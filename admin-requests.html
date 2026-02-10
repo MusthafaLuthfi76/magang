@@ -162,7 +162,6 @@
             width: 100%; 
         }
 
-        /* TABS */
         .tabs {
             display: flex;
             gap: 8px;
@@ -334,6 +333,30 @@
         }
         
         .btn-reject:hover {
+            background: #dc2626;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            padding: 5px 12px;
+            font-size: 12px;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            padding: 5px 12px;
+            font-size: 12px;
+        }
+
+        .btn-delete:hover {
             background: #dc2626;
         }
         
@@ -607,7 +630,6 @@
             opacity: 0.7;
         }
         
-        /* MOBILE RESPONSIVE */
         @media (max-width: 1023px) { 
             .sidebar { 
                 transform: translateX(-100%);
@@ -698,7 +720,6 @@
             }
         }
 
-        /* Mobile Menu Toggle */
         .mobile-menu-btn {
             display: none;
             position: fixed;
@@ -808,7 +829,6 @@
         </div>
 
         <div class="container">
-            <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('requests')">📋 Permintaan</button>
                 <button class="tab" onclick="switchTab('violations')">⚠️ Catatan Pelanggaran</button>
@@ -942,7 +962,6 @@
                             <p style="font-size: 20px; font-weight: 700; color: #1e293b;" id="sanksi-value">0.1 poin</p>
                         </div>
 
-                        <!-- Grafik Bar Chart -->
                         <div class="charts-grid">
                             <div class="card" style="margin: 0;">
                                 <div class="card-header" style="padding: 16px;">
@@ -967,7 +986,6 @@
                             </div>
                         </div>
 
-                        <!-- Tabel Detail -->
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -989,6 +1007,82 @@
             <div class="modal-content" id="modal-body"></div>
             <div class="modal-footer">
                 <button onclick="closeModal('detailModal')" class="btn">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Approve dengan Pilihan Nomor Kendaraan -->
+    <div id="approveModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Setujui Pengajuan</h2>
+            </div>
+            <div class="modal-content">
+                <div class="form-group">
+                    <label class="input-label">Pilih Nomor Kendaraan</label>
+                    <select class="form-input" id="vehicle-number-select">
+                        <option value="">Pilih Nomor Kendaraan</option>
+                        <option value="AB1027AV">AB1027AV</option>
+                        <option value="AB1869UA">AB1869UA</option>
+                        <option value="AB1147UH">AB1147UH</option>
+                        <option value="AB1340UH">AB1340UH</option>
+                        <option value="AB 1530 UH">AB 1530 UH</option>
+                        <option value="AB 1067 IA">AB 1067 IA</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('approveModal')" class="btn">Batal</button>
+                <button onclick="confirmApprove()" class="btn btn-approve" id="confirm-approve-btn">✓ Setujui</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Pengajuan</h2>
+            </div>
+            <div class="modal-content">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="input-label">Nama Pegawai</label>
+                        <input type="text" class="form-input" id="edit-nama" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Unit Eselon</label>
+                        <input type="text" class="form-input" id="edit-unit" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Penggunaan</label>
+                        <input type="date" class="form-input" id="edit-tanggal" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Waktu Penjemputan</label>
+                        <input type="time" class="form-input" id="edit-waktu-jemput" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Waktu Pengembalian</label>
+                        <input type="time" class="form-input" id="edit-waktu-kembali" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Nomor Kendaraan</label>
+                        <input type="text" class="form-input" id="edit-nomor-kendaraan" placeholder="Contoh: AB 1234 XY">
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tujuan</label>
+                        <input type="text" class="form-input" id="edit-tujuan" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Alamat</label>
+                        <textarea class="form-textarea" id="edit-alamat"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('editModal')" class="btn">Batal</button>
+                <button onclick="submitEdit()" class="btn btn-primary" id="submit-edit-btn">Simpan Perubahan</button>
             </div>
         </div>
     </div>
@@ -1057,13 +1151,15 @@
     </div>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbwQxRmjR4gK6jaBKJruSqdYQRberiiX4VZf8NXsaeW7YxxAlGFZMBDsyAh7VY19LN_x7A/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxwceGcQ2GimSJ392OYQq6BoX0fqFrM5WE0G11xl-YdbsuDVq3RUyUuMxc9r2pQ1kWpsQ/exec';
         
         let allRequests = [];
         let allViolations = [];
         let allScores = {};
         let scoreChart = null;
         let violationChart = null;
+        let currentApproveId = null;
+        let currentEditId = null;
 
         // ================== MOBILE MENU ==================
         function toggleMobileMenu() {
@@ -1071,7 +1167,6 @@
             sidebar.classList.toggle('mobile-open');
         }
 
-        // Close mobile menu when clicking outside
         document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('sidebar');
             const menuBtn = document.querySelector('.mobile-menu-btn');
@@ -1171,7 +1266,6 @@
 
         // ================== TAB SWITCHING ==================
         function switchTab(tabName) {
-            // Close mobile menu when switching tabs
             const sidebar = document.getElementById('sidebar');
             if (window.innerWidth <= 1023) {
                 sidebar.classList.remove('mobile-open');
@@ -1201,10 +1295,9 @@
 
         // ================== TAB 1: REQUESTS ==================
         async function loadRequests() {
-            // Cek apakah data sudah ada di variabel global 'allRequests'
             if (allRequests.length > 0) {
-                renderRequests(allRequests); // Langsung tampilkan data lama
-                return; // Berhenti di sini, nggak usah panggil API
+                renderRequests(allRequests);
+                return;
             }
 
             try {
@@ -1241,15 +1334,17 @@
                     <td>
                         ${req.status === 'pending' ? `
                             <div class="action-buttons">
-                                <button onclick="quickApprove('${req.id}')" class="btn btn-approve">✓ Setujui</button>
+                                <button onclick="openApproveModal('${req.id}')" class="btn btn-approve">✓ Setujui</button>
                                 <button onclick="quickReject('${req.id}')" class="btn btn-reject">✕ Tolak</button>
                             </div>
                         ` : createStatusBadge(req.status)}
                     </td>
                     <td>
-                        <button onclick="viewDetail('${req.id}')" class="btn">
-                            👁 Detail
-                        </button>
+                        <div class="action-buttons">
+                            <button onclick="viewDetail('${req.id}')" class="btn">👁 Detail</button>
+                            <button onclick="openEditModal('${req.id}')" class="btn btn-edit">✏️ Edit</button>
+                            <button onclick="deleteRequest('${req.id}')" class="btn btn-delete">🗑️ Hapus</button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
@@ -1282,6 +1377,10 @@
                     </div>
                 </div>
                 <div style="margin-bottom: 16px;">
+                    <label class="input-label">Nomor Kendaraan</label>
+                    <p style="font-weight: 500;">${request.nomorKendaraan || 'Belum Ditentukan'}</p>
+                </div>
+                <div style="margin-bottom: 16px;">
                     <label class="input-label">Keperluan</label>
                     <p style="font-weight: 500;">${request.tujuan || request.keterangan || '-'}</p>
                 </div>
@@ -1298,16 +1397,47 @@
             openModal('detailModal');
         }
 
-        async function quickApprove(id) {
-            if (!confirm('Setujui pengajuan ini?')) return;
+        // ================== APPROVE WITH VEHICLE NUMBER ==================
+        function openApproveModal(id) {
+            currentApproveId = id;
+            document.getElementById('vehicle-number-select').value = '';
+            openModal('approveModal');
+        }
+
+        async function confirmApprove() {
+            const vehicleNumber = document.getElementById('vehicle-number-select').value;
+            
+            if (!vehicleNumber) {
+                Toast.error('Pilih nomor kendaraan terlebih dahulu');
+                return;
+            }
+
+            const confirmBtn = document.getElementById('confirm-approve-btn');
+            const originalText = confirmBtn.innerHTML;
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyetujui...';
+
             try {
-                const res = await callAPI({ action: 'updateRequest', id, status: 'approved' });
+                const res = await callAPI({ 
+                    action: 'updateRequest', 
+                    id: currentApproveId, 
+                    status: 'approved',
+                    nomorKendaraan: vehicleNumber
+                });
+                
                 if (res.success) {
-                    Toast.success('Pengajuan disetujui');
-                    loadRequests(); 
+                    Toast.success('Pengajuan disetujui dengan kendaraan ' + vehicleNumber);
+                    closeModal('approveModal');
+                    allRequests = []; // Reset cache
+                    loadRequests();
+                } else {
+                    Toast.error(res.message || 'Gagal menyetujui');
                 }
             } catch (error) { 
                 Toast.error('Gagal: ' + error.message); 
+            } finally {
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = originalText;
             }
         }
 
@@ -1317,10 +1447,98 @@
                 const res = await callAPI({ action: 'updateRequest', id, status: 'rejected' });
                 if (res.success) {
                     Toast.success('Pengajuan ditolak');
+                    allRequests = [];
                     loadRequests();
                 }
             } catch (error) { 
                 Toast.error('Gagal: ' + error.message); 
+            }
+        }
+
+        // ================== EDIT REQUEST ==================
+        function openEditModal(id) {
+            const request = allRequests.find(r => r.id == id);
+            if (!request) {
+                Toast.error('Pengajuan tidak ditemukan');
+                return;
+            }
+
+            currentEditId = id;
+
+            // Isi form dengan data dari request
+            document.getElementById('edit-nama').value = request.nama_pegawai || '';
+            document.getElementById('edit-unit').value = request.unit_eselon || '';
+            document.getElementById('edit-tanggal').value = request.tanggal_penggunaan || '';
+            document.getElementById('edit-waktu-jemput').value = request.waktu_penjemputan ? request.waktu_penjemputan.split('T')[1].substring(0, 5) : '';
+            document.getElementById('edit-waktu-kembali').value = request.waktu_pengembalian ? request.waktu_pengembalian.split('T')[1].substring(0, 5) : '';
+            document.getElementById('edit-nomor-kendaraan').value = request.nomorKendaraan || '';
+            document.getElementById('edit-tujuan').value = request.tujuan || request.keterangan || '';
+            document.getElementById('edit-alamat').value = request.alamat || '';
+
+            openModal('editModal');
+        }
+
+        async function submitEdit() {
+            const form = document.getElementById('editForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const submitBtn = document.getElementById('submit-edit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
+
+            try {
+                const res = await callAPI({
+                    action: 'updateRequest',
+                    id: currentEditId,
+                    nama_pegawai: document.getElementById('edit-nama').value,
+                    unit_eselon: document.getElementById('edit-unit').value,
+                    tanggal_penggunaan: document.getElementById('edit-tanggal').value,
+                    waktu_penjemputan: document.getElementById('edit-waktu-jemput').value,
+                    waktu_pengembalian: document.getElementById('edit-waktu-kembali').value,
+                    nomorKendaraan: document.getElementById('edit-nomor-kendaraan').value,
+                    tujuan: document.getElementById('edit-tujuan').value,
+                    alamat: document.getElementById('edit-alamat').value
+                });
+
+                if (res.success) {
+                    Toast.success('Pengajuan berhasil diperbarui');
+                    closeModal('editModal');
+                    allRequests = [];
+                    loadRequests();
+                } else {
+                    Toast.error(res.message || 'Gagal memperbarui');
+                }
+            } catch (error) {
+                Toast.error('Gagal: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        // ================== DELETE REQUEST ==================
+        async function deleteRequest(id) {
+            if (!confirm('Hapus pengajuan ini? Tindakan ini tidak dapat dibatalkan.')) return;
+
+            try {
+                const res = await callAPI({ 
+                    action: 'deleteRequest', 
+                    id: id 
+                });
+
+                if (res.success) {
+                    Toast.success('Pengajuan berhasil dihapus');
+                    allRequests = [];
+                    loadRequests();
+                } else {
+                    Toast.error(res.message || 'Gagal menghapus');
+                }
+            } catch (error) {
+                Toast.error('Gagal: ' + error.message);
             }
         }
 
@@ -1427,7 +1645,6 @@
             try {
                 Toast.show('Mengekspor data...', 'success');
                 
-                // Map jenis filter to API parameter
                 let jenisParam = '';
                 if (jenis === 'Kealpaan Pengembalian Kunci') {
                     jenisParam = 'KUNCI';
@@ -1458,7 +1675,6 @@
             }
         }
 
-        // FILTER VIOLATIONS - ALL FILTERS WORKING
         document.getElementById('filter-bulan').addEventListener('change', filterViolations);
         document.getElementById('filter-unit').addEventListener('change', filterViolations);
         document.getElementById('filter-jenis').addEventListener('change', filterViolations);
@@ -1480,13 +1696,11 @@
         }
 
         // ================== TAB 3: SCORES ==================
-        // Ubah fungsi loadScores agar menerima parameter
         async function loadScores() {
             const bulan = document.getElementById('filter-score-bulan').value;
-            const mode = document.getElementById('score-mode-filter').value; // 'KUNCI' atau 'BERSIH'
+            const mode = document.getElementById('score-mode-filter').value;
 
             try {
-                // KIRIM PARAMETER KE API
                 const data = await callAPI({ 
                     action: 'getVehicleScores', 
                     bulan: bulan, 
@@ -1505,8 +1719,6 @@
             }
         }
 
-        // Pastikan event listener memanggil loadScores (ambil data baru dari server), 
-        // bukan cuma render ulang data lama yang mungkin kosong/salah jenis.
         document.getElementById('filter-score-bulan').addEventListener('change', loadScores);
         document.getElementById('score-mode-filter').addEventListener('change', loadScores);
 
@@ -1564,10 +1776,8 @@
                 return;
             }
 
-            // Render Charts with mode filter
             renderCharts(monthScores, mode);
 
-            // Render Table
             const modeLabel = mode === 'KUNCI' ? 'Kealpaan Pengembalian Kunci' : 'Kealpaan Membersihkan Mobil';
             
             container.innerHTML = `
@@ -1608,7 +1818,6 @@
         function renderCharts(monthScores, mode) {
             const units = monthScores.map(s => {
                 const unitName = s.unit;
-                // Shorten long unit names for chart labels
                 if (unitName.length > 25) {
                     return unitName.substring(0, 22) + '...';
                 }
@@ -1619,7 +1828,6 @@
 
             const modeLabel = mode === 'KUNCI' ? 'Pengembalian Kunci' : 'Membersihkan Mobil';
 
-            // Score Chart
             if (scoreChart) scoreChart.destroy();
             const scoreCtx = document.getElementById('scoreChart').getContext('2d');
             scoreChart = new Chart(scoreCtx, {
@@ -1669,7 +1877,6 @@
                 }
             });
 
-            // Violation Chart
             if (violationChart) violationChart.destroy();
             const violationCtx = document.getElementById('violationChart').getContext('2d');
             violationChart = new Chart(violationCtx, {
@@ -1711,10 +1918,6 @@
                 }
             });
         }
-
-        // Event listeners for score filters
-        document.getElementById('filter-score-bulan').addEventListener('change', renderScores);
-        document.getElementById('score-mode-filter').addEventListener('change', renderScores);
 
         // ================== MODAL FUNCTIONS ==================
         function openModal(modalId) {

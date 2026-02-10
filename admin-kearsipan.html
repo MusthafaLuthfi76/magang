@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penilaian Kearsipan Internal - Sistem Dinas</title>
+    <title>Penilaian Kearsipan Internal - 3 Komponen</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,7 +20,6 @@
         .toast { background: white; padding: 16px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 12px; }
         .toast.success { border-left: 4px solid #10b981; }
         .toast.error { border-left: 4px solid #ef4444; }
-        .toast.warning { border-left: 4px solid #f59e0b; }
         @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         .sidebar {
@@ -31,22 +30,20 @@
             flex-direction: column;
             position: fixed;
             height: 100vh;
-            left: 0;
-            top: 0;
         }
 
-        .sidebar-header {
-            padding: 20px 16px;
-            border-bottom: 1px solid #e5e7eb;
+        .sidebar-header { 
+            padding: 20px 16px; 
+            border-bottom: 1px solid #e5e7eb; 
         }
-
+        
         .sidebar-header-content {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
-        .sidebar-icon {
+        
+        .sidebar-icon.header-icon {
             width: 40px;
             height: 40px;
             background: #0f172a;
@@ -54,31 +51,39 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
         }
-
+        
+        .header-svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+            fill: none;
+            stroke-width: 1.8;
+        }
+        
         .sidebar-title {
             font-size: 16px;
             font-weight: 600;
             color: #1e293b;
+            margin-bottom: 2px;
         }
-
+        
         .sidebar-subtitle {
             font-size: 12px;
             color: #64748b;
         }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 16px 12px;
+        
+        .sidebar-nav { 
+            flex: 1; 
+            padding: 16px 12px; 
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
-
-        .sidebar-footer {
-            padding: 16px 12px;
-            border-top: 1px solid #e5e7eb;
+        
+        .sidebar-footer { 
+            padding: 16px 12px; 
+            border-top: 1px solid #e5e7eb; 
         }
 
         .nav-item {
@@ -89,17 +94,10 @@
             border-radius: 10px;
             font-weight: 500;
             font-size: 15px;
-            color: #0f172a;
+            color: #000;
             text-decoration: none;
+            position: relative;
             transition: all 0.15s ease;
-        }
-
-        .nav-item:hover {
-            background: #f8fafc;
-        }
-
-        .nav-item.active {
-            background: #f1f5f9;
         }
 
         .nav-icon {
@@ -107,38 +105,35 @@
             height: 20px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 1.8;
+            stroke-width: 2;
         }
 
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-left: 252px;
+        .nav-item:hover {
+            background: #f8fafc;
+            color: #000;
         }
 
-        .header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 24px 32px;
+        .nav-item.active {
+            background: #f1f5f9;
+            color: #000;
         }
 
-        .header-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 4px;
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            background: #0f172a;
+            border-radius: 0 4px 4px 0;
         }
 
-        .header-subtitle {
-            font-size: 14px;
-            color: #64748b;
-        }
-
-        .container {
-            padding: 24px 32px;
-            width: 100%;
-        }
+        .main-content { flex: 1; margin-left: 252px; }
+        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 24px 32px; }
+        .header-title { font-size: 24px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+        .header-subtitle { font-size: 14px; color: #64748b; }
+        .container { padding: 24px 32px; }
 
         .card {
             background: white;
@@ -156,15 +151,7 @@
             align-items: center;
         }
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .card-content {
-            padding: 24px;
-        }
+        .card-title { font-size: 18px; font-weight: 600; color: #1e293b; }
 
         .stats-grid {
             display: grid;
@@ -173,29 +160,11 @@
             margin-bottom: 24px;
         }
 
-        .stat-card {
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-        }
+        .stat-card { padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; }
+        .stat-label { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .stat-value { font-size: 32px; font-weight: 700; color: #1e293b; }
 
-        .stat-label {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .filter-container {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
+        .filter-container { display: flex; gap: 12px; align-items: center; }
 
         .search-input, .select-input {
             padding: 8px 12px;
@@ -205,18 +174,7 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .search-input {
-            width: 240px;
-        }
-
-        .select-input {
-            width: 150px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        table { width: 100%; border-collapse: collapse; }
 
         th {
             text-align: left;
@@ -235,9 +193,7 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        tbody tr:hover {
-            background: #fafbfc;
-        }
+        tbody tr:hover { background: #fafbfc; }
 
         .btn {
             padding: 6px 14px;
@@ -255,20 +211,15 @@
             transition: all 0.2s;
         }
 
-        .btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
+        .btn:hover { background: #f8fafc; }
 
-        .btn-primary {
-            background: #0f172a;
+        .btn-success {
+            background: #10b981;
             color: white;
-            border-color: #0f172a;
+            border-color: #10b981;
         }
 
-        .btn-primary:hover {
-            background: #1e293b;
-        }
+        .btn-success:hover { background: #059669; }
 
         .badge {
             padding: 4px 12px;
@@ -278,25 +229,8 @@
             display: inline-block;
         }
 
-        .badge-excellent {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .badge-good {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .badge-fair {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge-poor {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+        .badge-pending { background: #e0e7ff; color: #3730a3; }
+        .badge-assessed { background: #d1fae5; color: #065f46; }
 
         .modal-overlay {
             position: fixed;
@@ -312,33 +246,17 @@
         .modal {
             background: white;
             border-radius: 8px;
-            max-width: 800px;
+            max-width: 700px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .modal-content {
-            padding: 24px;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 12px;
-        }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-content { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; gap: 12px; }
 
         .input-label {
             display: block;
@@ -348,22 +266,86 @@
             margin-bottom: 6px;
         }
 
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .form-group { margin-bottom: 16px; }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .score-section {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .score-section-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .score-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .score-preview-title { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .score-preview-value { font-size: 36px; font-weight: 700; color: #0f172a; text-align: center; }
+
+        .score-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .score-item {
+            text-align: center;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .score-item-label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+        .score-item-value { font-size: 20px; font-weight: 700; color: #1e293b; }
+
         .user-info {
             padding: 0 12px;
             margin-bottom: 16px;
         }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 2px;
-        }
-
-        .user-email {
-            font-size: 12px;
-            color: #64748b;
-        }
+        
+        .user-name { font-size: 14px; font-weight: 600; color: #1e293b; }
+        .user-email { font-size: 12px; color: #64748b; }
 
         .logout-btn {
             width: 100%;
@@ -375,74 +357,71 @@
             font-size: 14px;
             font-weight: 500;
             color: #1e293b;
+            font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-family: 'Inter', sans-serif;
         }
 
-        .logout-btn:hover {
-            background: #f8fafc;
-        }
+        .logout-btn:hover { background: #f8fafc; }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+        .info-banner {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 12px 16px;
+            border-radius: 6px;
             margin-bottom: 16px;
+            font-size: 13px;
+            color: #1e3a8a;
         }
 
-        .info-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .score-card {
-            padding: 16px;
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: white;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            margin-bottom: 12px;
-            background: #f8fafc;
+            padding: 8px 12px;
+            cursor: pointer;
         }
 
-        .score-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .score-title {
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .score-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .score-notes {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 4px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 1023px) {
-            .sidebar { display: none; }
+            .sidebar { 
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 100;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
             .main-content { margin-left: 0; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
+            .score-breakdown { grid-template-columns: 1fr; }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
+
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
-                <div class="sidebar-icon">
-                    <svg viewBox="0 0 24 24" class="nav-icon" style="stroke: white;">
+                <div class="sidebar-icon header-icon">
+                    <svg viewBox="0 0 24 24" class="header-svg">
                         <rect x="3" y="3" width="7" height="7" rx="1"/>
                         <rect x="14" y="3" width="7" height="7" rx="1"/>
                         <rect x="3" y="14" width="7" height="7" rx="1"/>
@@ -520,66 +499,56 @@
     <div class="main-content">
         <div class="header">
             <h1 class="header-title">Penilaian Kearsipan Internal</h1>
-            <p class="header-subtitle">Sistem penilaian dan monitoring kearsipan bidang</p>
+            <p class="header-subtitle">Sistem penilaian 3 komponen (Bukti Dukung, Srikandi, Surat Keluar)</p>
         </div>
 
         <div class="container">
-            <!-- Statistics -->
             <div class="stats-grid">
                 <div class="stat-card" style="border-left: 4px solid #10b981;">
-                    <div class="stat-label">Skor Rata-rata</div>
-                    <div class="stat-value" id="avg-score">4.2</div>
+                    <div class="stat-label">Nilai Rata-rata</div>
+                    <div class="stat-value" id="avg-score">0</div>
                 </div>
                 <div class="stat-card" style="border-left: 4px solid #3b82f6;">
-                    <div class="stat-label">Total Penilaian</div>
-                    <div class="stat-value" id="total-assessments">12</div>
+                    <div class="stat-label">Total Dinilai</div>
+                    <div class="stat-value" id="total-assessed">0</div>
                 </div>
                 <div class="stat-card" style="border-left: 4px solid #f59e0b;">
                     <div class="stat-label">Bulan Ini</div>
-                    <div class="stat-value" id="this-month">3</div>
+                    <div class="stat-value" id="this-month">0</div>
                 </div>
                 <div class="stat-card" style="border-left: 4px solid #8b5cf6;">
-                    <div class="stat-label">Bidang Dinilai</div>
-                    <div class="stat-value" id="total-departments">8</div>
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value" id="total-pending">0</div>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Hasil Penilaian Kearsipan</h2>
+                    <h2 class="card-title">Dokumen Kearsipan</h2>
                     <div class="filter-container">
-                        <select class="select-input" id="month-filter">
-                            <option value="">Semua Bulan</option>
-                            <option value="01">Januari</option>
-                            <option value="02">Februari</option>
-                            <option value="03">Maret</option>
-                            <option value="04">April</option>
-                            <option value="05">Mei</option>
-                            <option value="06">Juni</option>
-                            <option value="07">Juli</option>
-                            <option value="08">Agustus</option>
-                            <option value="09">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
+                        <select class="select-input" id="status-filter">
+                            <option value="">Semua Status</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="ASSESSED">Sudah Dinilai</option>
                         </select>
-                        <input type="text" class="search-input" placeholder="Cari bidang..." id="search-input">
+                        <input type="text" class="search-input" placeholder="Cari..." id="search-input">
                     </div>
                 </div>
                 <div style="overflow-x: auto;">
                     <table>
                         <thead>
                             <tr>
-                                <th>Bulan/Tahun</th>
-                                <th>Bidang</th>
+                                <th>Tanggal</th>
+                                <th>Pengirim/Unit</th>
                                 <th>Jenis Dokumen</th>
-                                <th>Kategori</th>
-                                <th>Keterangan</th>
+                                <th>Periode</th>
+                                <th>Status</th>
+                                <th>Nilai</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="assessments-tbody">
-                            <!-- Data akan dimuat di sini -->
+                        <tbody id="documents-tbody">
+                            <tr><td colspan="7" style="text-align:center; padding: 2rem;">Memuat data...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -588,12 +557,28 @@
     </div>
 
     <script>
-        // =============================================
-        // KONFIGURASI - GANTI URL APPS SCRIPT ANDA!
-        // =============================================
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ-3HvcoJ9ymO8gP79NyZsRPgRt_Z9JiqOIiMw8gcwPOYhY6aa8EeJu24zMGqY-g5r/exec';
-        let masterData = []; // Untuk menyimpan data asli agar filter tidak merusak data
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy9kC3jqU-NHfxrfgd_1qprAi4ML6bzG5VbhRxVR5wt-iTon4cZpDaXswOMa37n_9kUQ/exec';
         
+        let allDocuments = [];
+        let currentUser = {};
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 1023 && 
+                sidebar.classList.contains('mobile-open') && 
+                !sidebar.contains(event.target) && 
+                !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+
         const Toast = {
             container: null,
             init() {
@@ -607,326 +592,377 @@
                 this.init();
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        ${type === 'success' 
-                            ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
-                            : type === 'warning'
-                            ? '<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>'
-                            : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
-                        }
-                    </svg>
-                    <span>${message}</span>
-                `;
+                toast.innerHTML = `<span>${message}</span>`;
                 this.container.appendChild(toast);
                 setTimeout(() => toast.remove(), 3000);
             },
             success(msg) { this.show(msg, 'success'); },
-            error(msg) { this.show(msg, 'error'); },
-            warning(msg) { this.show(msg, 'warning'); }
+            error(msg) { this.show(msg, 'error'); }
         };
-
-        // Dummy data untuk testing
-        const dummyAssessments = [
-            { 
-                id: 1,
-                bulan: '01',
-                tahun: '2024',
-                bidang: 'Bidang Pemberdayaan Masyarakat',
-                skor_total: 4.8,
-                kategori: 'excellent',
-                penilai: 'Tim Kearsipan',
-                detail: {
-                    bukti_dukung: 5,
-                    srikandi: 5,
-                    daftar_arsip: 5,
-                    softfile: 4.8,
-                    hasil_penilaian: 4.8,
-                    pengemasan: 4.5,
-                    surat_keluar: 5
-                }
-            },
-            { 
-                id: 2,
-                bulan: '01',
-                tahun: '2024',
-                bidang: 'Bidang KUMKM',
-                skor_total: 4.2,
-                kategori: 'good',
-                penilai: 'Tim Kearsipan',
-                detail: {
-                    bukti_dukung: 4,
-                    srikandi: 4.5,
-                    daftar_arsip: 4,
-                    softfile: 4.2,
-                    hasil_penilaian: 4.5,
-                    pengemasan: 4,
-                    surat_keluar: 4.2
-                }
-            },
-            { 
-                id: 3,
-                bulan: '02',
-                tahun: '2024',
-                bidang: 'Sekretariat',
-                skor_total: 3.5,
-                kategori: 'fair',
-                penilai: 'Tim Kearsipan',
-                detail: {
-                    bukti_dukung: 3,
-                    srikandi: 4,
-                    daftar_arsip: 3.5,
-                    softfile: 3.5,
-                    hasil_penilaian: 3.5,
-                    pengemasan: 3,
-                    surat_keluar: 4
-                }
-            }
-        ];
 
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         if (!user.email || user.role !== 'admin') {
             window.location.href = 'login.html';
         }
 
+        currentUser = user;
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
 
-
         function logout() {
-            localStorage.clear();
-            window.location.href = 'login.html';
-        }
-
-        function getScoreBadge(kategori) {
-            const labels = { 
-                excellent: 'Sangat Baik', 
-                good: 'Baik', 
-                fair: 'Cukup', 
-                poor: 'Kurang' 
-            };
-            const classes = { 
-                excellent: 'badge-excellent', 
-                good: 'badge-good', 
-                fair: 'badge-fair', 
-                poor: 'badge-poor' 
-            };
-            return `<span class="badge ${classes[kategori]}">${labels[kategori]}</span>`;
-        }
-
-        let allAssessments = [];
-
-        async function loadAssessments() {
-            const tableBody = document.getElementById('assessments-tbody');
-            
-            // Cek Cache LocalStorage
-            const cached = localStorage.getItem('assessments_cache');
-            if (cached) {
-                const data = JSON.parse(cached);
-                allAssessments = data;
-                masterData = [...data];
-                renderAssessments();
-                updateStats();
-            } else {
-                tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Memuat data...</td></tr>';
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                localStorage.clear();
+                window.location.href = 'login.html';
             }
+        }
 
+        async function loadDocuments() {
             try {
-                // PERUBAHAN DISINI: action diganti jadi getDocuments
                 const response = await fetch(`${APPS_SCRIPT_URL}?action=getDocuments`);
-                const res = await response.json();
+                const documents = await response.json();
 
-                // handleGetDocuments di Kode.gs mengembalikan array langsung jika sukses
-                if (Array.isArray(res)) {
-                    localStorage.setItem('assessments_cache', JSON.stringify(res));
-                    allAssessments = res;
-                    masterData = [...res];
-                    renderAssessments();
-                    updateStats();
-                } else if (res.success === false) {
-                    Toast.error("Gagal: " + res.message);
+                if (Array.isArray(documents)) {
+                    allDocuments = documents;
+                    renderDocuments();
+                    await loadStats();
                 }
-            } catch (e) {
-                console.error("Fetch error:", e);
-                if (!cached) tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Gagal memuat data dari server</td></tr>';
-            }
-        }
-
-        async function loadArchiveData() {
-            try {
-                const data = await fetchAPI('getDocuments'); // Pastikan action ini ada di doGet kode.gs
-                const container = document.getElementById('archive-list');
-
-                container.innerHTML = data.map(item => `
-                    <div class="request-item">
-                        <div>
-                            <p style="font-weight: 600;">📄 ${item.nama_file}</p>
-                            <p style="font-size: 13px; color: #64748b;">Kategori: ${item.kategori} • Diunggah: ${item.tgl}</p>
-                        </div>
-                        <a href="#" class="btn-sm">Buka File</a>
-                    </div>
-                `).join('');
             } catch (error) {
-                Toast.error("Gagal memuat data Kearsipan");
+                Toast.error('Gagal memuat data');
             }
         }
 
-        function updateStats() {
-            const total = allAssessments.length;
-            // Mencari yang statusnya PENDING (case insensitive)
-            const pending = allAssessments.filter(d => 
-                d.status && d.status.toString().toUpperCase() === 'PENDING'
-            ).length;
+        function renderDocuments() {
+            const tbody = document.getElementById('documents-tbody');
             
-            document.getElementById('total-assessments').textContent = total;
-            document.getElementById('this-month').textContent = pending;
-        }
-
-        function renderAssessments() {
-            const tbody = document.getElementById('assessments-tbody');
-            if (allAssessments.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem;">Data tidak ditemukan</td></tr>`;
+            if (allDocuments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 2rem;">Tidak ada dokumen</td></tr>';
                 return;
             }
 
-            tbody.innerHTML = allAssessments.map(doc => `
+            tbody.innerHTML = allDocuments.map(doc => `
                 <tr>
                     <td style="font-size: 0.85rem; color: #64748b;">${doc.timestamp || '-'}</td>
                     <td>
-                        <div style="font-weight: 600; color: #1e293b;">${doc.unit || doc.bidang || 'Umum'}</div>
-                        <div style="font-size: 0.75rem; color: #64748b;">${doc.nama_pengirim || '-'}</div>
+                        <div style="font-weight: 600;">${doc.nama_pengirim || '-'}</div>
+                        <div style="font-size: 0.75rem; color: #64748b;">${doc.unit || '-'}</div>
                     </td>
-                    <td><span class="doc-type-tag">${doc.jenis_dokumen || 'File'}</span></td>
-                    <td><span class="badge ${getStatusClass(doc.status)}">${doc.status}</span></td>
-                    <td><div class="keterangan-truncate">${doc.keterangan || '-'}</div></td>
+                    <td>${doc.jenis_dokumen || '-'}</td>
+                    <td>${doc.bulan || '-'} ${doc.tahun || ''}</td>
+                    <td>
+                        <span class="badge ${doc.status === 'ASSESSED' ? 'badge-assessed' : 'badge-pending'}">
+                            ${doc.status === 'ASSESSED' ? 'Sudah Dinilai' : 'Pending'}
+                        </span>
+                    </td>
+                    <td>
+                        ${doc.nilai ? `<strong style="font-size: 18px; color: #10b981;">${doc.nilai}</strong>` : '-'}
+                    </td>
                     <td>
                         <div style="display: flex; gap: 8px;">
-                            <a href="${doc.file_url}" target="_blank" class="btn-sm">👁️ Lihat</a>
+                            <a href="${doc.file_url}" target="_blank" class="btn">👁️ Lihat</a>
+                            ${doc.status !== 'ASSESSED' 
+                                ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-success">✓ Nilai</button>`
+                                : `<button onclick="viewAssessment('${doc.id}')" class="btn">📊 Detail</button>`
+                            }
                         </div>
                     </td>
                 </tr>
             `).join('');
         }
-        
-        async function updateDocStatus(id, status) {
-            if(!confirm(`Ubah status menjadi ${status}?`)) return;
-            
+
+        async function loadStats() {
             try {
-                // Di Kode.gs Anda, action-nya adalah updateRequest
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=updateRequest&id=${id}&status=${status}`);
-                const res = await response.json();
-                
-                if(res.success) {
-                    Toast.success("Status Berhasil Diperbarui");
-                    localStorage.removeItem('assessments_cache'); 
-                    await loadAssessments(); 
-                }
-            } catch (e) {
-                Toast.error("Gagal memperbarui status");
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getAssessmentStats`);
+                const stats = await response.json();
+
+                document.getElementById('avg-score').textContent = stats.avg_score || '0';
+                document.getElementById('total-assessed').textContent = stats.assessed || '0';
+                document.getElementById('this-month').textContent = stats.this_month || '0';
+                document.getElementById('total-pending').textContent = stats.pending || '0';
+            } catch (error) {
+                console.error('Stats error:', error);
             }
         }
 
-        function getStatusClass(status) {
-            status = status.toUpperCase();
-            if (status === 'APPROVED' || status === 'DISETUJUI') return 'badge-excellent';
-            if (status === 'PENDING') return 'badge-fair';
-            return 'badge-poor';
-        }
-        function viewDetail(id) {
-            const assessment = allAssessments.find(a => a.id === id);
-            if (!assessment) return;
-
-            const monthNames = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
-                              'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        function openAssessmentModal(docId) {
+            const doc = allDocuments.find(d => d.id === docId);
+            if (!doc) return;
 
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.innerHTML = `
                 <div class="modal">
                     <div class="modal-header">
-                        <h2 class="modal-title">Detail Penilaian Kearsipan</h2>
+                        <h2 class="modal-title">Penilaian Dokumen Kearsipan</h2>
                     </div>
                     <div class="modal-content">
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <label class="input-label">Periode</label>
-                                <p style="font-weight: 500;">${monthNames[parseInt(assessment.bulan)]} ${assessment.tahun}</p>
-                            </div>
-                            <div class="info-item">
-                                <label class="input-label">Bidang</label>
-                                <p style="font-weight: 500;">${assessment.bidang}</p>
-                            </div>
-                        </div>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <label class="input-label">Skor Total</label>
-                                <p style="font-weight: 700; font-size: 24px; color: #0f172a;">${assessment.skor_total.toFixed(1)}</p>
-                            </div>
-                            <div class="info-item">
-                                <label class="input-label">Kategori</label>
-                                <div>${getScoreBadge(assessment.kategori)}</div>
-                            </div>
+                        <div style="background: #f8fafc; padding: 16px; border-radius: 6px; margin-bottom: 20px;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">${doc.nama_pengirim} - ${doc.unit}</div>
+                            <div style="font-size: 13px; color: #64748b;">${doc.jenis_dokumen} • ${doc.bulan} ${doc.tahun}</div>
                         </div>
 
-                        <div style="margin-top: 24px;">
-                            <label class="input-label">Rincian Penilaian</label>
-                            
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Bukti Dukung Lengkap</div>
-                                    <div class="score-value">${assessment.detail.bukti_dukung}</div>
+                        <div class="info-banner">
+                            📋 <strong>Sistem Penilaian:</strong> Bukti Dukung (3 poin: 1+1+1) + Srikandi (1 poin) + Surat Keluar (1 poin) = Total 5 poin
+                        </div>
+
+                        <form id="assessment-form">
+                            <div class="score-section">
+                                <div class="score-section-title">1️⃣ Bukti Dukung (Maksimal 3 Poin)</div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="bukti-lengkap" checked>
+                                    <label for="bukti-lengkap" style="cursor: pointer;">✓ Bukti dukung lengkap (1 poin)</label>
                                 </div>
-                                <div class="score-notes">Kelengkapan dokumen pendukung arsip</div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="bukti-benar" checked>
+                                    <label for="bukti-benar" style="cursor: pointer;">✓ Bukti dukung benar (1 poin)</label>
+                                </div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="bukti-tepat-waktu" checked>
+                                    <label for="bukti-tepat-waktu" style="cursor: pointer;">✓ Tepat waktu - tidak terlambat (1 poin)</label>
+                                </div>
+
+                                <div class="form-group" id="terlambat-group" style="display: none; margin-top: 12px;">
+                                    <label class="input-label">⏰ Jumlah Hari Terlambat (pengurangan 0.1 × hari)</label>
+                                    <input type="number" class="input-field" id="hari-terlambat" min="0" value="0" placeholder="Contoh: 5 hari">
+                                </div>
                             </div>
 
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Penggunaan Srikandi</div>
-                                    <div class="score-value">${assessment.detail.srikandi}</div>
+                            <div class="score-section" style="border-left-color: #8b5cf6;">
+                                <div class="score-section-title">2️⃣ Penggunaan Srikandi (Maksimal 1 Poin)</div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="sudah-srikandi" checked>
+                                    <label for="sudah-srikandi" style="cursor: pointer;">✓ Sudah menggunakan Srikandi (1 poin)</label>
                                 </div>
-                                <div class="score-notes">Penggunaan sistem Srikandi untuk arsip</div>
                             </div>
 
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Daftar Arsip Vital & Alih Media</div>
-                                    <div class="score-value">${assessment.detail.daftar_arsip}</div>
+                            <div class="score-section" style="border-left-color: #f59e0b;">
+                                <div class="score-section-title">3️⃣ Surat Keluar sesuai TND (Maksimal 1 Poin)</div>
+                                
+                                <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
+                                    <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
+                                        Apakah semua surat keluar sudah sesuai Tata Naskah Dinas?
+                                    </div>
+                                    <div style="display: flex; gap: 16px;">
+                                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                            <input type="radio" name="surat-option" value="sesuai" checked>
+                                            <span>Semua Sesuai (1.0 poin)</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                            <input type="radio" name="surat-option" value="ada-salah">
+                                            <span>Ada yang Salah</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="score-notes">Kelengkapan daftar dan dokumentasi</div>
+
+                                <div class="form-group" id="surat-salah-group" style="display: none;">
+                                    <label class="input-label">📝 Jumlah Surat yang Tidak Sesuai TND (dari hasil uji petik)</label>
+                                    <input type="number" class="input-field" id="jumlah-surat-salah" min="0" value="0" placeholder="Contoh: 3 surat">
+                                    <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+                                        💡 Pengurangan: 0.1 × jumlah surat yang salah
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Softfile Daftar Arsip</div>
-                                    <div class="score-value">${assessment.detail.softfile}</div>
+                            <div class="score-preview">
+                                <div class="score-preview-title">TOTAL SKOR</div>
+                                <div class="score-preview-value" id="total-score">5.0</div>
+                                
+                                <div class="score-breakdown">
+                                    <div class="score-item">
+                                        <div class="score-item-label">Bukti Dukung</div>
+                                        <div class="score-item-value" id="score-bukti">3.0</div>
+                                    </div>
+                                    <div class="score-item">
+                                        <div class="score-item-label">Srikandi</div>
+                                        <div class="score-item-value" id="score-srikandi">1.0</div>
+                                    </div>
+                                    <div class="score-item">
+                                        <div class="score-item-label">Surat Keluar</div>
+                                        <div class="score-item-value" id="score-surat">1.0</div>
+                                    </div>
                                 </div>
-                                <div class="score-notes">Digital archiving dan backup</div>
                             </div>
 
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Hasil Penilaian Kearsipan</div>
-                                    <div class="score-value">${assessment.detail.hasil_penilaian}</div>
-                                </div>
-                                <div class="score-notes">Dokumentasi hasil penilaian</div>
+                            <div class="form-group">
+                                <label class="input-label">Catatan Tambahan (Opsional)</label>
+                                <textarea class="input-field" name="catatan" rows="3" placeholder="Tambahkan catatan..."></textarea>
                             </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="closeModal()" class="btn" style="flex: 1;">Batal</button>
+                        <button onclick="submitAssessment('${docId}')" class="btn btn-success" style="flex: 1;">
+                            Simpan Penilaian
+                        </button>
+                    </div>
+                </div>
+            `;
 
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Pengemasan Srikandi</div>
-                                    <div class="score-value">${assessment.detail.pengemasan}</div>
-                                </div>
-                                <div class="score-notes">Kualitas pengemasan dan penyimpanan</div>
-                            </div>
+            const buktiLengkap = modal.querySelector('#bukti-lengkap');
+            const buktiBenar = modal.querySelector('#bukti-benar');
+            const buktiTepatWaktu = modal.querySelector('#bukti-tepat-waktu');
+            const hariTerlambat = modal.querySelector('#hari-terlambat');
+            const terlambatGroup = modal.querySelector('#terlambat-group');
+            const sudahSrikandi = modal.querySelector('#sudah-srikandi');
+            const suratRadios = modal.querySelectorAll('input[name="surat-option"]');
+            const jumlahSuratSalah = modal.querySelector('#jumlah-surat-salah');
+            const suratSalahGroup = modal.querySelector('#surat-salah-group');
 
-                            <div class="score-card">
-                                <div class="score-header">
-                                    <div class="score-title">Surat Keluar</div>
-                                    <div class="score-value">${assessment.detail.surat_keluar}</div>
-                                </div>
-                                <div class="score-notes">Kelengkapan arsip surat keluar</div>
+            function updateScore() {
+                // KOMPONEN 1: BUKTI DUKUNG (max 3 poin)
+                // Setiap checkbox = 1 poin
+                let skorBukti = 0;
+                
+                if (buktiLengkap.checked) skorBukti += 1;
+                if (buktiBenar.checked) skorBukti += 1;
+                
+                // Untuk ketepatan waktu
+                if (buktiTepatWaktu.checked) {
+                    skorBukti += 1; // Tepat waktu = +1 poin
+                } else {
+                    // Terlambat = 1 - (0.1 × hari)
+                    const hari = parseInt(hariTerlambat.value) || 0;
+                    const skorWaktu = Math.max(0, 1 - (0.1 * hari));
+                    skorBukti += skorWaktu;
+                }
+
+                // KOMPONEN 2: SRIKANDI (1 poin)
+                const skorSrikandi = sudahSrikandi.checked ? 1 : 0;
+
+                // KOMPONEN 3: SURAT KELUAR (1 poin)
+                let skorSurat = 1;
+                const suratOption = modal.querySelector('input[name="surat-option"]:checked').value;
+                if (suratOption === 'ada-salah') {
+                    const salah = parseInt(jumlahSuratSalah.value) || 0;
+                    skorSurat = Math.max(0, 1 - (0.1 * salah));
+                }
+
+                const total = skorBukti + skorSrikandi + skorSurat;
+
+                modal.querySelector('#score-bukti').textContent = skorBukti.toFixed(1);
+                modal.querySelector('#score-srikandi').textContent = skorSrikandi.toFixed(1);
+                modal.querySelector('#score-surat').textContent = skorSurat.toFixed(1);
+                modal.querySelector('#total-score').textContent = total.toFixed(1);
+            }
+
+            buktiTepatWaktu.addEventListener('change', (e) => {
+                terlambatGroup.style.display = e.target.checked ? 'none' : 'block';
+                if (e.target.checked) hariTerlambat.value = 0;
+                updateScore();
+            });
+
+            suratRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    suratSalahGroup.style.display = e.target.value === 'ada-salah' ? 'block' : 'none';
+                    if (e.target.value === 'sesuai') jumlahSuratSalah.value = 0;
+                    updateScore();
+                });
+            });
+
+            [buktiLengkap, buktiBenar, hariTerlambat, sudahSrikandi, jumlahSuratSalah].forEach(el => {
+                el.addEventListener('change', updateScore);
+                el.addEventListener('input', updateScore);
+            });
+
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            document.body.appendChild(modal);
+            window.currentModal = modal;
+        }
+
+        async function submitAssessment(docId) {
+            const buktiLengkap = document.getElementById('bukti-lengkap').checked;
+            const buktiBenar = document.getElementById('bukti-benar').checked;
+            const buktiTepatWaktu = document.getElementById('bukti-tepat-waktu').checked;
+            const hariTerlambat = document.getElementById('hari-terlambat').value || 0;
+            const sudahSrikandi = document.getElementById('sudah-srikandi').checked;
+            const suratOption = document.querySelector('input[name="surat-option"]:checked').value;
+            const suratSesuaiTND = suratOption === 'sesuai';
+            const jumlahSuratSalah = suratSesuaiTND ? 0 : (document.getElementById('jumlah-surat-salah').value || 0);
+            const catatan = document.querySelector('textarea[name="catatan"]').value;
+
+            // Get buttons
+            const submitBtn = window.currentModal.querySelector('.btn-success');
+            const cancelBtn = window.currentModal.querySelector('.btn:not(.btn-success)');
+            
+            // Store original button text
+            const originalText = submitBtn.innerHTML;
+            
+            // Disable buttons and show loading
+            submitBtn.disabled = true;
+            cancelBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg style="width: 16px; height: 16px; animation: spin 0.8s linear infinite;" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"/>
+                    <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" opacity="0.75"/>
+                </svg>
+                Menyimpan...
+            `;
+
+            const params = new URLSearchParams({
+                action: 'createDocumentAssessment',
+                doc_id: docId,
+                bukti_lengkap: buktiLengkap,
+                bukti_benar: buktiBenar,
+                bukti_tepat_waktu: buktiTepatWaktu,
+                hari_terlambat: hariTerlambat,
+                sudah_srikandi: sudahSrikandi,
+                surat_sesuai_tnd: suratSesuaiTND,
+                jumlah_surat_salah: jumlahSuratSalah,
+                catatan: catatan,
+                penilai_nama: currentUser.name
+            });
+
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?${params}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    Toast.success(`Penilaian berhasil! Skor: ${result.nilai}/5`);
+                    closeModal();
+                    await loadDocuments();
+                } else {
+                    Toast.error('Gagal: ' + result.message);
+                    // Re-enable buttons on error
+                    submitBtn.disabled = false;
+                    cancelBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            } catch (error) {
+                Toast.error('Error: ' + error.message);
+                // Re-enable buttons on error
+                submitBtn.disabled = false;
+                cancelBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        function viewAssessment(docId) {
+            const doc = allDocuments.find(d => d.id === docId);
+            if (!doc) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Detail Penilaian</h2>
+                    </div>
+                    <div class="modal-content">
+                        <div style="text-align: center; padding: 20px;">
+                            <div style="font-size: 56px; font-weight: 700; color: #10b981;">${doc.nilai}</div>
+                            <div style="font-size: 14px; color: #64748b; margin-top: 8px;">
+                                Dinilai oleh ${doc.penilai || 'Admin'}
                             </div>
                         </div>
+
+                        ${doc.catatan ? `
+                            <div style="padding: 16px; background: #f8fafc; border-left: 4px solid #3b82f6; border-radius: 6px; white-space: pre-line;">
+                                ${doc.catatan}
+                            </div>
+                        ` : ''}
                     </div>
                     <div class="modal-footer">
                         <button onclick="closeModal()" class="btn" style="width: 100%;">Tutup</button>
@@ -946,29 +982,29 @@
             }
         }
 
-        // Filter functionality
-        document.getElementById('month-filter').addEventListener('change', (e) => {
-            const month = e.target.value;
-            if (month === '') {
-                allAssessments = [...masterData];
-            } else {
-                allAssessments = masterData.filter(a => a.bulan === month);
-            }
-            renderAssessments();
+        document.getElementById('status-filter').addEventListener('change', (e) => {
+            const status = e.target.value;
+            const rows = document.querySelectorAll('#documents-tbody tr');
+            rows.forEach(row => {
+                if (status === '') {
+                    row.style.display = '';
+                } else {
+                    const text = row.innerText.toUpperCase();
+                    row.style.display = text.includes(status) ? '' : 'none';
+                }
+            });
         });
 
-        // Search functionality
         document.getElementById('search-input').addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll('#assessments-tbody tr');
-            
+            const rows = document.querySelectorAll('#documents-tbody tr');
             rows.forEach(row => {
                 const text = row.innerText.toLowerCase();
                 row.style.display = text.includes(val) ? '' : 'none';
             });
         });
 
-        loadAssessments();
+        loadDocuments();
     </script>
 </body>
 </html>
