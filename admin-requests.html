@@ -33,6 +33,7 @@
             height: 100vh;
             left: 0;
             top: 0;
+            z-index: 100;
         }
         
         .sidebar-header { 
@@ -167,6 +168,7 @@
             gap: 8px;
             margin-bottom: 24px;
             border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
         }
 
         .tab {
@@ -181,6 +183,7 @@
             margin-bottom: -2px;
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
+            white-space: nowrap;
         }
 
         .tab:hover {
@@ -214,6 +217,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
         
         .card-title { 
@@ -230,6 +235,7 @@
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         .search-input, .select-input {
@@ -242,10 +248,12 @@
 
         .search-input {
             width: 240px;
+            min-width: 150px;
         }
 
         .select-input {
             width: 180px;
+            min-width: 120px;
         }
 
         table { 
@@ -599,17 +607,122 @@
             opacity: 0.7;
         }
         
+        /* MOBILE RESPONSIVE */
         @media (max-width: 1023px) { 
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; }
-            .info-grid { grid-template-columns: 1fr; }
-            .score-details { grid-template-columns: 1fr; }
-            .charts-grid { grid-template-columns: 1fr; }
+            .sidebar { 
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content { 
+                margin-left: 0; 
+            }
+            
+            .header {
+                padding: 16px 20px;
+            }
+            
+            .header-title {
+                font-size: 20px;
+            }
+            
+            .container {
+                padding: 16px 20px;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-container {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .search-input, .select-input {
+                width: 100%;
+            }
+            
+            .info-grid { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .score-details { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .charts-grid { 
+                grid-template-columns: 1fr; 
+            }
+            
+            table {
+                font-size: 13px;
+            }
+            
+            th, td {
+                padding: 10px 12px;
+            }
+            
+            .tabs {
+                gap: 4px;
+            }
+            
+            .tab {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .score-details {
+                gap: 12px;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1023px) {
+            .mobile-menu-btn {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
+
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
                 <div class="sidebar-icon header-icon">
@@ -768,8 +881,8 @@
                             </select>
                             <select class="select-input" id="filter-jenis">
                                 <option value="">Semua Jenis</option>
-                                <option value="KUNCI">Kealpaan Pengembalian Kunci</option>
-                                <option value="KEBERSIHAN">Kealpaan Membersihkan Mobil</option>
+                                <option value="Kealpaan Pengembalian Kunci">Kealpaan Pengembalian Kunci</option>
+                                <option value="Kealpaan Membersihkan Mobil">Kealpaan Membersihkan Mobil</option>
                             </select>
                             <button onclick="exportViolations()" class="btn" title="Export ke Sheet Baru">
                                 📊 Export Laporan
@@ -802,6 +915,10 @@
                     <div class="card-header">
                         <h2 class="card-title">Rekapitulasi Penilaian Penggunaan Mobil Dinas</h2>
                         <div class="filter-container">
+                            <select id="score-mode-filter" class="select-input">
+                                <option value="KUNCI">Kealpaan Pengembalian Kunci</option>
+                                <option value="BERSIH">Kealpaan Membersihkan Mobil</option>
+                            </select>
                             <select class="select-input" id="filter-score-bulan">
                                 <option value="">Pilih Bulan</option>
                                 <option value="JANUARI">Januari</option>
@@ -940,13 +1057,32 @@
     </div>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbwZ-3HvcoJ9ymO8gP79NyZsRPgRt_Z9JiqOIiMw8gcwPOYhY6aa8EeJu24zMGqY-g5r/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwQxRmjR4gK6jaBKJruSqdYQRberiiX4VZf8NXsaeW7YxxAlGFZMBDsyAh7VY19LN_x7A/exec';
         
         let allRequests = [];
         let allViolations = [];
         let allScores = {};
         let scoreChart = null;
         let violationChart = null;
+
+        // ================== MOBILE MENU ==================
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 1023 && 
+                sidebar.classList.contains('mobile-open') && 
+                !sidebar.contains(event.target) && 
+                !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
 
         // ================== TOAST ==================
         const Toast = {
@@ -1035,6 +1171,12 @@
 
         // ================== TAB SWITCHING ==================
         function switchTab(tabName) {
+            // Close mobile menu when switching tabs
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth <= 1023) {
+                sidebar.classList.remove('mobile-open');
+            }
+
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
 
@@ -1059,12 +1201,17 @@
 
         // ================== TAB 1: REQUESTS ==================
         async function loadRequests() {
+            // Cek apakah data sudah ada di variabel global 'allRequests'
+            if (allRequests.length > 0) {
+                renderRequests(allRequests); // Langsung tampilkan data lama
+                return; // Berhenti di sini, nggak usah panggil API
+            }
+
             try {
                 const response = await callAPI({ action: 'getRequests' });
                 allRequests = Array.isArray(response) ? response : [];
                 renderRequests(allRequests);
             } catch (error) {
-                console.error('Load error:', error);
                 Toast.error('Gagal memuat data');
             }
         }
@@ -1211,7 +1358,7 @@
                     <td>${v.bulan}</td>
                     <td>${v.unit}</td>
                     <td>${v.tanggal}</td>
-                    <td>${v.jenis === 'KUNCI' ? 'Kealpaan Pengembalian Kunci' : 'Kealpaan Membersihkan Mobil'}</td>
+                    <td>${v.jenis}</td>
                     <td>${v.laporan}</td>
                 </tr>
             `).join('');
@@ -1280,11 +1427,19 @@
             try {
                 Toast.show('Mengekspor data...', 'success');
                 
+                // Map jenis filter to API parameter
+                let jenisParam = '';
+                if (jenis === 'Kealpaan Pengembalian Kunci') {
+                    jenisParam = 'KUNCI';
+                } else if (jenis === 'Kealpaan Membersihkan Mobil') {
+                    jenisParam = 'KEBERSIHAN';
+                }
+                
                 const result = await callAPI({
                     action: 'exportVehicleViolationsReport',
                     bulan: bulan || '',
                     unit: unit || '',
-                    jenis: jenis || ''
+                    jenis: jenisParam
                 });
                 
                 if (result.success) {
@@ -1303,36 +1458,41 @@
             }
         }
 
+        // FILTER VIOLATIONS - ALL FILTERS WORKING
         document.getElementById('filter-bulan').addEventListener('change', filterViolations);
         document.getElementById('filter-unit').addEventListener('change', filterViolations);
         document.getElementById('filter-jenis').addEventListener('change', filterViolations);
 
         function filterViolations() {
-            const bulan = document.getElementById('filter-bulan').value;
-            const unit = document.getElementById('filter-unit').value;
-            const jenis = document.getElementById('filter-jenis').value;
+            const filterBulan = document.getElementById('filter-bulan').value;
+            const filterUnit = document.getElementById('filter-unit').value;
+            const filterJenis = document.getElementById('filter-jenis').value;
 
-            let filtered = allViolations;
+            const filtered = allViolations.filter(v => {
+                const matchBulan = filterBulan === "" || v.bulan === filterBulan;
+                const matchUnit = filterUnit === "" || v.unit === filterUnit;
+                const matchJenis = filterJenis === "" || v.jenis === filterJenis;
 
-            if (bulan) {
-                filtered = filtered.filter(v => v.bulan === bulan);
-            }
-
-            if (unit) {
-                filtered = filtered.filter(v => v.unit === unit);
-            }
-
-            if (jenis) {
-                filtered = filtered.filter(v => v.jenis === jenis);
-            }
+                return matchBulan && matchUnit && matchJenis;
+            });
 
             renderViolations(filtered);
         }
 
         // ================== TAB 3: SCORES ==================
+        // Ubah fungsi loadScores agar menerima parameter
         async function loadScores() {
+            const bulan = document.getElementById('filter-score-bulan').value;
+            const mode = document.getElementById('score-mode-filter').value; // 'KUNCI' atau 'BERSIH'
+
             try {
-                const data = await callAPI({ action: 'getVehicleScores' });
+                // KIRIM PARAMETER KE API
+                const data = await callAPI({ 
+                    action: 'getVehicleScores', 
+                    bulan: bulan, 
+                    jenis: mode 
+                });
+
                 if (data.success) {
                     allScores = {
                         sanksi: data.sanksiPerPelanggaran,
@@ -1341,10 +1501,14 @@
                     renderScoresUI(allScores);
                 }
             } catch (error) {
-                console.error("Gagal load scores:", error);
                 Toast.error('Gagal memuat penilaian');
             }
         }
+
+        // Pastikan event listener memanggil loadScores (ambil data baru dari server), 
+        // bukan cuma render ulang data lama yang mungkin kosong/salah jenis.
+        document.getElementById('filter-score-bulan').addEventListener('change', loadScores);
+        document.getElementById('score-mode-filter').addEventListener('change', loadScores);
 
         function renderScoresUI(data) {
             document.getElementById('sanksi-value').textContent = `${data.sanksi} poin`;
@@ -1361,6 +1525,7 @@
 
         function renderScores() {
             const bulan = document.getElementById('filter-score-bulan').value;
+            const mode = document.getElementById('score-mode-filter').value;
             const container = document.getElementById('scores-container');
 
             if (!bulan) {
@@ -1399,11 +1564,17 @@
                 return;
             }
 
-            // Render Charts
-            renderCharts(monthScores);
+            // Render Charts with mode filter
+            renderCharts(monthScores, mode);
 
             // Render Table
-            container.innerHTML = monthScores.map(score => {
+            const modeLabel = mode === 'KUNCI' ? 'Kealpaan Pengembalian Kunci' : 'Kealpaan Membersihkan Mobil';
+            
+            container.innerHTML = `
+                <div style="margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #0f172a;">
+                    <p style="font-size: 14px; font-weight: 600; color: #1e293b;">Mode Penilaian: ${modeLabel}</p>
+                </div>
+            ` + monthScores.map(score => {
                 const scoreClass = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
                 
                 return `
@@ -1434,10 +1605,19 @@
             }).join('');
         }
 
-        function renderCharts(monthScores) {
-            const units = monthScores.map(s => s.unit.length > 20 ? s.unit.substring(0, 20) + '...' : s.unit);
+        function renderCharts(monthScores, mode) {
+            const units = monthScores.map(s => {
+                const unitName = s.unit;
+                // Shorten long unit names for chart labels
+                if (unitName.length > 25) {
+                    return unitName.substring(0, 22) + '...';
+                }
+                return unitName;
+            });
             const scores = monthScores.map(s => s.skorAkhir);
             const violations = monthScores.map(s => s.jumlahPelanggaran);
+
+            const modeLabel = mode === 'KUNCI' ? 'Pengembalian Kunci' : 'Membersihkan Mobil';
 
             // Score Chart
             if (scoreChart) scoreChart.destroy();
@@ -1464,6 +1644,12 @@
                             callbacks: {
                                 label: (context) => `Skor: ${context.parsed.y.toFixed(2)}`
                             }
+                        },
+                        title: {
+                            display: true,
+                            text: `Mode: ${modeLabel}`,
+                            font: { size: 12, weight: 'normal' },
+                            color: '#64748b'
                         }
                     },
                     scales: {
@@ -1472,6 +1658,11 @@
                             max: 5,
                             ticks: {
                                 stepSize: 0.5
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 11 }
                             }
                         }
                     }
@@ -1496,7 +1687,13 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false }
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: `Mode: ${modeLabel}`,
+                            font: { size: 12, weight: 'normal' },
+                            color: '#64748b'
+                        }
                     },
                     scales: {
                         y: {
@@ -1504,13 +1701,20 @@
                             ticks: {
                                 stepSize: 1
                             }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 11 }
+                            }
                         }
                     }
                 }
             });
         }
 
+        // Event listeners for score filters
         document.getElementById('filter-score-bulan').addEventListener('change', renderScores);
+        document.getElementById('score-mode-filter').addEventListener('change', renderScores);
 
         // ================== MODAL FUNCTIONS ==================
         function openModal(modalId) {
