@@ -23,6 +23,35 @@
         .toast.error { border-left: 4px solid #ef4444; }
         @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+        /* MOBILE MENU TOGGLE */
+        .mobile-menu-toggle {
+            display: none;
+            position: absolute;
+            top: 28px;
+            left: 20px;
+            z-index: 100;
+            background: transparent;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle svg {
+            width: 24px;
+            height: 24px;
+            stroke: #1e293b;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
         .sidebar {
             width: 252px;
             background: white;
@@ -33,6 +62,8 @@
             height: 100vh;
             left: 0;
             top: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
         }
 
         .sidebar-header {
@@ -74,6 +105,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            overflow-y: auto;
         }
 
         .sidebar-footer {
@@ -115,6 +147,7 @@
             display: flex;
             flex-direction: column;
             margin-left: 252px;
+            transition: margin-left 0.3s ease;
         }
 
         .header {
@@ -140,12 +173,12 @@
             width: 100%;
         }
 
-        /* TABS */
         .tabs {
             display: flex;
             gap: 8px;
             margin-bottom: 24px;
             border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
         }
 
         .tab {
@@ -160,6 +193,7 @@
             margin-bottom: -2px;
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
+            white-space: nowrap;
         }
 
         .tab:hover {
@@ -169,6 +203,26 @@
         .tab.active {
             color: #0f172a;
             border-bottom-color: #0f172a;
+        }
+
+        /* Dropdown untuk mobile */
+        .tabs-dropdown {
+            display: none;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .tabs-dropdown select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: #1e293b;
+            cursor: pointer;
         }
 
         .tab-content {
@@ -193,6 +247,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .card-title {
@@ -222,29 +278,39 @@
 
         .search-input {
             width: 240px;
+            min-width: 150px;
         }
 
         .select-input {
-            width: 180px;
+            width: 150px;
+            min-width: 120px;
+        }
+
+        /* RESPONSIVE TABLE */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 800px;
         }
 
         th {
             text-align: left;
-            padding: 12px 24px;
+            padding: 12px 16px;
             font-size: 13px;
             font-weight: 600;
             color: #64748b;
             background: #f8fafc;
             border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
         }
 
         td {
-            padding: 16px 24px;
+            padding: 14px 16px;
             font-size: 14px;
             color: #1e293b;
             border-bottom: 1px solid #f1f5f9;
@@ -285,12 +351,15 @@
             background: #1e293b;
         }
 
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 12px;
+        }
+
         .btn-approve {
             background: #10b981;
             color: white;
             border-color: #10b981;
-            padding: 5px 12px;
-            font-size: 12px;
         }
 
         .btn-approve:hover {
@@ -301,22 +370,10 @@
             background: #3b82f6;
             color: white;
             border-color: #3b82f6;
-            padding: 5px 12px;
-            font-size: 12px;
         }
 
         .btn-complete:hover {
             background: #2563eb;
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
         }
 
         .action-buttons {
@@ -330,6 +387,7 @@
             font-size: 13px;
             font-weight: 500;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .badge-pending {
@@ -361,7 +419,7 @@
         .modal {
             background: white;
             border-radius: 8px;
-            max-width: 700px;
+            max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -550,7 +608,6 @@
             opacity: 0.5;
         }
 
-        /* Chart Container */
         .chart-container {
             position: relative;
             height: 400px;
@@ -564,24 +621,20 @@
             margin-bottom: 24px;
         }
 
-        @media (max-width: 1023px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; }
-            .info-grid { grid-template-columns: 1fr; }
-            .score-details { grid-template-columns: 1fr; }
-            .charts-grid { grid-template-columns: 1fr; }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
         }
 
         .spinner {
             display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255,255,255,0.3);
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top-color: #0f172a;
             border-radius: 50%;
-            border-top-color: #fff;
             animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-            vertical-align: middle;
         }
 
         @keyframes spin {
@@ -592,10 +645,295 @@
             cursor: not-allowed;
             opacity: 0.7;
         }
+
+        /* PAGINATION */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 16px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination button.active {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #64748b;
+            padding: 0 8px;
+        }
+
+        /* CARD LAYOUT FOR MOBILE */
+        .requests-card {
+            display: none;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: white;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .requests-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .requests-card-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .requests-card-subtitle {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .requests-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .requests-card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            gap: 8px;
+        }
+
+        .requests-card-label {
+            color: #64748b;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .requests-card-value {
+            color: #1e293b;
+            font-weight: 500;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            text-align: right;
+            flex: 1;
+        }
+
+        .requests-card-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        /* VIOLATION CARD FOR MOBILE */
+        .violation-card {
+            display: none;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: white;
+        }
+
+        .violation-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .violation-card-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .violation-card-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .violation-card-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .violation-card-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .violation-card-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .violation-card-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 1023px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 24px 20px;
+                padding-left: 60px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .card-content {
+                padding: 16px;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .select-input {
+                width: 100%;
+            }
+
+            .filter-container {
+                width: 100%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-details {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            /* Hide tabs, show dropdown */
+            .tabs {
+                display: none;
+            }
+
+            .tabs-dropdown {
+                display: block;
+            }
+
+            /* HIDE TABLE, SHOW CARDS ON MOBILE */
+            .table-container {
+                display: none;
+            }
+
+            .requests-card, .violation-card {
+                display: block;
+            }
+
+            .pagination {
+                gap: 6px;
+            }
+
+            .pagination button {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+            .pagination-info {
+                font-size: 12px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-title {
+                font-size: 20px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- SIDEBAR -->
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <svg viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
@@ -675,7 +1013,16 @@
                 <button class="tab" onclick="switchTab('scores')">📊 Penilaian</button>
             </div>
 
-            <!-- TAB 1: Permintaan Ruang Rapat -->
+            <!-- Dropdown untuk Mobile -->
+            <div class="tabs-dropdown">
+                <select id="mobile-tab-select" onchange="switchTabFromDropdown(this.value)">
+                    <option value="requests">📋 Permintaan</option>
+                    <option value="violations">⚠️ Catatan Pelanggaran</option>
+                    <option value="scores">📊 Penilaian</option>
+                </select>
+            </div>
+
+            <!-- TAB 1: Permintaan -->
             <div id="tab-requests" class="tab-content active">
                 <div class="card">
                     <div class="card-header">
@@ -684,7 +1031,7 @@
                             <input type="text" class="search-input" placeholder="Cari nama pegawai..." id="search-requests">
                         </div>
                     </div>
-                    <div style="overflow-x: auto;">
+                    <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
@@ -698,10 +1045,19 @@
                                 </tr>
                             </thead>
                             <tbody id="requests-tbody">
-                                <tr><td colspan="7" style="text-align: center; padding: 20px;">Memuat data...</td></tr>
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        <div class="spinner"></div>
+                                        <p style="margin-top: 16px;">Memuat data...</p>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div id="requests-cards">
+                        <!-- Card layout untuk mobile akan dimuat di sini -->
+                    </div>
+                    <div class="pagination" id="requests-pagination"></div>
                 </div>
             </div>
 
@@ -741,7 +1097,7 @@
                             <button onclick="openAddViolationModal()" class="btn btn-primary">+ Tambah Catatan</button>
                         </div>
                     </div>
-                    <div style="overflow-x: auto;">
+                    <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
@@ -757,10 +1113,14 @@
                             </tbody>
                         </table>
                     </div>
+                    <div id="violations-cards">
+                        <!-- Card layout untuk mobile akan dimuat di sini -->
+                    </div>
+                    <div class="pagination" id="violations-pagination"></div>
                 </div>
             </div>
 
-            <!-- TAB 3: Penilaian dengan Grafik -->
+            <!-- TAB 3: Penilaian -->
             <div id="tab-scores" class="tab-content">
                 <div class="card">
                     <div class="card-header">
@@ -789,7 +1149,6 @@
                             <p style="font-size: 20px; font-weight: 700; color: #1e293b;" id="sanksi-value">0.1 poin</p>
                         </div>
 
-                        <!-- Grafik Bar Chart -->
                         <div class="charts-grid">
                             <div class="card" style="margin: 0;">
                                 <div class="card-header" style="padding: 16px;">
@@ -814,7 +1173,6 @@
                             </div>
                         </div>
 
-                        <!-- Tabel Detail -->
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -902,32 +1260,37 @@
     <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCYXW87fi2Hn_i1wv4bQzEf2xYZ_SvH1fHhGaxF93tA0VGBFIy2IRbX1k2L_TmbnOcEw/exec';
     
+    let masterRequests = [];
     let allRequests = [];
+    let masterViolations = [];
     let allViolations = [];
     let allScores = {};
     let scoreChart = null;
     let violationChart = null;
 
-    async function fetchDataSmart(cacheKey, action, renderFunc, params = {}) {
-        const cachedData = localStorage.getItem(cacheKey);
-        if (cachedData) {
-            const parsed = JSON.parse(cachedData);
-            renderFunc(parsed);
-        }
+    // Pagination state
+    let requestsCurrentPage = 1;
+    let violationsCurrentPage = 1;
+    const itemsPerPage = 10;
 
-        try {
-            const response = await fetchAPI(action, params);
-            const finalData = Array.isArray(response) ? response : (response.scores || response.requests || response.data || []);
-            
-            if (Array.isArray(finalData)) {
-                localStorage.setItem(cacheKey, JSON.stringify(finalData));
-                renderFunc(finalData); 
-            }
-        } catch (error) {
-            console.error(`Gagal update background untuk ${action}:`, error);
-        }
+    // ================== MOBILE MENU ==================
+    function toggleMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.sidebar-overlay');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
     }
 
+    // Close sidebar when clicking nav item on mobile
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth < 1024) {
+                toggleMobileMenu();
+            }
+        });
+    });
+
+    // ================== TOAST ==================
     const Toast = {
         container: null,
         init() {
@@ -941,7 +1304,15 @@
             this.init();
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            toast.innerHTML = `<span>${message}</span>`;
+            toast.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    ${type === 'success' 
+                        ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
+                        : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
+                    }
+                </svg>
+                <span>${message}</span>
+            `;
             this.container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         },
@@ -949,6 +1320,7 @@
         error(msg) { this.show(msg, 'error'); }
     };
 
+    // ================== API HELPER (JSONP) ==================
     async function fetchAPI(action, params = {}) {
         return new Promise((resolve, reject) => {
             const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
@@ -967,6 +1339,23 @@
         });
     }
 
+    // ================== AUTH CHECK ==================
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!user.email || user.role !== 'admin') {
+        window.location.href = 'login.html';
+    }
+
+    document.getElementById('admin-name').textContent = user.name || 'Administrator';
+    document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
+
+    function logout() {
+        if (confirm("Apakah Anda yakin ingin keluar?")) {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    }
+
+    // ================== TAB SWITCHING ==================
     function switchTab(tabName) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         event.target.classList.add('active');
@@ -983,26 +1372,67 @@
         }
     }
 
-    async function loadRoomRequests() {
-        await fetchDataSmart('cache_room_req', 'getRoomRequests', (data) => {
-            allRequests = data;
-            renderRequests(data);
-        });
+    function switchTabFromDropdown(tabName) {
+        document.getElementById('mobile-tab-select').value = tabName;
+        
+        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+
+        if (tabName === 'requests') {
+            loadRoomRequests();
+        } else if (tabName === 'violations') {
+            loadViolations();
+        } else if (tabName === 'scores') {
+            loadScores();
+        }
     }
 
-    function renderRequests(dataToRender) {
+    // ================== STATUS BADGE ==================
+    function createStatusBadge(status) {
+        const s = status.toLowerCase();
+        if (s === 'approved') return '<span class="badge badge-approved">Disetujui</span>';
+        if (s === 'completed' || s === 'selesai') return '<span class="badge badge-completed">Selesai</span>';
+        return '<span class="badge badge-pending">Pending</span>';
+    }
+
+    // ================== TAB 1: REQUESTS WITH PAGINATION ==================
+    async function loadRoomRequests() {
+        try {
+            const response = await fetchAPI('getRoomRequests');
+            masterRequests = Array.isArray(response) ? response : [];
+            allRequests = [...masterRequests];
+            requestsCurrentPage = 1;
+            renderPaginatedRequests();
+        } catch (error) {
+            console.error('Load error:', error);
+            Toast.error('Gagal memuat data');
+        }
+    }
+
+    function renderPaginatedRequests() {
         const tbody = document.getElementById('requests-tbody');
-        if (dataToRender.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">Tidak ada data</td></tr>';
+        const cardsContainer = document.getElementById('requests-cards');
+        const paginationContainer = document.getElementById('requests-pagination');
+        
+        if (allRequests.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">Tidak ada permintaan</td></tr>';
+            cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
+            paginationContainer.innerHTML = '';
             return;
         }
 
-        tbody.innerHTML = dataToRender.map((req) => {
+        const totalPages = Math.ceil(allRequests.length / itemsPerPage);
+        const startIndex = (requestsCurrentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentItems = allRequests.slice(startIndex, endIndex);
+        
+        // Render table for desktop
+        tbody.innerHTML = currentItems.map((req) => {
             let actionButtons = '';
             if (req.status.toLowerCase() === 'pending') {
-                actionButtons = `<button onclick="updateStatus('${req.id}', 'APPROVED')" class="btn btn-approve">✓ Setujui</button>`;
+                actionButtons = `<button onclick="updateStatus('${req.id}', 'APPROVED')" class="btn btn-sm btn-approve">✓ Setujui</button>`;
             } else if (req.status.toLowerCase() === 'approved') {
-                actionButtons = `<button onclick="updateStatus('${req.id}', 'COMPLETED')" class="btn btn-complete">✓ Selesai</button>`;
+                actionButtons = `<button onclick="updateStatus('${req.id}', 'COMPLETED')" class="btn btn-sm btn-complete">✓ Selesai</button>`;
             }
 
             return `
@@ -1016,12 +1446,81 @@
                     <td>
                         <div class="action-buttons">
                             ${actionButtons}
-                            <button onclick="viewDetail('${req.id}')" class="btn">👁 Detail</button>
+                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
                         </div>
                     </td>
                 </tr>
             `;
         }).join('');
+
+        // Render cards for mobile
+        cardsContainer.innerHTML = currentItems.map((req) => {
+            let actionButtons = '';
+            if (req.status.toLowerCase() === 'pending') {
+                actionButtons = `<button onclick="updateStatus('${req.id}', 'APPROVED')" class="btn btn-sm btn-approve" style="flex: 1;">✓ Setujui</button>`;
+            } else if (req.status.toLowerCase() === 'approved') {
+                actionButtons = `<button onclick="updateStatus('${req.id}', 'COMPLETED')" class="btn btn-sm btn-complete" style="flex: 1;">✓ Selesai</button>`;
+            }
+
+            return `
+                <div class="requests-card">
+                    <div class="requests-card-header">
+                        <div style="flex: 1;">
+                            <div class="requests-card-title">${req.nama_pemohon}</div>
+                            <div class="requests-card-subtitle">#${req.id.toString().substring(0,6)}</div>
+                        </div>
+                        ${createStatusBadge(req.status)}
+                    </div>
+                    <div class="requests-card-body">
+                        <div class="requests-card-row">
+                            <span class="requests-card-label">Tanggal</span>
+                            <span class="requests-card-value">${req.tanggal}</span>
+                        </div>
+                        <div class="requests-card-row">
+                            <span class="requests-card-label">Waktu</span>
+                            <span class="requests-card-value">${req.waktu_mulai} - ${req.waktu_selesai}</span>
+                        </div>
+                        <div class="requests-card-row">
+                            <span class="requests-card-label">Keperluan</span>
+                            <span class="requests-card-value">${req.kegiatan || req.keperluan}</span>
+                        </div>
+                    </div>
+                    <div class="requests-card-footer">
+                        <div style="display: flex; gap: 8px;">
+                            ${actionButtons}
+                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex: 1;">👁 Detail</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Render pagination
+        paginationContainer.innerHTML = `
+            <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>
+                ‹ Prev
+            </button>
+            <span class="pagination-info">
+                Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)
+            </span>
+            <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>
+                Next ›
+            </button>
+        `;
+    }
+
+    function changeRequestsPage(page) {
+        const totalPages = Math.ceil(allRequests.length / itemsPerPage);
+        if (page < 1 || page > totalPages) return;
+        requestsCurrentPage = page;
+        renderPaginatedRequests();
+        
+        // Scroll to top
+        if (window.innerWidth < 1024) {
+            document.querySelector('#requests-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     async function updateStatus(id, newStatus) {
@@ -1032,19 +1531,11 @@
             const result = await fetchAPI('updateRoomRequest', { id: id, status: newStatus });
             if (result.success) {
                 Toast.success('Status berhasil diperbarui!');
-                localStorage.removeItem('cache_room_req');
                 loadRoomRequests(); 
             }
         } catch (error) {
             Toast.error("Gagal memperbarui status");
         }
-    }
-
-    function createStatusBadge(status) {
-        const s = status.toLowerCase();
-        if (s === 'approved') return '<span class="badge badge-approved">Disetujui</span>';
-        if (s === 'completed' || s === 'selesai') return '<span class="badge badge-completed">Selesai</span>';
-        return '<span class="badge badge-pending">Pending</span>';
     }
 
     function viewDetail(id) {
@@ -1097,21 +1588,50 @@
         openModal('detailModal');
     }
 
+    // ================== SEARCH ==================
+    document.getElementById('search-requests').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        allRequests = masterRequests.filter(req => 
+            req.nama_pemohon.toLowerCase().includes(term) || 
+            (req.kegiatan && req.kegiatan.toLowerCase().includes(term))
+        );
+        requestsCurrentPage = 1;
+        renderPaginatedRequests();
+    });
+
+    // ================== TAB 2: VIOLATIONS WITH PAGINATION ==================
     async function loadViolations() {
-        await fetchDataSmart('cache_violations', 'getRoomViolations', (data) => {
-            allViolations = data;
-            renderViolations(data);
-        });
+        try {
+            const response = await fetchAPI('getRoomViolations');
+            masterViolations = Array.isArray(response) ? response : [];
+            allViolations = [...masterViolations];
+            violationsCurrentPage = 1;
+            renderPaginatedViolations();
+        } catch (error) {
+            console.error('Error:', error);
+            Toast.error('Gagal memuat data keterlambatan');
+        }
     }
 
-    function renderViolations(dataToRender) {
+    function renderPaginatedViolations() {
         const tbody = document.getElementById('violations-tbody');
-        if (dataToRender.length === 0) {
+        const cardsContainer = document.getElementById('violations-cards');
+        const paginationContainer = document.getElementById('violations-pagination');
+        
+        if (allViolations.length === 0) {
             tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">Tidak ada catatan pelanggaran</td></tr>';
+            cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
+            paginationContainer.innerHTML = '';
             return;
         }
 
-        tbody.innerHTML = dataToRender.map(v => `
+        const totalPages = Math.ceil(allViolations.length / itemsPerPage);
+        const startIndex = (violationsCurrentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentItems = allViolations.slice(startIndex, endIndex);
+
+        // Render table for desktop
+        tbody.innerHTML = currentItems.map(v => `
             <tr>
                 <td>${v.bulan}</td>
                 <td>${v.unit}</td>
@@ -1120,6 +1640,59 @@
                 <td>${v.laporan}</td>
             </tr>
         `).join('');
+
+        // Render cards for mobile
+        cardsContainer.innerHTML = currentItems.map(v => `
+            <div class="violation-card">
+                <div class="violation-card-header">
+                    <div>
+                        <div class="violation-card-title">${v.unit}</div>
+                        <div class="violation-card-subtitle">Bulan ${v.bulan}</div>
+                    </div>
+                </div>
+                <div class="violation-card-body">
+                    <div class="violation-card-item">
+                        <div class="violation-card-label">Tanggal</div>
+                        <div class="violation-card-value">${v.tanggal}</div>
+                    </div>
+                    <div class="violation-card-item">
+                        <div class="violation-card-label">Nama Ruang</div>
+                        <div class="violation-card-value">${v.namaRuang}</div>
+                    </div>
+                    <div class="violation-card-item" style="grid-column: 1 / -1;">
+                        <div class="violation-card-label">Laporan</div>
+                        <div class="violation-card-value">${v.laporan}</div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Render pagination
+        paginationContainer.innerHTML = `
+            <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>
+                ‹ Prev
+            </button>
+            <span class="pagination-info">
+                Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)
+            </span>
+            <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>
+                Next ›
+            </button>
+        `;
+    }
+
+    function changeViolationsPage(page) {
+        const totalPages = Math.ceil(allViolations.length / itemsPerPage);
+        if (page < 1 || page > totalPages) return;
+        violationsCurrentPage = page;
+        renderPaginatedViolations();
+        
+        // Scroll to top
+        if (window.innerWidth < 1024) {
+            document.querySelector('#violations-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     function openAddViolationModal() {
@@ -1138,7 +1711,7 @@
 
         const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+        submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
 
         const bulan = document.getElementById('violation-bulan').value;
         const unit = document.getElementById('violation-unit').value;
@@ -1161,8 +1734,6 @@
             if (result.success) {
                 Toast.success('Catatan pelanggaran berhasil ditambahkan!');
                 closeModal('addViolationModal');
-                localStorage.removeItem('cache_violations');
-                localStorage.removeItem('cache_scores');
                 loadViolations();
                 loadScores();
             } else {
@@ -1213,42 +1784,34 @@
         const bulan = document.getElementById('filter-bulan').value;
         const unit = document.getElementById('filter-unit').value;
 
-        let filtered = allViolations;
+        allViolations = masterViolations.filter(v => {
+            const matchBulan = bulan === "" || v.bulan === bulan;
+            const matchUnit = unit === "" || v.unit === unit;
+            return matchBulan && matchUnit;
+        });
 
-        if (bulan) {
-            filtered = filtered.filter(v => v.bulan === bulan);
-        }
-
-        if (unit) {
-            filtered = filtered.filter(v => v.unit === unit);
-        }
-
-        renderViolations(filtered);
+        violationsCurrentPage = 1;
+        renderPaginatedViolations();
     }
 
+    // ================== TAB 3: SCORES ==================
     async function loadScores() {
-        const cached = localStorage.getItem('cache_scores');
-        if (cached) {
-            renderScoresUI(JSON.parse(cached));
-        }
-
         try {
             const data = await fetchAPI('getRoomScores');
             if (data.success) {
-                const scoreData = {
+                allScores = {
                     sanksi: data.sanksiPerPelanggaran,
                     scores: data.scores
                 };
-                localStorage.setItem('cache_scores', JSON.stringify(scoreData));
-                renderScoresUI(scoreData);
+                renderScoresUI(allScores);
             }
         } catch (error) {
-            console.error("Gagal update scores:", error);
+            console.error("Gagal load scores:", error);
+            Toast.error('Gagal memuat penilaian');
         }
     }
 
     function renderScoresUI(data) {
-        allScores = data;
         document.getElementById('sanksi-value').textContent = `${data.sanksi} poin`;
         
         if (!document.getElementById('filter-score-bulan').value) {
@@ -1301,10 +1864,8 @@
             return;
         }
 
-        // Render Charts
         renderCharts(monthScores);
 
-        // Render Table
         container.innerHTML = monthScores.map(score => {
             const scoreClass = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
             
@@ -1337,11 +1898,16 @@
     }
 
     function renderCharts(monthScores) {
-        const units = monthScores.map(s => s.unit.length > 20 ? s.unit.substring(0, 20) + '...' : s.unit);
+        const units = monthScores.map(s => {
+            const unitName = s.unit;
+            if (unitName.length > 25) {
+                return unitName.substring(0, 22) + '...';
+            }
+            return unitName;
+        });
         const scores = monthScores.map(s => s.skorAkhir);
         const violations = monthScores.map(s => s.jumlahPelanggaran);
 
-        // Score Chart
         if (scoreChart) scoreChart.destroy();
         const scoreCtx = document.getElementById('scoreChart').getContext('2d');
         scoreChart = new Chart(scoreCtx, {
@@ -1375,12 +1941,16 @@
                         ticks: {
                             stepSize: 0.5
                         }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 11 }
+                        }
                     }
                 }
             }
         });
 
-        // Violation Chart
         if (violationChart) violationChart.destroy();
         const violationCtx = document.getElementById('violationChart').getContext('2d');
         violationChart = new Chart(violationCtx, {
@@ -1406,6 +1976,11 @@
                         ticks: {
                             stepSize: 1
                         }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 11 }
+                        }
                     }
                 }
             }
@@ -1414,6 +1989,7 @@
 
     document.getElementById('filter-score-bulan').addEventListener('change', renderScores);
 
+    // ================== MODAL FUNCTIONS ==================
     function openModal(modalId) {
         document.getElementById(modalId).style.display = 'flex';
     }
@@ -1428,37 +2004,8 @@
         }
     }
 
-    document.getElementById('search-requests').addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        const filtered = allRequests.filter(req => 
-            req.nama_pemohon.toLowerCase().includes(term) || 
-            (req.kegiatan && req.kegiatan.toLowerCase().includes(term))
-        );
-        renderRequests(filtered);
-    });
-
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.email || user.role !== 'admin') {
-        window.location.href = 'login.html';
-    }
-
-    document.getElementById('admin-name').textContent = user.name || 'Administrator';
-    document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
-
-    function logout() {
-        if (confirm("Apakah Anda yakin ingin keluar?")) {
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('user');
-            Toast.success("Berhasil keluar. Mengalihkan...");
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 1000);
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        loadRoomRequests();
-    });
+    // ================== INIT ==================
+    loadRoomRequests();
     </script>
 </body>
 </html>
