@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penilaian SPJ Keuangan - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #1e293b;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ============ TOAST ============ */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+        .toast { background: white; padding: 16px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 12px; }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* ============ SIDEBAR ============ */
+        .sidebar {
+            width: 252px;
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0; top: 0;
+            z-index: 100;
+        }
+
+        .sidebar-header { padding: 20px 16px; border-bottom: 1px solid #e5e7eb; }
+        .sidebar-header-content { display: flex; align-items: center; gap: 12px; }
+        .sidebar-icon { width: 40px; height: 40px; background: #0f172a; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .sidebar-title { font-size: 16px; font-weight: 600; color: #1e293b; }
+        .sidebar-subtitle { font-size: 12px; color: #64748b; }
+        .sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid #e5e7eb; }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 12px 16px; border-radius: 10px; font-weight: 500; font-size: 15px;
+            color: #0f172a; text-decoration: none; position: relative;
+            transition: all 0.15s ease;
+        }
+        .nav-item:hover { background: #f8fafc; }
+        .nav-item.active { background: #f1f5f9; }
+        .nav-item.active::before {
+            content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+            width: 4px; background: #0f172a; border-radius: 0 4px 4px 0;
+        }
+
+        .nav-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+        /* ============ MAIN ============ */
+        .main-content { flex: 1; display: flex; flex-direction: column; margin-left: 252px; }
+        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 24px 32px; }
+        .header-title { font-size: 24px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+        .header-subtitle { font-size: 14px; color: #64748b; }
+        .container { padding: 24px 32px; width: 100%; }
+
+        /* ============ TABS ============ */
+        .tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid #e5e7eb; overflow-x: auto; }
+        .tab { padding: 12px 24px; border: none; background: none; cursor: pointer; font-size: 15px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .tab:hover { color: #1e293b; }
+        .tab.active { color: #0f172a; border-bottom-color: #0f172a; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ============ CARDS ============ */
+        .card { background: white; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-bottom: 24px; }
+        .card-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .card-title { font-size: 18px; font-weight: 600; color: #1e293b; }
+        .card-content { padding: 24px; }
+
+        /* ============ STATS GRID ============ */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; background: white; }
+        .stat-label { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .stat-value { font-size: 32px; font-weight: 700; color: #1e293b; }
+
+        /* ============ FORMULA BOX ============ */
+        .formula-box {
+            background: linear-gradient(135deg, #1e3a5f 0%, #1F4E79 100%);
+            border-radius: 12px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 24px;
+        }
+        .formula-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; opacity: 0.9; }
+        .formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .formula-item { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 16px; }
+        .formula-item-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; margin-bottom: 8px; }
+        .formula-math { font-size: 14px; font-weight: 600; line-height: 1.6; }
+        .formula-example { font-size: 12px; opacity: 0.7; margin-top: 8px; }
+        .formula-accent { color: #fbbf24; font-weight: 700; }
+
+        /* ============ FLOWCHART ============ */
+        .flowchart-container {
+            background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+            padding: 32px; margin-bottom: 24px; text-align: center;
+            overflow-x: auto;
+        }
+        .flowchart-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 28px; }
+        .fc-row { display: flex; justify-content: center; align-items: center; gap: 0; flex-wrap: nowrap; }
+        .fc-box { padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; min-width: 140px; text-align: center; position: relative; }
+        .fc-start { background: #0f172a; color: white; border-radius: 24px; }
+        .fc-input { background: #dbeafe; color: #1e40af; border: 2px solid #3b82f6; }
+        .fc-decision { background: #fef3c7; color: #92400e; border: 2px solid #f59e0b; transform: rotate(0); clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%); padding: 14px 28px; }
+        .fc-calc { background: #d1fae5; color: #065f46; border: 2px solid #10b981; }
+        .fc-result { background: #fee2e2; color: #991b1b; border: 2px solid #ef4444; border-radius: 24px; }
+        .fc-final { background: #1F4E79; color: white; border-radius: 8px; }
+        .fc-arrow { color: #94a3b8; font-size: 20px; margin: 0 4px; flex-shrink: 0; }
+        .fc-arrow-down { display: flex; justify-content: center; margin: 8px 0; color: #94a3b8; font-size: 20px; }
+        .fc-label { font-size: 11px; color: #64748b; text-align: center; margin-top: 4px; }
+        .fc-branch { display: flex; justify-content: center; gap: 40px; }
+        .fc-branch-item { text-align: center; }
+
+        /* ============ FORM ============ */
+        .filter-container { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .select-input, .search-input, .form-input { padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .select-input { width: 180px; }
+        .input-label { display: block; font-size: 13px; font-weight: 500; color: #64748b; margin-bottom: 6px; }
+        .form-input { width: 100%; }
+        .form-group { margin-bottom: 16px; }
+        .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px; }
+
+        /* ============ TABLE ============ */
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #64748b; background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
+        td { padding: 14px 16px; font-size: 14px; color: #1e293b; border-bottom: 1px solid #f1f5f9; }
+        tbody tr:hover { background: #fafbfc; }
+
+        /* ============ BUTTONS ============ */
+        .btn { padding: 8px 16px; border-radius: 6px; border: 1px solid #e5e7eb; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; background: white; color: #1e293b; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+        .btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .btn-primary { background: #0f172a; color: white; border-color: #0f172a; }
+        .btn-primary:hover { background: #1e293b; }
+        .btn-success { background: #10b981; color: white; border-color: #10b981; }
+        .btn-success:hover { background: #059669; }
+        .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+        /* ============ MODAL ============ */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal { background: white; border-radius: 12px; max-width: 680px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-content { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; gap: 12px; }
+
+        /* ============ SCORE INPUT ============ */
+        .score-section { background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 16px; border-left: 4px solid #1F4E79; }
+        .score-section-title { font-weight: 700; font-size: 14px; color: #1e293b; margin-bottom: 12px; }
+        .score-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .score-preview { background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 16px; }
+        .score-total { font-size: 48px; font-weight: 800; color: #1F4E79; line-height: 1; }
+        .score-max { font-size: 14px; color: #64748b; }
+        .score-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+        .score-item { text-align: center; padding: 10px; background: #f8fafc; border-radius: 6px; }
+        .score-item-label { font-size: 11px; color: #64748b; }
+        .score-item-val { font-size: 18px; font-weight: 700; color: #1e293b; }
+
+        /* ============ REKAPITULASI TABLE ============ */
+        .rekap-table th { background: #1F4E79; color: white; }
+        .rekap-good { color: #065f46; font-weight: 700; }
+        .rekap-bad { color: #991b1b; font-weight: 700; }
+
+        /* ============ CHART ============ */
+        .chart-container { position: relative; height: 350px; }
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+
+        /* ============ BADGES ============ */
+        .badge { padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 500; display: inline-block; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+
+        /* ============ USER / LOGOUT ============ */
+        .user-info { padding: 0 12px; margin-bottom: 16px; }
+        .user-name { font-size: 14px; font-weight: 600; color: #1e293b; }
+        .user-email { font-size: 12px; color: #64748b; }
+        .logout-btn { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; font-weight: 500; color: #1e293b; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', sans-serif; }
+        .logout-btn:hover { background: #f8fafc; }
+
+        .mobile-menu-btn { display: none; position: fixed; top: 20px; left: 20px; z-index: 101; background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
+
+        @media (max-width: 1023px) {
+            .mobile-menu-btn { display: block; }
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .sidebar.mobile-open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .formula-grid { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .score-row { grid-template-columns: 1fr; }
+            .score-breakdown { grid-template-columns: 1fr 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-header-content">
+                <div class="sidebar-icon">
+                    <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:white;fill:none;stroke-width:1.8">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="sidebar-title">Admin Panel</div>
+                    <div class="sidebar-subtitle">Dinas Koperasi UKM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="admin-dashboard.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Dashboard
+            </a>
+            <a href="admin-requests.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+                Kendaraan Dinas
+            </a>
+            <a href="admin-voucher-bbm.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Voucher BBM
+            </a>
+            <a href="admin-ruang-rapat.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Ruang Rapat
+            </a>
+            <a href="admin-kearsipan.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                Kearsipan Internal
+            </a>
+            <a href="admin-spj-keuangan.html" class="nav-item active">
+                <svg class="nav-icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                SPJ Keuangan
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-name" id="admin-name">Administrator</div>
+                <div class="user-email" id="admin-email">admin@dinas.gov.id</div>
+            </div>
+            <button onclick="logout()" class="logout-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Keluar
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="header">
+            <h1 class="header-title">Penilaian SPJ Keuangan — Subbag Keuangan</h1>
+            <p class="header-subtitle">Penilaian kinerja penyampaian SPJ keuangan (skor 35) per unit bidang</p>
+        </div>
+
+        <div class="container">
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('input', event)">📥 Input Penilaian</button>
+                <button class="tab" onclick="switchTab('rekap', event)">📊 Rekapitulasi</button>
+                <button class="tab" onclick="switchTab('rumus', event)">📐 Rumus & Flowchart</button>
+            </div>
+
+            <!-- ============ TAB 1: INPUT ============ -->
+            <div id="tab-input" class="tab-content active">
+
+                <div class="stats-grid">
+                    <div class="stat-card" style="border-left:4px solid #1F4E79;">
+                        <div class="stat-label">Skor Maksimum</div>
+                        <div class="stat-value">35</div>
+                    </div>
+                    <div class="stat-card" style="border-left:4px solid #10b981;">
+                        <div class="stat-label">Rata-rata Bulan Ini</div>
+                        <div class="stat-value" id="avg-score-this-month">—</div>
+                    </div>
+                    <div class="stat-card" style="border-left:4px solid #f59e0b;">
+                        <div class="stat-label">Unit Dinilai</div>
+                        <div class="stat-value" id="units-assessed">0</div>
+                    </div>
+                    <div class="stat-card" style="border-left:4px solid #ef4444;">
+                        <div class="stat-label">Unit Belum Dinilai</div>
+                        <div class="stat-value" id="units-pending">6</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Input Nilai Kinerja SPJ Per Unit</h2>
+                        <div class="filter-container">
+                            <select class="select-input" id="select-bulan-input">
+                                <option value="">Pilih Bulan</option>
+                                <option value="JANUARI">Januari</option>
+                                <option value="FEBRUARI">Februari</option>
+                                <option value="MARET">Maret</option>
+                                <option value="APRIL">April</option>
+                                <option value="MEI">Mei</option>
+                                <option value="JUNI">Juni</option>
+                                <option value="JULI">Juli</option>
+                                <option value="AGUSTUS">Agustus</option>
+                                <option value="SEPTEMBER">September</option>
+                                <option value="OKTOBER">Oktober</option>
+                                <option value="NOVEMBER">November</option>
+                                <option value="DESEMBER">Desember</option>
+                            </select>
+                            <button onclick="openInputModal()" class="btn btn-primary" id="btn-input-nilai">
+                                ✏️ Input Penilaian
+                            </button>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Unit</th>
+                                    <th>Bulan</th>
+                                    <th>Total Pengajuan (Rp)</th>
+                                    <th>SPJ Tepat Waktu (Rp)</th>
+                                    <th>Nilai Tepat Waktu</th>
+                                    <th>Nilai Sanksi Terlambat</th>
+                                    <th>Total Nilai (max 35)</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="input-tbody">
+                                <tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan untuk melihat data</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ TAB 2: REKAPITULASI ============ -->
+            <div id="tab-rekap" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Rekapitulasi Nilai Kinerja Penyampaian SPJ Keuangan</h2>
+                        <div class="filter-container">
+                            <select class="select-input" id="select-bulan-rekap">
+                                <option value="">Semua Bulan</option>
+                                <option value="JANUARI">Januari</option>
+                                <option value="FEBRUARI">Februari</option>
+                                <option value="MARET">Maret</option>
+                                <option value="APRIL">April</option>
+                                <option value="MEI">Mei</option>
+                                <option value="JUNI">Juni</option>
+                                <option value="JULI">Juli</option>
+                                <option value="AGUSTUS">Agustus</option>
+                                <option value="SEPTEMBER">September</option>
+                                <option value="OKTOBER">Oktober</option>
+                                <option value="NOVEMBER">November</option>
+                                <option value="DESEMBER">Desember</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="charts-grid">
+                            <div class="card" style="margin:0;">
+                                <div class="card-header" style="padding:16px;"><h3 style="font-size:15px;font-weight:600;">Nilai Tepat Waktu Per Unit</h3></div>
+                                <div class="card-content"><div class="chart-container"><canvas id="chartTepat"></canvas></div></div>
+                            </div>
+                            <div class="card" style="margin:0;">
+                                <div class="card-header" style="padding:16px;"><h3 style="font-size:15px;font-weight:600;">Total Nilai Per Unit (Maks 35)</h3></div>
+                                <div class="card-content"><div class="chart-container"><canvas id="chartTotal"></canvas></div></div>
+                            </div>
+                        </div>
+
+                        <div style="overflow-x:auto;">
+                            <table class="rekap-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Indikator Penilaian</th>
+                                        <th>BLUT</th>
+                                        <th>Bid. Kewirausahaan</th>
+                                        <th>Bid. Koperasi</th>
+                                        <th>Bid. UKM</th>
+                                        <th>Bid. Usaha Mikro</th>
+                                        <th>Sekretariat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rekap-tbody">
+                                    <tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Memuat data...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ TAB 3: RUMUS & FLOWCHART ============ -->
+            <div id="tab-rumus" class="tab-content">
+
+                <!-- Formula Box -->
+                <div class="formula-box">
+                    <h3>📐 Rumus Penilaian SPJ Keuangan (Skor 35)</h3>
+                    <div class="formula-grid">
+                        <div class="formula-item">
+                            <div class="formula-item-title">1. Nilai SPJ Tepat Waktu</div>
+                            <div class="formula-math">
+                                = <span class="formula-accent">(Nominal SPJ Tepat Waktu / Total Pengajuan)</span><br>
+                                &nbsp;&nbsp;× 100% × 35
+                            </div>
+                            <div class="formula-example">
+                                Contoh: SPJ tepat 30jt dari total 40jt<br>
+                                = (30jt / 40jt) × 100% × 35 = <strong style="color:#fbbf24">26,25</strong>
+                            </div>
+                        </div>
+                        <div class="formula-item">
+                            <div class="formula-item-title">2. Sanksi Keterlambatan</div>
+                            <div class="formula-math">
+                                Sanksi/hari = <span class="formula-accent">100% / Jumlah hari (tgl 26–30)</span><br>
+                                = 100% / 6 = <strong style="color:#fbbf24">~17%</strong> per hari
+                            </div>
+                            <div class="formula-example">
+                                Nilai sanksi 1 hari:<br>
+                                = 17% × (Skor maks – Nilai tepat waktu)<br>
+                                = 17% × (35 – 26,25) = <strong style="color:#fbbf24">1,46</strong>
+                            </div>
+                        </div>
+                        <div class="formula-item">
+                            <div class="formula-item-title">3. Total Nilai Akhir</div>
+                            <div class="formula-math">
+                                = Nilai tepat waktu<br>
+                                &nbsp;&nbsp;+ (Sisa nilai bobot – Total sanksi)
+                            </div>
+                            <div class="formula-example">
+                                Contoh 1 hari terlambat:<br>
+                                = 26,25 + (8,75 – 1,46) = <strong style="color:#fbbf24">33,54</strong>
+                            </div>
+                        </div>
+                        <div class="formula-item">
+                            <div class="formula-item-title">Catatan Penting</div>
+                            <div class="formula-math">
+                                Batas tepat waktu: <span class="formula-accent">sebelum tgl 25</span><br>
+                                Periode terlambat: <span class="formula-accent">tgl 26 – 30</span><br>
+                                Total hari denda: <span class="formula-accent">6 hari</span>
+                            </div>
+                            <div class="formula-example">
+                                Setelah tgl 30 → tidak mendapat nilai<br>
+                                Skor maksimal = 35 poin
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flowchart -->
+                <div class="flowchart-container">
+                    <div class="flowchart-title">📋 Alur Penilaian SPJ Keuangan Subbag Keuangan</div>
+
+                    <div class="fc-row">
+                        <div>
+                            <div class="fc-box fc-start">Mulai Bulan Berjalan</div>
+                            <div class="fc-arrow-down">↓</div>
+                            <div class="fc-box fc-input">Unit Bidang Mengajukan SPJ<br><small style="font-weight:400">Disertai nominal pengajuan dana</small></div>
+                            <div class="fc-arrow-down">↓</div>
+                            <div class="fc-box fc-decision">Apakah SPJ masuk<br>sebelum tgl 25?</div>
+                            <div class="fc-arrow-down">↓</div>
+                        </div>
+                    </div>
+
+                    <div class="fc-branch" style="margin-bottom:16px;">
+                        <div class="fc-branch-item">
+                            <div style="color:#10b981;font-weight:700;margin-bottom:8px;">✅ YA (Tepat Waktu)</div>
+                            <div class="fc-box fc-calc">Hitung Nilai SPJ Tepat Waktu<br><small>(Nominal/Total) × 100% × 35</small></div>
+                            <div class="fc-arrow-down">↓</div>
+                            <div class="fc-box fc-calc">Nilai Terlambat = 0</div>
+                        </div>
+                        <div class="fc-branch-item">
+                            <div style="color:#ef4444;font-weight:700;margin-bottom:8px;">❌ TIDAK (Terlambat)</div>
+                            <div class="fc-box fc-calc">Hitung Nilai Tepat Waktu<br><small>dari nominal yang sudah masuk</small></div>
+                            <div class="fc-arrow-down">↓</div>
+                            <div class="fc-box fc-calc" style="border-color:#ef4444;background:#fee2e2;color:#991b1b;">Hitung Sanksi per Hari<br><small>17% × sisa nilai bobot × hari</small></div>
+                        </div>
+                    </div>
+
+                    <div class="fc-arrow-down">↓</div>
+                    <div style="display:flex;justify-content:center;">
+                        <div class="fc-box fc-final" style="min-width:260px;">Total Nilai = Nilai Tepat + (Sisa Bobot – Sanksi)<br><strong>Maks 35 Poin</strong></div>
+                    </div>
+                    <div class="fc-arrow-down">↓</div>
+                    <div style="display:flex;justify-content:center;">
+                        <div class="fc-box fc-start">Input ke Rekapitulasi Bulanan</div>
+                    </div>
+                </div>
+
+                <!-- Contoh Kalkulasi -->
+                <div class="card">
+                    <div class="card-header"><h2 class="card-title">🧮 Kalkulator Nilai SPJ</h2></div>
+                    <div class="card-content">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+                            <div>
+                                <div class="form-group">
+                                    <label class="input-label">Total Pengajuan Dana (Rp)</label>
+                                    <input type="number" class="form-input" id="calc-total" placeholder="Contoh: 40000000" oninput="recalculate()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="input-label">Nominal SPJ Tepat Waktu (Rp)</label>
+                                    <input type="number" class="form-input" id="calc-tepat" placeholder="Contoh: 30000000" oninput="recalculate()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="input-label">Jumlah Hari Terlambat (hari)</label>
+                                    <input type="number" class="form-input" id="calc-terlambat" placeholder="0 jika tepat waktu" min="0" max="30" oninput="recalculate()">
+                                </div>
+                            </div>
+                            <div id="calc-result" style="background:#f8fafc;border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:center;">
+                                <div style="font-size:13px;color:#64748b;margin-bottom:8px;">Hasil Perhitungan</div>
+                                <div id="res-persentase" style="font-size:14px;color:#64748b;margin-bottom:4px;">Persentase tepat waktu: —</div>
+                                <div id="res-nilai-tepat" style="font-size:14px;color:#64748b;margin-bottom:4px;">Nilai tepat waktu: —</div>
+                                <div id="res-sanksi" style="font-size:14px;color:#ef4444;margin-bottom:12px;">Total sanksi: —</div>
+                                <div id="res-total" style="font-size:36px;font-weight:800;color:#1F4E79;">—</div>
+                                <div style="font-size:12px;color:#64748b;">Total Nilai (maks 35)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MODAL INPUT ============ -->
+    <div id="inputModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Input Penilaian SPJ Keuangan</h2>
+                <p style="font-size:13px;color:#64748b;margin-top:4px;" id="modal-bulan-label">—</p>
+            </div>
+            <div class="modal-content">
+                <div class="score-section">
+                    <div class="score-section-title">Informasi Unit & Pengajuan</div>
+                    <div class="score-row">
+                        <div class="form-group">
+                            <label class="input-label">Unit Bidang</label>
+                            <select class="form-input" id="input-unit">
+                                <option value="">Pilih Unit</option>
+                                <option value="Balai Layanan Usaha Terpadu KUMKM">Balai Layanan Usaha Terpadu KUMKM</option>
+                                <option value="Bidang Kewirausahaan">Bidang Kewirausahaan</option>
+                                <option value="Bidang Koperasi">Bidang Koperasi</option>
+                                <option value="Bidang UKM">Bidang UKM</option>
+                                <option value="Bidang Usaha Mikro">Bidang Usaha Mikro</option>
+                                <option value="Sekretariat">Sekretariat</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label">Total Pengajuan Dana (Rp)</label>
+                            <input type="number" class="form-input" id="input-total" placeholder="Contoh: 40000000" oninput="updateModalScore()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-section" style="border-left-color:#10b981;">
+                    <div class="score-section-title">Komponen 1: SPJ Tepat Waktu (sebelum tgl 25)</div>
+                    <div class="form-group">
+                        <label class="input-label">Nominal SPJ yang masuk tepat waktu (Rp)</label>
+                        <input type="number" class="form-input" id="input-nominal-tepat" placeholder="Contoh: 30000000" oninput="updateModalScore()">
+                    </div>
+                </div>
+
+                <div class="score-section" style="border-left-color:#ef4444;">
+                    <div class="score-section-title">Komponen 2: SPJ Terlambat (tgl 26–30)</div>
+                    <div class="form-group">
+                        <label class="input-label">Jumlah Hari Terlambat</label>
+                        <input type="number" class="form-input" id="input-hari-terlambat" placeholder="0 jika tidak ada keterlambatan" min="0" max="6" oninput="updateModalScore()">
+                        <div style="font-size:12px;color:#64748b;margin-top:4px;">Sanksi per hari = 100%/6 ≈ 17% × sisa nilai bobot</div>
+                    </div>
+                </div>
+
+                <div class="score-preview">
+                    <div style="font-size:13px;color:#64748b;margin-bottom:8px;">TOTAL NILAI</div>
+                    <div class="score-total" id="modal-total-nilai">—</div>
+                    <div class="score-max">dari maksimal 35</div>
+                    <div class="score-breakdown">
+                        <div class="score-item">
+                            <div class="score-item-label">Nilai Tepat Waktu</div>
+                            <div class="score-item-val" id="modal-nilai-tepat">—</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-item-label">Sisa Nilai Bobot</div>
+                            <div class="score-item-val" id="modal-sisa-bobot">—</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-item-label">Sanksi</div>
+                            <div class="score-item-val" style="color:#ef4444;" id="modal-sanksi">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label">Keterangan Tambahan (opsional)</label>
+                    <textarea class="form-textarea" id="input-catatan" placeholder="Catatan tambahan..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('inputModal')" class="btn" style="flex:1;">Batal</button>
+                <button onclick="submitInputNilai()" class="btn btn-success" style="flex:1;" id="submit-input-btn">💾 Simpan Penilaian</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztKkV-WTGZZuwDqNsHLmhbOOlKeG1-VjI-mnT5AoH3LIiJ-FPcAaSaAGJv1-KG1ULLpg/exec';
+
+    const UNITS = [
+        "Balai Layanan Usaha Terpadu KUMKM",
+        "Bidang Kewirausahaan",
+        "Bidang Koperasi",
+        "Bidang UKM",
+        "Bidang Usaha Mikro",
+        "Sekretariat"
+    ];
+    const MONTHS = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
+    const SKOR_MAX = 35;
+
+    // Use localStorage as local storage fallback for demo
+    function getLocalData() {
+        const raw = localStorage.getItem('spj_keuangan_data');
+        return raw ? JSON.parse(raw) : {};
+    }
+    function setLocalData(data) {
+        localStorage.setItem('spj_keuangan_data', JSON.stringify(data));
+    }
+
+    // Pre-populate with Jan & Feb from the provided data
+    (function initDemoData() {
+        const existing = getLocalData();
+        if (Object.keys(existing).length > 0) return;
+        const demo = {
+            "JANUARI": {
+                "Balai Layanan Usaha Terpadu KUMKM": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "Tepat waktu" },
+                "Bidang Kewirausahaan": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang Koperasi": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang UKM": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang Usaha Mikro": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Sekretariat": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" }
+            },
+            "FEBRUARI": {
+                "Balai Layanan Usaha Terpadu KUMKM": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang Kewirausahaan": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang Koperasi": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang UKM": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" },
+                "Bidang Usaha Mikro": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 3, nilaiTepat: 12.20, sanksi: 5.70, totalNilai: 17.90, catatan: "Terlambat 3 hari" },
+                "Sekretariat": { totalPengajuan: 0, nominalTepat: 0, hariTerlambat: 0, nilaiTepat: 35.00, sanksi: 0.00, totalNilai: 35.00, catatan: "" }
+            }
+        };
+        setLocalData(demo);
+    })();
+
+    function calcSPJScores(totalPengajuan, nominalTepat, hariTerlambat) {
+        // 1. Hitung nilai dari nominal yang tepat waktu (Bobot Maksimal 35)
+        const persen = totalPengajuan > 0 ? (nominalTepat / totalPengajuan) : 1;
+        const nilaiTepat = parseFloat((persen * SKOR_MAX).toFixed(2));
+        
+        // 2. Sisa bobot adalah porsi nilai untuk nominal yang "tidak tepat waktu"
+        const sisaBobot = parseFloat((SKOR_MAX - nilaiTepat).toFixed(2));
+        
+        // 3. Hitung sanksi hanya berdasarkan porsi sisa bobot tersebut
+        const sanksiPerHari = 100 / 6; // ~16.67% per hari
+        const sanksi = parseFloat((hariTerlambat * (sanksiPerHari / 100) * sisaBobot).toFixed(2));
+        
+        // 4. TOTAL NILAI: Nilai Tepat + (Sisa Bobot - Sanksi)
+        // Jika tidak ada keterlambatan, maka porsi sisa bobot tetap hangus (tidak dihitung)
+        // kecuali jika Anda ingin sisa bobot tersebut dianggap nilai tambahan.
+        
+        // Logika standar: Unit hanya mendapat nilai dari apa yang dikumpulkan tepat waktu.
+        // Jika ada keterlambatan pada sisanya, sisa tersebut dikurangi sanksi.
+        const totalNilai = Math.max(0, parseFloat((nilaiTepat + (sisaBobot - sanksi)).toFixed(2)));
+        
+        // Namun, jika di Spreadsheet Anda totalnya 31.50, maka logikanya adalah:
+        // TOTAL NILAI = Nilai Tepat Waktu saja (Sisa bobot hanya bisa didapat jika 100% tepat)
+        // Gunakan baris di bawah ini jika ingin sama persis dengan sheet:
+        // const totalNilai = nilaiTepat; 
+
+        return { nilaiTepat, sisaBobot, sanksi, totalNilai };
+    }
+
+    // ============ TAB SWITCHING ============
+    function switchTab(name, e) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        if (e) e.target.classList.add('active');
+        document.getElementById('tab-' + name).classList.add('active');
+        if (name === 'rekap') renderRekap();
+    }
+
+    // ============ STATS ============
+    function updateStats(bulan) {
+        const data = getLocalData();
+        if (!bulan || !data[bulan]) {
+            document.getElementById('avg-score-this-month').textContent = '—';
+            document.getElementById('units-assessed').textContent = '0';
+            document.getElementById('units-pending').textContent = '6';
+            return;
+        }
+        const unitData = data[bulan];
+        const vals = Object.values(unitData).map(u => u.totalNilai);
+        const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+        document.getElementById('avg-score-this-month').textContent = avg.toFixed(2);
+        document.getElementById('units-assessed').textContent = vals.length;
+        document.getElementById('units-pending').textContent = Math.max(0, 6 - vals.length);
+    }
+
+    // ============ TAB 1: INPUT ============
+    document.getElementById('select-bulan-input').addEventListener('change', function() {
+        renderInputTable(this.value);
+        updateStats(this.value);
+    });
+
+    function renderInputTable(bulan) {
+        const tbody = document.getElementById('input-tbody');
+        if (!bulan) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan untuk melihat data</td></tr>';
+            return;
+        }
+        const data = getLocalData();
+        const monthData = data[bulan] || {};
+
+        if (Object.keys(monthData).length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Belum ada penilaian untuk ${bulan}. Klik "Input Penilaian" untuk mulai.</td></tr>`;
+            return;
+        }
+
+        const fmt = n => new Intl.NumberFormat('id-ID').format(n);
+        tbody.innerHTML = UNITS.map(unit => {
+            const u = monthData[unit];
+            if (!u) return `<tr><td style="font-weight:500;">${unit}</td><td>${bulan}</td><td colspan="5" style="color:#94a3b8;font-style:italic;">Belum dinilai</td><td><button onclick="openEditModal('${unit}','${bulan}')" class="btn btn-sm btn-primary">+ Isi Nilai</button></td></tr>`;
+            const badgeClass = u.totalNilai >= 30 ? 'badge-green' : u.totalNilai >= 20 ? 'badge-blue' : 'badge-red';
+            return `<tr>
+                <td style="font-weight:500;">${unit}</td>
+                <td>${bulan}</td>
+                <td>${u.totalPengajuan > 0 ? 'Rp ' + fmt(u.totalPengajuan) : '—'}</td>
+                <td>${u.nominalTepat > 0 ? 'Rp ' + fmt(u.nominalTepat) : '—'}</td>
+                <td>${u.nilaiTepat.toFixed(2)}</td>
+                <td style="color:#ef4444;">${u.sanksi > 0 ? '-' + u.sanksi.toFixed(2) : '0.00'}</td>
+                <td><span class="badge ${badgeClass}">${u.totalNilai.toFixed(2)}</span></td>
+                <td>
+                    <button onclick="openEditModal('${unit}','${bulan}')" class="btn btn-sm">✏️ Edit</button>
+                    <button onclick="deleteEntry('${unit}','${bulan}')" class="btn btn-sm" style="color:#ef4444;">🗑️</button>
+                </td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ============ MODAL ============
+    function openInputModal() {
+        const bulan = document.getElementById('select-bulan-input').value;
+        if (!bulan) { Toast.error('Pilih bulan terlebih dahulu'); return; }
+        document.getElementById('modal-bulan-label').textContent = `Bulan: ${bulan}`;
+        document.getElementById('input-unit').value = '';
+        document.getElementById('input-total').value = '';
+        document.getElementById('input-nominal-tepat').value = '';
+        document.getElementById('input-hari-terlambat').value = '';
+        document.getElementById('input-catatan').value = '';
+        document.getElementById('modal-total-nilai').textContent = '—';
+        document.getElementById('modal-nilai-tepat').textContent = '—';
+        document.getElementById('modal-sisa-bobot').textContent = '—';
+        document.getElementById('modal-sanksi').textContent = '—';
+        openModal('inputModal');
+    }
+
+    function openEditModal(unit, bulan) {
+        const data = getLocalData();
+        const u = (data[bulan] || {})[unit];
+        document.getElementById('modal-bulan-label').textContent = `Unit: ${unit} | Bulan: ${bulan}`;
+        document.getElementById('input-unit').value = unit;
+        document.getElementById('input-unit').disabled = true;
+        document.getElementById('input-total').value = u ? u.totalPengajuan : '';
+        document.getElementById('input-nominal-tepat').value = u ? u.nominalTepat : '';
+        document.getElementById('input-hari-terlambat').value = u ? u.hariTerlambat : '';
+        document.getElementById('input-catatan').value = u ? u.catatan : '';
+        updateModalScore();
+        openModal('inputModal');
+    }
+
+    function updateModalScore() {
+        const total = parseFloat(document.getElementById('input-total').value) || 0;
+        const tepat = parseFloat(document.getElementById('input-nominal-tepat').value) || 0;
+        const hari = parseFloat(document.getElementById('input-hari-terlambat').value) || 0;
+        if (tepat === 0 && total === 0) {
+            // If no amounts, assume 100% tepat waktu = 35
+            if (hari === 0) {
+                document.getElementById('modal-total-nilai').textContent = '35.00';
+                document.getElementById('modal-nilai-tepat').textContent = '35.00';
+                document.getElementById('modal-sisa-bobot').textContent = '0.00';
+                document.getElementById('modal-sanksi').textContent = '0.00';
+            } else {
+                // Has late days but no amount
+                const ss = calcSPJScores(1, 1, hari); // use 100% as base
+                document.getElementById('modal-total-nilai').textContent = ss.totalNilai.toFixed(2);
+                document.getElementById('modal-nilai-tepat').textContent = ss.nilaiTepat.toFixed(2);
+                document.getElementById('modal-sisa-bobot').textContent = ss.sisaBobot.toFixed(2);
+                document.getElementById('modal-sanksi').textContent = ss.sanksi.toFixed(2);
+            }
+            return;
+        }
+        const ss = calcSPJScores(total || tepat, tepat, hari);
+        document.getElementById('modal-total-nilai').textContent = ss.totalNilai.toFixed(2);
+        document.getElementById('modal-nilai-tepat').textContent = ss.nilaiTepat.toFixed(2);
+        document.getElementById('modal-sisa-bobot').textContent = ss.sisaBobot.toFixed(2);
+        document.getElementById('modal-sanksi').textContent = ss.sanksi.toFixed(2);
+    }
+
+    async function submitInputNilai() {
+        const bulan = document.getElementById('select-bulan-input').value;
+        const unit = document.getElementById('input-unit').value;
+        if (!unit) { Toast.error('Pilih unit terlebih dahulu'); return; }
+
+        const totalPengajuan = parseFloat(document.getElementById('input-total').value) || 0;
+        const nominalTepat = parseFloat(document.getElementById('input-nominal-tepat').value) || 0;
+        const hariTerlambat = parseFloat(document.getElementById('input-hari-terlambat').value) || 0;
+        const catatan = document.getElementById('input-catatan').value;
+
+        let nilaiTepat, sanksi, totalNilai, sisaBobot;
+        if (totalPengajuan === 0 && nominalTepat === 0) {
+            if (hariTerlambat === 0) {
+                nilaiTepat = 35.00; sanksi = 0.00; totalNilai = 35.00; sisaBobot = 0.00;
+            } else {
+                const ss = calcSPJScores(1, 1, hariTerlambat);
+                ({ nilaiTepat, sanksi, totalNilai, sisaBobot } = ss);
+            }
+        } else {
+            const ss = calcSPJScores(totalPengajuan || nominalTepat, nominalTepat, hariTerlambat);
+            ({ nilaiTepat, sanksi, totalNilai, sisaBobot } = ss);
+        }
+
+        const submitBtn = document.getElementById('submit-input-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+
+        // Save locally
+        const data = getLocalData();
+        if (!data[bulan]) data[bulan] = {};
+        data[bulan][unit] = { totalPengajuan, nominalTepat, hariTerlambat, nilaiTepat, sanksi, totalNilai, catatan };
+        setLocalData(data);
+
+        // Try API
+        try {
+            await callAPI({
+                action: 'saveSPJKeuangan',
+                bulan, unit, totalPengajuan, nominalTepat, hariTerlambat, nilaiTepat, sanksi, totalNilai, catatan,
+                penilai: currentUser.name || 'Admin'
+            });
+        } catch (e) { /* API not configured yet, local save is fine */ }
+
+        document.getElementById('input-unit').disabled = false;
+        closeModal('inputModal');
+        renderInputTable(bulan);
+        updateStats(bulan);
+        Toast.success(`Nilai ${unit} bulan ${bulan} berhasil disimpan!`);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '💾 Simpan Penilaian';
+    }
+
+    function deleteEntry(unit, bulan) {
+        if (!confirm(`Hapus penilaian ${unit} bulan ${bulan}?`)) return;
+        const data = getLocalData();
+        if (data[bulan]) delete data[bulan][unit];
+        setLocalData(data);
+        renderInputTable(bulan);
+        updateStats(bulan);
+        Toast.success('Data berhasil dihapus');
+    }
+
+    // ============ TAB 2: REKAP ============
+    let chartTepat = null, chartTotal = null;
+
+    function renderRekap() {
+        const bulan = document.getElementById('select-bulan-rekap').value;
+        const data = getLocalData();
+
+        let targetData = {};
+        if (bulan) {
+            targetData[bulan] = data[bulan] || {};
+        } else {
+            // Use latest month with data
+            const latestMonth = MONTHS.slice().reverse().find(m => data[m] && Object.keys(data[m]).length > 0);
+            if (latestMonth) targetData[latestMonth] = data[latestMonth];
+        }
+
+        const currentBulan = bulan || Object.keys(targetData)[0] || '';
+        const monthData = targetData[currentBulan] || {};
+
+        // Build rekap rows
+        const tbody = document.getElementById('rekap-tbody');
+        const nilaiTepat = UNITS.map(u => (monthData[u]?.nilaiTepat ?? 0).toFixed(2));
+        const nilaiTerlambat = UNITS.map(u => (monthData[u]?.sanksi ?? 0).toFixed(2));
+        const totalNilai = UNITS.map(u => (monthData[u]?.totalNilai ?? 0).toFixed(2));
+
+        tbody.innerHTML = `
+            <tr>
+                <td style="text-align:center;">1</td>
+                <td style="font-weight:500;">SPJ yang masuk tepat waktu</td>
+                ${nilaiTepat.map(v => `<td class="${parseFloat(v) < 35 ? 'rekap-bad' : 'rekap-good'}" style="text-align:center;">${v}</td>`).join('')}
+            </tr>
+            <tr>
+                <td style="text-align:center;">2</td>
+                <td style="font-weight:500;">SPJ yang terlambat (sanksi)</td>
+                ${nilaiTerlambat.map(v => `<td style="text-align:center;color:${parseFloat(v) > 0 ? '#ef4444' : '#64748b'};">${v > 0 ? '-' : ''}${v}</td>`).join('')}
+            </tr>
+            <tr style="background:#f0f7ff;">
+                <td></td>
+                <td style="font-weight:700;">TOTAL NILAI</td>
+                ${totalNilai.map(v => `<td style="text-align:center;font-weight:700;color:${parseFloat(v) >= 30 ? '#065f46' : parseFloat(v) >= 20 ? '#1e40af' : '#991b1b'};">${v}</td>`).join('')}
+            </tr>
+        `;
+
+        // Render charts
+        if (chartTepat) chartTepat.destroy();
+        if (chartTotal) chartTotal.destroy();
+
+        const shortUnits = ['BLUT', 'Kewirausahaan', 'Koperasi', 'UKM', 'Usaha Mikro', 'Sekretariat'];
+
+        chartTepat = new Chart(document.getElementById('chartTepat').getContext('2d'), {
+            type: 'bar',
+            data: { labels: shortUnits, datasets: [{ label: 'Nilai Tepat Waktu', data: nilaiTepat.map(Number), backgroundColor: nilaiTepat.map(v => parseFloat(v) >= 35 ? '#10b981' : parseFloat(v) >= 20 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 35, ticks: { stepSize: 5 } } } }
+        });
+
+        chartTotal = new Chart(document.getElementById('chartTotal').getContext('2d'), {
+            type: 'bar',
+            data: { labels: shortUnits, datasets: [{ label: 'Total Nilai', data: totalNilai.map(Number), backgroundColor: totalNilai.map(v => parseFloat(v) >= 30 ? '#10b981' : parseFloat(v) >= 20 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `Nilai: ${ctx.parsed.y.toFixed(2)} / 35` } } }, scales: { y: { beginAtZero: true, max: 35, ticks: { stepSize: 5 } } } }
+        });
+    }
+
+    document.getElementById('select-bulan-rekap').addEventListener('change', renderRekap);
+
+    // ============ KALKULATOR ============
+    function recalculate() {
+        const total = parseFloat(document.getElementById('calc-total').value) || 0;
+        const tepat = parseFloat(document.getElementById('calc-tepat').value) || 0;
+        const hari = parseFloat(document.getElementById('calc-terlambat').value) || 0;
+        if (tepat === 0 && total === 0) { return; }
+        const base = total || tepat;
+        const ss = calcSPJScores(base, tepat, hari);
+        const persen = base > 0 ? ((tepat / base) * 100).toFixed(1) : '100.0';
+        document.getElementById('res-persentase').textContent = `Persentase tepat waktu: ${persen}%`;
+        document.getElementById('res-nilai-tepat').textContent = `Nilai tepat waktu: ${ss.nilaiTepat.toFixed(2)}`;
+        document.getElementById('res-sanksi').textContent = `Total sanksi: ${ss.sanksi.toFixed(2)}`;
+        document.getElementById('res-total').textContent = ss.totalNilai.toFixed(2);
+    }
+
+    // ============ API ============
+    function callAPI(params) {
+        return new Promise((resolve, reject) => {
+            const cb = 'cb_' + Date.now();
+            window[cb] = data => { cleanup(); resolve(data); };
+            const qs = new URLSearchParams({ ...params, callback: cb }).toString();
+            const s = document.createElement('script');
+            s.src = `${APPS_SCRIPT_URL}?${qs}`;
+            const t = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 12000);
+            function cleanup() { clearTimeout(t); if (s.parentNode) s.parentNode.removeChild(s); delete window[cb]; }
+            s.onerror = () => { cleanup(); reject(new Error('network')); };
+            document.body.appendChild(s);
+        });
+    }
+
+    // ============ MODAL HELPERS ============
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+        document.getElementById('input-unit').disabled = false;
+    }
+    window.onclick = e => { if (e.target.classList.contains('modal-overlay')) { e.target.style.display = 'none'; document.getElementById('input-unit').disabled = false; } };
+
+    // ============ MOBILE MENU ============
+    function toggleMobileMenu() { document.getElementById('sidebar').classList.toggle('mobile-open'); }
+
+    // ============ AUTH ============
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    let currentUser = user;
+    // For demo purposes, don't redirect
+    document.getElementById('admin-name').textContent = user.name || 'Administrator';
+    document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
+    function logout() { if (confirm("Keluar?")) { localStorage.clear(); location.href = 'login.html'; } }
+
+    // ============ TOAST ============
+    const Toast = {
+        container: null,
+        init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
+        show(msg, type = 'success') { this.init(); const el = document.createElement('div'); el.className = `toast ${type}`; el.innerHTML = `<span>${msg}</span>`; this.container.appendChild(el); setTimeout(() => el.remove(), 3000); },
+        success(msg) { this.show(msg, 'success'); },
+        error(msg) { this.show(msg, 'error'); }
+    };
+
+    // Auto-select current month
+    const currentMonthIdx = new Date().getMonth();
+    if (MONTHS[currentMonthIdx]) {
+        document.getElementById('select-bulan-input').value = MONTHS[currentMonthIdx];
+        renderInputTable(MONTHS[currentMonthIdx]);
+        updateStats(MONTHS[currentMonthIdx]);
+    }
+    </script>
+</body>
+</html>
