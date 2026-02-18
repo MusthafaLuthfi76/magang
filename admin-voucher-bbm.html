@@ -23,7 +23,6 @@
         .toast.error { border-left: 4px solid #ef4444; }
         @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* MOBILE MENU TOGGLE */
         .mobile-menu-toggle {
             display: none;
             position: absolute;
@@ -66,65 +65,13 @@
             transition: transform 0.3s ease;
         }
 
-        .sidebar-header {
-            padding: 20px 16px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .sidebar-header-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar-icon {
-            width: 40px;
-            height: 40px;
-            background: #0f172a;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .sidebar-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .sidebar-subtitle {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 16px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            overflow-y: auto;
-        }
-
-        .sidebar-footer {
-            padding: 16px 12px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 15px;
-            color: #0f172a;
-            text-decoration: none;
-            transition: all 0.15s ease;
-        }
+        .sidebar-header { padding: 20px 16px; border-bottom: 1px solid #e5e7eb; }
+        .sidebar-header-content { display: flex; align-items: center; gap: 12px; }
+        .sidebar-icon { width: 40px; height: 40px; background: #0f172a; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; }
+        .sidebar-title { font-size: 16px; font-weight: 600; color: #1e293b; }
+        .sidebar-subtitle { font-size: 12px; color: #64748b; }
+        .sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid #e5e7eb; }
 
         .nav-item {
             display: flex; align-items: center; gap: 14px;
@@ -139,800 +86,170 @@
             width: 4px; background: #0f172a; border-radius: 0 4px 4px 0;
         }
 
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.8;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-left: 252px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 24px 32px;
-        }
-
-        .header-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .header-subtitle {
-            font-size: 14px;
-            color: #64748b;
-        }
-
-        .container {
-            padding: 24px 32px;
-            width: 100%;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #e5e7eb;
-            overflow-x: auto;
-        }
-
-        .tab {
-            padding: 12px 24px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            color: #64748b;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-            white-space: nowrap;
-        }
-
-        .tab:hover {
-            color: #1e293b;
-        }
-
-        .tab.active {
-            color: #0f172a;
-            border-bottom-color: #0f172a;
-        }
-
-        /* Dropdown untuk mobile */
-        .tabs-dropdown {
-            display: none;
-            width: 100%;
-            margin-bottom: 24px;
-        }
-
-        .tabs-dropdown select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            color: #1e293b;
-            cursor: pointer;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            margin-bottom: 24px;
-        }
-
-        .card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .card-content {
-            padding: 24px;
-        }
-
-        .filter-container {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-input, .select-input {
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .search-input {
-            width: 240px;
-            min-width: 150px;
-        }
-
-        .select-input {
-            width: 150px;
-            min-width: 120px;
-        }
-
-        /* RESPONSIVE TABLE */
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        th {
-            text-align: left;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            background: #f8fafc;
-            border-bottom: 1px solid #e5e7eb;
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 14px 16px;
-            font-size: 14px;
-            color: #1e293b;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        tbody tr:hover {
-            background: #fafbfc;
-        }
-
-        .btn {
-            padding: 6px 14px;
-            border-radius: 6px;
-            border: 1px solid #e5e7eb;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            color: #1e293b;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .btn-primary {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-
-        .btn-primary:hover {
-            background: #1e293b;
-        }
-
-        .btn-sm {
-            padding: 4px 10px;
-            font-size: 12px;
-        }
-
-        .btn-approve {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
-        }
-
-        .btn-approve:hover {
-            background: #059669;
-        }
-
-        .btn-reject {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
-        }
-
-        .btn-reject:hover {
-            background: #dc2626;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 6px;
-        }
-
-        .badge {
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 500;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .badge-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge-approved {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .badge-rejected {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal {
-            background: white;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .modal-content {
-            padding: 24px;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .input-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #64748b;
-            margin-bottom: 6px;
-        }
-
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .user-info {
-            padding: 0 12px;
-            margin-bottom: 16px;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 2px;
-        }
-
-        .user-email {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .logout-btn {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .logout-btn:hover {
-            background: #f8fafc;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .score-card {
-            padding: 20px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            transition: all 0.2s;
-        }
-
-        .score-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .score-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .score-unit-name {
-            font-weight: 600;
-            font-size: 16px;
-            color: #1e293b;
-        }
-
-        .score-month {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 2px;
-        }
-
-        .score-value {
-            font-size: 32px;
-            font-weight: 700;
-        }
-
-        .score-good {
-            color: #10b981;
-        }
-
-        .score-warning {
-            color: #f59e0b;
-        }
-
-        .score-danger {
-            color: #ef4444;
-        }
-
-        .score-details {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid #f1f5f9;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-        }
-
-        .score-detail-item {
-            text-align: center;
-        }
-
-        .score-detail-label {
-            font-size: 12px;
-            color: #64748b;
-            margin-bottom: 4px;
-        }
-
-        .score-detail-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #64748b;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin-bottom: 24px;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #64748b;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e5e7eb;
-            border-top-color: #0f172a;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* PAGINATION */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 16px;
-            flex-wrap: wrap;
-        }
-
-        .pagination button {
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .pagination button:hover:not(:disabled) {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .pagination button.active {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-
-        .pagination-info {
-            font-size: 14px;
-            color: #64748b;
-            padding: 0 8px;
-        }
-
-        /* CARD LAYOUT FOR MOBILE */
-        .assessment-card {
-            display: none;
-            padding: 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            background: white;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-
-        .assessment-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            gap: 12px;
-        }
-
-        .assessment-card-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .assessment-card-subtitle {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        .assessment-card-body {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .assessment-card-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            gap: 8px;
-            width: 100%;
-        }
-
-        .assessment-card-label {
-            color: #64748b;
-            font-size: 13px;
-            flex-shrink: 0;
-            min-width: fit-content;
-        }
-
-        .assessment-card-value {
-            color: #1e293b;
-            font-weight: 500;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            text-align: right;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .assessment-card-footer {
-            display: flex;
-            gap: 8px;
-            padding-top: 12px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        /* VIOLATION CARD FOR MOBILE */
-        .violation-card {
-            display: none;
-            padding: 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            background: white;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-
-        .violation-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .violation-card-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: #1e293b;
-        }
-
-        .violation-card-subtitle {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 2px;
-        }
-
-        .violation-card-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .violation-card-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .violation-card-label {
-            font-size: 12px;
-            color: #64748b;
-            margin-bottom: 4px;
-        }
-
-        .violation-card-value {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1e293b;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+        .nav-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+        .main-content { flex: 1; display: flex; flex-direction: column; margin-left: 252px; transition: margin-left 0.3s ease; }
+        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 24px 32px; }
+        .header-title { font-size: 24px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+        .header-subtitle { font-size: 14px; color: #64748b; }
+        .container { padding: 24px 32px; width: 100%; }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid #e5e7eb; overflow-x: auto; }
+        .tab { padding: 12px 24px; border: none; background: none; cursor: pointer; font-size: 15px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .tab:hover { color: #1e293b; }
+        .tab.active { color: #0f172a; border-bottom-color: #0f172a; }
+
+        .tabs-dropdown { display: none; width: 100%; margin-bottom: 24px; }
+        .tabs-dropdown select { width: 100%; padding: 12px 16px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 15px; font-weight: 500; font-family: 'Inter', sans-serif; background: white; color: #1e293b; cursor: pointer; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card { background: white; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); margin-bottom: 24px; }
+        .card-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .card-title { font-size: 18px; font-weight: 600; color: #1e293b; }
+        .card-content { padding: 24px; }
+        .filter-container { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+        .search-input, .select-input { padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .search-input { width: 240px; min-width: 150px; }
+        .select-input { width: 150px; min-width: 120px; }
+
+        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th { text-align: left; padding: 12px 16px; font-size: 13px; font-weight: 600; color: #64748b; background: #f8fafc; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+        td { padding: 14px 16px; font-size: 14px; color: #1e293b; border-bottom: 1px solid #f1f5f9; }
+        tbody tr:hover { background: #fafbfc; }
+
+        .btn { padding: 6px 14px; border-radius: 6px; border: 1px solid #e5e7eb; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; background: white; color: #1e293b; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+        .btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .btn-primary { background: #0f172a; color: white; border-color: #0f172a; }
+        .btn-primary:hover { background: #1e293b; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+        .btn-approve { background: #10b981; color: white; border-color: #10b981; }
+        .btn-approve:hover { background: #059669; }
+        .btn-reject { background: #ef4444; color: white; border-color: #ef4444; }
+        .btn-reject:hover { background: #dc2626; }
+
+        /* ✅ FIXED: btn-edit sekarang biru konsisten dengan Kendaraan Dinas */
+        .btn-edit { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .btn-edit:hover { background: #2563eb; }
+
+        /* ✅ btn-delete tetap merah, sudah konsisten */
+        .btn-delete { background: #ef4444; color: white; border-color: #ef4444; }
+        .btn-delete:hover { background: #dc2626; }
+
+        .action-buttons { display: flex; gap: 6px; }
+
+        .badge { padding: 4px 12px; border-radius: 16px; font-size: 13px; font-weight: 500; display: inline-block; white-space: nowrap; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+        .badge-approved { background: #d1fae5; color: #065f46; }
+        .badge-rejected { background: #fee2e2; color: #991b1b; }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal { background: white; border-radius: 8px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-content { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; gap: 12px; }
+
+        .form-group { margin-bottom: 16px; }
+        .input-label { display: block; font-size: 13px; font-weight: 500; color: #64748b; margin-bottom: 6px; }
+        .form-input, .form-textarea { width: 100%; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .form-textarea { resize: vertical; min-height: 80px; }
+
+        .user-info { padding: 0 12px; margin-bottom: 16px; }
+        .user-name { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+        .user-email { font-size: 12px; color: #64748b; }
+        .logout-btn { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; font-weight: 500; color: #1e293b; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', sans-serif; }
+        .logout-btn:hover { background: #f8fafc; }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .info-item { display: flex; flex-direction: column; }
+
+        .score-card { padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 16px; transition: all 0.2s; }
+        .score-card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .score-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .score-unit-name { font-weight: 600; font-size: 16px; color: #1e293b; }
+        .score-month { font-size: 13px; color: #64748b; margin-top: 2px; }
+        .score-value { font-size: 32px; font-weight: 700; }
+        .score-good { color: #10b981; }
+        .score-warning { color: #f59e0b; }
+        .score-danger { color: #ef4444; }
+        .score-details { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .score-detail-item { text-align: center; }
+        .score-detail-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+        .score-detail-value { font-size: 18px; font-weight: 600; color: #1e293b; }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: #64748b; }
+        .empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+
+        .chart-container { position: relative; height: 400px; margin-bottom: 24px; }
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+
+        .loading { text-align: center; padding: 40px; color: #64748b; }
+        .spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid #e5e7eb; border-top-color: #0f172a; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        button:disabled { cursor: not-allowed; opacity: 0.7; }
+
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; padding: 16px; flex-wrap: wrap; }
+        .pagination button { padding: 8px 12px; border: 1px solid #e5e7eb; background: white; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .pagination button:hover:not(:disabled) { background: #f8fafc; border-color: #cbd5e1; }
+        .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .pagination button.active { background: #0f172a; color: white; border-color: #0f172a; }
+        .pagination-info { font-size: 14px; color: #64748b; padding: 0 8px; }
+
+        .assessment-card { display: none; padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; background: white; overflow: hidden; box-sizing: border-box; }
+        .assessment-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 12px; }
+        .assessment-card-title { font-weight: 600; font-size: 15px; color: #1e293b; margin-bottom: 4px; }
+        .assessment-card-subtitle { font-size: 13px; color: #64748b; }
+        .assessment-card-body { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+        .assessment-card-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; gap: 8px; width: 100%; }
+        .assessment-card-label { color: #64748b; font-size: 13px; flex-shrink: 0; min-width: fit-content; }
+        .assessment-card-value { color: #1e293b; font-weight: 500; word-wrap: break-word; overflow-wrap: break-word; text-align: right; flex: 1; min-width: 0; }
+        .assessment-card-footer { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid #f1f5f9; }
+
+        .violation-card { display: none; padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; background: white; overflow: hidden; box-sizing: border-box; }
+        .violation-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .violation-card-title { font-weight: 600; font-size: 15px; color: #1e293b; }
+        .violation-card-subtitle { font-size: 13px; color: #64748b; margin-top: 2px; }
+        .violation-card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .violation-card-item { display: flex; flex-direction: column; }
+        .violation-card-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+        .violation-card-value { font-size: 14px; font-weight: 500; color: #1e293b; word-wrap: break-word; overflow-wrap: break-word; }
 
         @media (max-width: 1023px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .header {
-                padding: 24px 20px;
-                padding-left: 60px;
-            }
-
-            .container {
-                padding: 20px 16px;
-            }
-
-            .card-content {
-                padding: 16px;
-            }
-
-            .search-input {
-                width: 100%;
-            }
-
-            .select-input {
-                width: 100%;
-            }
-
-            .filter-container {
-                width: 100%;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .score-details {
-                grid-template-columns: 1fr;
-            }
-
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .chart-container {
-                height: 300px;
-            }
-
-            /* Hide tabs, show dropdown */
-            .tabs {
-                display: none;
-            }
-
-            .tabs-dropdown {
-                display: block;
-            }
-
-            /* HIDE TABLE, SHOW CARDS ON MOBILE */
-            .table-container {
-                display: none;
-            }
-
-            .assessment-card, .violation-card {
-                display: block;
-            }
-
-            .pagination {
-                gap: 6px;
-            }
-
-            .pagination button {
-                padding: 6px 10px;
-                font-size: 13px;
-            }
-
-            .pagination-info {
-                font-size: 12px;
-                width: 100%;
-                text-align: center;
-            }
+            .mobile-menu-toggle { display: block; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0; }
+            .header { padding: 24px 20px; padding-left: 60px; }
+            .container { padding: 20px 16px; }
+            .card-content { padding: 16px; }
+            .search-input { width: 100%; }
+            .select-input { width: 100%; }
+            .filter-container { width: 100%; }
+            .info-grid { grid-template-columns: 1fr; }
+            .score-details { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .chart-container { height: 300px; }
+            .tabs { display: none; }
+            .tabs-dropdown { display: block; }
+            .table-container { display: none; }
+            .assessment-card, .violation-card { display: block; }
+            .pagination { gap: 6px; }
+            .pagination button { padding: 6px 10px; font-size: 13px; }
+            .pagination-info { font-size: 12px; width: 100%; text-align: center; }
         }
 
         @media (max-width: 640px) {
-            .header-title {
-                font-size: 20px;
-            }
-
-            .card-title {
-                font-size: 16px;
-            }
+            .header-title { font-size: 20px; }
+            .card-title { font-size: 16px; }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Menu Toggle -->
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <svg viewBox="0 0 24 24">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -941,10 +258,8 @@
         </svg>
     </button>
 
-    <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
-<!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
@@ -1002,7 +317,7 @@
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-name" id="admin-name">Administrator</div>
-                <div class="user-email" id="admin-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5130353c383f1135383f30227f363e277f3835">[email&#160;protected]</a></div>
+                <div class="user-email" id="admin-email">admin@dinas.gov.id</div>
             </div>
             <button onclick="logout()" class="logout-btn">
                 <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -1018,14 +333,12 @@
         </div>
 
         <div class="container">
-            <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('requests')">📋 Permintaan</button>
                 <button class="tab" onclick="switchTab('violations')">⚠️ Catatan Keterlambatan</button>
                 <button class="tab" onclick="switchTab('scores')">📊 Penilaian</button>
             </div>
 
-            <!-- Dropdown untuk Mobile -->
             <div class="tabs-dropdown">
                 <select id="mobile-tab-select" onchange="switchTabFromDropdown(this.value)">
                     <option value="requests">📋 Permintaan</option>
@@ -1065,9 +378,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="requests-cards">
-                        <!-- Card layout untuk mobile akan dimuat di sini -->
-                    </div>
+                    <div id="requests-cards"></div>
                     <div class="pagination" id="requests-pagination"></div>
                 </div>
             </div>
@@ -1114,16 +425,15 @@
                                     <th>Tgl Pengambilan</th>
                                     <th>Tgl Pengembalian</th>
                                     <th>Nomor Kendaraan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="violations-tbody">
-                                <tr><td colspan="5" style="text-align: center; padding: 20px;">Memuat data...</td></tr>
+                                <tr><td colspan="6" style="text-align: center; padding: 20px;">Memuat data...</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <div id="violations-cards">
-                        <!-- Card layout untuk mobile akan dimuat di sini -->
-                    </div>
+                    <div id="violations-cards"></div>
                     <div class="pagination" id="violations-pagination"></div>
                 </div>
             </div>
@@ -1157,32 +467,17 @@
                             <p style="font-size: 20px; font-weight: 700; color: #1e293b;" id="sanksi-value">0.1 poin</p>
                         </div>
 
-                        <!-- Charts -->
                         <div class="charts-grid">
                             <div class="card" style="margin: 0;">
-                                <div class="card-header" style="padding: 16px;">
-                                    <h3 style="font-size: 16px; font-weight: 600;">Skor Akhir Per Unit</h3>
-                                </div>
-                                <div class="card-content">
-                                    <div class="chart-container">
-                                        <canvas id="scoreChart"></canvas>
-                                    </div>
-                                </div>
+                                <div class="card-header" style="padding: 16px;"><h3 style="font-size: 16px; font-weight: 600;">Skor Akhir Per Unit</h3></div>
+                                <div class="card-content"><div class="chart-container"><canvas id="scoreChart"></canvas></div></div>
                             </div>
-
                             <div class="card" style="margin: 0;">
-                                <div class="card-header" style="padding: 16px;">
-                                    <h3 style="font-size: 16px; font-weight: 600;">Jumlah Keterlambatan Per Unit</h3>
-                                </div>
-                                <div class="card-content">
-                                    <div class="chart-container">
-                                        <canvas id="violationChart"></canvas>
-                                    </div>
-                                </div>
+                                <div class="card-header" style="padding: 16px;"><h3 style="font-size: 16px; font-weight: 600;">Jumlah Keterlambatan Per Unit</h3></div>
+                                <div class="card-content"><div class="chart-container"><canvas id="violationChart"></canvas></div></div>
                             </div>
                         </div>
 
-                        <!-- Detail Cards -->
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -1195,43 +490,31 @@
         </div>
     </div>
 
-    <!-- Modal Detail Permintaan -->
+    <!-- Modal Detail -->
     <div id="detailModal" class="modal-overlay">
         <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Detail Permintaan Voucher BBM</h2>
-            </div>
+            <div class="modal-header"><h2 class="modal-title">Detail Permintaan Voucher BBM</h2></div>
             <div class="modal-content" id="modal-detail-body"></div>
-            <div class="modal-footer">
-                <button onclick="closeModal('detailModal')" class="btn">Tutup</button>
-            </div>
+            <div class="modal-footer"><button onclick="closeModal('detailModal')" class="btn">Tutup</button></div>
         </div>
     </div>
 
-    <!-- Modal Tambah Catatan Keterlambatan -->
+    <!-- Modal Tambah Catatan -->
     <div id="addViolationModal" class="modal-overlay">
         <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Tambah Catatan Keterlambatan</h2>
-            </div>
+            <div class="modal-header"><h2 class="modal-title">Tambah Catatan Keterlambatan</h2></div>
             <div class="modal-content">
                 <form id="violationForm">
                     <div class="form-group">
                         <label class="input-label">Bulan</label>
                         <select class="form-input" id="violation-bulan" required>
                             <option value="">Pilih Bulan</option>
-                            <option value="JANUARI">Januari</option>
-                            <option value="FEBRUARI">Februari</option>
-                            <option value="MARET">Maret</option>
-                            <option value="APRIL">April</option>
-                            <option value="MEI">Mei</option>
-                            <option value="JUNI">Juni</option>
-                            <option value="JULI">Juli</option>
-                            <option value="AGUSTUS">Agustus</option>
-                            <option value="SEPTEMBER">September</option>
-                            <option value="OKTOBER">Oktober</option>
-                            <option value="NOVEMBER">November</option>
-                            <option value="DESEMBER">Desember</option>
+                            <option value="JANUARI">Januari</option><option value="FEBRUARI">Februari</option>
+                            <option value="MARET">Maret</option><option value="APRIL">April</option>
+                            <option value="MEI">Mei</option><option value="JUNI">Juni</option>
+                            <option value="JULI">Juli</option><option value="AGUSTUS">Agustus</option>
+                            <option value="SEPTEMBER">September</option><option value="OKTOBER">Oktober</option>
+                            <option value="NOVEMBER">November</option><option value="DESEMBER">Desember</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1275,8 +558,113 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzwUzk_04ZRYbF5wIXVtrHsHE7xz9NI2QGpKR7UMVkwtgwvyFqM-8scXEV0LOpmD3rxaQ/exec';
+    <!-- Modal Edit Permintaan -->
+    <div id="editRequestModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header"><h2 class="modal-title">Edit Permintaan Voucher BBM</h2></div>
+            <div class="modal-content">
+                <form id="editRequestForm">
+                    <div class="form-group">
+                        <label class="input-label">Status Permintaan</label>
+                        <select class="form-input" id="edit-req-status" required>
+                            <option value="pending">Menunggu (Pending)</option>
+                            <option value="approved">Disetujui (Approved)</option>
+                            <option value="rejected">Ditolak (Rejected)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Nomor Kendaraan</label>
+                        <select class="form-input" id="edit-req-nopol">
+                            <option value="">Pilih Nomor Kendaraan</option>
+                            <option value="AB1027AV">AB1027AV</option>
+                            <option value="AB1869UA">AB1869UA</option>
+                            <option value="AB1147UH">AB1147UH</option>
+                            <option value="AB1340UH">AB1340UH</option>
+                            <option value="AB 1530 UH">AB 1530 UH</option>
+                            <option value="AB 1067 IA">AB 1067 IA</option>
+                        </select>
+                    </div>
+                    <div style="margin: 12px 0; padding: 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #cbd5e1;">
+                        <p style="font-size: 12px; color: #64748b; margin-bottom: 8px; font-weight: 500;">Info Pegawai (tidak dapat diubah)</p>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label class="input-label">Nama Pegawai</label>
+                            <input type="text" class="form-input" id="edit-req-nama" readonly style="background:#f0f4f8; cursor:not-allowed;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="input-label">Tanggal Permintaan</label>
+                            <input type="text" class="form-input" id="edit-req-tanggal" readonly style="background:#f0f4f8; cursor:not-allowed;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('editRequestModal')" class="btn">Batal</button>
+                <button onclick="submitEditRequest()" class="btn btn-primary" id="submit-edit-req-btn">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Catatan Keterlambatan -->
+    <div id="editViolationModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header"><h2 class="modal-title">Edit Catatan Keterlambatan</h2></div>
+            <div class="modal-content">
+                <form id="editViolationForm">
+                    <div class="form-group">
+                        <label class="input-label">Bulan</label>
+                        <select class="form-input" id="edit-viol-bulan" required>
+                            <option value="">Pilih Bulan</option>
+                            <option value="JANUARI">Januari</option><option value="FEBRUARI">Februari</option>
+                            <option value="MARET">Maret</option><option value="APRIL">April</option>
+                            <option value="MEI">Mei</option><option value="JUNI">Juni</option>
+                            <option value="JULI">Juli</option><option value="AGUSTUS">Agustus</option>
+                            <option value="SEPTEMBER">September</option><option value="OKTOBER">Oktober</option>
+                            <option value="NOVEMBER">November</option><option value="DESEMBER">Desember</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Unit</label>
+                        <select class="form-input" id="edit-viol-unit" required>
+                            <option value="">Pilih Unit</option>
+                            <option value="Sekretariat">Sekretariat</option>
+                            <option value="Bidang Koperasi">Bidang Koperasi</option>
+                            <option value="Bidang UKM">Bidang UKM</option>
+                            <option value="Bidang Usaha Mikro">Bidang Usaha Mikro</option>
+                            <option value="Bidang Kewirausahaan">Bidang Kewirausahaan</option>
+                            <option value="Balai Layanan Usaha Terpadu KUMKM">Balai Layanan Usaha Terpadu KUMKM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Pengambilan Voucher</label>
+                        <input type="date" class="form-input" id="edit-viol-tgl-ambil" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Pengembalian Bukti</label>
+                        <input type="date" class="form-input" id="edit-viol-tgl-kembali" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Nomor Kendaraan</label>
+                        <select class="form-input" id="edit-viol-nopol" required>
+                            <option value="">Pilih Nomor Kendaraan</option>
+                            <option value="AB1027AV">AB1027AV</option>
+                            <option value="AB1869UA">AB1869UA</option>
+                            <option value="AB1147UH">AB1147UH</option>
+                            <option value="AB1340UH">AB1340UH</option>
+                            <option value="AB 1530 UH">AB 1530 UH</option>
+                            <option value="AB 1067 IA">AB 1067 IA</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('editViolationModal')" class="btn">Batal</button>
+                <button onclick="submitEditViolation()" class="btn btn-primary" id="submit-edit-viol-btn">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwf0614TBmYtUNrkGyQWHYYQg1W8v6E3eN45bnS6Fpq72rTwxA3NKZAVo4alj1aUT4NIw/exec';
 
         let masterRequests = [];
         let allRequests = [];
@@ -1285,13 +673,13 @@
         let allScores = {};
         let scoreChart = null;
         let violationChart = null;
+        let currentEditRequestId = null;
+        let currentEditViolationId = null;
 
-        // Pagination state
         let requestsCurrentPage = 1;
         let violationsCurrentPage = 1;
         const itemsPerPage = 10;
 
-        // ================== MOBILE MENU ==================
         function toggleMobileMenu() {
             const sidebar = document.querySelector('.sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
@@ -1299,155 +687,80 @@
             overlay.classList.toggle('active');
         }
 
-        // Close sidebar when clicking nav item on mobile
         document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth < 1024) {
-                    toggleMobileMenu();
-                }
-            });
+            item.addEventListener('click', () => { if (window.innerWidth < 1024) { toggleMobileMenu(); } });
         });
 
-        // ================== TOAST ==================
         const Toast = {
             container: null,
-            init() {
-                if (!this.container) {
-                    this.container = document.createElement('div');
-                    this.container.className = 'toast-container';
-                    document.body.appendChild(this.container);
-                }
-            },
+            init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
             show(message, type = 'success') {
                 this.init();
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        ${type === 'success' 
-                            ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
-                            : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
-                        }
-                    </svg>
-                    <span>${message}</span>
-                `;
+                toast.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">${type === 'success' ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>' : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'}</svg><span>${message}</span>`;
                 this.container.appendChild(toast);
                 setTimeout(() => toast.remove(), 3000);
             },
             success(msg) { this.show(msg, 'success'); },
-            error(msg) { this.show(msg, 'error'); }
+            error(msg) { this.show(msg, 'error'); },
+            warning(msg) { this.show(msg, 'error'); }
         };
 
-        // ================== API HELPER (JSONP) ==================
         function callAPI(params) {
             return new Promise((resolve, reject) => {
                 const callbackName = 'callback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                
-                window[callbackName] = function(data) {
-                    cleanup();
-                    resolve(data);
-                };
-                
+                window[callbackName] = function(data) { cleanup(); resolve(data); };
                 const queryParams = new URLSearchParams();
-                for (const [key, value] of Object.entries(params)) {
-                    queryParams.append(key, value);
-                }
+                for (const [key, value] of Object.entries(params)) { queryParams.append(key, value); }
                 queryParams.append('callback', callbackName);
-                
                 const script = document.createElement('script');
                 script.src = `${API_URL}?${queryParams.toString()}`;
-                
-                const timeoutId = setTimeout(() => {
-                    cleanup();
-                    reject(new Error('Request timeout'));
-                }, 15000);
-                
-                function cleanup() {
-                    clearTimeout(timeoutId);
-                    if (script.parentNode) script.parentNode.removeChild(script);
-                    delete window[callbackName];
-                }
-                
-                script.onerror = () => {
-                    cleanup();
-                    reject(new Error('Network error'));
-                };
-                
+                const timeoutId = setTimeout(() => { cleanup(); reject(new Error('Request timeout')); }, 15000);
+                function cleanup() { clearTimeout(timeoutId); if (script.parentNode) script.parentNode.removeChild(script); delete window[callbackName]; }
+                script.onerror = () => { cleanup(); reject(new Error('Network error')); };
                 document.body.appendChild(script);
             });
         }
 
-        // ================== AUTH CHECK ==================
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!user.email || user.role !== 'admin') {
-            window.location.href = 'login.html';
-        }
-
+        if (!user.email || user.role !== 'admin') { window.location.href = 'login.html'; }
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
 
-        function logout() {
-            if (confirm("Apakah Anda yakin ingin keluar?")) {
-                localStorage.clear();
-                window.location.href = 'login.html';
-            }
-        }
+        function logout() { if (confirm("Apakah Anda yakin ingin keluar?")) { localStorage.clear(); window.location.href = 'login.html'; } }
 
-        // ================== TAB SWITCHING ==================
         function switchTab(tabName) {
-            // Jangan toggle menu di sini, biarkan event listener nav-item yang handle
-            
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
-
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
-
-            if (tabName === 'requests') {
-                loadRequests();
-            } else if (tabName === 'violations') {
-                loadViolations();
-            } else if (tabName === 'scores') {
-                loadScores();
-            }
+            if (tabName === 'requests') { loadRequests(); }
+            else if (tabName === 'violations') { loadViolations(); }
+            else if (tabName === 'scores') { loadScores(); }
         }
 
         function switchTabFromDropdown(tabName) {
-            // Update dropdown value
             document.getElementById('mobile-tab-select').value = tabName;
-            
-            // Switch content
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
-
-            if (tabName === 'requests') {
-                loadRequests();
-            } else if (tabName === 'violations') {
-                loadViolations();
-            } else if (tabName === 'scores') {
-                loadScores();
-            }
+            if (tabName === 'requests') { loadRequests(); }
+            else if (tabName === 'violations') { loadViolations(); }
+            else if (tabName === 'scores') { loadScores(); }
         }
 
-        // ================== STATUS BADGE ==================
         function createStatusBadge(status) {
             const labels = { pending: 'Menunggu', approved: 'Disetujui', rejected: 'Ditolak' };
             const classes = { pending: 'badge-pending', approved: 'badge-approved', rejected: 'badge-rejected' };
             return `<span class="badge ${classes[status]}">${labels[status]}</span>`;
         }
 
-        // ================== TAB 1: REQUESTS WITH PAGINATION ==================
         async function loadRequests() {
             try {
                 const response = await callAPI({ action: 'getVoucherRequests' });
                 masterRequests = Array.isArray(response) ? response : [];
-                allRequests = [...masterRequests];
-                requestsCurrentPage = 1;
-                renderPaginatedRequests();
-            } catch (error) {
-                console.error('Load error:', error);
-                Toast.error('Gagal memuat data');
-            }
+                allRequests = [...masterRequests]; requestsCurrentPage = 1; renderPaginatedRequests();
+            } catch (error) { console.error('Load error:', error); Toast.error('Gagal memuat data'); }
         }
 
         function renderPaginatedRequests() {
@@ -1458,16 +771,13 @@
             if (allRequests.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #94a3b8;">Tidak ada permintaan</td></tr>';
                 cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
-                paginationContainer.innerHTML = '';
-                return;
+                paginationContainer.innerHTML = ''; return;
             }
 
             const totalPages = Math.ceil(allRequests.length / itemsPerPage);
             const startIndex = (requestsCurrentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const currentItems = allRequests.slice(startIndex, endIndex);
+            const currentItems = allRequests.slice(startIndex, startIndex + itemsPerPage);
             
-            // Render table for desktop
             tbody.innerHTML = currentItems.map((req) => `
                 <tr>
                     <td style="font-weight: 500;">#${req.id}</td>
@@ -1483,114 +793,70 @@
                         ` : createStatusBadge(req.status)}
                     </td>
                     <td>
-                        <button onclick="viewDetail('${req.id}')" class="btn btn-sm">
-                            👁 Detail
-                        </button>
+                        <div class="action-buttons">
+                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
+                            <button onclick="openEditRequestModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>
+                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
 
-            // Render cards for mobile
             cardsContainer.innerHTML = currentItems.map((req) => {
                 let actionButtons = '';
                 if (req.status === 'pending') {
-                    actionButtons = `
-                        <button onclick="approve('${req.id}')" class="btn btn-sm btn-approve">✓ Berikan</button>
-                        <button onclick="reject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button>
-                    `;
+                    actionButtons = `<button onclick="approve('${req.id}')" class="btn btn-sm btn-approve">✓ Berikan</button><button onclick="reject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button>`;
                 }
-
-                return `
-                    <div class="assessment-card">
-                        <div class="assessment-card-header">
-                            <div style="flex: 1;">
-                                <div class="assessment-card-title">${req.nama_pegawai || req.nama_pemohon}</div>
-                                <div class="assessment-card-subtitle">#${req.id}</div>
-                            </div>
-                            ${createStatusBadge(req.status)}
-                        </div>
-                        <div class="assessment-card-body">
-                            <div class="assessment-card-row">
-                                <span class="assessment-card-label">Nomor Kendaraan</span>
-                                <span class="assessment-card-value">${req.nomor_kendaraan || '-'}</span>
-                            </div>
-                            <div class="assessment-card-row">
-                                <span class="assessment-card-label">Tanggal</span>
-                                <span class="assessment-card-value">${req.timestamp || req.tanggal}</span>
-                            </div>
-                        </div>
-                        <div class="assessment-card-footer">
-                            ${actionButtons}
-                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
+                return `<div class="assessment-card">
+                    <div class="assessment-card-header">
+                        <div style="flex: 1;"><div class="assessment-card-title">${req.nama_pegawai || req.nama_pemohon}</div><div class="assessment-card-subtitle">#${req.id}</div></div>
+                        ${createStatusBadge(req.status)}
+                    </div>
+                    <div class="assessment-card-body">
+                        <div class="assessment-card-row"><span class="assessment-card-label">Nomor Kendaraan</span><span class="assessment-card-value">${req.nomor_kendaraan || '-'}</span></div>
+                        <div class="assessment-card-row"><span class="assessment-card-label">Tanggal</span><span class="assessment-card-value">${req.timestamp || req.tanggal}</span></div>
+                    </div>
+                    <div class="assessment-card-footer" style="flex-direction: column; gap: 8px;">
+                        ${req.status === 'pending' ? `<div style="display:flex; gap:8px;">${actionButtons}</div>` : ''}
+                        <div style="display:flex; gap:8px;">
+                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex:1;">👁 Detail</button>
+                            <button onclick="openEditRequestModal('${req.id}')" class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button>
+                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button>
                         </div>
                     </div>
-                `;
+                </div>`;
             }).join('');
 
-            // Render pagination
             paginationContainer.innerHTML = `
-                <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>
-                    ‹ Prev
-                </button>
-                <span class="pagination-info">
-                    Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)
-                </span>
-                <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>
-                    Next ›
-                </button>
-            `;
+                <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+                <span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span>
+                <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function changeRequestsPage(page) {
             const totalPages = Math.ceil(allRequests.length / itemsPerPage);
             if (page < 1 || page > totalPages) return;
-            requestsCurrentPage = page;
-            renderPaginatedRequests();
-            
-            // Scroll to top
-            if (window.innerWidth < 1024) {
-                document.querySelector('#requests-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            requestsCurrentPage = page; renderPaginatedRequests();
+            if (window.innerWidth < 1024) { document.querySelector('#requests-cards').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            else { document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         }
 
         function viewDetail(id) {
             const request = allRequests.find(r => r.id === id);
             if (!request) return;
-
             document.getElementById('modal-detail-body').innerHTML = `
                 <div class="info-grid">
-                    <div class="info-item">
-                        <label class="input-label">No. Permintaan</label>
-                        <p style="font-weight: 500;">#${request.id}</p>
-                    </div>
-                    <div class="info-item">
-                        <label class="input-label">Nama Pegawai</label>
-                        <p style="font-weight: 500;">${request.nama_pemohon || request.nama_pegawai}</p>
-                    </div>
+                    <div class="info-item"><label class="input-label">No. Permintaan</label><p style="font-weight: 500;">#${request.id}</p></div>
+                    <div class="info-item"><label class="input-label">Nama Pegawai</label><p style="font-weight: 500;">${request.nama_pemohon || request.nama_pegawai}</p></div>
                 </div>
                 <div class="info-grid">
-                    <div class="info-item">
-                        <label class="input-label">Unit Kerja / Bidang</label>
-                        <p style="font-weight: 500;">${request.unit_eselon || '-'}</p>
-                    </div>
-                    <div class="info-item">
-                        <label class="input-label">Nomor Kendaraan</label>
-                        <p style="font-weight: 500;">${request.nomor_kendaraan}</p>
-                    </div>
+                    <div class="info-item"><label class="input-label">Unit Kerja / Bidang</label><p style="font-weight: 500;">${request.unit_eselon || '-'}</p></div>
+                    <div class="info-item"><label class="input-label">Nomor Kendaraan</label><p style="font-weight: 500;">${request.nomor_kendaraan}</p></div>
                 </div>
                 <div class="info-grid">
-                    <div class="info-item">
-                        <label class="input-label">Tanggal Permintaan</label>
-                        <p style="font-weight: 500;">${request.timestamp || request.tanggal}</p>
-                    </div>
-                    <div class="info-item">
-                        <label class="input-label">Status</label>
-                        <div>${createStatusBadge(request.status)}</div>
-                    </div>
-                </div>
-            `;
+                    <div class="info-item"><label class="input-label">Tanggal Permintaan</label><p style="font-weight: 500;">${request.timestamp || request.tanggal}</p></div>
+                    <div class="info-item"><label class="input-label">Status</label><div>${createStatusBadge(request.status)}</div></div>
+                </div>`;
             openModal('detailModal');
         }
 
@@ -1598,29 +864,18 @@
             if (!confirm('Berikan voucher BBM untuk permintaan ini?')) return;
             try {
                 const res = await callAPI({ action: 'updateVoucherRequest', id, status: 'approved' });
-                if (res.success) {
-                    Toast.success('Voucher BBM berhasil diberikan');
-                    loadRequests();
-                }
-            } catch (error) { 
-                Toast.error('Gagal: ' + error.message); 
-            }
+                if (res.success) { Toast.success('Voucher BBM berhasil diberikan'); loadRequests(); }
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
         }
 
         async function reject(id) {
             if (!confirm('Tolak permintaan voucher BBM ini?')) return;
             try {
                 const res = await callAPI({ action: 'updateVoucherRequest', id, status: 'rejected' });
-                if (res.success) {
-                    Toast.success('Permintaan ditolak');
-                    loadRequests();
-                }
-            } catch (error) { 
-                Toast.error('Gagal: ' + error.message); 
-            }
+                if (res.success) { Toast.success('Permintaan ditolak'); loadRequests(); }
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
         }
 
-        // ================== SEARCH ==================
         document.getElementById('search-input').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             allRequests = masterRequests.filter(req => {
@@ -1628,22 +883,15 @@
                 const plat = (req.nomor_kendaraan || "").toLowerCase();
                 return nama.includes(searchTerm) || plat.includes(searchTerm);
             });
-            requestsCurrentPage = 1;
-            renderPaginatedRequests();
+            requestsCurrentPage = 1; renderPaginatedRequests();
         });
 
-        // ================== TAB 2: VIOLATIONS WITH PAGINATION ==================
         async function loadViolations() {
             try {
                 const response = await callAPI({ action: 'getBBMViolations' });
                 masterViolations = Array.isArray(response) ? response : [];
-                allViolations = [...masterViolations];
-                violationsCurrentPage = 1;
-                renderPaginatedViolations();
-            } catch (error) {
-                console.error('Error:', error);
-                Toast.error('Gagal memuat data keterlambatan');
-            }
+                allViolations = [...masterViolations]; violationsCurrentPage = 1; renderPaginatedViolations();
+            } catch (error) { console.error('Error:', error); Toast.error('Gagal memuat data keterlambatan'); }
         }
 
         function renderPaginatedViolations() {
@@ -1652,18 +900,15 @@
             const paginationContainer = document.getElementById('violations-pagination');
             
             if (allViolations.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">Tidak ada catatan keterlambatan</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">Tidak ada catatan keterlambatan</td></tr>';
                 cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
-                paginationContainer.innerHTML = '';
-                return;
+                paginationContainer.innerHTML = ''; return;
             }
 
             const totalPages = Math.ceil(allViolations.length / itemsPerPage);
             const startIndex = (violationsCurrentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const currentItems = allViolations.slice(startIndex, endIndex);
+            const currentItems = allViolations.slice(startIndex, startIndex + itemsPerPage);
 
-            // Render table for desktop
             tbody.innerHTML = currentItems.map(v => `
                 <tr>
                     <td>${v.bulan}</td>
@@ -1671,347 +916,232 @@
                     <td>${v.tanggal_pengambilan}</td>
                     <td>${v.tanggal_pengembalian}</td>
                     <td>${v.nomor_kendaraan}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit">✏️ Edit</button>
+                            <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
+                        </div>
+                    </td>
                 </tr>
             `).join('');
 
-            // Render cards for mobile
             cardsContainer.innerHTML = currentItems.map(v => `
                 <div class="violation-card">
-                    <div class="violation-card-header">
-                        <div>
-                            <div class="violation-card-title">${v.unit}</div>
-                            <div class="violation-card-subtitle">Bulan ${v.bulan}</div>
-                        </div>
-                    </div>
+                    <div class="violation-card-header"><div><div class="violation-card-title">${v.unit}</div><div class="violation-card-subtitle">Bulan ${v.bulan}</div></div></div>
                     <div class="violation-card-body">
-                        <div class="violation-card-item">
-                            <div class="violation-card-label">Tgl Pengambilan</div>
-                            <div class="violation-card-value">${v.tanggal_pengambilan}</div>
-                        </div>
-                        <div class="violation-card-item">
-                            <div class="violation-card-label">Tgl Pengembalian</div>
-                            <div class="violation-card-value">${v.tanggal_pengembalian}</div>
-                        </div>
-                        <div class="violation-card-item" style="grid-column: 1 / -1;">
-                            <div class="violation-card-label">Nomor Kendaraan</div>
-                            <div class="violation-card-value">${v.nomor_kendaraan}</div>
-                        </div>
+                        <div class="violation-card-item"><div class="violation-card-label">Tgl Pengambilan</div><div class="violation-card-value">${v.tanggal_pengambilan}</div></div>
+                        <div class="violation-card-item"><div class="violation-card-label">Tgl Pengembalian</div><div class="violation-card-value">${v.tanggal_pengembalian}</div></div>
+                        <div class="violation-card-item" style="grid-column: 1 / -1;"><div class="violation-card-label">Nomor Kendaraan</div><div class="violation-card-value">${v.nomor_kendaraan}</div></div>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f1f5f9;">
+                        <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button>
+                        <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button>
                     </div>
                 </div>
             `).join('');
 
-            // Render pagination
             paginationContainer.innerHTML = `
-                <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>
-                    ‹ Prev
-                </button>
-                <span class="pagination-info">
-                    Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)
-                </span>
-                <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>
-                    Next ›
-                </button>
-            `;
+                <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+                <span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span>
+                <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function changeViolationsPage(page) {
             const totalPages = Math.ceil(allViolations.length / itemsPerPage);
             if (page < 1 || page > totalPages) return;
-            violationsCurrentPage = page;
-            renderPaginatedViolations();
-            
-            // Scroll to top
-            if (window.innerWidth < 1024) {
-                document.querySelector('#violations-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            violationsCurrentPage = page; renderPaginatedViolations();
+            if (window.innerWidth < 1024) { document.querySelector('#violations-cards').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            else { document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         }
 
-        function openAddViolationModal() {
-            document.getElementById('violationForm').reset();
-            openModal('addViolationModal');
-        }
+        function openAddViolationModal() { document.getElementById('violationForm').reset(); openModal('addViolationModal'); }
 
         async function submitViolation() {
             const form = document.getElementById('violationForm');
             const submitBtn = document.getElementById('submit-violation-btn');
-            
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
+            if (!form.checkValidity()) { form.reportValidity(); return; }
             const originalBtnText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
-
             const bulan = document.getElementById('violation-bulan').value;
             const unit = document.getElementById('violation-unit').value;
             const tglAmbil = document.getElementById('violation-tgl-ambil').value;
             const tglKembali = document.getElementById('violation-tgl-kembali').value;
             const nopol = document.getElementById('violation-nopol').value;
-
             try {
-                const formatDate = (dateStr) => {
-                    const dateObj = new Date(dateStr);
-                    return `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-                };
-
-                const result = await callAPI({
-                    action: 'createBBMViolation',
-                    bulan: bulan,
-                    unit: unit,
-                    tanggal_pengambilan: formatDate(tglAmbil),
-                    tanggal_pengembalian: formatDate(tglKembali),
-                    nomor_kendaraan: nopol
-                });
-
-                if (result.success) {
-                    Toast.success('Catatan keterlambatan berhasil ditambahkan!');
-                    closeModal('addViolationModal');
-                    loadViolations();
-                    loadScores();
-                } else {
-                    Toast.error(result.message || 'Gagal menambahkan catatan');
-                }
-            } catch (error) {
-                Toast.error('Gagal menambahkan catatan: ' + error);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            }
+                const formatDate = (dateStr) => { const dateObj = new Date(dateStr); return `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`; };
+                const result = await callAPI({ action: 'createBBMViolation', bulan, unit, tanggal_pengambilan: formatDate(tglAmbil), tanggal_pengembalian: formatDate(tglKembali), nomor_kendaraan: nopol });
+                if (result.success) { Toast.success('Catatan keterlambatan berhasil ditambahkan!'); closeModal('addViolationModal'); loadViolations(); loadScores(); }
+                else { Toast.error(result.message || 'Gagal menambahkan catatan'); }
+            } catch (error) { Toast.error('Gagal menambahkan catatan: ' + error); }
+            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnText; }
         }
 
-        // Filters for violations
         document.getElementById('filter-bulan').addEventListener('change', filterViolations);
         document.getElementById('filter-unit').addEventListener('change', filterViolations);
 
         function filterViolations() {
             const filterBulan = document.getElementById('filter-bulan').value;
             const filterUnit = document.getElementById('filter-unit').value;
-
-            allViolations = masterViolations.filter(v => {
-                const matchBulan = filterBulan === "" || v.bulan === filterBulan;
-                const matchUnit = filterUnit === "" || v.unit === filterUnit;
-                return matchBulan && matchUnit;
-            });
-
-            violationsCurrentPage = 1;
-            renderPaginatedViolations();
+            allViolations = masterViolations.filter(v => { const matchBulan = filterBulan === "" || v.bulan === filterBulan; const matchUnit = filterUnit === "" || v.unit === filterUnit; return matchBulan && matchUnit; });
+            violationsCurrentPage = 1; renderPaginatedViolations();
         }
 
-        // ================== TAB 3: SCORES ==================
+        // ================== EDIT REQUEST ==================
+        function openEditRequestModal(id) {
+            const req = allRequests.find(r => r.id === id);
+            if (!req) { Toast.error('Data tidak ditemukan'); return; }
+            currentEditRequestId = id;
+            document.getElementById('edit-req-status').value = req.status || 'pending';
+            document.getElementById('edit-req-nopol').value = req.nomor_kendaraan || '';
+            document.getElementById('edit-req-nama').value = req.nama_pegawai || req.nama_pemohon || '';
+            document.getElementById('edit-req-tanggal').value = req.timestamp || req.tanggal || '';
+            openModal('editRequestModal');
+        }
+
+        async function submitEditRequest() {
+            const submitBtn = document.getElementById('submit-edit-req-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;"></span> Menyimpan...';
+            try {
+                const res = await callAPI({
+                    action: 'updateVoucherRequest',
+                    id: currentEditRequestId,
+                    status: document.getElementById('edit-req-status').value,
+                    nomor_kendaraan: document.getElementById('edit-req-nopol').value
+                });
+                if (res.success) {
+                    Toast.success('Permintaan berhasil diperbarui');
+                    closeModal('editRequestModal');
+                    loadRequests();
+                } else { Toast.error(res.message || 'Gagal memperbarui'); }
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
+            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
+        }
+
+        async function deleteRequest(id) {
+            if (!confirm('Hapus permintaan ini? Tindakan ini tidak dapat dibatalkan.')) return;
+            try {
+                const res = await callAPI({ action: 'deleteVoucherRequest', id: id });
+                if (res.success) {
+                    Toast.success('Permintaan berhasil dihapus');
+                    loadRequests();
+                } else { Toast.error(res.message || 'Gagal menghapus. Pastikan backend sudah diperbarui.'); }
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
+        }
+
+        // ================== EDIT & DELETE VIOLATION ==================
+        function openEditViolationModal(violation) {
+            currentEditViolationId = violation.id;
+            // Parse tanggal format DD-M-YYYY atau DD-MM-YYYY ke YYYY-MM-DD
+            const parseToInputDate = (dateStr) => {
+                if (!dateStr) return '';
+                const parts = dateStr.split('-');
+                if (parts.length === 3) {
+                    return `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
+                }
+                return '';
+            };
+            document.getElementById('edit-viol-bulan').value = violation.bulan || '';
+            document.getElementById('edit-viol-unit').value = violation.unit || '';
+            document.getElementById('edit-viol-tgl-ambil').value = parseToInputDate(violation.tanggal_pengambilan);
+            document.getElementById('edit-viol-tgl-kembali').value = parseToInputDate(violation.tanggal_pengembalian);
+            document.getElementById('edit-viol-nopol').value = violation.nomor_kendaraan || '';
+            openModal('editViolationModal');
+        }
+
+        async function submitEditViolation() {
+            const form = document.getElementById('editViolationForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const submitBtn = document.getElementById('submit-edit-viol-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;"></span> Menyimpan...';
+            try {
+                const formatDate = (dateStr) => {
+                    const d = new Date(dateStr);
+                    return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+                };
+                const res = await callAPI({
+                    action: 'updateBBMViolation',
+                    id: currentEditViolationId,
+                    bulan: document.getElementById('edit-viol-bulan').value,
+                    unit: document.getElementById('edit-viol-unit').value,
+                    tanggal_pengambilan: formatDate(document.getElementById('edit-viol-tgl-ambil').value),
+                    tanggal_pengembalian: formatDate(document.getElementById('edit-viol-tgl-kembali').value),
+                    nomor_kendaraan: document.getElementById('edit-viol-nopol').value
+                });
+                if (res.success) {
+                    Toast.success('Catatan berhasil diperbarui');
+                    closeModal('editViolationModal');
+                    loadViolations();
+                    loadScores();
+                } else { Toast.error(res.message || 'Gagal memperbarui'); }
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
+            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
+        }
+
+        async function deleteViolation(id, bulan, unit) {
+            if (!confirm('Hapus catatan keterlambatan ini?')) return;
+            try {
+                const res = await callAPI({ action: 'deleteBBMViolation', id: id, bulan: bulan, unit: unit });
+                if (res.success) {
+                    Toast.success('Catatan berhasil dihapus');
+                    loadViolations();
+                    loadScores();
+                } else { Toast.error(res.message || 'Gagal menghapus'); }
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
+        }
+
         async function loadScores() {
             try {
                 const data = await callAPI({ action: 'getBBMScores' });
-                if (data.success) {
-                    allScores = {
-                        sanksi: data.sanksiPerPelanggaran,
-                        scores: data.scores
-                    };
-                    renderScoresUI(allScores);
-                }
-            } catch (error) {
-                console.error("Gagal load scores:", error);
-                Toast.error('Gagal memuat penilaian');
-            }
+                if (data.success) { allScores = { sanksi: data.sanksiPerPelanggaran, scores: data.scores }; renderScoresUI(allScores); }
+            } catch (error) { console.error("Gagal load scores:", error); Toast.error('Gagal memuat penilaian'); }
         }
 
         function renderScoresUI(data) {
             document.getElementById('sanksi-value').textContent = `${data.sanksi} poin`;
-            
             if (!document.getElementById('filter-score-bulan').value) {
-                const monthNames = ['', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 
-                                  'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-                const currentMonth = monthNames[new Date().getMonth() + 1];
-                document.getElementById('filter-score-bulan').value = currentMonth;
+                const monthNames = ['', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+                document.getElementById('filter-score-bulan').value = monthNames[new Date().getMonth() + 1];
             }
-            
             renderScores();
         }
 
         function renderScores() {
             const bulan = document.getElementById('filter-score-bulan').value;
             const container = document.getElementById('scores-container');
-
-            if (!bulan) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📊</div>
-                        <p>Pilih bulan untuk melihat penilaian</p>
-                    </div>
-                `;
-                if (scoreChart) scoreChart.destroy();
-                if (violationChart) violationChart.destroy();
-                return;
-            }
-
-            if (!allScores.scores) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⚠️</div>
-                        <p style="color: #ef4444;">Data penilaian tidak tersedia</p>
-                    </div>
-                `;
-                return;
-            }
-
+            if (!bulan) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>`; if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return; }
+            if (!allScores.scores) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color: #ef4444;">Data penilaian tidak tersedia</p></div>`; return; }
             const monthScores = allScores.scores.filter(s => s.bulan === bulan);
-
-            if (monthScores.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <p>Tidak ada data untuk bulan ini</p>
-                    </div>
-                `;
-                if (scoreChart) scoreChart.destroy();
-                if (violationChart) violationChart.destroy();
-                return;
-            }
-
+            if (monthScores.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>`; if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return; }
             renderCharts(monthScores);
-
             container.innerHTML = monthScores.map(score => {
                 const scoreClass = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
-                
-                return `
-                    <div class="score-card">
-                        <div class="score-header">
-                            <div>
-                                <div class="score-unit-name">${score.unit}</div>
-                                <div class="score-month">Bulan ${score.bulan}</div>
-                            </div>
-                            <div class="score-value ${scoreClass}">${score.skorAkhir.toFixed(2)}</div>
-                        </div>
-                        <div class="score-details">
-                            <div class="score-detail-item">
-                                <div class="score-detail-label">Skor Utuh</div>
-                                <div class="score-detail-value">${score.skorUtuh}</div>
-                            </div>
-                            <div class="score-detail-item">
-                                <div class="score-detail-label">Keterlambatan</div>
-                                <div class="score-detail-value">${score.jumlahPelanggaran}</div>
-                            </div>
-                            <div class="score-detail-item">
-                                <div class="score-detail-label">Sanksi</div>
-                                <div class="score-detail-value" style="color: #ef4444;">-${score.jumlahSanksi.toFixed(2)}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="score-card"><div class="score-header"><div><div class="score-unit-name">${score.unit}</div><div class="score-month">Bulan ${score.bulan}</div></div><div class="score-value ${scoreClass}">${score.skorAkhir.toFixed(2)}</div></div><div class="score-details"><div class="score-detail-item"><div class="score-detail-label">Skor Utuh</div><div class="score-detail-value">${score.skorUtuh}</div></div><div class="score-detail-item"><div class="score-detail-label">Keterlambatan</div><div class="score-detail-value">${score.jumlahPelanggaran}</div></div><div class="score-detail-item"><div class="score-detail-label">Sanksi</div><div class="score-detail-value" style="color: #ef4444;">-${score.jumlahSanksi.toFixed(2)}</div></div></div></div>`;
             }).join('');
         }
 
         function renderCharts(monthScores) {
-            const units = monthScores.map(s => {
-                const unitName = s.unit;
-                if (unitName.length > 25) {
-                    return unitName.substring(0, 22) + '...';
-                }
-                return unitName;
-            });
+            const units = monthScores.map(s => s.unit.length > 25 ? s.unit.substring(0, 22) + '...' : s.unit);
             const scores = monthScores.map(s => s.skorAkhir);
             const violations = monthScores.map(s => s.jumlahPelanggaran);
-
             if (scoreChart) scoreChart.destroy();
             const scoreCtx = document.getElementById('scoreChart').getContext('2d');
-            scoreChart = new Chart(scoreCtx, {
-                type: 'bar',
-                data: {
-                    labels: units,
-                    datasets: [{
-                        label: 'Skor Akhir',
-                        data: scores,
-                        backgroundColor: scores.map(s => 
-                            s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'
-                        ),
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: (context) => `Skor: ${context.parsed.y.toFixed(2)}`
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 5,
-                            ticks: {
-                                stepSize: 0.5
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                font: { size: 11 }
-                            }
-                        }
-                    }
-                }
-            });
-
+            scoreChart = new Chart(scoreCtx, { type: 'bar', data: { labels: units, datasets: [{ label: 'Skor Akhir', data: scores, backgroundColor: scores.map(s => s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => `Skor: ${context.parsed.y.toFixed(2)}` } } }, scales: { y: { beginAtZero: true, max: 5, ticks: { stepSize: 0.5 } }, x: { ticks: { font: { size: 11 } } } } } });
             if (violationChart) violationChart.destroy();
             const violationCtx = document.getElementById('violationChart').getContext('2d');
-            violationChart = new Chart(violationCtx, {
-                type: 'bar',
-                data: {
-                    labels: units,
-                    datasets: [{
-                        label: 'Jumlah Keterlambatan',
-                        data: violations,
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                font: { size: 11 }
-                            }
-                        }
-                    }
-                }
-            });
+            violationChart = new Chart(violationCtx, { type: 'bar', data: { labels: units, datasets: [{ label: 'Jumlah Keterlambatan', data: violations, backgroundColor: '#3b82f6', borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 11 } } } } } });
         }
 
         document.getElementById('filter-score-bulan').addEventListener('change', renderScores);
 
-        // ================== MODAL FUNCTIONS ==================
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
+        function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        window.onclick = function(event) { if (event.target.classList.contains('modal-overlay')) { event.target.style.display = 'none'; } }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.style.display = 'none';
-            }
-        }
-
-        // ================== INIT ==================
         loadRequests();
     </script>
 </body>

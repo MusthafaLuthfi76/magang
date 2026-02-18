@@ -1068,7 +1068,7 @@
                                     <th>Unit Eselon</th>
                                     <th>Tanggal</th>
                                     <th>Waktu</th>
-                                    <th>Status</th>
+                                    <th>Kendaraan</th> <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -1266,42 +1266,46 @@
     <div id="editModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Edit Pengajuan</h2>
+                <h2 class="modal-title">Update Status & Kendaraan</h2>
             </div>
             <div class="modal-content">
                 <form id="editForm">
                     <div class="form-group">
-                        <label class="input-label">Nama Pegawai</label>
-                        <input type="text" class="form-input" id="edit-nama" required>
+                        <label class="input-label">Status Pengajuan</label>
+                        <select class="form-input" id="edit-status" required>
+                            <option value="pending">Menunggu (Pending)</option>
+                            <option value="approved">Disetujui (Approved)</option>
+                            <option value="rejected">Ditolak (Rejected)</option>
+                        </select>
                     </div>
+
                     <div class="form-group">
-                        <label class="input-label">Unit Eselon</label>
-                        <input type="text" class="form-input" id="edit-unit" required>
+                        <label class="input-label">Nomor Kendaraan</label>
+                        <select class="form-input" id="edit-nomor-kendaraan">
+                            <option value="">Pilih Nomor Kendaraan</option>
+                            <option value="AB1027AV">AB1027AV</option>
+                            <option value="AB1869UA">AB1869UA</option>
+                            <option value="AB1147UH">AB1147UH</option>
+                            <option value="AB1340UH">AB1340UH</option>
+                            <option value="AB 1530 UH">AB 1530 UH</option>
+                            <option value="AB 1067 IA">AB 1067 IA</option>
+                        </select>
+                    </div>
+
+                    <div style="margin: 15px 0; border-top: 1px dashed #ccc; padding-top: 10px;">
+                        <small style="color: #666;">Data Pegawai (Tidak dapat diubah):</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="input-label">Nama Pegawai</label>
+                        <input type="text" class="form-input" id="edit-nama" readonly style="background: #f0f0f0; cursor: not-allowed;">
                     </div>
                     <div class="form-group">
                         <label class="input-label">Tanggal Penggunaan</label>
-                        <input type="date" class="form-input" id="edit-tanggal" required>
+                        <input type="text" class="form-input" id="edit-tanggal" readonly style="background: #f0f0f0; cursor: not-allowed;">
                     </div>
-                    <div class="form-group">
-                        <label class="input-label">Waktu Penjemputan</label>
-                        <input type="time" class="form-input" id="edit-waktu-jemput" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Waktu Pengembalian</label>
-                        <input type="time" class="form-input" id="edit-waktu-kembali" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Nomor Kendaraan</label>
-                        <input type="text" class="form-input" id="edit-nomor-kendaraan" placeholder="Contoh: AB 1234 XY">
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Tujuan</label>
-                        <input type="text" class="form-input" id="edit-tujuan" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Alamat</label>
-                        <textarea class="form-textarea" id="edit-alamat"></textarea>
-                    </div>
+
+                    <input type="hidden" id="edit-id">
                 </form>
             </div>
             <div class="modal-footer">
@@ -1375,7 +1379,7 @@
     </div>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxwceGcQ2GimSJ392OYQq6BoX0fqFrM5WE0G11xl-YdbsuDVq3RUyUuMxc9r2pQ1kWpsQ/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwJYcC9UtR6N4jDLcfKBIxiZ57GG2XGB1B9bsJS8b2kDZPo8Fr_cn9jPus6zpDHR0GH1w/exec';
         
         let masterRequests = [];
         let allRequests = [];
@@ -1535,15 +1539,31 @@
 
         // ================== TAB 1: REQUESTS WITH PAGINATION ==================
         async function loadRequests() {
+            // 1. Cek apakah ada data di cache (localStorage)
+            const cachedData = localStorage.getItem('cache_requests');
+            if (cachedData) {
+                masterRequests = JSON.parse(cachedData);
+                allRequests = [...masterRequests];
+                renderPaginatedRequests();
+                console.log('Memuat data dari cache');
+            }
+
+            // 2. Tetap panggil API di background untuk memperbarui data terbaru
             try {
                 const response = await callAPI({ action: 'getRequests' });
-                masterRequests = Array.isArray(response) ? response : [];
-                allRequests = [...masterRequests];
-                requestsCurrentPage = 1;
-                renderPaginatedRequests();
+                const newData = Array.isArray(response) ? response : [];
+                
+                // 3. Jika data dari API berbeda dengan cache, perbarui tampilan dan simpan ke cache
+                if (JSON.stringify(newData) !== cachedData) {
+                    masterRequests = newData;
+                    allRequests = [...masterRequests];
+                    localStorage.setItem('cache_requests', JSON.stringify(newData)); // Simpan ke cache
+                    renderPaginatedRequests();
+                    console.log('Cache diperbarui dari server');
+                }
             } catch (error) {
                 console.error('Load error:', error);
-                Toast.error('Gagal memuat data');
+                if (!cachedData) Toast.error('Gagal memuat data');
             }
         }
 
@@ -1579,6 +1599,11 @@
                     <td>${req.unit_eselon || '-'}</td>
                     <td>${req.tanggal_penggunaan || '-'}</td>
                     <td>${formatTime(req.waktu_penjemputan)} - ${formatTime(req.waktu_pengembalian)}</td>
+                    
+                    <td style="font-family: monospace; font-weight: bold; color: #1e293b;">
+                        ${req.nomorKendaraan && req.nomorKendaraan !== '-' ? req.nomorKendaraan : '<span style="color: #94a3b8; font-weight: normal;">Belum Ada</span>'}
+                    </td>
+
                     <td>
                         ${req.status === 'pending' ? `
                             <div class="action-buttons">
@@ -1624,6 +1649,10 @@
                             <div class="requests-card-row">
                                 <span class="requests-card-label">Waktu</span>
                                 <span class="requests-card-value">${formatTime(req.waktu_penjemputan)} - ${formatTime(req.waktu_pengembalian)}</span>
+                            </div>
+                            <div class="requests-card-row">
+                                <span class="requests-card-label">Kendaraan</span>
+                                <span class="requests-card-value" style="font-weight: bold;">${req.nomorKendaraan || '-'}</span>
                             </div>
                         </div>
                         <div class="requests-card-footer">
@@ -1746,6 +1775,7 @@
                     closeModal('approveModal');
                     masterRequests = [];
                     allRequests = [];
+                    localStorage.removeItem('cache_requests');
                     loadRequests();
                 } else {
                     Toast.error(res.message || 'Gagal menyetujui');
@@ -1766,6 +1796,7 @@
                     Toast.success('Pengajuan ditolak');
                     masterRequests = [];
                     allRequests = [];
+                    localStorage.removeItem('cache_requests');
                     loadRequests();
                 }
             } catch (error) { 
@@ -1777,61 +1808,54 @@
         function openEditModal(id) {
             const request = allRequests.find(r => r.id == id);
             if (!request) {
-                Toast.error('Pengajuan tidak ditemukan');
+                Toast.error('Data tidak ditemukan');
                 return;
             }
 
             currentEditId = id;
 
-            document.getElementById('edit-nama').value = request.nama_pegawai || '';
-            document.getElementById('edit-unit').value = request.unit_eselon || '';
-            document.getElementById('edit-tanggal').value = request.tanggal_penggunaan || '';
-            document.getElementById('edit-waktu-jemput').value = request.waktu_penjemputan ? request.waktu_penjemputan.split('T')[1].substring(0, 5) : '';
-            document.getElementById('edit-waktu-kembali').value = request.waktu_pengembalian ? request.waktu_pengembalian.split('T')[1].substring(0, 5) : '';
+            // Isi field yang bisa diedit
+            document.getElementById('edit-status').value = request.status || 'pending';
             document.getElementById('edit-nomor-kendaraan').value = request.nomorKendaraan || '';
-            document.getElementById('edit-tujuan').value = request.tujuan || request.keterangan || '';
-            document.getElementById('edit-alamat').value = request.alamat || '';
+
+            // Isi field readonly sebagai informasi
+            document.getElementById('edit-nama').value = request.nama_pegawai || '';
+            document.getElementById('edit-tanggal').value = request.tanggal_penggunaan || '';
+            document.getElementById('edit-id').value = id;
 
             openModal('editModal');
         }
 
         async function submitEdit() {
-            const form = document.getElementById('editForm');
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
             const submitBtn = document.getElementById('submit-edit-btn');
             const originalText = submitBtn.innerHTML;
+            
+            // Ambil nilai yang diubah oleh admin
+            const updatedStatus = document.getElementById('edit-status').value;
+            const updatedVehicle = document.getElementById('edit-nomor-kendaraan').value;
+            const requestId = document.getElementById('edit-id').value;
+
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
+            submitBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
 
             try {
                 const res = await callAPI({
-                    action: 'updateRequest',
-                    id: currentEditId,
-                    nama_pegawai: document.getElementById('edit-nama').value,
-                    unit_eselon: document.getElementById('edit-unit').value,
-                    tanggal_penggunaan: document.getElementById('edit-tanggal').value,
-                    waktu_penjemputan: document.getElementById('edit-waktu-jemput').value,
-                    waktu_pengembalian: document.getElementById('edit-waktu-kembali').value,
-                    nomorKendaraan: document.getElementById('edit-nomor-kendaraan').value,
-                    tujuan: document.getElementById('edit-tujuan').value,
-                    alamat: document.getElementById('edit-alamat').value
+                    action: 'updateRequest', 
+                    id: requestId,
+                    status: updatedStatus,
+                    nomorKendaraan: updatedVehicle
                 });
 
                 if (res.success) {
-                    Toast.success('Pengajuan berhasil diperbarui');
+                    Toast.success('Data Berhasil Diperbarui!');
+                    localStorage.removeItem('cache_requests');
                     closeModal('editModal');
-                    masterRequests = [];
-                    allRequests = [];
-                    loadRequests();
+                    loadRequests(); // Muat ulang tabel
                 } else {
-                    Toast.error(res.message || 'Gagal memperbarui');
+                    Toast.error(res.message || 'Gagal menyimpan');
                 }
             } catch (error) {
-                Toast.error('Gagal: ' + error.message);
+                Toast.error('Koneksi Error: ' + error.message);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
@@ -1852,6 +1876,7 @@
                     Toast.success('Pengajuan berhasil dihapus');
                     masterRequests = [];
                     allRequests = [];
+                    localStorage.removeItem('cache_requests');
                     loadRequests();
                 } else {
                     Toast.error(res.message || 'Gagal menghapus');

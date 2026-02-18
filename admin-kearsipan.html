@@ -320,9 +320,20 @@
             background: #059669; 
         }
 
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
         .action-buttons {
             display: flex;
             gap: 6px;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -786,7 +797,6 @@
     <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- SIDEBAR -->
-    <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
@@ -923,7 +933,7 @@
     </div>
 
     <script>
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy9kC3jqU-NHfxrfgd_1qprAi4ML6bzG5VbhRxVR5wt-iTon4cZpDaXswOMa37n_9kUQ/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYbUHgMtbcVrFk4H-j_Wfi___Ah4mLmBqF9ZvquFcZ9PSE8t4l-JDoTPRzvDJfgwX2Og/exec';
         
         let masterDocuments = [];
         let allDocuments = [];
@@ -1055,7 +1065,10 @@
                             <a href="${doc.file_url}" target="_blank" class="btn btn-sm">👁️ Lihat</a>
                             ${doc.status !== 'ASSESSED' 
                                 ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-sm btn-success">✓ Nilai</button>`
-                                : `<button onclick="viewAssessment('${doc.id}')" class="btn btn-sm">📊 Detail</button>`
+                                : `
+                                <button onclick="viewAssessment('${doc.id}')" class="btn btn-sm">📊 Detail</button>
+                                <button onclick="editAssessment('${doc.id}')" class="btn btn-sm btn-warning">✏️ Edit</button>
+                                `
                             }
                         </div>
                     </td>
@@ -1096,11 +1109,14 @@
                             ` : ''}
                         </div>
                         <div class="documents-card-footer">
-                            <div style="display: flex; gap: 8px;">
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                 <a href="${doc.file_url}" target="_blank" class="btn btn-sm" style="flex: 1;">👁️ Lihat</a>
                                 ${doc.status !== 'ASSESSED' 
                                     ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-sm btn-success" style="flex: 1;">✓ Nilai</button>`
-                                    : `<button onclick="viewAssessment('${doc.id}')" class="btn btn-sm" style="flex: 1;">📊 Detail</button>`
+                                    : `
+                                    <button onclick="viewAssessment('${doc.id}')" class="btn btn-sm" style="flex: 1;">📊 Detail</button>
+                                    <button onclick="editAssessment('${doc.id}')" class="btn btn-sm btn-warning" style="flex: 1;">✏️ Edit</button>
+                                    `
                                 }
                             </div>
                         </div>
@@ -1150,16 +1166,63 @@
             }
         }
 
-        function openAssessmentModal(docId) {
+        function openAssessmentModal(docId, isEdit = false) {
             const doc = allDocuments.find(d => d.id === docId);
             if (!doc) return;
+
+            // Parse existing catatan if editing
+            let existingData = {
+                bukti_lengkap: true,
+                bukti_benar: true,
+                bukti_tepat_waktu: true,
+                hari_terlambat: 0,
+                sudah_srikandi: true,
+                surat_sesuai_tnd: true,
+                jumlah_surat_salah: 0,
+                catatan: ''
+            };
+
+            if (isEdit && doc.catatan) {
+                // Parse catatan untuk mendapatkan nilai sebelumnya
+                const catatanText = doc.catatan;
+                existingData.bukti_lengkap = catatanText.includes('Lengkap: ✓');
+                existingData.bukti_benar = catatanText.includes('Benar: ✓');
+                existingData.bukti_tepat_waktu = !catatanText.includes('terlambat');
+                
+                // Extract hari terlambat
+                const terlambatMatch = catatanText.match(/terlambat (\d+) hari/);
+                if (terlambatMatch) {
+                    existingData.hari_terlambat = parseInt(terlambatMatch[1]);
+                }
+                
+                // Extract Srikandi
+                const srikandiMatch = catatanText.match(/Srikandi: ([\d.]+)/);
+                existingData.sudah_srikandi = srikandiMatch && parseFloat(srikandiMatch[1]) === 1;
+                
+                // Extract Surat Keluar
+                const suratMatch = catatanText.match(/(\d+) surat salah TND/);
+                if (suratMatch) {
+                    existingData.surat_sesuai_tnd = false;
+                    existingData.jumlah_surat_salah = parseInt(suratMatch[1]);
+                } else {
+                    existingData.surat_sesuai_tnd = true;
+                    existingData.jumlah_surat_salah = 0;
+                }
+                
+                // Extract custom catatan (text after breakdown)
+                const catatanLines = catatanText.split('\n');
+                const lastLines = catatanLines.slice(catatanLines.findIndex(l => l.includes('Surat Keluar')) + 1).join('\n').trim();
+                if (lastLines && !lastLines.includes('surat salah')) {
+                    existingData.catatan = lastLines;
+                }
+            }
 
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.innerHTML = `
                 <div class="modal">
                     <div class="modal-header">
-                        <h2 class="modal-title">Penilaian Dokumen Kearsipan</h2>
+                        <h2 class="modal-title">${isEdit ? 'Edit' : ''} Penilaian Dokumen Kearsipan</h2>
                     </div>
                     <div class="modal-content">
                         <div style="background: #f8fafc; padding: 16px; border-radius: 6px; margin-bottom: 20px;">
@@ -1176,23 +1239,23 @@
                                 <div class="score-section-title">1️⃣ Bukti Dukung (Maksimal 3 Poin)</div>
                                 
                                 <div class="checkbox-container">
-                                    <input type="checkbox" id="bukti-lengkap" checked>
+                                    <input type="checkbox" id="bukti-lengkap" ${existingData.bukti_lengkap ? 'checked' : ''}>
                                     <label for="bukti-lengkap" style="cursor: pointer;">✓ Bukti dukung lengkap (1 poin)</label>
                                 </div>
                                 
                                 <div class="checkbox-container">
-                                    <input type="checkbox" id="bukti-benar" checked>
+                                    <input type="checkbox" id="bukti-benar" ${existingData.bukti_benar ? 'checked' : ''}>
                                     <label for="bukti-benar" style="cursor: pointer;">✓ Bukti dukung benar (1 poin)</label>
                                 </div>
                                 
                                 <div class="checkbox-container">
-                                    <input type="checkbox" id="bukti-tepat-waktu" checked>
+                                    <input type="checkbox" id="bukti-tepat-waktu" ${existingData.bukti_tepat_waktu ? 'checked' : ''}>
                                     <label for="bukti-tepat-waktu" style="cursor: pointer;">✓ Tepat waktu - tidak terlambat (1 poin)</label>
                                 </div>
 
-                                <div class="form-group" id="terlambat-group" style="display: none; margin-top: 12px;">
+                                <div class="form-group" id="terlambat-group" style="display: ${existingData.bukti_tepat_waktu ? 'none' : 'block'}; margin-top: 12px;">
                                     <label class="input-label">⏰ Jumlah Hari Terlambat (pengurangan 0.1 × hari)</label>
-                                    <input type="number" class="input-field" id="hari-terlambat" min="0" value="0" placeholder="Contoh: 5 hari">
+                                    <input type="number" class="input-field" id="hari-terlambat" min="0" value="${existingData.hari_terlambat}" placeholder="Contoh: 5 hari">
                                 </div>
                             </div>
 
@@ -1200,7 +1263,7 @@
                                 <div class="score-section-title">2️⃣ Penggunaan Srikandi (Maksimal 1 Poin)</div>
                                 
                                 <div class="checkbox-container">
-                                    <input type="checkbox" id="sudah-srikandi" checked>
+                                    <input type="checkbox" id="sudah-srikandi" ${existingData.sudah_srikandi ? 'checked' : ''}>
                                     <label for="sudah-srikandi" style="cursor: pointer;">✓ Sudah menggunakan Srikandi (1 poin)</label>
                                 </div>
                             </div>
@@ -1214,19 +1277,19 @@
                                     </div>
                                     <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                                            <input type="radio" name="surat-option" value="sesuai" checked>
+                                            <input type="radio" name="surat-option" value="sesuai" ${existingData.surat_sesuai_tnd ? 'checked' : ''}>
                                             <span>Semua Sesuai (1.0 poin)</span>
                                         </label>
                                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                                            <input type="radio" name="surat-option" value="ada-salah">
+                                            <input type="radio" name="surat-option" value="ada-salah" ${!existingData.surat_sesuai_tnd ? 'checked' : ''}>
                                             <span>Ada yang Salah</span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="surat-salah-group" style="display: none;">
+                                <div class="form-group" id="surat-salah-group" style="display: ${existingData.surat_sesuai_tnd ? 'none' : 'block'};">
                                     <label class="input-label">📝 Jumlah Surat yang Tidak Sesuai TND (dari hasil uji petik)</label>
-                                    <input type="number" class="input-field" id="jumlah-surat-salah" min="0" value="0" placeholder="Contoh: 3 surat">
+                                    <input type="number" class="input-field" id="jumlah-surat-salah" min="0" value="${existingData.jumlah_surat_salah}" placeholder="Contoh: 3 surat">
                                     <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
                                         💡 Pengurangan: 0.1 × jumlah surat yang salah
                                     </div>
@@ -1255,14 +1318,14 @@
 
                             <div class="form-group">
                                 <label class="input-label">Catatan Tambahan (Opsional)</label>
-                                <textarea class="input-field" name="catatan" rows="3" placeholder="Tambahkan catatan..."></textarea>
+                                <textarea class="input-field" name="catatan" rows="3" placeholder="Tambahkan catatan...">${existingData.catatan}</textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button onclick="closeModal()" class="btn" style="flex: 1;">Batal</button>
-                        <button onclick="submitAssessment('${docId}')" class="btn btn-success" style="flex: 1;">
-                            Simpan Penilaian
+                        <button onclick="submitAssessment('${docId}', ${isEdit})" class="btn ${isEdit ? 'btn-warning' : 'btn-success'}" style="flex: 1;">
+                            ${isEdit ? '💾 Update Penilaian' : 'Simpan Penilaian'}
                         </button>
                     </div>
                 </div>
@@ -1328,12 +1391,19 @@
                 el.addEventListener('input', updateScore);
             });
 
+            // Initialize score on load
+            updateScore();
+
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
             document.body.appendChild(modal);
             window.currentModal = modal;
         }
 
-        async function submitAssessment(docId) {
+        function editAssessment(docId) {
+            openAssessmentModal(docId, true);
+        }
+
+        async function submitAssessment(docId, isEdit = false) {
             const buktiLengkap = document.getElementById('bukti-lengkap').checked;
             const buktiBenar = document.getElementById('bukti-benar').checked;
             const buktiTepatWaktu = document.getElementById('bukti-tepat-waktu').checked;
@@ -1344,8 +1414,8 @@
             const jumlahSuratSalah = suratSesuaiTND ? 0 : (document.getElementById('jumlah-surat-salah').value || 0);
             const catatan = document.querySelector('textarea[name="catatan"]').value;
 
-            const submitBtn = window.currentModal.querySelector('.btn-success');
-            const cancelBtn = window.currentModal.querySelector('.btn:not(.btn-success)');
+            const submitBtn = window.currentModal.querySelector('.btn-success, .btn-warning');
+            const cancelBtn = window.currentModal.querySelector('.btn:not(.btn-success):not(.btn-warning)');
             
             const originalText = submitBtn.innerHTML;
             
@@ -1354,7 +1424,7 @@
             submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
 
             const params = new URLSearchParams({
-                action: 'createDocumentAssessment',
+                action: isEdit ? 'updateDocumentAssessment' : 'createDocumentAssessment',
                 doc_id: docId,
                 bukti_lengkap: buktiLengkap,
                 bukti_benar: buktiBenar,
@@ -1372,7 +1442,7 @@
                 const result = await response.json();
 
                 if (result.success) {
-                    Toast.success(`Penilaian berhasil! Skor: ${result.nilai}/5`);
+                    Toast.success(`${isEdit ? 'Penilaian berhasil diupdate' : 'Penilaian berhasil'}! Skor: ${result.nilai}/5`);
                     closeModal();
                     await loadDocuments();
                 } else {
@@ -1415,7 +1485,8 @@
                         ` : ''}
                     </div>
                     <div class="modal-footer">
-                        <button onclick="closeModal()" class="btn" style="width: 100%;">Tutup</button>
+                        <button onclick="closeModal()" class="btn" style="flex: 1;">Tutup</button>
+                        <button onclick="editAssessment('${docId}')" class="btn btn-warning" style="flex: 1;">✏️ Edit Penilaian</button>
                     </div>
                 </div>
             `;
