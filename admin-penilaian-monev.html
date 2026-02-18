@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penilaian Monitoring & Evaluasi - Admin Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -18,13 +24,70 @@
         }
 
         /* ============ TOAST ============ */
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
-        .toast { background: white; padding: 16px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 12px; }
-        .toast.success { border-left: 4px solid #10b981; }
-        .toast.error { border-left: 4px solid #ef4444; }
-        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: white;
+            padding: 14px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 10px;
+            min-width: 280px;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
 
         /* ============ SIDEBAR ============ */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+
         .sidebar {
             width: 252px;
             background: white;
@@ -33,167 +96,800 @@
             flex-direction: column;
             position: fixed;
             height: 100vh;
-            left: 0; top: 0;
+            left: 0;
+            top: 0;
             z-index: 100;
+            transition: transform 0.3s;
         }
 
-        .sidebar-header { padding: 20px 16px; border-bottom: 1px solid #e5e7eb; }
-        .sidebar-header-content { display: flex; align-items: center; gap: 12px; }
-        .sidebar-icon { width: 40px; height: 40px; background: #0f172a; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-        .sidebar-title { font-size: 16px; font-weight: 600; color: #1e293b; }
-        .sidebar-subtitle { font-size: 12px; color: #64748b; }
-        .sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
-        .sidebar-footer { padding: 16px 12px; border-top: 1px solid #e5e7eb; }
+        .sidebar-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-header-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-icon {
+            width: 40px;
+            height: 40px;
+            background: #0f172a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+        }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid #e5e7eb;
+        }
 
         .nav-item {
-            display: flex; align-items: center; gap: 14px;
-            padding: 12px 16px; border-radius: 10px; font-weight: 500; font-size: 15px;
-            color: #0f172a; text-decoration: none; position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #0f172a;
+            text-decoration: none;
+            position: relative;
             transition: all 0.15s ease;
         }
-        .nav-item:hover { background: #f8fafc; }
-        .nav-item.active { background: #f1f5f9; }
-        .nav-item.active::before {
-            content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
-            width: 4px; background: #0f172a; border-radius: 0 4px 4px 0;
+
+        .nav-item:hover {
+            background: #f8fafc;
         }
 
-        .nav-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+        .nav-item.active {
+            background: #f1f5f9;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            background: #0f172a;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .user-info {
+            padding: 0 12px;
+            margin-bottom: 16px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .logout-btn:hover {
+            background: #f8fafc;
+        }
 
         /* ============ MAIN ============ */
-        .main-content { flex: 1; display: flex; flex-direction: column; margin-left: 252px; }
-        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 24px 32px; }
-        .header-title { font-size: 24px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
-        .header-subtitle { font-size: 14px; color: #64748b; }
-        .container { padding: 24px 32px; width: 100%; }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 252px;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 24px 32px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .container {
+            padding: 24px 32px;
+        }
 
         /* ============ TABS ============ */
-        .tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid #e5e7eb; overflow-x: auto; }
-        .tab { padding: 12px 24px; border: none; background: none; cursor: pointer; font-size: 15px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
-        .tab:hover { color: #1e293b; }
-        .tab.active { color: #0f172a; border-bottom-color: #0f172a; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: #1e293b;
+        }
+
+        .tab.active {
+            color: #0f172a;
+            border-bottom-color: #0f172a;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
 
         /* ============ CARDS ============ */
-        .card { background: white; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-bottom: 24px; }
-        .card-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-        .card-title { font-size: 18px; font-weight: 600; color: #1e293b; }
-        .card-content { padding: 24px; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+        }
 
-        /* ============ STATS GRID ============ */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-        .stat-card { padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; background: white; }
-        .stat-label { font-size: 13px; color: #64748b; margin-bottom: 8px; }
-        .stat-value { font-size: 32px; font-weight: 700; color: #1e293b; }
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        /* ============ STATS ============ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+        }
 
         /* ============ FORM ============ */
-        .filter-container { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-        .select-input, .search-input, .form-input { padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; font-family: 'Inter', sans-serif; }
-        .select-input { width: 180px; }
-        .input-label { display: block; font-size: 13px; font-weight: 500; color: #64748b; margin-bottom: 6px; }
-        .form-input { width: 100%; }
-        .form-group { margin-bottom: 16px; }
-        .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px; }
+        .filter-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .select-input,
+        .form-input {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .select-input {
+            width: 180px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+        }
 
         /* ============ TABLE ============ */
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #64748b; background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
-        td { padding: 14px 16px; font-size: 14px; color: #1e293b; border-bottom: 1px solid #f1f5f9; }
-        tbody tr:hover { background: #fafbfc; }
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            background: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 16px;
+            font-size: 14px;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        tbody tr:hover {
+            background: #fafbfc;
+        }
 
         /* ============ BUTTONS ============ */
-        .btn { padding: 8px 16px; border-radius: 6px; border: 1px solid #e5e7eb; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; background: white; color: #1e293b; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
-        .btn:hover { background: #f8fafc; border-color: #cbd5e1; }
-        .btn-primary { background: #0f172a; color: white; border-color: #0f172a; }
-        .btn-primary:hover { background: #1e293b; }
-        .btn-success { background: #10b981; color: white; border-color: #10b981; }
-        .btn-success:hover { background: #059669; }
-        .btn-sm { padding: 5px 12px; font-size: 12px; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
 
-        /* ============ MODAL ============ */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal { background: white; border-radius: 12px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; }
-        .modal-title { font-size: 18px; font-weight: 600; }
-        .modal-content { padding: 24px; }
-        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; gap: 12px; }
+        .btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
 
-        /* ============ SCORE INPUT ============ */
-        .score-section { background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 16px; border-left: 4px solid #3b82f6; }
-        .score-section-title { font-weight: 700; font-size: 14px; color: #1e293b; margin-bottom: 12px; }
-        .score-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .score-preview { background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 16px; }
-        .score-total { font-size: 48px; font-weight: 800; color: #1F4E79; line-height: 1; }
-        .score-max { font-size: 14px; color: #64748b; }
-        .score-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
-        .score-item { text-align: center; padding: 10px; background: #f8fafc; border-radius: 6px; }
-        .score-item-label { font-size: 11px; color: #64748b; }
-        .score-item-val { font-size: 18px; font-weight: 700; color: #1e293b; }
+        .btn-primary {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
 
-        /* ============ REKAPITULASI TABLE ============ */
-        .rekap-table th { background: #1F4E79; color: white; text-align: center; }
-        .rekap-table td { text-align: center; }
-        .rekap-good { color: #065f46; font-weight: 700; }
-        .rekap-bad { color: #991b1b; font-weight: 700; }
-        .rekap-table tr:last-child { background: #f0f7ff; font-weight: 700; }
+        .btn-primary:hover {
+            background: #1e293b;
+        }
 
-        /* ============ CHART ============ */
-        .chart-container { position: relative; height: 350px; }
-        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 12px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
         /* ============ BADGES ============ */
-        .badge { padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 500; display: inline-block; }
-        .badge-green { background: #d1fae5; color: #065f46; }
-        .badge-red { background: #fee2e2; color: #991b1b; }
-        .badge-blue { background: #dbeafe; color: #1e40af; }
-        .badge-yellow { background: #fef3c7; color: #92400e; }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
 
-        /* ============ USER / LOGOUT ============ */
-        .user-info { padding: 0 12px; margin-bottom: 16px; }
-        .user-name { font-size: 14px; font-weight: 600; color: #1e293b; }
-        .user-email { font-size: 12px; color: #64748b; }
-        .logout-btn { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; font-weight: 500; color: #1e293b; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', sans-serif; }
-        .logout-btn:hover { background: #f8fafc; }
+        .badge-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
 
-        .mobile-menu-btn { display: none; position: fixed; top: 20px; left: 20px; z-index: 101; background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+        .badge-red {
+            background: #fee2e2;
+            color: #991b1b;
+        }
 
-        .radio-group { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
-        .radio-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
-        .radio-label input[type="radio"] { width: 16px; height: 16px; cursor: pointer; }
+        .badge-yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
 
-        .info-banner { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; color: #1e3a8a; }
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 24px 16px;
+            overflow-y: auto;
+        }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
+        .modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            /* center vertically */
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* ============ SCORE SECTIONS ============ */
+        .score-section {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .score-section-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        /* CHECKBOX ROWS */
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .check-item:hover {
+            border-color: #cbd5e1;
+            background: #fafbfc;
+        }
+
+        .check-item.checked {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .check-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-top: 1px;
+            flex-shrink: 0;
+            accent-color: #10b981;
+        }
+
+        .check-item-body {
+            flex: 1;
+        }
+
+        .check-item-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            cursor: pointer;
+        }
+
+        .check-item-sub {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .check-item-badge {
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+
+        .check-item.checked .check-item-badge {
+            background: #10b981;
+            color: white;
+        }
+
+        .check-item.unchecked-state .check-item-badge {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Sub-input that appears when unchecked */
+        .sub-input-group {
+            margin-top: 10px;
+            padding: 12px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .sub-input-group.show {
+            display: block;
+        }
+
+        .sub-input-group .input-label {
+            color: #92400e;
+        }
+
+        .sub-input-group .form-input {
+            border-color: #fde68a;
+        }
+
+        /* ============ SCORE PREVIEW ============ */
+        .score-preview {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .score-total {
+            font-size: 52px;
+            font-weight: 800;
+            color: #1F4E79;
+            line-height: 1;
+        }
+
+        .score-max {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .score-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .score-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .score-item-label {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .score-item-val {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* ============ INFO BANNER ============ */
+        .info-banner {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #1e3a8a;
+        }
+
+        /* ============ REKAP TABLE ============ */
+        .rekap-table th {
+            background: #1F4E79;
+            color: white;
+            text-align: center;
+        }
+
+        .rekap-table td {
+            text-align: center;
+        }
+
+        .rekap-good {
+            color: #065f46;
+            font-weight: 700;
+        }
+
+        .rekap-bad {
+            color: #991b1b;
+            font-weight: 700;
+        }
+
+        .rekap-table tr:last-child {
+            background: #f0f7ff;
+            font-weight: 700;
+        }
+
+        /* ============ CHART ============ */
+        .chart-container {
+            position: relative;
+            height: 320px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* ============ SPINNER ============ */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ============ UNIT INFO STRIP ============ */
+        .unit-strip {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .unit-strip-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .unit-strip-meta {
+            font-size: 13px;
+            color: #64748b;
+        }
 
         @media (max-width: 1023px) {
-            .mobile-menu-btn { display: block; }
-            .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
-            .sidebar.mobile-open { transform: translateX(0); }
-            .main-content { margin-left: 0; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .charts-grid { grid-template-columns: 1fr; }
-            .score-row { grid-template-columns: 1fr; }
-            .score-breakdown { grid-template-columns: 1fr 1fr; }
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 24px 20px;
+                padding-left: 60px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-breakdown {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media (max-width: 640px) {
-            .score-breakdown { grid-template-columns: 1fr; }
+            .score-breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
+
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
                 <div class="sidebar-icon">
-                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj" 
-                        alt="Logo Dinas Koperasi UKM" 
-                        style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
+                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj"
+                        alt="Logo" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
                 </div>
                 <div>
                     <div class="sidebar-title">Admin Panel</div>
@@ -201,53 +897,90 @@
                 </div>
             </div>
         </div>
-
         <div class="sidebar-nav">
             <a href="admin-dashboard.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
                 Dashboard
             </a>
             <a href="admin-requests.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                    <path d="M14 3v6h6" />
+                </svg>
                 Kendaraan Dinas
             </a>
             <a href="admin-voucher-bbm.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                </svg>
                 Voucher BBM
             </a>
             <a href="admin-ruang-rapat.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
                 Ruang Rapat
             </a>
             <a href="admin-kearsipan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                </svg>
                 Kearsipan Internal
             </a>
             <a href="admin-spj-keuangan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
                 Penilaian SPJ Keuangan
             </a>
             <a href="admin-spj-pengumpulan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
                 Pengumpulan SPJ
             </a>
             <a href="admin-pengajuan-dana.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="12" y1="18" x2="12" y2="12" />
+                    <line x1="9" y1="15" x2="15" y2="15" />
+                </svg>
                 Pengajuan Dana
             </a>
             <a href="admin-penilaian-monev.html" class="nav-item active">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
                 Penilaian Monev
             </a>
         </div>
-
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-name" id="admin-name">Administrator</div>
-                <div class="user-email" id="admin-email">admin@dinas.gov.id</div>
+                <div class="user-email" id="admin-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="48292c252126082c2126293b662f273e66212c">[email&#160;protected]</a></div>
             </div>
             <button onclick="logout()" class="logout-btn">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
                 Keluar
             </button>
         </div>
@@ -261,15 +994,13 @@
         </div>
 
         <div class="container">
-            <!-- TABS -->
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('input', event)">📥 Input Penilaian</button>
                 <button class="tab" onclick="switchTab('rekap', event)">📊 Rekapitulasi</button>
             </div>
 
-            <!-- ============ TAB 1: INPUT ============ -->
+            <!-- TAB INPUT -->
             <div id="tab-input" class="tab-content active">
-
                 <div class="stats-grid">
                     <div class="stat-card" style="border-left:4px solid #1F4E79;">
                         <div class="stat-label">Skor Maksimum</div>
@@ -310,31 +1041,35 @@
                             </select>
                         </div>
                     </div>
-                    <div style="overflow-x:auto;">
+                    <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
                                     <th>Unit</th>
                                     <th>Bulan</th>
-                                    <th>Ketepatan Waktu (5)</th>
+                                    <th>Ket. Waktu (5)</th>
                                     <th>Kelengkapan (5)</th>
                                     <th>Fisik (10)</th>
                                     <th>Keuangan (10)</th>
                                     <th>Partisipasi (5)</th>
                                     <th>Tindak Lanjut (5)</th>
-                                    <th>Total (max 40)</th>
+                                    <th>Total (40)</th>
+                                    <th>Bukti</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="input-tbody">
-                                <tr><td colspan="10" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan untuk melihat data</td></tr>
+                                <tr>
+                                    <td colspan="11" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan
+                                        untuk melihat data</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- ============ TAB 2: REKAPITULASI ============ -->
+            <!-- TAB REKAP -->
             <div id="tab-rekap" class="tab-content">
                 <div class="card">
                     <div class="card-header">
@@ -360,15 +1095,22 @@
                     <div class="card-content">
                         <div class="charts-grid">
                             <div class="card" style="margin:0;">
-                                <div class="card-header" style="padding:16px;"><h3 style="font-size:15px;font-weight:600;">Distribusi Nilai Per Indikator</h3></div>
-                                <div class="card-content"><div class="chart-container"><canvas id="chartIndikator"></canvas></div></div>
+                                <div class="card-header" style="padding:16px;">
+                                    <h3 style="font-size:15px;font-weight:600;">Distribusi Per Indikator</h3>
+                                </div>
+                                <div class="card-content">
+                                    <div class="chart-container"><canvas id="chartIndikator"></canvas></div>
+                                </div>
                             </div>
                             <div class="card" style="margin:0;">
-                                <div class="card-header" style="padding:16px;"><h3 style="font-size:15px;font-weight:600;">Total Nilai Per Unit (Maks 40)</h3></div>
-                                <div class="card-content"><div class="chart-container"><canvas id="chartTotal"></canvas></div></div>
+                                <div class="card-header" style="padding:16px;">
+                                    <h3 style="font-size:15px;font-weight:600;">Total Nilai Per Unit</h3>
+                                </div>
+                                <div class="card-content">
+                                    <div class="chart-container"><canvas id="chartTotal"></canvas></div>
+                                </div>
                             </div>
                         </div>
-
                         <div style="overflow-x:auto;">
                             <table class="rekap-table">
                                 <thead>
@@ -384,7 +1126,10 @@
                                     </tr>
                                 </thead>
                                 <tbody id="rekap-tbody">
-                                    <tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Memuat data...</td></tr>
+                                    <tr>
+                                        <td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Memuat
+                                            data...</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -395,190 +1140,171 @@
     </div>
 
     <!-- ============ MODAL INPUT ============ -->
-    <div id="inputModal" class="modal-overlay">
+    <div id="inputModal" class="modal-overlay" style="display:none;">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Input Penilaian Monitoring & Evaluasi</h2>
-                <p style="font-size:13px;color:#64748b;margin-top:4px;" id="modal-bulan-label">—</p>
+                <h2 class="modal-title" id="modal-title-text">Input Penilaian Monev</h2>
+                <p style="font-size:13px;color:#64748b;margin-top:2px;" id="modal-bulan-label">—</p>
             </div>
             <div class="modal-content">
                 <div class="info-banner">
-                    📊 <strong>Sistem Penilaian:</strong> Total maksimal 40 poin dari 6 indikator utama dengan pengurangan nilai sesuai keterlambatan dan deviasi
+                    📊 <strong>Sistem Penilaian:</strong> Centang tiap indikator jika terpenuhi. Jika tidak dicentang,
+                    isikan detail pengurangan nilai.
                 </div>
 
-                <!-- HIDDEN UNIT FIELD -->
                 <input type="hidden" id="input-unit">
+
+                <!-- UNIT STRIP -->
+                <div class="unit-strip">
+                    <div>
+                        <div class="unit-strip-name" id="modal-unit-name">—</div>
+                        <div class="unit-strip-meta" id="modal-unit-meta">—</div>
+                    </div>
+                    <div id="modal-existing-badge" style="display:none;">
+                        <span
+                            style="background:#dbeafe;color:#1e40af;font-size:12px;font-weight:600;padding:4px 12px;border-radius:12px;">✏️
+                            Mode Edit</span>
+                    </div>
+                </div>
 
                 <!-- 1. KETEPATAN WAKTU -->
                 <div class="score-section">
-                    <div class="score-section-title">1️⃣ Ketepatan Waktu (Maks 5 poin)</div>
-                    
-                    <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Apakah penyampaian data tepat waktu? (max 3 bulan berikutnya)
+                    <div class="score-section-title">1️⃣ Ketepatan Waktu <span
+                            style="color:#64748b;font-weight:400;font-size:12px;">(Maks 5 poin)</span></div>
+                    <div class="check-item checked" id="check-waktu-item" onclick="toggleCheck('waktu')">
+                        <input type="checkbox" id="check-waktu" checked
+                            onclick="event.stopPropagation();toggleCheck('waktu')">
+                        <div class="check-item-body">
+                            <div class="check-item-label">Penyampaian data tepat waktu</div>
+                            <div class="check-item-sub">Tidak melebihi batas waktu pelaporan</div>
                         </div>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="ketepatan-waktu" value="tepat" checked>
-                                <span>Tepat Waktu (5 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="ketepatan-waktu" value="terlambat">
-                                <span>Ada Keterlambatan</span>
-                            </label>
-                        </div>
+                        <span class="check-item-badge" id="badge-waktu">+5 poin</span>
                     </div>
-
-                    <div class="form-group" id="keterlambatan-group" style="display: none;">
-                        <label class="input-label">⏰ Keterlambatan (pilih kategori)</label>
-                        <select class="form-input" id="keterlambatan">
-                            <option value="3">< 5 hari (-3 poin)</option>
-                            <option value="5">≥ 5 hari (-5 poin)</option>
+                    <div class="sub-input-group" id="sub-waktu">
+                        <label class="input-label">⏰ Pilih kategori keterlambatan</label>
+                        <select class="form-input" id="sel-keterlambatan" onchange="updateModalScore()">
+                            <option value="3">Terlambat &lt; 5 hari (-3 poin → skor 2)</option>
+                            <option value="5">Terlambat ≥ 5 hari (-5 poin → skor 0)</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- 2. KELENGKAPAN DATA -->
-                <div class="score-section" style="border-left-color: #8b5cf6;">
-                    <div class="score-section-title">2️⃣ Kelengkapan Data (Maks 5 poin)</div>
-                    
-                    <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Apakah seluruh komponen data monev sudah lengkap?
+                <!-- 2. KELENGKAPAN -->
+                <div class="score-section" style="border-left-color:#8b5cf6;">
+                    <div class="score-section-title">2️⃣ Kelengkapan Data <span
+                            style="color:#64748b;font-weight:400;font-size:12px;">(Maks 5 poin)</span></div>
+                    <div class="check-item checked" id="check-kelengkapan-item" onclick="toggleCheck('kelengkapan')">
+                        <input type="checkbox" id="check-kelengkapan" checked
+                            onclick="event.stopPropagation();toggleCheck('kelengkapan')">
+                        <div class="check-item-body">
+                            <div class="check-item-label">Seluruh komponen data monev lengkap</div>
+                            <div class="check-item-sub">Keterlisian &gt; 90%</div>
                         </div>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="kelengkapan-data" value="lengkap" checked>
-                                <span>Lengkap (5 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="kelengkapan-data" value="kurang">
-                                <span>Ada Kekurangan</span>
-                            </label>
-                        </div>
+                        <span class="check-item-badge" id="badge-kelengkapan">+5 poin</span>
                     </div>
-
-                    <div class="form-group" id="kualitas-data-group" style="display: none;">
-                        <label class="input-label">📋 Kualitas Data (pilih kategori)</label>
-                        <select class="form-input" id="kualitas-data">
-                            <option value="2">Keterlisian 50% - 90% (-2 poin)</option>
-                            <option value="3">Keterlisian < 50% (-3 poin)</option>
+                    <div class="sub-input-group" id="sub-kelengkapan">
+                        <label class="input-label">📋 Pilih kategori kekurangan</label>
+                        <select class="form-input" id="sel-kualitas" onchange="updateModalScore()">
+                            <option value="2">Keterlisian 50%–90% (-2 poin → skor 3)</option>
+                            <option value="3">Keterlisian &lt; 50% (-3 poin → skor 2)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 3. CAPAIAN FISIK -->
-                <div class="score-section" style="border-left-color: #10b981;">
-                    <div class="score-section-title">3️⃣ Capaian Fisik (Maks 10 poin)</div>
-                    
-                    <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Apakah capaian fisik sesuai target? (deviasi < 5%)
+                <div class="score-section" style="border-left-color:#10b981;">
+                    <div class="score-section-title">3️⃣ Capaian Fisik <span
+                            style="color:#64748b;font-weight:400;font-size:12px;">(Maks 10 poin)</span></div>
+                    <div class="check-item checked" id="check-fisik-item" onclick="toggleCheck('fisik')">
+                        <input type="checkbox" id="check-fisik" checked
+                            onclick="event.stopPropagation();toggleCheck('fisik')">
+                        <div class="check-item-body">
+                            <div class="check-item-label">Capaian fisik sesuai target</div>
+                            <div class="check-item-sub">Deviasi &lt; 5% dari target</div>
                         </div>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="capaian-fisik" value="sesuai" checked>
-                                <span>Sesuai Target (10 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="capaian-fisik" value="deviasi">
-                                <span>Ada Deviasi</span>
-                            </label>
-                        </div>
+                        <span class="check-item-badge" id="badge-fisik">+10 poin</span>
                     </div>
-
-                    <div class="form-group" id="deviasi-fisik-group" style="display: none;">
-                        <label class="input-label">📊 Deviasi Fisik (pilih kategori)</label>
-                        <select class="form-input" id="deviasi-fisik">
-                            <option value="5">Deviasi ≥ 5% - < 10% (-5 poin)</option>
-                            <option value="8">Deviasi ≥ 10% (-8 poin)</option>
+                    <div class="sub-input-group" id="sub-fisik">
+                        <label class="input-label">📊 Pilih kategori deviasi fisik</label>
+                        <select class="form-input" id="sel-deviasi-fisik" onchange="updateModalScore()">
+                            <option value="5">Deviasi ≥ 5% – &lt; 10% (-5 poin → skor 5)</option>
+                            <option value="8">Deviasi ≥ 10% (-8 poin → skor 2)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 4. CAPAIAN KEUANGAN -->
-                <div class="score-section" style="border-left-color: #f59e0b;">
-                    <div class="score-section-title">4️⃣ Capaian Keuangan (Maks 10 poin)</div>
-                    
-                    <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Apakah capaian keuangan sesuai anggaran? (deviasi < 5%)
+                <div class="score-section" style="border-left-color:#f59e0b;">
+                    <div class="score-section-title">4️⃣ Capaian Keuangan <span
+                            style="color:#64748b;font-weight:400;font-size:12px;">(Maks 10 poin)</span></div>
+                    <div class="check-item checked" id="check-keuangan-item" onclick="toggleCheck('keuangan')">
+                        <input type="checkbox" id="check-keuangan" checked
+                            onclick="event.stopPropagation();toggleCheck('keuangan')">
+                        <div class="check-item-body">
+                            <div class="check-item-label">Capaian keuangan sesuai anggaran</div>
+                            <div class="check-item-sub">Deviasi &lt; 5% dari anggaran</div>
                         </div>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="capaian-keuangan" value="sesuai" checked>
-                                <span>Sesuai Anggaran (10 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="capaian-keuangan" value="deviasi">
-                                <span>Ada Deviasi</span>
-                            </label>
-                        </div>
+                        <span class="check-item-badge" id="badge-keuangan">+10 poin</span>
                     </div>
-
-                    <div class="form-group" id="deviasi-keuangan-group" style="display: none;">
-                        <label class="input-label">💰 Deviasi Keuangan (pilih kategori)</label>
-                        <select class="form-input" id="deviasi-keuangan">
-                            <option value="5">Deviasi ≥ 5% - < 10% (-5 poin)</option>
-                            <option value="8">Deviasi ≥ 10% (-8 poin)</option>
+                    <div class="sub-input-group" id="sub-keuangan">
+                        <label class="input-label">💰 Pilih kategori deviasi keuangan</label>
+                        <select class="form-input" id="sel-deviasi-keuangan" onchange="updateModalScore()">
+                            <option value="5">Deviasi ≥ 5% – &lt; 10% (-5 poin → skor 5)</option>
+                            <option value="8">Deviasi ≥ 10% (-8 poin → skor 2)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 5. PARTISIPASI PPTK -->
-                <div class="score-section" style="border-left-color: #ec4899;">
-                    <div class="score-section-title">5️⃣ Partisipasi PPTK (Maks 5 poin)</div>
-                    
-                    <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Partisipasi PPTK dalam Desk Timbal Balik
+                <div class="score-section" style="border-left-color:#ec4899;">
+                    <div class="score-section-title">5️⃣ Partisipasi PPTK <span
+                            style="color:#64748b;font-weight:400;font-size:12px;">(Maks 5 poin)</span></div>
+                    <div class="check-item checked" id="check-partisipasi-item" onclick="toggleCheck('partisipasi')">
+                        <input type="checkbox" id="check-partisipasi" checked
+                            onclick="event.stopPropagation();toggleCheck('partisipasi')">
+                        <div class="check-item-body">
+                            <div class="check-item-label">PPTK hadir langsung dalam Desk Timbal Balik</div>
+                            <div class="check-item-sub">Tidak diwakilkan</div>
                         </div>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="partisipasi" value="hadir" checked>
-                                <span>PPTK Hadir (5 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="partisipasi" value="diwakili">
-                                <span>Diwakili Staf (-2 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="partisipasi" value="tidak-hadir">
-                                <span>Tidak Hadir (-5 poin)</span>
-                            </label>
-                        </div>
+                        <span class="check-item-badge" id="badge-partisipasi">+5 poin</span>
+                    </div>
+                    <div class="sub-input-group" id="sub-partisipasi">
+                        <label class="input-label">👤 Pilih kategori ketidakhadiran</label>
+                        <select class="form-input" id="sel-partisipasi" onchange="updateModalScore()">
+                            <option value="diwakili">Diwakili Staf (-2 poin → skor 3)</option>
+                            <option value="tidak-hadir">Tidak Hadir sama sekali (-5 poin → skor 0)</option>
+                        </select>
                     </div>
                 </div>
 
                 <!-- 6. TINDAK LANJUT -->
-                <div class="score-section" style="border-left-color: #06b6d4;">
-                    <div class="score-section-title">6️⃣ Tindak Lanjut (Maks 5 poin)</div>
-                    
-                    <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Apakah tindak lanjut pasca Desk Timbal Balik sudah dilaksanakan?
+                <div class="score-section" style="border-left-color:#06b6d4;">
+                    <div class="score-section-title">6️⃣ Tindak Lanjut <span
+                            style="color:#64748b;font-weight:400;font-size:12px;">(Maks 5 poin)</span></div>
+                    <div class="check-item checked" id="check-tindaklanjut-item" onclick="toggleCheck('tindaklanjut')">
+                        <input type="checkbox" id="check-tindaklanjut" checked
+                            onclick="event.stopPropagation();toggleCheck('tindaklanjut')">
+                        <div class="check-item-body">
+                            <div class="check-item-label">Tindak lanjut pasca Desk Timbal Balik sudah dilaksanakan</div>
+                            <div class="check-item-sub">Rekomendasi diimplementasikan</div>
                         </div>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="tindak-lanjut" value="ya" checked>
-                                <span>Ya, Ditindaklanjuti (5 poin)</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="tindak-lanjut" value="tidak">
-                                <span>Tidak Ditindaklanjuti (-5 poin)</span>
-                            </label>
-                        </div>
+                        <span class="check-item-badge" id="badge-tindaklanjut">+5 poin</span>
+                    </div>
+                    <!-- No sub-input needed: if unchecked = 0 poin, no sub-category -->
+                    <div class="sub-input-group" id="sub-tindaklanjut">
+                        <p style="font-size:13px;color:#92400e;margin:0;">⚠️ Tindak lanjut tidak dilaksanakan: <strong>0
+                                poin</strong> untuk indikator ini.</p>
                     </div>
                 </div>
 
                 <!-- SCORE PREVIEW -->
                 <div class="score-preview">
-                    <div style="font-size:13px;color:#64748b;margin-bottom:8px;">TOTAL NILAI</div>
+                    <div style="font-size:13px;color:#64748b;margin-bottom:8px;font-weight:500;">TOTAL NILAI</div>
                     <div class="score-total" id="modal-total-nilai">40</div>
-                    <div class="score-max">dari maksimal 40</div>
+                    <div class="score-max">dari maksimal 40 poin</div>
                     <div class="score-breakdown">
                         <div class="score-item">
-                            <div class="score-item-label">Ketepatan Waktu</div>
+                            <div class="score-item-label">Ket. Waktu</div>
                             <div class="score-item-val" id="score-waktu">5</div>
                         </div>
                         <div class="score-item">
@@ -590,7 +1316,7 @@
                             <div class="score-item-val" id="score-fisik">10</div>
                         </div>
                         <div class="score-item">
-                            <div class="score-item-label">Capaian Keuangan</div>
+                            <div class="score-item-label">Keuangan</div>
                             <div class="score-item-val" id="score-keuangan">10</div>
                         </div>
                         <div class="score-item">
@@ -604,542 +1330,704 @@
                     </div>
                 </div>
 
+                <!-- CATATAN -->
                 <div class="form-group">
-                    <label class="input-label">Catatan Tambahan (Opsional)</label>
-                    <textarea class="form-textarea" id="input-catatan" placeholder="Catatan tambahan..."></textarea>
+                    <label class="input-label">📝 Catatan Tambahan (Opsional)</label>
+                    <textarea class="form-textarea" id="input-catatan"
+                        placeholder="Catatan tambahan mengenai penilaian ini..."></textarea>
+                </div>
+
+                <!-- UPLOAD BUKTI -->
+                <div
+                    style="background:#fafafa;border:1.5px dashed #cbd5e1;border-radius:10px;padding:16px;margin-bottom:4px;">
+                    <div
+                        style="font-size:13px;font-weight:700;color:#374151;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+                        📎 Bukti Penilaian
+                        <span
+                            style="background:#fef3c7;color:#92400e;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;">Opsional</span>
+                    </div>
+                    <div style="font-size:12px;color:#f59e0b;margin-bottom:12px;">⚠️ Upload jika diperlukan sebagai
+                        dokumentasi</div>
+
+                    <!-- EXISTING FILE PANEL (shown only on Edit if linkBukti exists) -->
+                    <div id="existing-bukti-panel" style="display:none;margin-bottom:12px;">
+                        <div style="font-size:12px;font-weight:600;color:#1e40af;margin-bottom:6px;">📌 File Bukti
+                            Tersimpan:</div>
+                        <div
+                            style="display:flex;align-items:center;gap:12px;background:white;border:1.5px solid #bfdbfe;border-radius:8px;padding:12px;">
+                            <div
+                                style="width:36px;height:36px;border-radius:8px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
+                                📎</div>
+                            <div style="flex:1;min-width:0;">
+                                <div style="font-size:13px;font-weight:600;color:#1e293b;">File bukti sebelumnya</div>
+                                <a id="existing-bukti-link" href="#" target="_blank" rel="noopener"
+                                    style="font-size:12px;color:#3b82f6;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:2px;">
+                                    🔗 Lihat file di Google Drive
+                                </a>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0;">
+                                <button onclick="replaceExistingBukti()" title="Ganti file"
+                                    style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#0369a1;cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;">
+                                    🔄 Ganti File
+                                </button>
+                                <button onclick="deleteExistingBukti()" title="Hapus file bukti"
+                                    style="background:#fff1f2;border:1px solid #fecdd3;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#be123c;cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;">
+                                    🗑️ Hapus Bukti
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW FILE UPLOAD ZONE (always visible on new, shown when replacing on edit) -->
+                    <div id="new-file-upload-zone">
+                        <div style="position:relative;cursor:pointer;">
+                            <input type="file" id="bukti-file-input" accept=".jpg,.jpeg,.png,.pdf"
+                                style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;"
+                                onchange="handleBuktiFileSelect(event)">
+                            <div id="file-upload-ui"
+                                style="border:2px dashed #e2e8f0;border-radius:8px;padding:16px;text-align:center;background:white;transition:all 0.2s;">
+                                <div style="font-size:24px;margin-bottom:4px;">📁</div>
+                                <div style="font-size:13px;color:#64748b;"><strong style="color:#3b82f6;">Klik untuk
+                                        pilih file</strong> atau drag & drop</div>
+                                <div style="font-size:11px;color:#94a3b8;margin-top:4px;">JPG · PNG · PDF | Maks. 10 MB
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bukti-file-error"
+                            style="display:none;font-size:12px;color:#ef4444;margin-top:6px;padding:6px 10px;background:#fee2e2;border-radius:5px;">
+                        </div>
+                        <div id="bukti-file-preview"
+                            style="display:none;align-items:center;gap:12px;background:white;border:1.5px solid #e2e8f0;border-radius:8px;padding:12px;margin-top:10px;">
+                            <div id="bukti-preview-icon"
+                                style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:#dbeafe;">
+                                📄</div>
+                            <div style="flex:1;min-width:0;">
+                                <div id="bukti-preview-name"
+                                    style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                    —</div>
+                                <div id="bukti-preview-size" style="font-size:11px;color:#94a3b8;margin-top:2px;">—
+                                </div>
+                            </div>
+                            <button onclick="cancelNewFile()"
+                                style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:18px;padding:4px;"
+                                title="Batal">✕</button>
+                        </div>
+                    </div>
+
+                    <div id="upload-progress" style="display:none;margin-top:10px;">
+                        <div style="height:4px;background:#e5e7eb;border-radius:10px;overflow:hidden;">
+                            <div id="upload-progress-fill"
+                                style="height:100%;background:linear-gradient(90deg,#3b82f6,#10b981);border-radius:10px;transition:width 0.3s;width:0%;">
+                            </div>
+                        </div>
+                        <div id="upload-progress-label"
+                            style="font-size:11px;color:#64748b;margin-top:4px;text-align:right;">Mengunggah...</div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="closeModal('inputModal')" class="btn" style="flex:1;">Batal</button>
-                <button onclick="submitInputNilai()" class="btn btn-success" style="flex:1;" id="submit-input-btn">💾 Simpan Penilaian</button>
+                <button onclick="closeInputModal()" class="btn" style="flex:1;">Batal</button>
+                <button onclick="submitInputNilai()" class="btn btn-success" style="flex:1;" id="submit-input-btn">💾
+                    Simpan Penilaian</button>
             </div>
         </div>
     </div>
 
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-    // GANTI URL INI DENGAN URL APPS SCRIPT ANDA
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzaoArHCPDFVx-Jvfa430krfrlXoge-JVNGUX_emfwWmXFkT25A_ifgQwFOyuILb465/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytRA8QRKTqQezKM8CDKRFS1X8JmIn-i3xzo61y-W-D7BZYpFassY0vluquieEmEERU/exec';
 
-    const UNITS = [
-        "Balai Layanan Usaha Terpadu KUMKM",
-        "Bidang Kewirausahaan",
-        "Bidang Koperasi",
-        "Bidang UKM",
-        "Bidang Usaha Mikro",
-        "Sekretariat"
-    ];
-    const SHORT_UNITS = ['BLUT', 'Kewirausahaan', 'Koperasi', 'UKM', 'Usaha Mikro', 'Sekretariat'];
-    const MONTHS = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
-    const SKOR_MAX = 40;
+        const UNITS = [
+            "Balai Layanan Usaha Terpadu KUMKM",
+            "Bidang Kewirausahaan",
+            "Bidang Koperasi",
+            "Bidang UKM",
+            "Bidang Usaha Mikro",
+            "Sekretariat"
+        ];
+        const SHORT_UNITS = ['BLUT', 'Kewirausahaan', 'Koperasi', 'UKM', 'Usaha Mikro', 'Sekretariat'];
+        const MONTHS = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+        const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
-    // Use localStorage as local storage fallback for demo
-    function getLocalData() {
-        const raw = localStorage.getItem('monev_data');
-        return raw ? JSON.parse(raw) : {};
-    }
-    function setLocalData(data) {
-        localStorage.setItem('monev_data', JSON.stringify(data));
-    }
+        let selectedBuktiFile = null;       // new file selected by user
+        let selectedBuktiBase64 = null;     // base64 of new file
+        let existingLinkBukti = '';         // saved Drive link from previous upload
+        let existingBuktiDeleted = false;   // true when user explicitly deletes existing file
 
-    // Pre-populate demo data (struktur: bulan -> unit -> indikator)
-    (function initDemoData() {
-        const existing = getLocalData();
-        if (Object.keys(existing).length > 0) return;
-        
-        const demo = {
-            "JANUARI": {
-                "Balai Layanan Usaha Terpadu KUMKM": { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "Tepat waktu" },
-                "Bidang Kewirausahaan": { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "" },
-                "Bidang Koperasi": { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "" },
-                "Bidang UKM": { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "" },
-                "Bidang Usaha Mikro": { waktu: 2, kelengkapan: 3, fisik: 5, keuangan: 5, partisipasi: 3, tindakLanjut: 5, total: 23, catatan: "Terlambat 3 hari" },
-                "Sekretariat": { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "" }
+        // ============ MOBILE MENU ============
+        function toggleMobileMenu() {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+
+        // ============ LOCAL STORAGE ============
+        function getLocalData() { return JSON.parse(localStorage.getItem('monev_data') || '{}'); }
+        function setLocalData(d) { localStorage.setItem('monev_data', JSON.stringify(d)); }
+
+        // Demo data
+        (function initDemoData() {
+            if (Object.keys(getLocalData()).length > 0) return;
+            setLocalData({
+                "JANUARI": {
+                    "Balai Layanan Usaha Terpadu KUMKM": {
+                        waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "Tepat waktu", linkBukti: "",
+                        _state: { waktuOk: true, kelengkapanOk: true, fisikOk: true, keuanganOk: true, partisipasiOk: true, tindakLanjutOk: true, selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili' }
+                    },
+                    "Bidang Kewirausahaan": {
+                        waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "", linkBukti: "",
+                        _state: { waktuOk: true, kelengkapanOk: true, fisikOk: true, keuanganOk: true, partisipasiOk: true, tindakLanjutOk: true, selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili' }
+                    },
+                    "Bidang Usaha Mikro": {
+                        waktu: 2, kelengkapan: 3, fisik: 5, keuangan: 5, partisipasi: 3, tindakLanjut: 5, total: 23, catatan: "Terlambat", linkBukti: "",
+                        _state: { waktuOk: false, kelengkapanOk: false, fisikOk: false, keuanganOk: false, partisipasiOk: false, tindakLanjutOk: true, selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili' }
+                    }
+                }
+            });
+        })();
+
+        // ============ SCORE CALC ============
+        function calcScores(state) {
+            // Waktu
+            let waktu = state.waktuOk ? 5 : Math.max(0, 5 - parseInt(state.selKeterlambatan || 3));
+            // Kelengkapan
+            let kelengkapan = state.kelengkapanOk ? 5 : Math.max(0, 5 - parseInt(state.selKualitas || 2));
+            // Fisik
+            let fisik = state.fisikOk ? 10 : Math.max(0, 10 - parseInt(state.selDeviasiFisik || 5));
+            // Keuangan
+            let keuangan = state.keuanganOk ? 10 : Math.max(0, 10 - parseInt(state.selDeviasiKeuangan || 5));
+            // Partisipasi
+            let partisipasi;
+            if (state.partisipasiOk) {
+                partisipasi = 5;
+            } else {
+                partisipasi = (state.selPartisipasi === 'tidak-hadir') ? 0 : 3;
             }
-        };
-        setLocalData(demo);
-    })();
+            // Tindak Lanjut
+            let tindakLanjut = state.tindakLanjutOk ? 5 : 0;
 
-    // Calculation function
-    function calcMonevScores(keTepatanWaktu, kelengkapanData, capaianFisik, capaianKeuangan, partisipasi, tindakLanjut, keterlambatan, kualitasData, deviasiFisik, deviasiKeuangan) {
-        // 1. Ketepatan Waktu (max 5)
-        let skorWaktu = 5;
-        if (keTepatanWaktu === 'terlambat') {
-            const pengurangan = parseInt(keterlambatan) || 0;
-            skorWaktu = Math.max(0, 5 - pengurangan);
+            return {
+                waktu, kelengkapan, fisik, keuangan, partisipasi, tindakLanjut,
+                total: waktu + kelengkapan + fisik + keuangan + partisipasi + tindakLanjut
+            };
         }
 
-        // 2. Kelengkapan Data (max 5)
-        let skorKelengkapan = 5;
-        if (kelengkapanData === 'kurang') {
-            const pengurangan = parseInt(kualitasData) || 0;
-            skorKelengkapan = Math.max(0, 5 - pengurangan);
+        // ============ TAB SWITCHING ============
+        function switchTab(name, e) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            if (e) e.target.classList.add('active');
+            document.getElementById('tab-' + name).classList.add('active');
+            if (name === 'rekap') renderRekap();
         }
 
-        // 3. Capaian Fisik (max 10)
-        let skorFisik = 10;
-        if (capaianFisik === 'deviasi') {
-            const pengurangan = parseInt(deviasiFisik) || 0;
-            skorFisik = Math.max(0, 10 - pengurangan);
+        // ============ STATS ============
+        function updateStats(bulan) {
+            const data = getLocalData();
+            if (!bulan || !data[bulan]) {
+                document.getElementById('avg-score-this-month').textContent = '—';
+                document.getElementById('units-assessed').textContent = '0';
+                document.getElementById('units-pending').textContent = '6';
+                return;
+            }
+            const vals = Object.values(data[bulan]).map(u => u.total);
+            document.getElementById('avg-score-this-month').textContent = (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1);
+            document.getElementById('units-assessed').textContent = vals.length;
+            document.getElementById('units-pending').textContent = Math.max(0, 6 - vals.length);
         }
 
-        // 4. Capaian Keuangan (max 10)
-        let skorKeuangan = 10;
-        if (capaianKeuangan === 'deviasi') {
-            const pengurangan = parseInt(deviasiKeuangan) || 0;
-            skorKeuangan = Math.max(0, 10 - pengurangan);
-        }
+        // ============ RENDER TABLE ============
+        document.getElementById('select-bulan-input').addEventListener('change', function () {
+            renderInputTable(this.value); updateStats(this.value);
+        });
 
-        // 5. Partisipasi (max 5)
-        let skorPartisipasi = 5;
-        if (partisipasi === 'diwakili') {
-            skorPartisipasi = 3;
-        } else if (partisipasi === 'tidak-hadir') {
-            skorPartisipasi = 0;
-        }
-
-        // 6. Tindak Lanjut (max 5)
-        let skorTindakLanjut = 5;
-        if (tindakLanjut === 'tidak') {
-            skorTindakLanjut = 0;
-        }
-
-        const total = skorWaktu + skorKelengkapan + skorFisik + skorKeuangan + skorPartisipasi + skorTindakLanjut;
-
-        return { 
-            waktu: skorWaktu, 
-            kelengkapan: skorKelengkapan, 
-            fisik: skorFisik, 
-            keuangan: skorKeuangan, 
-            partisipasi: skorPartisipasi, 
-            tindakLanjut: skorTindakLanjut, 
-            total 
-        };
-    }
-
-    // ============ TAB SWITCHING ============
-    function switchTab(name, e) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        if (e) e.target.classList.add('active');
-        document.getElementById('tab-' + name).classList.add('active');
-        if (name === 'rekap') renderRekap();
-    }
-
-    // ============ STATS ============
-    function updateStats(bulan) {
-        const data = getLocalData();
-        if (!bulan || !data[bulan]) {
-            document.getElementById('avg-score-this-month').textContent = '—';
-            document.getElementById('units-assessed').textContent = '0';
-            document.getElementById('units-pending').textContent = '6';
-            return;
-        }
-        const unitData = data[bulan];
-        const vals = Object.values(unitData).map(u => u.total);
-        const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-        document.getElementById('avg-score-this-month').textContent = avg.toFixed(2);
-        document.getElementById('units-assessed').textContent = vals.length;
-        document.getElementById('units-pending').textContent = Math.max(0, 6 - vals.length);
-    }
-
-    // ============ TAB 1: INPUT ============
-    document.getElementById('select-bulan-input').addEventListener('change', function() {
-        renderInputTable(this.value);
-        updateStats(this.value);
-    });
-
-    function renderInputTable(bulan) {
-        const tbody = document.getElementById('input-tbody');
-        if (!bulan) {
-            tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan untuk melihat data</td></tr>';
-            return;
-        }
-        const data = getLocalData();
-        const monthData = data[bulan] || {};
-
-        if (Object.keys(monthData).length === 0) {
-            tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px;color:#94a3b8;">Belum ada penilaian untuk ${bulan}. Klik tombol di unit untuk mulai.</td></tr>`;
-        }
-
-        tbody.innerHTML = UNITS.map(unit => {
-            const u = monthData[unit];
-            if (!u) return `<tr>
+        function renderInputTable(bulan) {
+            const tbody = document.getElementById('input-tbody');
+            if (!bulan) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan untuk melihat data</td></tr>';
+                return;
+            }
+            const monthData = (getLocalData()[bulan]) || {};
+            tbody.innerHTML = UNITS.map(unit => {
+                const u = monthData[unit];
+                if (!u) return `<tr>
                 <td style="font-weight:500;">${unit}</td>
                 <td>${bulan}</td>
-                <td colspan="7" style="color:#94a3b8;font-style:italic;">Belum dinilai</td>
-                <td><button onclick="openInputModal('${unit}','${bulan}')" class="btn btn-sm btn-primary">+ Isi Nilai</button></td>
+                <td colspan="6" style="color:#94a3b8;font-style:italic;">Belum dinilai</td>
+                <td>—</td><td>—</td>
+                <td><button onclick="openInputModal('${unit.replace(/'/g, "\\'")}','${bulan}')" class="btn btn-sm btn-primary">+ Isi Nilai</button></td>
             </tr>`;
-            
-            const badgeClass = u.total >= 35 ? 'badge-green' : u.total >= 25 ? 'badge-yellow' : 'badge-red';
-            return `<tr>
+                const badgeClass = u.total >= 35 ? 'badge-green' : u.total >= 25 ? 'badge-yellow' : 'badge-red';
+                const buktiCell = u.linkBukti
+                    ? `<a href="${u.linkBukti}" target="_blank" style="color:#3b82f6;font-size:12px;text-decoration:none;">📎 Lihat</a>`
+                    : `<span style="color:#94a3b8;font-size:12px;">—</span>`;
+                return `<tr>
                 <td style="font-weight:500;">${unit}</td>
                 <td>${bulan}</td>
-                <td>${u.waktu}</td>
-                <td>${u.kelengkapan}</td>
-                <td>${u.fisik}</td>
-                <td>${u.keuangan}</td>
-                <td>${u.partisipasi}</td>
-                <td>${u.tindakLanjut}</td>
+                <td>${u.waktu}</td><td>${u.kelengkapan}</td><td>${u.fisik}</td>
+                <td>${u.keuangan}</td><td>${u.partisipasi}</td><td>${u.tindakLanjut}</td>
                 <td><span class="badge ${badgeClass}">${u.total}</span></td>
-                <td>
-                    <button onclick="openInputModal('${unit}','${bulan}')" class="btn btn-sm">✏️ Edit</button>
-                    <button onclick="deleteEntry('${unit}','${bulan}')" class="btn btn-sm" style="color:#ef4444;">🗑️</button>
+                <td>${buktiCell}</td>
+                <td style="white-space:nowrap;">
+                    <button onclick="openInputModal('${unit.replace(/'/g, "\\'")}','${bulan}')" class="btn btn-sm">✏️ Edit</button>
+                    <button onclick="deleteEntry('${unit.replace(/'/g, "\\'")}','${bulan}')" class="btn btn-sm" style="color:#ef4444;margin-left:4px;">🗑️</button>
                 </td>
             </tr>`;
-        }).join('');
-    }
-
-    // ============ MODAL ============
-    function openInputModal(unit, bulan) {
-        if (!bulan) {
-            bulan = document.getElementById('select-bulan-input').value;
-            if (!bulan) { Toast.error('Pilih bulan terlebih dahulu'); return; }
-        }
-        
-        const data = getLocalData();
-        const u = (data[bulan] || {})[unit];
-        
-        document.getElementById('modal-bulan-label').textContent = `Unit: ${unit} | Bulan: ${bulan}`;
-        document.getElementById('input-unit').value = unit;
-        
-        // Reset form
-        document.querySelector('input[name="ketepatan-waktu"][value="tepat"]').checked = true;
-        document.querySelector('input[name="kelengkapan-data"][value="lengkap"]').checked = true;
-        document.querySelector('input[name="capaian-fisik"][value="sesuai"]').checked = true;
-        document.querySelector('input[name="capaian-keuangan"][value="sesuai"]').checked = true;
-        document.querySelector('input[name="partisipasi"][value="hadir"]').checked = true;
-        document.querySelector('input[name="tindak-lanjut"][value="ya"]').checked = true;
-        
-        document.getElementById('keterlambatan').value = '0';
-        document.getElementById('kualitas-data').value = '0';
-        document.getElementById('deviasi-fisik').value = '0';
-        document.getElementById('deviasi-keuangan').value = '0';
-        document.getElementById('input-catatan').value = u ? u.catatan : '';
-        
-        document.getElementById('keterlambatan-group').style.display = 'none';
-        document.getElementById('kualitas-data-group').style.display = 'none';
-        document.getElementById('deviasi-fisik-group').style.display = 'none';
-        document.getElementById('deviasi-keuangan-group').style.display = 'none';
-        
-        updateModalScore();
-        openModal('inputModal');
-    }
-
-    function updateModalScore() {
-        const waktuOption = document.querySelector('input[name="ketepatan-waktu"]:checked').value;
-        const keterlambatan = document.getElementById('keterlambatan').value;
-        
-        const kelengkapanOption = document.querySelector('input[name="kelengkapan-data"]:checked').value;
-        const kualitasData = document.getElementById('kualitas-data').value;
-        
-        const fisikOption = document.querySelector('input[name="capaian-fisik"]:checked').value;
-        const deviasiFisik = document.getElementById('deviasi-fisik').value;
-        
-        const keuanganOption = document.querySelector('input[name="capaian-keuangan"]:checked').value;
-        const deviasiKeuangan = document.getElementById('deviasi-keuangan').value;
-        
-        const partisipasi = document.querySelector('input[name="partisipasi"]:checked').value;
-        const tindakLanjut = document.querySelector('input[name="tindak-lanjut"]:checked').value;
-        
-        const scores = calcMonevScores(waktuOption, kelengkapanOption, fisikOption, keuanganOption, partisipasi, tindakLanjut, keterlambatan, kualitasData, deviasiFisik, deviasiKeuangan);
-        
-        document.getElementById('score-waktu').textContent = scores.waktu;
-        document.getElementById('score-kelengkapan').textContent = scores.kelengkapan;
-        document.getElementById('score-fisik').textContent = scores.fisik;
-        document.getElementById('score-keuangan').textContent = scores.keuangan;
-        document.getElementById('score-partisipasi').textContent = scores.partisipasi;
-        document.getElementById('score-tindak-lanjut').textContent = scores.tindakLanjut;
-        document.getElementById('modal-total-nilai').textContent = scores.total;
-    }
-
-    // Event listeners for modal inputs
-    document.addEventListener('DOMContentLoaded', function() {
-        const keTepatanWaktuRadios = document.querySelectorAll('input[name="ketepatan-waktu"]');
-        const kelengkapanDataRadios = document.querySelectorAll('input[name="kelengkapan-data"]');
-        const capaianFisikRadios = document.querySelectorAll('input[name="capaian-fisik"]');
-        const capaianKeuanganRadios = document.querySelectorAll('input[name="capaian-keuangan"]');
-        const partisipasiRadios = document.querySelectorAll('input[name="partisipasi"]');
-        const tindakLanjutRadios = document.querySelectorAll('input[name="tindak-lanjut"]');
-        
-        keTepatanWaktuRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.getElementById('keterlambatan-group').style.display = e.target.value === 'terlambat' ? 'block' : 'none';
-                updateModalScore();
-            });
-        });
-        
-        kelengkapanDataRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.getElementById('kualitas-data-group').style.display = e.target.value === 'kurang' ? 'block' : 'none';
-                updateModalScore();
-            });
-        });
-        
-        capaianFisikRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.getElementById('deviasi-fisik-group').style.display = e.target.value === 'deviasi' ? 'block' : 'none';
-                updateModalScore();
-            });
-        });
-        
-        capaianKeuanganRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.getElementById('deviasi-keuangan-group').style.display = e.target.value === 'deviasi' ? 'block' : 'none';
-                updateModalScore();
-            });
-        });
-        
-        partisipasiRadios.forEach(radio => radio.addEventListener('change', updateModalScore));
-        tindakLanjutRadios.forEach(radio => radio.addEventListener('change', updateModalScore));
-        
-        document.getElementById('keterlambatan').addEventListener('change', updateModalScore);
-        document.getElementById('kualitas-data').addEventListener('change', updateModalScore);
-        document.getElementById('deviasi-fisik').addEventListener('change', updateModalScore);
-        document.getElementById('deviasi-keuangan').addEventListener('change', updateModalScore);
-    });
-
-    async function submitInputNilai() {
-        const bulan = document.getElementById('select-bulan-input').value;
-        const unit = document.getElementById('input-unit').value;
-        if (!unit || !bulan) { Toast.error('Data tidak lengkap'); return; }
-
-        const waktuOption = document.querySelector('input[name="ketepatan-waktu"]:checked').value;
-        const keterlambatan = document.getElementById('keterlambatan').value;
-        
-        const kelengkapanOption = document.querySelector('input[name="kelengkapan-data"]:checked').value;
-        const kualitasData = document.getElementById('kualitas-data').value;
-        
-        const fisikOption = document.querySelector('input[name="capaian-fisik"]:checked').value;
-        const deviasiFisik = document.getElementById('deviasi-fisik').value;
-        
-        const keuanganOption = document.querySelector('input[name="capaian-keuangan"]:checked').value;
-        const deviasiKeuangan = document.getElementById('deviasi-keuangan').value;
-        
-        const partisipasi = document.querySelector('input[name="partisipasi"]:checked').value;
-        const tindakLanjut = document.querySelector('input[name="tindak-lanjut"]:checked').value;
-        const catatan = document.getElementById('input-catatan').value;
-
-        const scores = calcMonevScores(waktuOption, kelengkapanOption, fisikOption, keuanganOption, partisipasi, tindakLanjut, keterlambatan, kualitasData, deviasiFisik, deviasiKeuangan);
-
-        const submitBtn = document.getElementById('submit-input-btn');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
-
-        // Save locally
-        const data = getLocalData();
-        if (!data[bulan]) data[bulan] = {};
-        data[bulan][unit] = { ...scores, catatan };
-        setLocalData(data);
-
-        // Try API
-        try {
-            await callAPI({
-                action: 'saveMonevData',
-                bulan, unit, 
-                waktu: scores.waktu,
-                kelengkapan: scores.kelengkapan,
-                fisik: scores.fisik,
-                keuangan: scores.keuangan,
-                partisipasi: scores.partisipasi,
-                tindakLanjut: scores.tindakLanjut,
-                total: scores.total,
-                catatan,
-                penilai: currentUser.name || 'Admin'
-            });
-        } catch (e) { /* API not configured yet, local save is fine */ }
-
-        closeModal('inputModal');
-        renderInputTable(bulan);
-        updateStats(bulan);
-        Toast.success(`Nilai ${unit} bulan ${bulan} berhasil disimpan!`);
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '💾 Simpan Penilaian';
-    }
-
-    function deleteEntry(unit, bulan) {
-        if (!confirm(`Hapus penilaian ${unit} bulan ${bulan}?`)) return;
-        const data = getLocalData();
-        if (data[bulan]) delete data[bulan][unit];
-        setLocalData(data);
-        renderInputTable(bulan);
-        updateStats(bulan);
-        Toast.success('Data berhasil dihapus');
-    }
-
-    // ============ TAB 2: REKAP ============
-    let chartIndikator = null, chartTotal = null;
-
-    function renderRekap() {
-        const bulan = document.getElementById('select-bulan-rekap').value;
-        const data = getLocalData();
-
-        let targetData = {};
-        if (bulan) {
-            targetData[bulan] = data[bulan] || {};
-        } else {
-            // Use latest month with data
-            const latestMonth = MONTHS.slice().reverse().find(m => data[m] && Object.keys(data[m]).length > 0);
-            if (latestMonth) targetData[latestMonth] = data[latestMonth];
+            }).join('');
         }
 
-        const currentBulan = bulan || Object.keys(targetData)[0] || '';
-        const monthData = targetData[currentBulan] || {};
+        // ============ TOGGLE CHECK ============
+        function toggleCheck(key) {
+            const cb = document.getElementById('check-' + key);
+            cb.checked = !cb.checked;
+            syncCheckItem(key);
+            updateModalScore();
+        }
 
-        // Build rekap rows
-        const tbody = document.getElementById('rekap-tbody');
-        const waktuVals = UNITS.map(u => monthData[u]?.waktu ?? 0);
-        const kelengkapanVals = UNITS.map(u => monthData[u]?.kelengkapan ?? 0);
-        const fisikVals = UNITS.map(u => monthData[u]?.fisik ?? 0);
-        const keuanganVals = UNITS.map(u => monthData[u]?.keuangan ?? 0);
-        const partisipasiVals = UNITS.map(u => monthData[u]?.partisipasi ?? 0);
-        const tindakLanjutVals = UNITS.map(u => monthData[u]?.tindakLanjut ?? 0);
-        const totalVals = UNITS.map(u => monthData[u]?.total ?? 0);
+        function syncCheckItem(key) {
+            const cb = document.getElementById('check-' + key);
+            const item = document.getElementById('check-' + key + '-item');
+            const sub = document.getElementById('sub-' + key);
+            const badge = document.getElementById('badge-' + key);
 
-        tbody.innerHTML = `
-            <tr>
-                <td>1</td>
-                <td style="font-weight:500;">Ketepatan Waktu</td>
-                ${waktuVals.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}
-            </tr>
-            <tr>
-                <td>2</td>
-                <td style="font-weight:500;">Kelengkapan Data</td>
-                ${kelengkapanVals.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}
-            </tr>
-            <tr>
-                <td>3</td>
-                <td style="font-weight:500;">Capaian Fisik</td>
-                ${fisikVals.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}
-            </tr>
-            <tr>
-                <td>4</td>
-                <td style="font-weight:500;">Capaian Keuangan</td>
-                ${keuanganVals.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}
-            </tr>
-            <tr>
-                <td>5</td>
-                <td style="font-weight:500;">Partisipasi PPTK</td>
-                ${partisipasiVals.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}
-            </tr>
-            <tr>
-                <td>6</td>
-                <td style="font-weight:500;">Tindak Lanjut</td>
-                ${tindakLanjutVals.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}
-            </tr>
-            <tr>
-                <td></td>
-                <td style="font-weight:700;">TOTAL NILAI</td>
-                ${totalVals.map(v => `<td style="font-weight:700;color:${v >= 35 ? '#065f46' : v >= 25 ? '#92400e' : '#991b1b'};">${v}</td>`).join('')}
-            </tr>
+            const maxPoints = { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindaklanjut: 5 };
+            const mp = maxPoints[key];
+
+            if (cb.checked) {
+                item.classList.add('checked');
+                item.classList.remove('unchecked-state');
+                badge.textContent = `+${mp} poin`;
+                sub.classList.remove('show');
+            } else {
+                item.classList.remove('checked');
+                item.classList.add('unchecked-state');
+                sub.classList.add('show');
+                // Update badge to show reduced
+                updateBadge(key);
+            }
+        }
+
+        function updateBadge(key) {
+            const badge = document.getElementById('badge-' + key);
+            const scores = calcScores(getModalState());
+            const scoreMap = { waktu: 'waktu', kelengkapan: 'kelengkapan', fisik: 'fisik', keuangan: 'keuangan', partisipasi: 'partisipasi', tindaklanjut: 'tindakLanjut' };
+            const val = scores[scoreMap[key]];
+            const maxPoints = { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindaklanjut: 5 };
+            badge.textContent = val === maxPoints[key] ? `+${val} poin` : `${val} poin ⬇`;
+        }
+
+        function getModalState() {
+            return {
+                waktuOk: document.getElementById('check-waktu').checked,
+                kelengkapanOk: document.getElementById('check-kelengkapan').checked,
+                fisikOk: document.getElementById('check-fisik').checked,
+                keuanganOk: document.getElementById('check-keuangan').checked,
+                partisipasiOk: document.getElementById('check-partisipasi').checked,
+                tindakLanjutOk: document.getElementById('check-tindaklanjut').checked,
+                selKeterlambatan: document.getElementById('sel-keterlambatan').value,
+                selKualitas: document.getElementById('sel-kualitas').value,
+                selDeviasiFisik: document.getElementById('sel-deviasi-fisik').value,
+                selDeviasiKeuangan: document.getElementById('sel-deviasi-keuangan').value,
+                selPartisipasi: document.getElementById('sel-partisipasi').value,
+            };
+        }
+
+        function updateModalScore() {
+            const s = calcScores(getModalState());
+            document.getElementById('score-waktu').textContent = s.waktu;
+            document.getElementById('score-kelengkapan').textContent = s.kelengkapan;
+            document.getElementById('score-fisik').textContent = s.fisik;
+            document.getElementById('score-keuangan').textContent = s.keuangan;
+            document.getElementById('score-partisipasi').textContent = s.partisipasi;
+            document.getElementById('score-tindak-lanjut').textContent = s.tindakLanjut;
+            document.getElementById('modal-total-nilai').textContent = s.total;
+            // Update all badges
+            ['waktu', 'kelengkapan', 'fisik', 'keuangan', 'partisipasi', 'tindaklanjut'].forEach(k => {
+                const cb = document.getElementById('check-' + k);
+                if (!cb.checked) updateBadge(k);
+            });
+        }
+
+        // Add change listeners for selects
+        document.querySelectorAll('#sub-waktu select, #sub-kelengkapan select, #sub-fisik select, #sub-keuangan select, #sub-partisipasi select').forEach(sel => {
+            sel.addEventListener('change', updateModalScore);
+        });
+
+        // ============ OPEN MODAL ============
+        function openInputModal(unit, bulan) {
+            if (!bulan) {
+                bulan = document.getElementById('select-bulan-input').value;
+                if (!bulan) { Toast.error('Pilih bulan terlebih dahulu'); return; }
+            }
+
+            const data = getLocalData();
+            const existing = (data[bulan] || {})[unit];
+            const isEdit = !!existing;
+
+            // Update header
+            document.getElementById('modal-title-text').textContent = isEdit ? 'Edit Penilaian Monev' : 'Input Penilaian Monev';
+            document.getElementById('modal-bulan-label').textContent = `Bulan: ${bulan}`;
+            document.getElementById('modal-unit-name').textContent = unit;
+            document.getElementById('modal-unit-meta').textContent = `Penilaian Bulan ${bulan}`;
+            document.getElementById('modal-existing-badge').style.display = isEdit ? 'block' : 'none';
+            document.getElementById('input-unit').value = unit;
+
+            // Change submit button style
+            const submitBtn = document.getElementById('submit-input-btn');
+            if (isEdit) {
+                submitBtn.className = 'btn btn-warning';
+                submitBtn.style.flex = '1';
+                submitBtn.innerHTML = '💾 Update Penilaian';
+            } else {
+                submitBtn.className = 'btn btn-success';
+                submitBtn.style.flex = '1';
+                submitBtn.innerHTML = '💾 Simpan Penilaian';
+            }
+
+            // Restore state from saved data if editing
+            const state = isEdit && existing._state ? existing._state : {
+                waktuOk: true, kelengkapanOk: true, fisikOk: true, keuanganOk: true,
+                partisipasiOk: true, tindakLanjutOk: true,
+                selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5',
+                selDeviasiKeuangan: '5', selPartisipasi: 'diwakili'
+            };
+
+            // Set checkboxes
+            document.getElementById('check-waktu').checked = state.waktuOk;
+            document.getElementById('check-kelengkapan').checked = state.kelengkapanOk;
+            document.getElementById('check-fisik').checked = state.fisikOk;
+            document.getElementById('check-keuangan').checked = state.keuanganOk;
+            document.getElementById('check-partisipasi').checked = state.partisipasiOk;
+            document.getElementById('check-tindaklanjut').checked = state.tindakLanjutOk;
+
+            // Set select values
+            document.getElementById('sel-keterlambatan').value = state.selKeterlambatan || '3';
+            document.getElementById('sel-kualitas').value = state.selKualitas || '2';
+            document.getElementById('sel-deviasi-fisik').value = state.selDeviasiFisik || '5';
+            document.getElementById('sel-deviasi-keuangan').value = state.selDeviasiKeuangan || '5';
+            document.getElementById('sel-partisipasi').value = state.selPartisipasi || 'diwakili';
+
+            // Sync visual state for all check items
+            ['waktu', 'kelengkapan', 'fisik', 'keuangan', 'partisipasi', 'tindaklanjut'].forEach(k => syncCheckItem(k));
+
+            document.getElementById('input-catatan').value = existing ? existing.catatan : '';
+
+            // ---- Restore file bukti state ----
+            // Reset new-file selection
+            selectedBuktiFile = null;
+            selectedBuktiBase64 = null;
+            existingBuktiDeleted = false;
+            document.getElementById('bukti-file-input').value = '';
+            document.getElementById('bukti-file-preview').style.display = 'none';
+            document.getElementById('bukti-file-error').style.display = 'none';
+            document.getElementById('upload-progress').style.display = 'none';
+
+            if (isEdit && existing && existing.linkBukti) {
+                // Show existing file panel, hide upload zone
+                existingLinkBukti = existing.linkBukti;
+                document.getElementById('existing-bukti-link').href = existingLinkBukti;
+                document.getElementById('existing-bukti-panel').style.display = 'block';
+                document.getElementById('new-file-upload-zone').style.display = 'none';
+            } else {
+                // New entry or no previous file — just show upload zone
+                existingLinkBukti = '';
+                document.getElementById('existing-bukti-panel').style.display = 'none';
+                document.getElementById('new-file-upload-zone').style.display = 'block';
+            }
+            updateModalScore();
+
+            // Show modal and scroll to top
+            const modal = document.getElementById('inputModal');
+            modal.style.display = 'flex';
+            // Scroll modal content to top
+            setTimeout(() => {
+                const modalEl = modal.querySelector('.modal');
+                if (modalEl) modalEl.scrollTop = 0;
+            }, 0);
+        }
+
+        function closeInputModal() {
+            document.getElementById('inputModal').style.display = 'none';
+        }
+
+        // Click overlay to close
+        document.getElementById('inputModal').addEventListener('click', function (e) {
+            if (e.target === this) closeInputModal();
+        });
+
+        // ============ SUBMIT ============
+        async function submitInputNilai() {
+            const bulan = document.getElementById('select-bulan-input').value;
+            const unit = document.getElementById('input-unit').value;
+            if (!unit || !bulan) { Toast.error('Data tidak lengkap'); return; }
+
+            const state = getModalState();
+            const scores = calcScores(state);
+            const catatan = document.getElementById('input-catatan').value;
+
+            const submitBtn = document.getElementById('submit-input-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+
+            const payload = {
+                action: 'uploadAndSave', bulan, unit,
+                waktu: scores.waktu, kelengkapan: scores.kelengkapan,
+                fisik: scores.fisik, keuangan: scores.keuangan,
+                partisipasi: scores.partisipasi, tindakLanjut: scores.tindakLanjut,
+                total: scores.total, catatan,
+                penilai: currentUser.name || 'Admin',
+                fileName: '', mimeType: '', fileData: ''
+            };
+
+            if (selectedBuktiFile && selectedBuktiBase64) {
+                // Case 1: User picked a NEW file — upload it
+                setUploadProgress(20, 'Mempersiapkan file...');
+                const ext = selectedBuktiFile.name.split('.').pop().toLowerCase();
+                const safeUnit = unit.replace(/[^a-zA-Z0-9]/g, '_');
+                payload.fileName = `MONEV_${bulan}_${safeUnit}_${Date.now()}.${ext}`;
+                payload.mimeType = selectedBuktiFile.type;
+                payload.fileData = selectedBuktiBase64;
+            }
+
+            setUploadProgress(50, 'Mengirim ke server...');
+
+            let linkBukti = '';
+            try {
+                const result = await callAPIPost(payload);
+                if (result && result.status === 'success') {
+                    if (selectedBuktiFile && selectedBuktiBase64) {
+                        // Case 1: New file uploaded — use the new link
+                        linkBukti = result.linkBukti || '';
+                    } else if (!existingBuktiDeleted && existingLinkBukti) {
+                        // Case 2: No new file, existing not deleted — keep old link
+                        linkBukti = existingLinkBukti;
+                    }
+                    // Case 3: existingBuktiDeleted = true → linkBukti stays ''
+                    setUploadProgress(100, 'Berhasil!');
+                } else {
+                    Toast.error('Gagal simpan: ' + (result?.message || 'Unknown error'));
+                }
+            } catch (err) {
+                Toast.error('Gagal menghubungi server: ' + err.message);
+            }
+
+            // Save locally with _state so Edit can restore it
+            const localData = getLocalData();
+            if (!localData[bulan]) localData[bulan] = {};
+            localData[bulan][unit] = { ...scores, catatan, linkBukti, _state: state };
+            setLocalData(localData);
+
+            hideUploadProgress();
+            closeInputModal();
+            renderInputTable(bulan);
+            updateStats(bulan);
+            Toast.success(`Nilai ${unit} bulan ${bulan} berhasil disimpan!${linkBukti ? ' (Bukti terupload)' : ''}`);
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '💾 Simpan Penilaian';
+        }
+
+        function deleteEntry(unit, bulan) {
+            if (!confirm(`Hapus penilaian ${unit} bulan ${bulan}?`)) return;
+            const data = getLocalData();
+            if (data[bulan]) delete data[bulan][unit];
+            setLocalData(data);
+            renderInputTable(bulan);
+            updateStats(bulan);
+            Toast.success('Penilaian dihapus.');
+        }
+
+        // ============ REKAP ============
+        let chartIndikator = null, chartTotal = null;
+
+        function renderRekap() {
+            const bulan = document.getElementById('select-bulan-rekap').value;
+            const data = getLocalData();
+            const monthData = (bulan && data[bulan]) ? data[bulan] : {};
+
+            const w = UNITS.map(u => (monthData[u]?.waktu) || 0);
+            const kl = UNITS.map(u => (monthData[u]?.kelengkapan) || 0);
+            const f = UNITS.map(u => (monthData[u]?.fisik) || 0);
+            const ke = UNITS.map(u => (monthData[u]?.keuangan) || 0);
+            const p = UNITS.map(u => (monthData[u]?.partisipasi) || 0);
+            const tl = UNITS.map(u => (monthData[u]?.tindakLanjut) || 0);
+            const tot = UNITS.map(u => (monthData[u]?.total) || 0);
+
+            document.getElementById('rekap-tbody').innerHTML = `
+            <tr><td>1</td><td style="font-weight:500;text-align:left;">Ketepatan Waktu</td>${w.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+            <tr><td>2</td><td style="font-weight:500;text-align:left;">Kelengkapan Data</td>${kl.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+            <tr><td>3</td><td style="font-weight:500;text-align:left;">Capaian Fisik</td>${f.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+            <tr><td>4</td><td style="font-weight:500;text-align:left;">Capaian Keuangan</td>${ke.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+            <tr><td>5</td><td style="font-weight:500;text-align:left;">Partisipasi PPTK</td>${p.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+            <tr><td>6</td><td style="font-weight:500;text-align:left;">Tindak Lanjut</td>${tl.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+            <tr><td></td><td style="font-weight:700;text-align:left;">TOTAL NILAI</td>${tot.map(v => `<td style="font-weight:700;color:${v >= 35 ? '#065f46' : v >= 25 ? '#92400e' : '#991b1b'};">${v}</td>`).join('')}</tr>
         `;
 
-        // Render charts
-        if (chartIndikator) chartIndikator.destroy();
-        if (chartTotal) chartTotal.destroy();
+            if (chartIndikator) chartIndikator.destroy();
+            if (chartTotal) chartTotal.destroy();
 
-        // Chart 1: Stacked bar showing all indicators per unit
-        chartIndikator = new Chart(document.getElementById('chartIndikator').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: SHORT_UNITS,
-                datasets: [
-                    { label: 'Ketepatan Waktu', data: waktuVals, backgroundColor: '#3b82f6' },
-                    { label: 'Kelengkapan', data: kelengkapanVals, backgroundColor: '#8b5cf6' },
-                    { label: 'Fisik', data: fisikVals, backgroundColor: '#10b981' },
-                    { label: 'Keuangan', data: keuanganVals, backgroundColor: '#f59e0b' },
-                    { label: 'Partisipasi', data: partisipasiVals, backgroundColor: '#ec4899' },
-                    { label: 'Tindak Lanjut', data: tindakLanjutVals, backgroundColor: '#06b6d4' }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: true, position: 'bottom' } },
-                scales: {
-                    x: { stacked: true },
-                    y: { stacked: true, beginAtZero: true, max: 40 }
-                }
-            }
-        });
-
-        // Chart 2: Total score per unit
-        chartTotal = new Chart(document.getElementById('chartTotal').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: SHORT_UNITS,
-                datasets: [{
-                    label: 'Total Nilai',
-                    data: totalVals,
-                    backgroundColor: totalVals.map(v => v >= 35 ? '#10b981' : v >= 25 ? '#f59e0b' : '#ef4444'),
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: ctx => `Nilai: ${ctx.parsed.y} / 40`
-                        }
-                    }
+            chartIndikator = new Chart(document.getElementById('chartIndikator').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: SHORT_UNITS, datasets: [
+                        { label: 'Ket.Waktu', data: w, backgroundColor: '#3b82f6' },
+                        { label: 'Kelengkapan', data: kl, backgroundColor: '#8b5cf6' },
+                        { label: 'Fisik', data: f, backgroundColor: '#10b981' },
+                        { label: 'Keuangan', data: ke, backgroundColor: '#f59e0b' },
+                        { label: 'Partisipasi', data: p, backgroundColor: '#ec4899' },
+                        { label: 'Tindak Lanjut', data: tl, backgroundColor: '#06b6d4' }
+                    ]
                 },
-                scales: {
-                    y: { beginAtZero: true, max: 40, ticks: { stepSize: 5 } }
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom' } },
+                    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, max: 40 } }
                 }
+            });
+
+            chartTotal = new Chart(document.getElementById('chartTotal').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: SHORT_UNITS, datasets: [{
+                        label: 'Total', data: tot, borderRadius: 6,
+                        backgroundColor: tot.map(v => v >= 35 ? '#10b981' : v >= 25 ? '#f59e0b' : '#ef4444')
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `Nilai: ${ctx.parsed.y}/40` } } },
+                    scales: { y: { beginAtZero: true, max: 40, ticks: { stepSize: 5 } } }
+                }
+            });
+        }
+
+        document.getElementById('select-bulan-rekap').addEventListener('change', renderRekap);
+
+        // ============ FILE HANDLING ============
+
+        // User picked a new file from disk
+        function handleBuktiFileSelect(event) {
+            const file = event.target.files[0];
+            const errEl = document.getElementById('bukti-file-error');
+            errEl.style.display = 'none';
+            if (!file) return;
+
+            if (!['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'].includes(file.type)) {
+                errEl.textContent = '❌ Format tidak didukung. Gunakan JPG, PNG, atau PDF.';
+                errEl.style.display = 'block'; event.target.value = ''; return;
             }
-        });
-    }
+            if (file.size > MAX_FILE_SIZE) {
+                errEl.textContent = `❌ Ukuran terlalu besar (${formatFileSize(file.size)}). Maks 10 MB.`;
+                errEl.style.display = 'block'; event.target.value = ''; return;
+            }
+            selectedBuktiFile = file;
+            document.getElementById('bukti-preview-name').textContent = file.name;
+            document.getElementById('bukti-preview-size').textContent = formatFileSize(file.size);
+            document.getElementById('bukti-preview-icon').textContent = file.type === 'application/pdf' ? '📄' : '🖼️';
+            document.getElementById('bukti-file-preview').style.display = 'flex';
 
-    document.getElementById('select-bulan-rekap').addEventListener('change', renderRekap);
+            const reader = new FileReader();
+            reader.onload = e => { selectedBuktiBase64 = e.target.result.split(',')[1]; };
+            reader.readAsDataURL(file);
+        }
 
-    // ============ API ============
-    function callAPI(params) {
-        return new Promise((resolve, reject) => {
-            const cb = 'cb_' + Date.now();
-            window[cb] = data => { cleanup(); resolve(data); };
-            const qs = new URLSearchParams({ ...params, callback: cb }).toString();
-            const s = document.createElement('script');
-            s.src = `${APPS_SCRIPT_URL}?${qs}`;
-            const t = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 12000);
-            function cleanup() { clearTimeout(t); if (s.parentNode) s.parentNode.removeChild(s); delete window[cb]; }
-            s.onerror = () => { cleanup(); reject(new Error('network')); };
-            document.body.appendChild(s);
-        });
-    }
+        // User clicked "Ganti File" on the existing-file panel
+        function replaceExistingBukti() {
+            // Hide existing panel, show upload zone so user can pick a new file
+            document.getElementById('existing-bukti-panel').style.display = 'none';
+            document.getElementById('new-file-upload-zone').style.display = 'block';
+            // Existing link is still preserved in existingLinkBukti
+            // until a new file is actually selected
+        }
 
-    // ============ MODAL HELPERS ============
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    window.onclick = e => { if (e.target.classList.contains('modal-overlay')) { e.target.style.display = 'none'; } };
+        // User clicked "Hapus Bukti" — wants to remove the existing file link
+        function deleteExistingBukti() {
+            if (!confirm('Hapus bukti yang tersimpan? Tindakan ini tidak bisa dibatalkan setelah disimpan.')) return;
+            existingLinkBukti = '';
+            existingBuktiDeleted = true;
+            document.getElementById('existing-bukti-panel').style.display = 'none';
+            document.getElementById('new-file-upload-zone').style.display = 'block';
+            Toast.show('Bukti akan dihapus saat penilaian disimpan.', 'error');
+        }
 
-    // ============ MOBILE MENU ============
-    function toggleMobileMenu() { document.getElementById('sidebar').classList.toggle('mobile-open'); }
+        // User clicked ✕ on the new-file preview (cancel new selection, go back to existing if any)
+        function cancelNewFile() {
+            selectedBuktiFile = null;
+            selectedBuktiBase64 = null;
+            document.getElementById('bukti-file-input').value = '';
+            document.getElementById('bukti-file-preview').style.display = 'none';
+            document.getElementById('bukti-file-error').style.display = 'none';
 
-    // ============ AUTH ============
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    let currentUser = user;
-    document.getElementById('admin-name').textContent = user.name || 'Administrator';
-    document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
-    function logout() { if (confirm("Keluar?")) { localStorage.clear(); location.href = 'login.html'; } }
+            // If there was an existing file and user hasn't deleted it, restore the panel
+            if (existingLinkBukti && !existingBuktiDeleted) {
+                document.getElementById('existing-bukti-panel').style.display = 'block';
+                document.getElementById('new-file-upload-zone').style.display = 'none';
+            }
+        }
 
-    // ============ TOAST ============
-    const Toast = {
-        container: null,
-        init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
-        show(msg, type = 'success') { this.init(); const el = document.createElement('div'); el.className = `toast ${type}`; el.innerHTML = `<span>${msg}</span>`; this.container.appendChild(el); setTimeout(() => el.remove(), 3000); },
-        success(msg) { this.show(msg, 'success'); },
-        error(msg) { this.show(msg, 'error'); }
-    };
+        // Legacy alias kept so nothing breaks
+        function removeBuktiFile() { cancelNewFile(); }
 
-    // Auto-select current month
-    const currentMonthIdx = new Date().getMonth();
-    if (MONTHS[currentMonthIdx]) {
-        document.getElementById('select-bulan-input').value = MONTHS[currentMonthIdx];
-        renderInputTable(MONTHS[currentMonthIdx]);
-        updateStats(MONTHS[currentMonthIdx]);
-    }
+        function formatFileSize(b) {
+            if (b < 1024) return b + ' B';
+            if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+            return (b / 1048576).toFixed(2) + ' MB';
+        }
+
+        function setUploadProgress(pct, label) {
+            document.getElementById('upload-progress').style.display = 'block';
+            document.getElementById('upload-progress-fill').style.width = pct + '%';
+            document.getElementById('upload-progress-label').textContent = label;
+        }
+        function hideUploadProgress() {
+            document.getElementById('upload-progress').style.display = 'none';
+            document.getElementById('upload-progress-fill').style.width = '0%';
+        }
+
+        // ============ API ============
+        function callAPIPost(params) {
+            return new Promise((resolve, reject) => {
+                const t = setTimeout(() => reject(new Error('timeout')), 30000);
+                const body = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k] || '')).join('&');
+                fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body, redirect: 'follow' })
+                    .then(r => r.text())
+                    .then(text => {
+                        clearTimeout(t);
+                        try { resolve(JSON.parse(text)); }
+                        catch (e) { console.warn('Non-JSON:', text.slice(0, 200)); resolve({ status: 'success', linkBukti: '' }); }
+                    })
+                    .catch(err => { clearTimeout(t); reject(err); });
+            });
+        }
+
+        // ============ AUTH ============
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        let currentUser = user;
+        document.getElementById('admin-name').textContent = user.name || 'Administrator';
+        document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
+        function logout() { if (confirm('Keluar?')) { localStorage.clear(); location.href = 'login.html'; } }
+
+        // ============ TOAST ============
+        const Toast = {
+            container: null,
+            init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
+            show(msg, type = 'success') {
+                this.init();
+                const el = document.createElement('div'); el.className = `toast ${type}`;
+                el.innerHTML = `<span>${msg}</span>`; this.container.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            },
+            success(m) { this.show(m, 'success'); }, error(m) { this.show(m, 'error'); }
+        };
+
+        // ============ AUTO-SELECT CURRENT MONTH ============
+        const currentMonthName = MONTHS[new Date().getMonth()];
+        if (currentMonthName) {
+            const selInput = document.getElementById('select-bulan-input');
+            const selRekap = document.getElementById('select-bulan-rekap');
+            selInput.value = currentMonthName; renderInputTable(currentMonthName); updateStats(currentMonthName);
+            selRekap.value = currentMonthName; renderRekap();
+        }
     </script>
 </body>
+
 </html>

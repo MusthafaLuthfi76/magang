@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penilaian Kearsipan Internal - 3 Komponen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa;
@@ -16,11 +22,45 @@
             min-height: 100vh;
         }
 
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
-        .toast { background: white; padding: 16px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 12px; }
-        .toast.success { border-left: 4px solid #10b981; }
-        .toast.error { border-left: 4px solid #ef4444; }
-        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 10px;
+            min-width: 300px;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
 
         /* MOBILE MENU TOGGLE */
         .mobile-menu-toggle {
@@ -65,17 +105,17 @@
             transition: transform 0.3s ease;
         }
 
-        .sidebar-header { 
-            padding: 20px 16px; 
-            border-bottom: 1px solid #e5e7eb; 
+        .sidebar-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #e5e7eb;
         }
-        
+
         .sidebar-header-content {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
+
         .sidebar-icon {
             width: 40px;
             height: 40px;
@@ -85,30 +125,30 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .sidebar-title {
             font-size: 16px;
             font-weight: 600;
             color: #1e293b;
         }
-        
+
         .sidebar-subtitle {
             font-size: 12px;
             color: #64748b;
         }
-        
-        .sidebar-nav { 
-            flex: 1; 
-            padding: 16px 12px; 
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
             display: flex;
             flex-direction: column;
             gap: 4px;
             overflow-y: auto;
         }
-        
-        .sidebar-footer { 
-            padding: 16px 12px; 
-            border-top: 1px solid #e5e7eb; 
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid #e5e7eb;
         }
 
         .nav-item {
@@ -133,46 +173,66 @@
         }
 
         .nav-item {
-            display: flex; align-items: center; gap: 14px;
-            padding: 12px 16px; border-radius: 10px; font-weight: 500; font-size: 15px;
-            color: #0f172a; text-decoration: none; position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #0f172a;
+            text-decoration: none;
+            position: relative;
             transition: all 0.15s ease;
         }
-        .nav-item:hover { background: #f8fafc; }
-        .nav-item.active { background: #f1f5f9; }
-        .nav-item.active::before {
-            content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
-            width: 4px; background: #0f172a; border-radius: 0 4px 4px 0;
+
+        .nav-item:hover {
+            background: #f8fafc;
         }
 
-        .main-content { 
-            flex: 1; 
+        .nav-item.active {
+            background: #f1f5f9;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            background: #0f172a;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             margin-left: 252px;
             transition: margin-left 0.3s ease;
         }
 
-        .header { 
-            background: white; 
-            border-bottom: 1px solid #e5e7eb; 
-            padding: 24px 32px; 
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 24px 32px;
         }
 
-        .header-title { 
-            font-size: 24px; 
-            font-weight: 600; 
-            color: #1e293b; 
-            margin-bottom: 4px; 
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
         }
 
-        .header-subtitle { 
-            font-size: 14px; 
-            color: #64748b; 
+        .header-subtitle {
+            font-size: 14px;
+            color: #64748b;
         }
 
-        .container { 
-            padding: 24px 32px; 
+        .container {
+            padding: 24px 32px;
         }
 
         .card {
@@ -193,10 +253,10 @@
             gap: 16px;
         }
 
-        .card-title { 
-            font-size: 18px; 
-            font-weight: 600; 
-            color: #1e293b; 
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
         }
 
         .stats-grid {
@@ -206,33 +266,34 @@
             margin-bottom: 24px;
         }
 
-        .stat-card { 
-            padding: 20px; 
-            border-radius: 8px; 
+        .stat-card {
+            padding: 20px;
+            border-radius: 8px;
             border: 1px solid #e5e7eb;
             background: white;
         }
 
-        .stat-label { 
-            font-size: 13px; 
-            color: #64748b; 
-            margin-bottom: 8px; 
+        .stat-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 8px;
         }
 
-        .stat-value { 
-            font-size: 32px; 
-            font-weight: 700; 
-            color: #1e293b; 
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
         }
 
-        .filter-container { 
-            display: flex; 
-            gap: 12px; 
+        .filter-container {
+            display: flex;
+            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
         }
 
-        .search-input, .select-input {
+        .search-input,
+        .select-input {
             padding: 8px 12px;
             border: 1px solid #e5e7eb;
             border-radius: 6px;
@@ -256,8 +317,8 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        table { 
-            width: 100%; 
+        table {
+            width: 100%;
             border-collapse: collapse;
             min-width: 900px;
         }
@@ -280,8 +341,8 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        tbody tr:hover { 
-            background: #fafbfc; 
+        tbody tr:hover {
+            background: #fafbfc;
         }
 
         .btn {
@@ -300,7 +361,7 @@
             transition: all 0.2s;
         }
 
-        .btn:hover { 
+        .btn:hover {
             background: #f8fafc;
             border-color: #cbd5e1;
         }
@@ -316,8 +377,8 @@
             border-color: #10b981;
         }
 
-        .btn-success:hover { 
-            background: #059669; 
+        .btn-success:hover {
+            background: #059669;
         }
 
         .btn-warning {
@@ -345,14 +406,14 @@
             white-space: nowrap;
         }
 
-        .badge-pending { 
-            background: #e0e7ff; 
-            color: #3730a3; 
+        .badge-pending {
+            background: #e0e7ff;
+            color: #3730a3;
         }
 
-        .badge-assessed { 
-            background: #d1fae5; 
-            color: #065f46; 
+        .badge-assessed {
+            background: #d1fae5;
+            color: #065f46;
         }
 
         .modal-overlay {
@@ -376,25 +437,25 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .modal-header { 
-            padding: 20px 24px; 
-            border-bottom: 1px solid #e5e7eb; 
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
-        .modal-title { 
-            font-size: 18px; 
-            font-weight: 600; 
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        .modal-content { 
-            padding: 24px; 
+        .modal-content {
+            padding: 24px;
         }
 
-        .modal-footer { 
-            padding: 16px 24px; 
-            border-top: 1px solid #e5e7eb; 
-            display: flex; 
-            gap: 12px; 
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
         }
 
         .input-label {
@@ -420,8 +481,8 @@
             box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
         }
 
-        .form-group { 
-            margin-bottom: 16px; 
+        .form-group {
+            margin-bottom: 16px;
         }
 
         .checkbox-container {
@@ -460,17 +521,17 @@
             border: 2px solid #e5e7eb;
         }
 
-        .score-preview-title { 
-            font-size: 13px; 
-            color: #64748b; 
-            margin-bottom: 8px; 
+        .score-preview-title {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 8px;
         }
 
-        .score-preview-value { 
-            font-size: 36px; 
-            font-weight: 700; 
-            color: #0f172a; 
-            text-align: center; 
+        .score-preview-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: center;
         }
 
         .score-breakdown {
@@ -487,33 +548,33 @@
             border-radius: 6px;
         }
 
-        .score-item-label { 
-            font-size: 11px; 
-            color: #64748b; 
-            margin-bottom: 4px; 
+        .score-item-label {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 4px;
         }
 
-        .score-item-value { 
-            font-size: 20px; 
-            font-weight: 700; 
-            color: #1e293b; 
+        .score-item-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
         }
 
         .user-info {
             padding: 0 12px;
             margin-bottom: 16px;
         }
-        
-        .user-name { 
-            font-size: 14px; 
-            font-weight: 600; 
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
             color: #1e293b;
             margin-bottom: 2px;
         }
 
-        .user-email { 
-            font-size: 12px; 
-            color: #64748b; 
+        .user-email {
+            font-size: 12px;
+            color: #64748b;
         }
 
         .logout-btn {
@@ -533,8 +594,8 @@
             gap: 8px;
         }
 
-        .logout-btn:hover { 
-            background: #f8fafc; 
+        .logout-btn:hover {
+            background: #f8fafc;
         }
 
         .info-banner {
@@ -684,7 +745,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 1023px) {
@@ -717,12 +780,12 @@
                 padding: 20px 16px;
             }
 
-            .stats-grid { 
-                grid-template-columns: 1fr 1fr; 
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
-            .score-breakdown { 
-                grid-template-columns: 1fr; 
+            .score-breakdown {
+                grid-template-columns: 1fr;
             }
 
             .search-input {
@@ -783,6 +846,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Mobile Menu Toggle -->
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -801,8 +865,8 @@
         <div class="sidebar-header">
             <div class="sidebar-header-content">
                 <div class="sidebar-icon">
-                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj" 
-                        alt="Logo Dinas Koperasi UKM" 
+                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj"
+                        alt="Logo Dinas Koperasi UKM"
                         style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
                 </div>
                 <div>
@@ -814,39 +878,74 @@
 
         <div class="sidebar-nav">
             <a href="admin-dashboard.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
                 Dashboard
             </a>
             <a href="admin-requests.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                    <path d="M14 3v6h6" />
+                </svg>
                 Kendaraan Dinas
             </a>
             <a href="admin-voucher-bbm.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                </svg>
                 Voucher BBM
             </a>
             <a href="admin-ruang-rapat.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
                 Ruang Rapat
             </a>
             <a href="admin-kearsipan.html" class="nav-item active">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                </svg>
                 Kearsipan Internal
             </a>
             <a href="admin-spj-keuangan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
                 Penilaian SPJ Keuangan
             </a>
             <a href="admin-spj-pengumpulan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                </svg>
                 Pengumpulan SPJ
             </a>
             <a href="admin-pengajuan-dana.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="12" y1="18" x2="12" y2="12" />
+                    <line x1="9" y1="15" x2="15" y2="15" />
+                </svg>
                 Pengajuan Dana
             </a>
             <a href="admin-penilaian-monev.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
                 Penilaian Monev
             </a>
         </div>
@@ -857,7 +956,11 @@
                 <div class="user-email" id="admin-email">admin@dinas.gov.id</div>
             </div>
             <button onclick="logout()" class="logout-btn">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
                 Keluar
             </button>
         </div>
@@ -934,7 +1037,7 @@
 
     <script>
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYbUHgMtbcVrFk4H-j_Wfi___Ah4mLmBqF9ZvquFcZ9PSE8t4l-JDoTPRzvDJfgwX2Og/exec';
-        
+
         let masterDocuments = [];
         let allDocuments = [];
         let currentUser = {};
@@ -976,10 +1079,10 @@
                 toast.className = `toast ${type}`;
                 toast.innerHTML = `
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        ${type === 'success' 
-                            ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
-                            : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
-                        }
+                        ${type === 'success'
+                        ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
+                        : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
+                    }
                     </svg>
                     <span>${message}</span>
                 `;
@@ -1029,7 +1132,7 @@
             const tbody = document.getElementById('documents-tbody');
             const cardsContainer = document.getElementById('documents-cards');
             const paginationContainer = document.getElementById('documents-pagination');
-            
+
             if (allDocuments.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">Tidak ada dokumen</td></tr>';
                 cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
@@ -1041,7 +1144,7 @@
             const startIndex = (documentsCurrentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const currentItems = allDocuments.slice(startIndex, endIndex);
-            
+
             // Render table for desktop
             tbody.innerHTML = currentItems.map(doc => `
                 <tr>
@@ -1063,13 +1166,13 @@
                     <td>
                         <div class="action-buttons">
                             <a href="${doc.file_url}" target="_blank" class="btn btn-sm">👁️ Lihat</a>
-                            ${doc.status !== 'ASSESSED' 
-                                ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-sm btn-success">✓ Nilai</button>`
-                                : `
+                            ${doc.status !== 'ASSESSED'
+                    ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-sm btn-success">✓ Nilai</button>`
+                    : `
                                 <button onclick="viewAssessment('${doc.id}')" class="btn btn-sm">📊 Detail</button>
                                 <button onclick="editAssessment('${doc.id}')" class="btn btn-sm btn-warning">✏️ Edit</button>
                                 `
-                            }
+                }
                         </div>
                     </td>
                 </tr>
@@ -1111,13 +1214,13 @@
                         <div class="documents-card-footer">
                             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                 <a href="${doc.file_url}" target="_blank" class="btn btn-sm" style="flex: 1;">👁️ Lihat</a>
-                                ${doc.status !== 'ASSESSED' 
-                                    ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-sm btn-success" style="flex: 1;">✓ Nilai</button>`
-                                    : `
+                                ${doc.status !== 'ASSESSED'
+                        ? `<button onclick="openAssessmentModal('${doc.id}')" class="btn btn-sm btn-success" style="flex: 1;">✓ Nilai</button>`
+                        : `
                                     <button onclick="viewAssessment('${doc.id}')" class="btn btn-sm" style="flex: 1;">📊 Detail</button>
                                     <button onclick="editAssessment('${doc.id}')" class="btn btn-sm btn-warning" style="flex: 1;">✏️ Edit</button>
                                     `
-                                }
+                    }
                             </div>
                         </div>
                     </div>
@@ -1143,7 +1246,7 @@
             if (page < 1 || page > totalPages) return;
             documentsCurrentPage = page;
             renderPaginatedDocuments();
-            
+
             // Scroll to top
             if (window.innerWidth < 1024) {
                 document.querySelector('#documents-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1188,17 +1291,17 @@
                 existingData.bukti_lengkap = catatanText.includes('Lengkap: ✓');
                 existingData.bukti_benar = catatanText.includes('Benar: ✓');
                 existingData.bukti_tepat_waktu = !catatanText.includes('terlambat');
-                
+
                 // Extract hari terlambat
                 const terlambatMatch = catatanText.match(/terlambat (\d+) hari/);
                 if (terlambatMatch) {
                     existingData.hari_terlambat = parseInt(terlambatMatch[1]);
                 }
-                
+
                 // Extract Srikandi
                 const srikandiMatch = catatanText.match(/Srikandi: ([\d.]+)/);
                 existingData.sudah_srikandi = srikandiMatch && parseFloat(srikandiMatch[1]) === 1;
-                
+
                 // Extract Surat Keluar
                 const suratMatch = catatanText.match(/(\d+) surat salah TND/);
                 if (suratMatch) {
@@ -1208,7 +1311,7 @@
                     existingData.surat_sesuai_tnd = true;
                     existingData.jumlah_surat_salah = 0;
                 }
-                
+
                 // Extract custom catatan (text after breakdown)
                 const catatanLines = catatanText.split('\n');
                 const lastLines = catatanLines.slice(catatanLines.findIndex(l => l.includes('Surat Keluar')) + 1).join('\n').trim();
@@ -1343,10 +1446,10 @@
 
             function updateScore() {
                 let skorBukti = 0;
-                
+
                 if (buktiLengkap.checked) skorBukti += 1;
                 if (buktiBenar.checked) skorBukti += 1;
-                
+
                 if (buktiTepatWaktu.checked) {
                     skorBukti += 1;
                 } else {
@@ -1416,9 +1519,9 @@
 
             const submitBtn = window.currentModal.querySelector('.btn-success, .btn-warning');
             const cancelBtn = window.currentModal.querySelector('.btn:not(.btn-success):not(.btn-warning)');
-            
+
             const originalText = submitBtn.innerHTML;
-            
+
             submitBtn.disabled = true;
             cancelBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
@@ -1506,24 +1609,24 @@
         // ================== FILTERS ==================
         document.getElementById('status-filter').addEventListener('change', () => {
             const status = document.getElementById('status-filter').value;
-            
+
             allDocuments = masterDocuments.filter(doc => {
                 if (status === '') return true;
                 return doc.status === status;
             });
-            
+
             documentsCurrentPage = 1;
             renderPaginatedDocuments();
         });
 
         document.getElementById('search-input').addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            
+
             allDocuments = masterDocuments.filter(doc => {
                 const text = `${doc.nama_pengirim} ${doc.unit} ${doc.jenis_dokumen}`.toLowerCase();
                 return text.includes(val);
             });
-            
+
             documentsCurrentPage = 1;
             renderPaginatedDocuments();
         });
@@ -1532,4 +1635,5 @@
         loadDocuments();
     </script>
 </body>
+
 </html>
