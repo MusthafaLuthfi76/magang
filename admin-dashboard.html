@@ -758,6 +758,27 @@
             font-size: 14px;
         }
 
+        /* ── DATA SOURCE DEBUG ── */
+        .data-source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .ds-api {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .ds-local {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
         /* ── USER INFO ── */
         .user-info {
             padding: 0 12px;
@@ -1247,6 +1268,13 @@
         const MONEV_MAX = 40;
         const UC = ['#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#10b981', '#ec4899'];
 
+        // Bulan dalam Bahasa Indonesia (title case) → UPPERCASE
+        const MONTH_MAP = {
+            'januari': 'JANUARI', 'februari': 'FEBRUARI', 'maret': 'MARET', 'april': 'APRIL',
+            'mei': 'MEI', 'juni': 'JUNI', 'juli': 'JULI', 'agustus': 'AGUSTUS',
+            'september': 'SEPTEMBER', 'oktober': 'OKTOBER', 'november': 'NOVEMBER', 'desember': 'DESEMBER'
+        };
+
         let S = { bulan: '', scores: {}, allMonth: {}, loading: false };
         let C = {};
         let activeCat = 'bbm';
@@ -1287,6 +1315,16 @@
         }
 
         // ════════════════════════════════════════
+        // NORMALIZE BULAN: "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
+        // ════════════════════════════════════════
+        function normalizeBulan(str) {
+            if (!str) return '';
+            // Ambil kata pertama saja, lowercase, lalu lookup
+            const first = String(str).trim().toLowerCase().split(/[\s,\/\-]+/)[0];
+            return MONTH_MAP[first] || String(str).trim().toUpperCase().split(/[\s,\/\-]+/)[0];
+        }
+
+        // ════════════════════════════════════════
         // LOAD
         // ════════════════════════════════════════
         async function loadAll() {
@@ -1304,7 +1342,7 @@
                     api(API_OP, { action: 'getVehicleScores', jenis: 'KUNCI' }),
                     api(API_OP, { action: 'getVehicleScores', jenis: 'BERSIH' }),
                     api(API_OP, { action: 'getBBMScores' }),
-                    api(API_OP, { action: 'getDocuments' }),
+                    api(API_OP, { action: 'getDocuments' }),   // returns array directly
                     api(API_SPJ, { action: 'getAllSPJKeuangan' }),
                 ]);
 
@@ -1332,22 +1370,147 @@
             }
         }
 
+        // ════════════════════════════════════════
+        // fillScores — FIXED
+        // ════════════════════════════════════════
         function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
-            if (ok(roomR)) (roomR.value.scores || []).forEach(s => { if (s.bulan === bulan && sc[s.unit]) sc[s.unit].ruang = s.skorAkhir; });
+
+            // ── RUANG RAPAT ──────────────────────────────────────────
+            if (ok(roomR)) {
+                (roomR.value.scores || []).forEach(s => {
+                    if (s.bulan === bulan && sc[s.unit]) sc[s.unit].ruang = s.skorAkhir;
+                });
+            }
+
+            // ── KENDARAAN ────────────────────────────────────────────
             const km = {}, bm = {};
             if (ok(vkR)) (vkR.value.scores || []).forEach(s => { if (s.bulan === bulan) km[s.unit] = s.skorAkhir; });
             if (ok(vbR)) (vbR.value.scores || []).forEach(s => { if (s.bulan === bulan) bm[s.unit] = s.skorAkhir; });
-            UNITS.forEach(u => { const k = km[u] ?? null, b = bm[u] ?? null; if (k !== null || b !== null) sc[u].kendaraan = (k ?? 0) + (b ?? 0); });
-            if (ok(bbmR)) (bbmR.value.scores || []).forEach(s => { if (s.bulan === bulan && sc[s.unit]) sc[s.unit].bbm = s.skorAkhir; });
-            if (docsR.status === 'fulfilled' && Array.isArray(docsR.value)) {
-                const dm = {};
-                docsR.value.forEach(d => { if (d.bulan?.toUpperCase() === bulan && d.nilai && d.unit) { dm[d.unit] = dm[d.unit] || []; dm[d.unit].push(parseFloat(d.nilai) || 0); } });
-                UNITS.forEach(u => { if (dm[u]?.length) sc[u].kearsipan = dm[u].reduce((a, c) => a + c, 0) / dm[u].length; });
+            UNITS.forEach(u => {
+                const k = km[u] ?? null, b = bm[u] ?? null;
+                if (k !== null || b !== null) sc[u].kendaraan = (k ?? 0) + (b ?? 0);
+            });
+
+            // ── BBM ──────────────────────────────────────────────────
+            if (ok(bbmR)) {
+                (bbmR.value.scores || []).forEach(s => {
+                    if (s.bulan === bulan && sc[s.unit]) sc[s.unit].bbm = s.skorAkhir;
+                });
             }
-            if (ok(spjR)) { const bd = (spjR.value.rekap || {})[bulan] || {}; UNITS.forEach(u => { if (bd[u]?.totalNilai !== undefined) sc[u].spj = bd[u].totalNilai; }); }
-            if (withMonev) UNITS.forEach(u => { try { const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null'); if (d?.totalScore !== undefined) sc[u].monev = d.totalScore; } catch { } });
+
+            // ── KEARSIPAN ────────────────────────────────────────────
+            // FIX: getDocuments() mengembalikan ARRAY langsung (bukan {success, data})
+            // Tidak boleh menggunakan ok() yang cek .success
+            let docsArray = [];
+            if (docsR.status === 'fulfilled') {
+                const val = docsR.value;
+                // Handle both: plain array OR {success, data: [...]}
+                if (Array.isArray(val)) {
+                    docsArray = val;
+                } else if (val && Array.isArray(val.data)) {
+                    docsArray = val.data;
+                } else if (val && val.success === false) {
+                    docsArray = []; // explicit error
+                }
+            }
+
+            console.log("[Kearsipan Debug] docsArray.length:", docsArray.length, "| Mencari bulan:", bulan);
+            if (docsArray.length > 0) {
+                const dm = {}; // unit_normalized → [nilai]
+                docsArray.forEach(d => {
+                    // Skip dokumen belum dinilai / pending
+                    if (!d.nilai || d.nilai === '' || d.nilai === '-' || !d.unit) return;
+                    // Nilai bisa berformat "3,7" atau "3.7"
+                    const nilaiStr = String(d.nilai).replace(',', '.');
+                    const nilaiNum = parseFloat(nilaiStr);
+                    if (isNaN(nilaiNum) || nilaiNum <= 0) return;
+
+                    // Normalisasi bulan dokumen → uppercase
+                    const bulanDoc = normalizeBulan(d.bulan);
+                    if (bulanDoc !== bulan) return;
+
+                    // Normalisasi unit — trim whitespace
+                    const unitRaw = String(d.unit).trim();
+
+                    // Cari unit yang cocok di UNITS (exact match dulu, lalu partial)
+                    const matchedUnit = UNITS.find(u => u.trim() === unitRaw)
+                        || UNITS.find(u => u.trim().toLowerCase() === unitRaw.toLowerCase())
+                        || UNITS.find(u => unitRaw.toLowerCase().includes(u.trim().toLowerCase()) || u.trim().toLowerCase().includes(unitRaw.toLowerCase()));
+
+                    if (!matchedUnit) return;
+
+                    if (!dm[matchedUnit]) dm[matchedUnit] = [];
+                    dm[matchedUnit].push(nilaiNum);
+                });
+
+                UNITS.forEach(u => {
+                    if (dm[u] && dm[u].length > 0) {
+                        // Rata-rata nilai (nilai kearsipan sudah skala 0–5)
+                        const avg = dm[u].reduce((a, c) => a + c, 0) / dm[u].length;
+                        sc[u].kearsipan = +Math.min(5, avg).toFixed(2);
+                    }
+                });
+            }
+
+            // ── SPJ KEUANGAN ─────────────────────────────────────────
+            // STRATEGY: Cek API backend dulu, lalu SELALU cek localStorage
+            // Ini karena admin-spj-keuangan.html menyimpan ke localStorage
+            // sementara API backend mungkin kosong
+
+            // Step 1: Coba dari API backend
+            if (ok(spjR)) {
+                const rekap = spjR.value.rekap || {};
+                const bulanKey = Object.keys(rekap).find(k => k.toUpperCase() === bulan.toUpperCase());
+                const bd = bulanKey ? rekap[bulanKey] : {};
+                UNITS.forEach(u => {
+                    const unitKey = Object.keys(bd).find(k => k.trim() === u.trim());
+                    const unitData = unitKey ? bd[unitKey] : null;
+                    if (unitData && unitData.totalNilai !== undefined) {
+                        const v = parseFloat(unitData.totalNilai);
+                        if (!isNaN(v) && v >= 0) sc[u].spj = v;
+                    }
+                });
+            }
+
+            // Step 2: SELALU cek localStorage juga — isi yang masih null
+            try {
+                const localData = JSON.parse(localStorage.getItem('spj_keuangan_data') || '{}');
+                console.log('[SPJ Debug] localStorage keys:', Object.keys(localData), '| Mencari bulan:', bulan);
+
+                // Cari key bulan di localStorage (case-insensitive)
+                const localBulanKey = Object.keys(localData).find(k => k.toUpperCase() === bulan.toUpperCase());
+                const monthData = localBulanKey ? localData[localBulanKey] : {};
+                console.log('[SPJ Debug] monthData keys:', Object.keys(monthData));
+
+                UNITS.forEach(u => {
+                    if (sc[u].spj !== null) return; // sudah dapat dari API, skip
+                    // Cari unit key (exact, lalu case-insensitive)
+                    const unitKey = Object.keys(monthData).find(k => k.trim() === u.trim())
+                        || Object.keys(monthData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+                    const unitData = unitKey ? monthData[unitKey] : null;
+                    if (unitData && unitData.totalNilai !== undefined) {
+                        const v = parseFloat(unitData.totalNilai);
+                        if (!isNaN(v)) { sc[u].spj = v; console.log('[SPJ Debug] Set', u, '=', v); }
+                    } else if (Object.keys(monthData).length > 0) {
+                        console.log('[SPJ Debug] Unit tidak match:', u, '| Keys ada:', Object.keys(monthData));
+                    }
+                });
+            } catch (e) {
+                console.warn('SPJ localStorage error:', e);
+            }
+
+            // ── MONEV (localStorage) ─────────────────────────────────
+            if (withMonev) {
+                UNITS.forEach(u => {
+                    try {
+                        const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
+                        if (d?.totalScore !== undefined) sc[u].monev = d.totalScore;
+                    } catch { }
+                });
+            }
         }
 
+        // ok() helper — hanya untuk response yang mengembalikan {success: true, ...}
         function ok(r) { return r.status === 'fulfilled' && r.value?.success; }
 
         // ════════════════════════════════════════

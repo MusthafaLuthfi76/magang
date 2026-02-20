@@ -219,157 +219,6 @@
             color: #64748b;
         }
 
-        .container {
-            padding: 24px 32px;
-            width: 100%;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #e5e7eb;
-            overflow-x: auto;
-        }
-
-        .tab {
-            padding: 12px 24px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            color: #64748b;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-            white-space: nowrap;
-        }
-
-        .tab:hover {
-            color: #1e293b;
-        }
-
-        .tab.active {
-            color: #0f172a;
-            border-bottom-color: #0f172a;
-        }
-
-        .tabs-dropdown {
-            display: none;
-            width: 100%;
-            margin-bottom: 24px;
-        }
-
-        .tabs-dropdown select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            color: #1e293b;
-            cursor: pointer;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            margin-bottom: 24px;
-        }
-
-        .card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .card-content {
-            padding: 24px;
-        }
-
-        .filter-container {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-input,
-        .select-input {
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .search-input {
-            width: 240px;
-            min-width: 150px;
-        }
-
-        .select-input {
-            width: 150px;
-            min-width: 120px;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        th {
-            text-align: left;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            background: #f8fafc;
-            border-bottom: 1px solid #e5e7eb;
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 14px 16px;
-            font-size: 14px;
-            color: #1e293b;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        tbody tr:hover {
-            background: #fafbfc;
-        }
-
         .btn {
             padding: 6px 14px;
             border-radius: 6px;
@@ -426,7 +275,6 @@
             background: #dc2626;
         }
 
-        /* ✅ FIXED: btn-edit sekarang biru konsisten dengan Kendaraan Dinas */
         .btn-edit {
             background: #3b82f6;
             color: white;
@@ -437,7 +285,6 @@
             background: #2563eb;
         }
 
-        /* ✅ btn-delete tetap merah, sudah konsisten */
         .btn-delete {
             background: #ef4444;
             color: white;
@@ -451,6 +298,7 @@
         .action-buttons {
             display: flex;
             gap: 6px;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -486,6 +334,17 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal {
@@ -496,6 +355,19 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal-header {
@@ -539,6 +411,14 @@
             border-radius: 6px;
             font-size: 14px;
             font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
         }
 
         .form-textarea {
@@ -584,16 +464,9 @@
             background: #f8fafc;
         }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
+        .badge-rejected {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
         .score-card {
@@ -669,29 +542,19 @@
             color: #1e293b;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #64748b;
+        .modal {
+            background: white;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin-bottom: 24px;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 24px;
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .loading {
@@ -710,6 +573,12 @@
             animation: spin 0.8s linear infinite;
         }
 
+        .spinner-sm {
+            width: 16px;
+            height: 16px;
+            border-width: 2px;
+        }
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -721,51 +590,11 @@
             opacity: 0.7;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 16px;
-            flex-wrap: wrap;
+        .modal-content {
+            padding: 24px;
         }
 
-        .pagination button {
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .pagination button:hover:not(:disabled) {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .pagination button.active {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-
-        .pagination-info {
-            font-size: 14px;
-            color: #64748b;
-            padding: 0 8px;
-        }
-
-        .assessment-card {
+        .requests-card {
             display: none;
             padding: 16px;
             border: 1px solid #e5e7eb;
@@ -776,7 +605,7 @@
             box-sizing: border-box;
         }
 
-        .assessment-card-header {
+        .requests-card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -784,53 +613,51 @@
             gap: 12px;
         }
 
-        .assessment-card-title {
+        .requests-card-title {
             font-weight: 600;
             font-size: 15px;
             color: #1e293b;
             margin-bottom: 4px;
         }
 
-        .assessment-card-subtitle {
+        .requests-card-subtitle {
             font-size: 13px;
             color: #64748b;
         }
 
-        .assessment-card-body {
+        .requests-card-body {
             display: flex;
             flex-direction: column;
             gap: 8px;
             margin-bottom: 12px;
         }
 
-        .assessment-card-row {
+        .requests-card-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 14px;
             gap: 8px;
-            width: 100%;
         }
 
-        .assessment-card-label {
+        .requests-card-label {
             color: #64748b;
             font-size: 13px;
             flex-shrink: 0;
-            min-width: fit-content;
         }
 
-        .assessment-card-value {
+        .requests-card-value {
             color: #1e293b;
             font-weight: 500;
             word-wrap: break-word;
             overflow-wrap: break-word;
             text-align: right;
             flex: 1;
-            min-width: 0;
         }
 
-        .assessment-card-footer {
+        .requests-card-footer {
             display: flex;
+            flex-direction: column;
             gap: 8px;
             padding-top: 12px;
             border-top: 1px solid #f1f5f9;
@@ -843,8 +670,6 @@
             border-radius: 8px;
             margin-bottom: 12px;
             background: white;
-            overflow: hidden;
-            box-sizing: border-box;
         }
 
         .violation-card-header {
@@ -888,7 +713,26 @@
             font-weight: 500;
             color: #1e293b;
             word-wrap: break-word;
-            overflow-wrap: break-word;
+        }
+
+        .cache-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 8px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .cache-indicator.show {
+            opacity: 1;
         }
 
         @media (max-width: 1023px) {
@@ -965,7 +809,7 @@
                 display: none;
             }
 
-            .assessment-card,
+            .requests-card,
             .violation-card {
                 display: block;
             }
@@ -999,6 +843,12 @@
 </head>
 
 <body>
+    <!-- Cache Indicator -->
+    <div class="cache-indicator" id="cache-indicator">
+        📦 Data dari cache
+    </div>
+
+    <!-- Mobile Menu Toggle -->
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <svg viewBox="0 0 24 24">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1007,6 +857,7 @@
         </svg>
     </button>
 
+    <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <div class="sidebar" id="sidebar">
@@ -1151,7 +1002,7 @@
                         <h2 class="card-title">Daftar Permintaan Voucher BBM</h2>
                         <div class="filter-container">
                             <input type="text" class="search-input" placeholder="Cari nama pegawai..."
-                                id="search-input">
+                                id="search-requests">
                         </div>
                     </div>
                     <div class="table-container">
@@ -1266,7 +1117,6 @@
                             <p style="font-size: 14px; color: #64748b;">Sanksi per Keterlambatan:</p>
                             <p style="font-size: 20px; font-weight: 700; color: #1e293b;" id="sanksi-value">0.1 poin</p>
                         </div>
-
                         <div class="charts-grid">
                             <div class="card" style="margin: 0;">
                                 <div class="card-header" style="padding: 16px;">
@@ -1285,7 +1135,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -1304,12 +1153,65 @@
             <div class="modal-header">
                 <h2 class="modal-title">Detail Permintaan Voucher BBM</h2>
             </div>
-            <div class="modal-content" id="modal-detail-body"></div>
+            <div class="modal-content" id="modal-body"></div>
             <div class="modal-footer"><button onclick="closeModal('detailModal')" class="btn">Tutup</button></div>
         </div>
     </div>
 
-    <!-- Modal Tambah Catatan -->
+    <!-- Modal Edit Permintaan -->
+    <div id="editRequestModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Permintaan Voucher BBM</h2>
+            </div>
+            <div class="modal-content">
+                <form id="editRequestForm">
+                    <div class="form-group">
+                        <label class="input-label">Status Permintaan</label>
+                        <select class="form-input" id="edit-req-status" required>
+                            <option value="pending">Menunggu (Pending)</option>
+                            <option value="approved">Disetujui (Approved)</option>
+                            <option value="rejected">Ditolak (Rejected)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Nomor Kendaraan</label>
+                        <select class="form-input" id="edit-req-nopol">
+                            <option value="">Pilih Nomor Kendaraan</option>
+                            <option value="AB1027AV">AB1027AV</option>
+                            <option value="AB1869UA">AB1869UA</option>
+                            <option value="AB1147UH">AB1147UH</option>
+                            <option value="AB1340UH">AB1340UH</option>
+                            <option value="AB 1530 UH">AB 1530 UH</option>
+                            <option value="AB 1067 IA">AB 1067 IA</option>
+                        </select>
+                    </div>
+                    <div
+                        style="margin: 12px 0; padding: 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #cbd5e1;">
+                        <p style="font-size: 12px; color: #64748b; margin-bottom: 8px; font-weight: 500;">Info Pegawai
+                            (tidak dapat diubah)</p>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label class="input-label">Nama Pegawai</label>
+                            <input type="text" class="form-input" id="edit-req-nama" readonly
+                                style="background:#f0f4f8; cursor:not-allowed;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="input-label">Tanggal Permintaan</label>
+                            <input type="text" class="form-input" id="edit-req-tanggal" readonly
+                                style="background:#f0f4f8; cursor:not-allowed;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('editRequestModal')" class="btn">Batal</button>
+                <button onclick="submitEditRequest()" class="btn btn-primary" id="submit-edit-req-btn">Simpan
+                    Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Catatan Keterlambatan -->
     <div id="addViolationModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1372,59 +1274,6 @@
             <div class="modal-footer">
                 <button onclick="closeModal('addViolationModal')" class="btn">Batal</button>
                 <button onclick="submitViolation()" class="btn btn-primary" id="submit-violation-btn">Simpan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Edit Permintaan -->
-    <div id="editRequestModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Edit Permintaan Voucher BBM</h2>
-            </div>
-            <div class="modal-content">
-                <form id="editRequestForm">
-                    <div class="form-group">
-                        <label class="input-label">Status Permintaan</label>
-                        <select class="form-input" id="edit-req-status" required>
-                            <option value="pending">Menunggu (Pending)</option>
-                            <option value="approved">Disetujui (Approved)</option>
-                            <option value="rejected">Ditolak (Rejected)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Nomor Kendaraan</label>
-                        <select class="form-input" id="edit-req-nopol">
-                            <option value="">Pilih Nomor Kendaraan</option>
-                            <option value="AB1027AV">AB1027AV</option>
-                            <option value="AB1869UA">AB1869UA</option>
-                            <option value="AB1147UH">AB1147UH</option>
-                            <option value="AB1340UH">AB1340UH</option>
-                            <option value="AB 1530 UH">AB 1530 UH</option>
-                            <option value="AB 1067 IA">AB 1067 IA</option>
-                        </select>
-                    </div>
-                    <div
-                        style="margin: 12px 0; padding: 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #cbd5e1;">
-                        <p style="font-size: 12px; color: #64748b; margin-bottom: 8px; font-weight: 500;">Info Pegawai
-                            (tidak dapat diubah)</p>
-                        <div class="form-group" style="margin-bottom: 8px;">
-                            <label class="input-label">Nama Pegawai</label>
-                            <input type="text" class="form-input" id="edit-req-nama" readonly
-                                style="background:#f0f4f8; cursor:not-allowed;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label class="input-label">Tanggal Permintaan</label>
-                            <input type="text" class="form-input" id="edit-req-tanggal" readonly
-                                style="background:#f0f4f8; cursor:not-allowed;">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeModal('editRequestModal')" class="btn">Batal</button>
-                <button onclick="submitEditRequest()" class="btn btn-primary" id="submit-edit-req-btn">Simpan
-                    Perubahan</button>
             </div>
         </div>
     </div>
@@ -1498,7 +1347,15 @@
     </div>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbwf0614TBmYtUNrkGyQWHYYQg1W8v6E3eN45bnS6Fpq72rTwxA3NKZAVo4alj1aUT4NIw/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyalvREFjlyRvIuiN8Th4ULZ5tixpM8FRUX7PV4yIsU1zKEz2V4UtUBzTwr4Srnv9DkFw/exec';
+
+        // ── Cache (identik dengan ruang rapat) ──────────────────────────────────
+        const CACHE_DURATION = 5 * 60 * 1000;
+        const CACHE_KEYS = {
+            REQUESTS: 'voucher_bbm_requests',
+            VIOLATIONS: 'voucher_bbm_violations',
+            SCORES: 'voucher_bbm_scores'
+        };
 
         let masterRequests = [];
         let allRequests = [];
@@ -1509,10 +1366,38 @@
         let violationChart = null;
         let currentEditRequestId = null;
         let currentEditViolationId = null;
+        let currentEditViolationBulan = null;
+        let currentEditViolationUnit = null;
 
         let requestsCurrentPage = 1;
         let violationsCurrentPage = 1;
         const itemsPerPage = 10;
+
+        function saveToCache(key, data) {
+            const cacheData = { data: data, timestamp: Date.now() };
+            try { localStorage.setItem(key, JSON.stringify(cacheData)); } catch (e) { console.warn('Cache storage failed:', e); }
+        }
+
+        function getFromCache(key) {
+            try {
+                const cached = localStorage.getItem(key);
+                if (!cached) return null;
+                const cacheData = JSON.parse(cached);
+                const age = Date.now() - cacheData.timestamp;
+                if (age < CACHE_DURATION) { return cacheData.data; } else { localStorage.removeItem(key); return null; }
+            } catch (e) { console.warn('Cache retrieval failed:', e); return null; }
+        }
+
+        function showCacheIndicator() {
+            const indicator = document.getElementById('cache-indicator');
+            indicator.classList.add('show');
+            setTimeout(() => { indicator.classList.remove('show'); }, 2000);
+        }
+
+        function clearCache() {
+            Object.values(CACHE_KEYS).forEach(key => { localStorage.removeItem(key); });
+        }
+        // ────────────────────────────────────────────────────────────────────────
 
         function toggleMobileMenu() {
             const sidebar = document.querySelector('.sidebar');
@@ -1527,7 +1412,13 @@
 
         const Toast = {
             container: null,
-            init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
+            init() {
+                if (!this.container) {
+                    this.container = document.createElement('div');
+                    this.container.className = 'toast-container';
+                    document.body.appendChild(this.container);
+                }
+            },
             show(message, type = 'success') {
                 this.init();
                 const toast = document.createElement('div');
@@ -1537,22 +1428,24 @@
                 setTimeout(() => toast.remove(), 3000);
             },
             success(msg) { this.show(msg, 'success'); },
-            error(msg) { this.show(msg, 'error'); },
-            warning(msg) { this.show(msg, 'error'); }
+            error(msg) { this.show(msg, 'error'); }
         };
 
-        function callAPI(params) {
+        async function fetchAPI(action, params = {}) {
             return new Promise((resolve, reject) => {
-                const callbackName = 'callback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                window[callbackName] = function (data) { cleanup(); resolve(data); };
-                const queryParams = new URLSearchParams();
-                for (const [key, value] of Object.entries(params)) { queryParams.append(key, value); }
-                queryParams.append('callback', callbackName);
+                const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+                window[callbackName] = function (data) {
+                    delete window[callbackName];
+                    const script = document.getElementById(callbackName);
+                    if (script) script.remove();
+                    if (data && data.success === false) reject(data.message);
+                    else resolve(data);
+                };
+                const queryString = new URLSearchParams({ action, callback: callbackName, ...params }).toString();
                 const script = document.createElement('script');
-                script.src = `${API_URL}?${queryParams.toString()}`;
-                const timeoutId = setTimeout(() => { cleanup(); reject(new Error('Request timeout')); }, 15000);
-                function cleanup() { clearTimeout(timeoutId); if (script.parentNode) script.parentNode.removeChild(script); delete window[callbackName]; }
-                script.onerror = () => { cleanup(); reject(new Error('Network error')); };
+                script.id = callbackName;
+                script.src = `${APPS_SCRIPT_URL}?${queryString}`;
+                script.onerror = () => { delete window[callbackName]; reject(new Error('Network error')); };
                 document.body.appendChild(script);
             });
         }
@@ -1562,7 +1455,9 @@
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
 
-        function logout() { if (confirm("Apakah Anda yakin ingin keluar?")) { localStorage.clear(); window.location.href = 'login.html'; } }
+        function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); localStorage.clear(); window.location.href = 'login.html'; }
+        }
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1584,16 +1479,26 @@
         }
 
         function createStatusBadge(status) {
-            const labels = { pending: 'Menunggu', approved: 'Disetujui', rejected: 'Ditolak' };
-            const classes = { pending: 'badge-pending', approved: 'badge-approved', rejected: 'badge-rejected' };
-            return `<span class="badge ${classes[status]}">${labels[status]}</span>`;
+            const s = (status || '').toLowerCase();
+            if (s === 'approved') return '<span class="badge badge-approved">Disetujui</span>';
+            if (s === 'rejected') return '<span class="badge badge-rejected">Ditolak</span>';
+            return '<span class="badge badge-pending">Menunggu</span>';
         }
 
-        async function loadRequests() {
+        // ── LOAD REQUESTS ────────────────────────────────────────────────────────
+        async function loadRequests(forceRefresh = false) {
             try {
-                const response = await callAPI({ action: 'getVoucherRequests' });
+                if (!forceRefresh) {
+                    const cached = getFromCache(CACHE_KEYS.REQUESTS);
+                    if (cached) {
+                        masterRequests = cached; allRequests = [...masterRequests];
+                        requestsCurrentPage = 1; renderPaginatedRequests(); showCacheIndicator(); return;
+                    }
+                }
+                const response = await fetchAPI('getVoucherRequests');
                 masterRequests = Array.isArray(response) ? response : [];
-                allRequests = [...masterRequests]; requestsCurrentPage = 1; renderPaginatedRequests();
+                allRequests = [...masterRequests]; requestsCurrentPage = 1;
+                saveToCache(CACHE_KEYS.REQUESTS, masterRequests); renderPaginatedRequests();
             } catch (error) { console.error('Load error:', error); Toast.error('Gagal memuat data'); }
         }
 
@@ -1612,59 +1517,63 @@
             const startIndex = (requestsCurrentPage - 1) * itemsPerPage;
             const currentItems = allRequests.slice(startIndex, startIndex + itemsPerPage);
 
-            tbody.innerHTML = currentItems.map((req) => `
-                <tr>
-                    <td style="font-weight: 500;">#${req.id}</td>
-                    <td>${req.nama_pegawai || req.nama_pemohon}</td>
-                    <td>${req.nomor_kendaraan || '-'}</td>
-                    <td>${req.timestamp || req.tanggal}</td>
-                    <td>
-                        ${req.status === 'pending' ? `
-                            <div class="action-buttons">
-                                <button onclick="approve('${req.id}')" class="btn btn-sm btn-approve">✓ Berikan</button>
-                                <button onclick="reject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button>
-                            </div>
-                        ` : createStatusBadge(req.status)}
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
-                            <button onclick="openEditRequestModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>
-                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = currentItems.map((req) => {
+                let statusDisplay = '';
+                if ((req.status || '').toLowerCase() === 'pending') {
+                    statusDisplay = `<div class="action-buttons">
+                    <button onclick="approve('${req.id}')" class="btn btn-sm btn-approve">✓ Berikan</button>
+                    <button onclick="reject('${req.id}')"  class="btn btn-sm btn-reject">✕ Tolak</button>
+                </div>`;
+                } else { statusDisplay = createStatusBadge(req.status); }
+
+                return `<tr>
+                <td style="font-weight: 500;">#${req.id}</td>
+                <td>${req.nama_pegawai || req.nama_pemohon}</td>
+                <td>${req.nomor_kendaraan || '-'}</td>
+                <td>${req.timestamp || req.tanggal}</td>
+                <td>${statusDisplay}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="viewDetail('${req.id}')"           class="btn btn-sm">👁 Detail</button>
+                        <button onclick="openEditRequestModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>
+                        <button onclick="deleteRequest('${req.id}')"        class="btn btn-sm btn-delete">🗑️ Hapus</button>
+                    </div>
+                </td>
+            </tr>`;
+            }).join('');
 
             cardsContainer.innerHTML = currentItems.map((req) => {
                 let actionButtons = '';
-                if (req.status === 'pending') {
-                    actionButtons = `<button onclick="approve('${req.id}')" class="btn btn-sm btn-approve">✓ Berikan</button><button onclick="reject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button>`;
-                }
-                return `<div class="assessment-card">
-                    <div class="assessment-card-header">
-                        <div style="flex: 1;"><div class="assessment-card-title">${req.nama_pegawai || req.nama_pemohon}</div><div class="assessment-card-subtitle">#${req.id}</div></div>
-                        ${createStatusBadge(req.status)}
-                    </div>
-                    <div class="assessment-card-body">
-                        <div class="assessment-card-row"><span class="assessment-card-label">Nomor Kendaraan</span><span class="assessment-card-value">${req.nomor_kendaraan || '-'}</span></div>
-                        <div class="assessment-card-row"><span class="assessment-card-label">Tanggal</span><span class="assessment-card-value">${req.timestamp || req.tanggal}</span></div>
-                    </div>
-                    <div class="assessment-card-footer" style="flex-direction: column; gap: 8px;">
-                        ${req.status === 'pending' ? `<div style="display:flex; gap:8px;">${actionButtons}</div>` : ''}
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex:1;">👁 Detail</button>
-                            <button onclick="openEditRequestModal('${req.id}')" class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button>
-                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button>
-                        </div>
-                    </div>
+                if ((req.status || '').toLowerCase() === 'pending') {
+                    actionButtons = `<div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                    <button onclick="approve('${req.id}')" class="btn btn-sm btn-approve" style="flex: 1;">✓ Berikan</button>
+                    <button onclick="reject('${req.id}')"  class="btn btn-sm btn-reject"  style="flex: 1;">✕ Tolak</button>
                 </div>`;
+                }
+                return `<div class="requests-card">
+                <div class="requests-card-header">
+                    <div style="flex: 1;"><div class="requests-card-title">${req.nama_pegawai || req.nama_pemohon}</div><div class="requests-card-subtitle">#${req.id}</div></div>
+                    ${(req.status || '').toLowerCase() === 'pending' ? '' : createStatusBadge(req.status)}
+                </div>
+                <div class="requests-card-body">
+                    <div class="requests-card-row"><span class="requests-card-label">Nomor Kendaraan</span><span class="requests-card-value">${req.nomor_kendaraan || '-'}</span></div>
+                    <div class="requests-card-row"><span class="requests-card-label">Tanggal</span><span class="requests-card-value">${req.timestamp || req.tanggal}</span></div>
+                </div>
+                <div class="requests-card-footer">
+                    ${actionButtons}
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="viewDetail('${req.id}')"           class="btn btn-sm"        style="flex: 1;">👁 Detail</button>
+                        <button onclick="openEditRequestModal('${req.id}')" class="btn btn-sm btn-edit"   style="flex: 1;">✏️ Edit</button>
+                        <button onclick="deleteRequest('${req.id}')"        class="btn btn-sm btn-delete" style="flex: 1;">🗑️ Hapus</button>
+                    </div>
+                </div>
+            </div>`;
             }).join('');
 
             paginationContainer.innerHTML = `
-                <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-                <span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span>
-                <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+            <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+            <span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span>
+            <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function changeRequestsPage(page) {
@@ -1676,55 +1585,98 @@
         }
 
         function viewDetail(id) {
-            const request = allRequests.find(r => r.id === id);
-            if (!request) return;
-            document.getElementById('modal-detail-body').innerHTML = `
-                <div class="info-grid">
-                    <div class="info-item"><label class="input-label">No. Permintaan</label><p style="font-weight: 500;">#${request.id}</p></div>
-                    <div class="info-item"><label class="input-label">Nama Pegawai</label><p style="font-weight: 500;">${request.nama_pemohon || request.nama_pegawai}</p></div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><label class="input-label">Unit Kerja / Bidang</label><p style="font-weight: 500;">${request.unit_eselon || '-'}</p></div>
-                    <div class="info-item"><label class="input-label">Nomor Kendaraan</label><p style="font-weight: 500;">${request.nomor_kendaraan}</p></div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><label class="input-label">Tanggal Permintaan</label><p style="font-weight: 500;">${request.timestamp || request.tanggal}</p></div>
-                    <div class="info-item"><label class="input-label">Status</label><div>${createStatusBadge(request.status)}</div></div>
-                </div>`;
+            const req = allRequests.find(r => r.id == id); if (!req) return;
+            document.getElementById('modal-body').innerHTML = `
+            <div class="info-grid">
+                <div class="info-item"><span class="input-label">No. Permintaan</span><p><strong>#${req.id}</strong></p></div>
+                <div class="info-item"><span class="input-label">Status</span><div>${createStatusBadge(req.status)}</div></div>
+            </div>
+            <hr style="margin-bottom: 16px; border: 0; border-top: 1px solid #eee;">
+            <div class="info-grid">
+                <div class="info-item"><span class="input-label">Nama Pegawai</span><p>${req.nama_pemohon || req.nama_pegawai}</p></div>
+                <div class="info-item"><span class="input-label">Unit Kerja</span><p>${req.unit_eselon || '-'}</p></div>
+                <div class="info-item"><span class="input-label">Tanggal Permintaan</span><p>${req.timestamp || req.tanggal}</p></div>
+                <div class="info-item"><span class="input-label">Nomor Kendaraan</span><p>${req.nomor_kendaraan || '-'}</p></div>
+            </div>`;
             openModal('detailModal');
         }
 
         async function approve(id) {
             if (!confirm('Berikan voucher BBM untuk permintaan ini?')) return;
             try {
-                const res = await callAPI({ action: 'updateVoucherRequest', id, status: 'approved' });
-                if (res.success) { Toast.success('Voucher BBM berhasil diberikan'); loadRequests(); }
+                const res = await fetchAPI('updateVoucherRequest', { id, status: 'approved' });
+                if (res.success) { Toast.success('Voucher BBM berhasil diberikan'); clearCache(); await loadRequests(true); }
+                else Toast.error(res.message);
             } catch (error) { Toast.error('Gagal: ' + error.message); }
         }
 
         async function reject(id) {
             if (!confirm('Tolak permintaan voucher BBM ini?')) return;
             try {
-                const res = await callAPI({ action: 'updateVoucherRequest', id, status: 'rejected' });
-                if (res.success) { Toast.success('Permintaan ditolak'); loadRequests(); }
+                const res = await fetchAPI('updateVoucherRequest', { id, status: 'rejected' });
+                if (res.success) { Toast.success('Permintaan ditolak'); clearCache(); await loadRequests(true); }
+                else Toast.error(res.message);
             } catch (error) { Toast.error('Gagal: ' + error.message); }
         }
 
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            allRequests = masterRequests.filter(req => {
-                const nama = (req.nama_pemohon || req.nama_pegawai || "").toLowerCase();
-                const plat = (req.nomor_kendaraan || "").toLowerCase();
-                return nama.includes(searchTerm) || plat.includes(searchTerm);
-            });
+        function openEditRequestModal(id) {
+            const req = allRequests.find(r => r.id == id);
+            if (!req) { Toast.error('Data tidak ditemukan'); return; }
+            currentEditRequestId = id;
+            document.getElementById('edit-req-status').value = req.status || 'pending';
+            document.getElementById('edit-req-nopol').value = req.nomor_kendaraan || '';
+            document.getElementById('edit-req-nama').value = req.nama_pegawai || req.nama_pemohon || '';
+            document.getElementById('edit-req-tanggal').value = req.timestamp || req.tanggal || '';
+            openModal('editRequestModal');
+        }
+
+        async function submitEditRequest() {
+            const form = document.getElementById('editRequestForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const btn = document.getElementById('submit-edit-req-btn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            try {
+                const res = await fetchAPI('updateVoucherRequest', {
+                    id: currentEditRequestId,
+                    status: document.getElementById('edit-req-status').value,
+                    nomor_kendaraan: document.getElementById('edit-req-nopol').value
+                });
+                if (res.success) { Toast.success('Permintaan berhasil diperbarui'); closeModal('editRequestModal'); clearCache(); await loadRequests(true); }
+                else Toast.error(res.message || 'Gagal memperbarui');
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+            finally { btn.disabled = false; btn.innerHTML = originalText; }
+        }
+
+        async function deleteRequest(id) {
+            if (!confirm('Hapus permintaan ini? Tindakan ini tidak dapat dibatalkan.')) return;
+            try {
+                const res = await fetchAPI('deleteVoucherRequest', { id });
+                if (res.success) { Toast.success('Permintaan berhasil dihapus'); clearCache(); await loadRequests(true); }
+                else Toast.error(res.message || 'Gagal menghapus');
+            } catch (error) { Toast.error('Gagal: ' + error.message); }
+        }
+
+        document.getElementById('search-requests').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            allRequests = masterRequests.filter(req =>
+                (req.nama_pegawai || req.nama_pemohon || '').toLowerCase().includes(term) ||
+                (req.nomor_kendaraan || '').toLowerCase().includes(term)
+            );
             requestsCurrentPage = 1; renderPaginatedRequests();
         });
 
-        async function loadViolations() {
+        // ── LOAD VIOLATIONS ──────────────────────────────────────────────────────
+        async function loadViolations(forceRefresh = false) {
             try {
-                const response = await callAPI({ action: 'getBBMViolations' });
+                if (!forceRefresh) {
+                    const cached = getFromCache(CACHE_KEYS.VIOLATIONS);
+                    if (cached) { masterViolations = cached; allViolations = [...masterViolations]; violationsCurrentPage = 1; renderPaginatedViolations(); showCacheIndicator(); return; }
+                }
+                const response = await fetchAPI('getBBMViolations');
                 masterViolations = Array.isArray(response) ? response : [];
-                allViolations = [...masterViolations]; violationsCurrentPage = 1; renderPaginatedViolations();
+                allViolations = [...masterViolations]; violationsCurrentPage = 1;
+                saveToCache(CACHE_KEYS.VIOLATIONS, masterViolations); renderPaginatedViolations();
             } catch (error) { console.error('Error:', error); Toast.error('Gagal memuat data keterlambatan'); }
         }
 
@@ -1744,40 +1696,40 @@
             const currentItems = allViolations.slice(startIndex, startIndex + itemsPerPage);
 
             tbody.innerHTML = currentItems.map(v => `
-                <tr>
-                    <td>${v.bulan}</td>
-                    <td>${v.unit}</td>
-                    <td>${v.tanggal_pengambilan}</td>
-                    <td>${v.tanggal_pengembalian}</td>
-                    <td>${v.nomor_kendaraan}</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit">✏️ Edit</button>
-                            <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            <tr>
+                <td>${v.bulan}</td>
+                <td>${v.unit}</td>
+                <td>${v.tanggal_pengambilan}</td>
+                <td>${v.tanggal_pengembalian}</td>
+                <td>${v.nomor_kendaraan}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit">✏️ Edit</button>
+                        <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
+                    </div>
+                </td>
+            </tr>`).join('');
 
             cardsContainer.innerHTML = currentItems.map(v => `
-                <div class="violation-card">
-                    <div class="violation-card-header"><div><div class="violation-card-title">${v.unit}</div><div class="violation-card-subtitle">Bulan ${v.bulan}</div></div></div>
-                    <div class="violation-card-body">
-                        <div class="violation-card-item"><div class="violation-card-label">Tgl Pengambilan</div><div class="violation-card-value">${v.tanggal_pengambilan}</div></div>
-                        <div class="violation-card-item"><div class="violation-card-label">Tgl Pengembalian</div><div class="violation-card-value">${v.tanggal_pengembalian}</div></div>
-                        <div class="violation-card-item" style="grid-column: 1 / -1;"><div class="violation-card-label">Nomor Kendaraan</div><div class="violation-card-value">${v.nomor_kendaraan}</div></div>
-                    </div>
-                    <div style="display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f1f5f9;">
-                        <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button>
-                        <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button>
-                    </div>
+            <div class="violation-card">
+                <div class="violation-card-header">
+                    <div><div class="violation-card-title">${v.unit}</div><div class="violation-card-subtitle">Bulan ${v.bulan}</div></div>
                 </div>
-            `).join('');
+                <div class="violation-card-body">
+                    <div class="violation-card-item"><div class="violation-card-label">Tgl Pengambilan</div><div class="violation-card-value">${v.tanggal_pengambilan}</div></div>
+                    <div class="violation-card-item"><div class="violation-card-label">Tgl Pengembalian</div><div class="violation-card-value">${v.tanggal_pengembalian}</div></div>
+                    <div class="violation-card-item" style="grid-column: 1 / -1;"><div class="violation-card-label">Nomor Kendaraan</div><div class="violation-card-value">${v.nomor_kendaraan}</div></div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f1f5f9;">
+                    <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit" style="flex: 1;">✏️ Edit</button>
+                    <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete" style="flex: 1;">🗑️ Hapus</button>
+                </div>
+            </div>`).join('');
 
             paginationContainer.innerHTML = `
-                <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-                <span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span>
-                <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+            <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+            <span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span>
+            <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function changeViolationsPage(page) {
@@ -1788,99 +1740,56 @@
             else { document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         }
 
-        function openAddViolationModal() { document.getElementById('violationForm').reset(); openModal('addViolationModal'); }
-
-        async function submitViolation() {
-            const form = document.getElementById('violationForm');
-            const submitBtn = document.getElementById('submit-violation-btn');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
-            const bulan = document.getElementById('violation-bulan').value;
-            const unit = document.getElementById('violation-unit').value;
-            const tglAmbil = document.getElementById('violation-tgl-ambil').value;
-            const tglKembali = document.getElementById('violation-tgl-kembali').value;
-            const nopol = document.getElementById('violation-nopol').value;
-            try {
-                const formatDate = (dateStr) => { const dateObj = new Date(dateStr); return `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`; };
-                const result = await callAPI({ action: 'createBBMViolation', bulan, unit, tanggal_pengambilan: formatDate(tglAmbil), tanggal_pengembalian: formatDate(tglKembali), nomor_kendaraan: nopol });
-                if (result.success) { Toast.success('Catatan keterlambatan berhasil ditambahkan!'); closeModal('addViolationModal'); loadViolations(); loadScores(); }
-                else { Toast.error(result.message || 'Gagal menambahkan catatan'); }
-            } catch (error) { Toast.error('Gagal menambahkan catatan: ' + error); }
-            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnText; }
-        }
-
         document.getElementById('filter-bulan').addEventListener('change', filterViolations);
         document.getElementById('filter-unit').addEventListener('change', filterViolations);
 
         function filterViolations() {
-            const filterBulan = document.getElementById('filter-bulan').value;
-            const filterUnit = document.getElementById('filter-unit').value;
-            allViolations = masterViolations.filter(v => { const matchBulan = filterBulan === "" || v.bulan === filterBulan; const matchUnit = filterUnit === "" || v.unit === filterUnit; return matchBulan && matchUnit; });
+            const bulan = document.getElementById('filter-bulan').value;
+            const unit = document.getElementById('filter-unit').value;
+            allViolations = masterViolations.filter(v => {
+                const matchBulan = bulan === '' || v.bulan === bulan;
+                const matchUnit = unit === '' || v.unit === unit;
+                return matchBulan && matchUnit;
+            });
             violationsCurrentPage = 1; renderPaginatedViolations();
         }
 
-        // ================== EDIT REQUEST ==================
-        function openEditRequestModal(id) {
-            const req = allRequests.find(r => r.id === id);
-            if (!req) { Toast.error('Data tidak ditemukan'); return; }
-            currentEditRequestId = id;
-            document.getElementById('edit-req-status').value = req.status || 'pending';
-            document.getElementById('edit-req-nopol').value = req.nomor_kendaraan || '';
-            document.getElementById('edit-req-nama').value = req.nama_pegawai || req.nama_pemohon || '';
-            document.getElementById('edit-req-tanggal').value = req.timestamp || req.tanggal || '';
-            openModal('editRequestModal');
-        }
+        function openAddViolationModal() { document.getElementById('violationForm').reset(); openModal('addViolationModal'); }
 
-        async function submitEditRequest() {
-            const submitBtn = document.getElementById('submit-edit-req-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;"></span> Menyimpan...';
+        async function submitViolation() {
+            const form = document.getElementById('violationForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const btn = document.getElementById('submit-violation-btn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
             try {
-                const res = await callAPI({
-                    action: 'updateVoucherRequest',
-                    id: currentEditRequestId,
-                    status: document.getElementById('edit-req-status').value,
-                    nomor_kendaraan: document.getElementById('edit-req-nopol').value
+                const dateToStr = d => { const o = new Date(d); return `${o.getDate()}-${o.getMonth() + 1}-${o.getFullYear()}`; };
+                const result = await fetchAPI('createBBMViolation', {
+                    bulan: document.getElementById('violation-bulan').value,
+                    unit: document.getElementById('violation-unit').value,
+                    tanggal_pengambilan: dateToStr(document.getElementById('violation-tgl-ambil').value),
+                    tanggal_pengembalian: dateToStr(document.getElementById('violation-tgl-kembali').value),
+                    nomor_kendaraan: document.getElementById('violation-nopol').value
                 });
-                if (res.success) {
-                    Toast.success('Permintaan berhasil diperbarui');
-                    closeModal('editRequestModal');
-                    loadRequests();
-                } else { Toast.error(res.message || 'Gagal memperbarui'); }
-            } catch (error) { Toast.error('Gagal: ' + error.message); }
-            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
+                if (result.success) { Toast.success('Catatan keterlambatan berhasil ditambahkan!'); closeModal('addViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(result.message || 'Gagal menambahkan catatan');
+            } catch (error) { Toast.error('Gagal menambahkan catatan: ' + error); }
+            finally { btn.disabled = false; btn.innerHTML = originalText; }
         }
 
-        async function deleteRequest(id) {
-            if (!confirm('Hapus permintaan ini? Tindakan ini tidak dapat dibatalkan.')) return;
-            try {
-                const res = await callAPI({ action: 'deleteVoucherRequest', id: id });
-                if (res.success) {
-                    Toast.success('Permintaan berhasil dihapus');
-                    loadRequests();
-                } else { Toast.error(res.message || 'Gagal menghapus. Pastikan backend sudah diperbarui.'); }
-            } catch (error) { Toast.error('Gagal: ' + error.message); }
-        }
-
-        // ================== EDIT & DELETE VIOLATION ==================
         function openEditViolationModal(violation) {
             currentEditViolationId = violation.id;
-            // Parse tanggal format DD-M-YYYY atau DD-MM-YYYY ke YYYY-MM-DD
-            const parseToInputDate = (dateStr) => {
-                if (!dateStr) return '';
-                const parts = dateStr.split('-');
-                if (parts.length === 3) {
-                    return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-                }
-                return '';
+            currentEditViolationBulan = violation.bulan;
+            currentEditViolationUnit = violation.unit;
+            const toInputDate = s => {
+                if (!s || s === '-') return '';
+                const parts = s.split('-');
+                return parts.length === 3 ? `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}` : '';
             };
             document.getElementById('edit-viol-bulan').value = violation.bulan || '';
             document.getElementById('edit-viol-unit').value = violation.unit || '';
-            document.getElementById('edit-viol-tgl-ambil').value = parseToInputDate(violation.tanggal_pengambilan);
-            document.getElementById('edit-viol-tgl-kembali').value = parseToInputDate(violation.tanggal_pengembalian);
+            document.getElementById('edit-viol-tgl-ambil').value = toInputDate(violation.tanggal_pengambilan);
+            document.getElementById('edit-viol-tgl-kembali').value = toInputDate(violation.tanggal_pengembalian);
             document.getElementById('edit-viol-nopol').value = violation.nomor_kendaraan || '';
             openModal('editViolationModal');
         }
@@ -1888,50 +1797,49 @@
         async function submitEditViolation() {
             const form = document.getElementById('editViolationForm');
             if (!form.checkValidity()) { form.reportValidity(); return; }
-            const submitBtn = document.getElementById('submit-edit-viol-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;"></span> Menyimpan...';
+            const btn = document.getElementById('submit-edit-viol-btn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
             try {
-                const formatDate = (dateStr) => {
-                    const d = new Date(dateStr);
-                    return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
-                };
-                const res = await callAPI({
-                    action: 'updateBBMViolation',
+                const dateToStr = d => { const o = new Date(d); return `${o.getDate()}-${o.getMonth() + 1}-${o.getFullYear()}`; };
+                const res = await fetchAPI('updateBBMViolation', {
                     id: currentEditViolationId,
-                    bulan: document.getElementById('edit-viol-bulan').value,
-                    unit: document.getElementById('edit-viol-unit').value,
-                    tanggal_pengambilan: formatDate(document.getElementById('edit-viol-tgl-ambil').value),
-                    tanggal_pengembalian: formatDate(document.getElementById('edit-viol-tgl-kembali').value),
+                    bulan: currentEditViolationBulan,
+                    unit: currentEditViolationUnit,
+                    tanggal_pengambilan: dateToStr(document.getElementById('edit-viol-tgl-ambil').value),
+                    tanggal_pengembalian: dateToStr(document.getElementById('edit-viol-tgl-kembali').value),
                     nomor_kendaraan: document.getElementById('edit-viol-nopol').value
                 });
-                if (res.success) {
-                    Toast.success('Catatan berhasil diperbarui');
-                    closeModal('editViolationModal');
-                    loadViolations();
-                    loadScores();
-                } else { Toast.error(res.message || 'Gagal memperbarui'); }
-            } catch (error) { Toast.error('Gagal: ' + error.message); }
-            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
+                if (res.success) { Toast.success('Catatan berhasil diperbarui'); closeModal('editViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(res.message || 'Gagal memperbarui');
+            } catch (error) { Toast.error('Gagal: ' + error); }
+            finally { btn.disabled = false; btn.innerHTML = originalText; }
         }
 
         async function deleteViolation(id, bulan, unit) {
             if (!confirm('Hapus catatan keterlambatan ini?')) return;
             try {
-                const res = await callAPI({ action: 'deleteBBMViolation', id: id, bulan: bulan, unit: unit });
-                if (res.success) {
-                    Toast.success('Catatan berhasil dihapus');
-                    loadViolations();
-                    loadScores();
-                } else { Toast.error(res.message || 'Gagal menghapus'); }
-            } catch (error) { Toast.error('Gagal: ' + error.message); }
+                const res = await fetchAPI('deleteBBMViolation', { id, bulan, unit });
+                if (res.success) { Toast.success('Catatan berhasil dihapus'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(res.message || 'Gagal menghapus');
+            } catch (error) { Toast.error('Gagal: ' + error); }
         }
 
-        async function loadScores() {
+        // ── LOAD SCORES ──────────────────────────────────────────────────────────
+        async function loadScores(forceRefresh = false) {
             try {
-                const data = await callAPI({ action: 'getBBMScores' });
-                if (data.success) { allScores = { sanksi: data.sanksiPerPelanggaran, scores: data.scores }; renderScoresUI(allScores); }
+                const bulan = document.getElementById('filter-score-bulan').value;
+                const cacheKey = `${CACHE_KEYS.SCORES}_${bulan}`;
+                if (!forceRefresh && bulan) {
+                    const cached = getFromCache(cacheKey);
+                    if (cached) { allScores = cached; renderScoresUI(allScores); showCacheIndicator(); return; }
+                }
+                const data = await fetchAPI('getBBMScores');
+                if (data.success) {
+                    allScores = { sanksi: data.sanksiPerPelanggaran, scores: data.scores };
+                    if (bulan) { saveToCache(cacheKey, allScores); }
+                    renderScoresUI(allScores);
+                }
             } catch (error) { console.error("Gagal load scores:", error); Toast.error('Gagal memuat penilaian'); }
         }
 
@@ -1947,14 +1855,32 @@
         function renderScores() {
             const bulan = document.getElementById('filter-score-bulan').value;
             const container = document.getElementById('scores-container');
-            if (!bulan) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>`; if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return; }
-            if (!allScores.scores) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color: #ef4444;">Data penilaian tidak tersedia</p></div>`; return; }
+            if (!bulan) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>`;
+                if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return;
+            }
+            if (!allScores.scores) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color: #ef4444;">Data penilaian tidak tersedia</p></div>`; return;
+            }
             const monthScores = allScores.scores.filter(s => s.bulan === bulan);
-            if (monthScores.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>`; if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return; }
+            if (monthScores.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>`;
+                if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return;
+            }
             renderCharts(monthScores);
             container.innerHTML = monthScores.map(score => {
                 const scoreClass = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
-                return `<div class="score-card"><div class="score-header"><div><div class="score-unit-name">${score.unit}</div><div class="score-month">Bulan ${score.bulan}</div></div><div class="score-value ${scoreClass}">${score.skorAkhir.toFixed(2)}</div></div><div class="score-details"><div class="score-detail-item"><div class="score-detail-label">Skor Utuh</div><div class="score-detail-value">${score.skorUtuh}</div></div><div class="score-detail-item"><div class="score-detail-label">Keterlambatan</div><div class="score-detail-value">${score.jumlahPelanggaran}</div></div><div class="score-detail-item"><div class="score-detail-label">Sanksi</div><div class="score-detail-value" style="color: #ef4444;">-${score.jumlahSanksi.toFixed(2)}</div></div></div></div>`;
+                return `<div class="score-card">
+                <div class="score-header">
+                    <div><div class="score-unit-name">${score.unit}</div><div class="score-month">Bulan ${score.bulan}</div></div>
+                    <div class="score-value ${scoreClass}">${score.skorAkhir.toFixed(2)}</div>
+                </div>
+                <div class="score-details">
+                    <div class="score-detail-item"><div class="score-detail-label">Skor Utuh</div><div class="score-detail-value">${score.skorUtuh}</div></div>
+                    <div class="score-detail-item"><div class="score-detail-label">Keterlambatan</div><div class="score-detail-value">${score.jumlahPelanggaran}</div></div>
+                    <div class="score-detail-item"><div class="score-detail-label">Sanksi</div><div class="score-detail-value" style="color: #ef4444;">-${score.jumlahSanksi.toFixed(2)}</div></div>
+                </div>
+            </div>`;
             }).join('');
         }
 
@@ -1970,7 +1896,7 @@
             violationChart = new Chart(violationCtx, { type: 'bar', data: { labels: units, datasets: [{ label: 'Jumlah Keterlambatan', data: violations, backgroundColor: '#3b82f6', borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 11 } } } } } });
         }
 
-        document.getElementById('filter-score-bulan').addEventListener('change', renderScores);
+        document.getElementById('filter-score-bulan').addEventListener('change', () => loadScores(false));
 
         function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
         function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }

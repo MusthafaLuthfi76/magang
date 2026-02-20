@@ -63,7 +63,26 @@
             }
         }
 
-        /* MOBILE MENU TOGGLE */
+        .cache-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 8px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .cache-indicator.show {
+            opacity: 1;
+        }
+
         .mobile-menu-toggle {
             display: none;
             position: absolute;
@@ -117,17 +136,6 @@
             gap: 12px;
         }
 
-        .sidebar-icon {
-            width: 40px;
-            height: 40px;
-            background: #0f172a;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
         .sidebar-title {
             font-size: 16px;
             font-weight: 600;
@@ -163,6 +171,7 @@
             font-size: 15px;
             color: #0f172a;
             text-decoration: none;
+            position: relative;
             transition: all 0.15s ease;
         }
 
@@ -172,20 +181,6 @@
             stroke: currentColor;
             fill: none;
             stroke-width: 1.8;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 15px;
-            color: #0f172a;
-            text-decoration: none;
-            position: relative;
-            transition: all 0.15s ease;
         }
 
         .nav-item:hover {
@@ -270,7 +265,6 @@
             border-bottom-color: #0f172a;
         }
 
-        /* Dropdown untuk mobile */
         .tabs-dropdown {
             display: none;
             width: 100%;
@@ -352,7 +346,6 @@
             min-width: 120px;
         }
 
-        /* RESPONSIVE TABLE */
         .table-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -465,7 +458,7 @@
         .action-buttons {
             display: flex;
             gap: 6px;
-            align-items: center;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -511,6 +504,19 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal-header {
@@ -554,6 +560,14 @@
             border-radius: 6px;
             font-size: 14px;
             font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
         }
 
         .form-textarea {
@@ -616,7 +630,6 @@
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             margin-bottom: 16px;
-            transition: all 0.2s;
         }
 
         .score-card:hover {
@@ -709,12 +722,6 @@
             margin-bottom: 24px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #64748b;
-        }
-
         .spinner {
             display: inline-block;
             width: 40px;
@@ -723,6 +730,12 @@
             border-top-color: #0f172a;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
+        }
+
+        .spinner-sm {
+            width: 16px;
+            height: 16px;
+            border-width: 2px;
         }
 
         @keyframes spin {
@@ -736,7 +749,6 @@
             opacity: 0.7;
         }
 
-        /* PAGINATION */
         .pagination {
             display: flex;
             justify-content: center;
@@ -769,19 +781,12 @@
             cursor: not-allowed;
         }
 
-        .pagination button.active {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-
         .pagination-info {
             font-size: 14px;
             color: #64748b;
             padding: 0 8px;
         }
 
-        /* CARD LAYOUT FOR MOBILE */
         .requests-card {
             display: none;
             padding: 16px;
@@ -790,7 +795,6 @@
             margin-bottom: 12px;
             background: white;
             overflow: hidden;
-            box-sizing: border-box;
         }
 
         .requests-card-header {
@@ -838,7 +842,6 @@
             color: #1e293b;
             font-weight: 500;
             word-wrap: break-word;
-            overflow-wrap: break-word;
             text-align: right;
             flex: 1;
         }
@@ -851,7 +854,6 @@
             border-top: 1px solid #f1f5f9;
         }
 
-        /* VIOLATION CARD FOR MOBILE */
         .violation-card {
             display: none;
             padding: 16px;
@@ -904,6 +906,21 @@
             word-wrap: break-word;
         }
 
+        .info-box {
+            margin: 12px 0;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 6px;
+            border-left: 3px solid #cbd5e1;
+        }
+
+        .info-box-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
         @media (max-width: 1023px) {
             .mobile-menu-toggle {
                 display: block;
@@ -942,10 +959,7 @@
                 padding: 16px;
             }
 
-            .search-input {
-                width: 100%;
-            }
-
+            .search-input,
             .select-input {
                 width: 100%;
             }
@@ -970,7 +984,6 @@
                 height: 300px;
             }
 
-            /* Hide tabs, show dropdown */
             .tabs {
                 display: none;
             }
@@ -979,7 +992,6 @@
                 display: block;
             }
 
-            /* HIDE TABLE, SHOW CARDS ON MOBILE */
             .table-container {
                 display: none;
             }
@@ -1004,17 +1016,13 @@
                 text-align: center;
             }
         }
-
-        @media (max-width: 640px) {
-            .card-title {
-                font-size: 16px;
-            }
-        }
     </style>
 </head>
 
 <body>
-    <!-- Mobile Menu Toggle -->
+
+    <div class="cache-indicator" id="cache-indicator">📦 Data dari cache</div>
+
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <svg viewBox="0 0 24 24">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1022,19 +1030,16 @@
             <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
     </button>
-
-    <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
-    <!-- SIDEBAR -->
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
-                <div class="sidebar-icon">
+                <div
+                    style="width:40px;height:40px;background:#0f172a;border-radius:10px;display:flex;align-items:center;justify-content:center;">
                     <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj"
-                        alt="Logo Dinas Koperasi UKM"
-                        style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
+                        alt="Logo" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
                 </div>
                 <div>
                     <div class="sidebar-title">Admin Panel</div>
@@ -1042,7 +1047,6 @@
                 </div>
             </div>
         </div>
-
         <div class="sidebar-nav">
             <a href="admin-dashboard.html" class="nav-item">
                 <svg class="nav-icon" viewBox="0 0 24 24">
@@ -1095,7 +1099,6 @@
                     <polyline points="14 2 14 8 20 8" />
                     <line x1="16" y1="13" x2="8" y2="13" />
                     <line x1="16" y1="17" x2="8" y2="17" />
-                    <polyline points="10 9 9 9 8 9" />
                 </svg>
                 Pengumpulan SPJ
             </a>
@@ -1115,17 +1118,7 @@
                 </svg>
                 Penilaian Monev
             </a>
-            <a href="admin-manageacc.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-                Manajemen Akun
-            </a>
         </div>
-
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-name" id="admin-name">Administrator</div>
@@ -1148,16 +1141,12 @@
             <p class="header-subtitle">Tinjau permintaan, kelola catatan pelanggaran, dan penilaian penggunaan kendaraan
                 dinas</p>
         </div>
-
         <div class="container">
-            <!-- Tabs -->
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('requests')">📋 Permintaan</button>
-                <button class="tab" onclick="switchTab('violations')">⚠️ Catatan Pelanggaran</button>
-                <button class="tab" onclick="switchTab('scores')">📊 Penilaian</button>
+                <button class="tab active" onclick="switchTab('requests', event)">📋 Permintaan</button>
+                <button class="tab" onclick="switchTab('violations', event)">⚠️ Catatan Pelanggaran</button>
+                <button class="tab" onclick="switchTab('scores', event)">📊 Penilaian</button>
             </div>
-
-            <!-- Dropdown untuk Mobile -->
             <div class="tabs-dropdown">
                 <select id="mobile-tab-select" onchange="switchTabFromDropdown(this.value)">
                     <option value="requests">📋 Permintaan</option>
@@ -1191,17 +1180,15 @@
                             </thead>
                             <tbody id="requests-tbody">
                                 <tr>
-                                    <td colspan="6" class="loading">
+                                    <td colspan="7" style="text-align:center;padding:40px;">
                                         <div class="spinner"></div>
-                                        <p style="margin-top: 16px;">Memuat data...</p>
+                                        <p style="margin-top:16px;color:#64748b;">Memuat data...</p>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div id="requests-cards">
-                        <!-- Card layout untuk mobile akan dimuat di sini -->
-                    </div>
+                    <div id="requests-cards"></div>
                     <div class="pagination" id="requests-pagination"></div>
                 </div>
             </div>
@@ -1241,9 +1228,7 @@
                                 <option value="Kealpaan Pengembalian Kunci">Kealpaan Pengembalian Kunci</option>
                                 <option value="Kealpaan Membersihkan Mobil">Kealpaan Membersihkan Mobil</option>
                             </select>
-                            <button onclick="exportViolations()" class="btn" title="Export ke Sheet Baru">
-                                📊 Export Laporan
-                            </button>
+                            <button onclick="exportViolations()" class="btn">📊 Export Laporan</button>
                             <button onclick="openAddViolationModal()" class="btn btn-primary">+ Tambah Catatan</button>
                         </div>
                     </div>
@@ -1256,18 +1241,17 @@
                                     <th>Tanggal</th>
                                     <th>Jenis Pelanggaran</th>
                                     <th>Laporan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="violations-tbody">
                                 <tr>
-                                    <td colspan="5" style="text-align: center; padding: 20px;">Memuat data...</td>
+                                    <td colspan="6" style="text-align:center;padding:20px;">Memuat data...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div id="violations-cards">
-                        <!-- Card layout untuk mobile akan dimuat di sini -->
-                    </div>
+                    <div id="violations-cards"></div>
                     <div class="pagination" id="violations-pagination"></div>
                 </div>
             </div>
@@ -1300,35 +1284,28 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <div style="margin-bottom: 24px; padding: 16px; background: #f8fafc; border-radius: 8px;">
-                            <p style="font-size: 14px; color: #64748b;">Sanksi per Pelanggaran:</p>
-                            <p style="font-size: 20px; font-weight: 700; color: #1e293b;" id="sanksi-value">0.1 poin</p>
+                        <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;">
+                            <p style="font-size:14px;color:#64748b;">Sanksi per Pelanggaran:</p>
+                            <p style="font-size:20px;font-weight:700;color:#1e293b;" id="sanksi-value">0.1 poin</p>
                         </div>
-
                         <div class="charts-grid">
-                            <div class="card" style="margin: 0;">
-                                <div class="card-header" style="padding: 16px;">
-                                    <h3 style="font-size: 16px; font-weight: 600;">Skor Akhir Per Unit</h3>
+                            <div class="card" style="margin:0;">
+                                <div class="card-header" style="padding:16px;">
+                                    <h3 style="font-size:16px;font-weight:600;">Skor Akhir Per Unit</h3>
                                 </div>
                                 <div class="card-content">
-                                    <div class="chart-container">
-                                        <canvas id="scoreChart"></canvas>
-                                    </div>
+                                    <div class="chart-container"><canvas id="scoreChart"></canvas></div>
                                 </div>
                             </div>
-
-                            <div class="card" style="margin: 0;">
-                                <div class="card-header" style="padding: 16px;">
-                                    <h3 style="font-size: 16px; font-weight: 600;">Jumlah Pelanggaran Per Unit</h3>
+                            <div class="card" style="margin:0;">
+                                <div class="card-header" style="padding:16px;">
+                                    <h3 style="font-size:16px;font-weight:600;">Jumlah Pelanggaran Per Unit</h3>
                                 </div>
                                 <div class="card-content">
-                                    <div class="chart-container">
-                                        <canvas id="violationChart"></canvas>
-                                    </div>
+                                    <div class="chart-container"><canvas id="violationChart"></canvas></div>
                                 </div>
                             </div>
                         </div>
-
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -1341,6 +1318,8 @@
         </div>
     </div>
 
+    <!-- ═══════════════════ MODALS ═══════════════════ -->
+
     <!-- Modal Detail -->
     <div id="detailModal" class="modal-overlay">
         <div class="modal">
@@ -1348,13 +1327,11 @@
                 <h2 class="modal-title">Detail Pengajuan</h2>
             </div>
             <div class="modal-content" id="modal-body"></div>
-            <div class="modal-footer">
-                <button onclick="closeModal('detailModal')" class="btn">Tutup</button>
-            </div>
+            <div class="modal-footer"><button onclick="closeModal('detailModal')" class="btn">Tutup</button></div>
         </div>
     </div>
 
-    <!-- Modal Approve dengan Pilihan Nomor Kendaraan -->
+    <!-- Modal Approve -->
     <div id="approveModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1381,11 +1358,11 @@
         </div>
     </div>
 
-    <!-- Modal Edit -->
+    <!-- Modal Edit Request -->
     <div id="editModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Update Status & Kendaraan</h2>
+                <h2 class="modal-title">Edit Pengajuan Kendaraan Dinas</h2>
             </div>
             <div class="modal-content">
                 <form id="editForm">
@@ -1397,7 +1374,6 @@
                             <option value="rejected">Ditolak (Rejected)</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label class="input-label">Nomor Kendaraan</label>
                         <select class="form-input" id="edit-nomor-kendaraan">
@@ -1410,22 +1386,18 @@
                             <option value="AB 1067 IA">AB 1067 IA</option>
                         </select>
                     </div>
-
-                    <div style="margin: 15px 0; border-top: 1px dashed #ccc; padding-top: 10px;">
-                        <small style="color: #666;">Data Pegawai (Tidak dapat diubah):</small>
+                    <div class="info-box">
+                        <p class="info-box-label">Info Pengajuan (tidak dapat diubah)</p>
+                        <div class="form-group" style="margin-bottom:8px;"><label class="input-label">Nama
+                                Pegawai</label><input type="text" class="form-input" id="edit-nama" readonly
+                                style="background:#f0f4f8;cursor:not-allowed;"></div>
+                        <div class="form-group" style="margin-bottom:8px;"><label class="input-label">Unit
+                                Eselon</label><input type="text" class="form-input" id="edit-unit" readonly
+                                style="background:#f0f4f8;cursor:not-allowed;"></div>
+                        <div class="form-group" style="margin-bottom:0;"><label class="input-label">Tanggal
+                                Penggunaan</label><input type="text" class="form-input" id="edit-tanggal" readonly
+                                style="background:#f0f4f8;cursor:not-allowed;"></div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="input-label">Nama Pegawai</label>
-                        <input type="text" class="form-input" id="edit-nama" readonly
-                            style="background: #f0f0f0; cursor: not-allowed;">
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Tanggal Penggunaan</label>
-                        <input type="text" class="form-input" id="edit-tanggal" readonly
-                            style="background: #f0f0f0; cursor: not-allowed;">
-                    </div>
-
                     <input type="hidden" id="edit-id">
                 </form>
             </div>
@@ -1436,7 +1408,7 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Catatan -->
+    <!-- Modal Tambah Catatan Pelanggaran -->
     <div id="addViolationModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1500,975 +1472,295 @@
         </div>
     </div>
 
+    <!-- ══ Modal Edit Catatan Pelanggaran (BARU) ══ -->
+    <div id="editViolationModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">✏️ Edit Catatan Pelanggaran</h2>
+            </div>
+            <div class="modal-content">
+                <div class="info-box">
+                    <p class="info-box-label">Info Catatan (tidak dapat diubah)</p>
+                    <div class="form-group" style="margin-bottom:8px;">
+                        <label class="input-label">Bulan</label>
+                        <input type="text" class="form-input" id="ev-bulan" readonly
+                            style="background:#f0f4f8;cursor:not-allowed;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:8px;">
+                        <label class="input-label">Unit</label>
+                        <input type="text" class="form-input" id="ev-unit" readonly
+                            style="background:#f0f4f8;cursor:not-allowed;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="input-label">Jenis Pelanggaran</label>
+                        <input type="text" class="form-input" id="ev-jenis-display" readonly
+                            style="background:#f0f4f8;cursor:not-allowed;">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:16px;">
+                    <label class="input-label">Tanggal Penggunaan Mobil</label>
+                    <input type="text" class="form-input" id="ev-tanggal" placeholder="contoh: 07-01-2026">
+                </div>
+                <div class="form-group">
+                    <label class="input-label">Laporan</label>
+                    <textarea class="form-textarea" id="ev-laporan"
+                        placeholder="Deskripsikan pelanggaran..."></textarea>
+                </div>
+                <input type="hidden" id="ev-id">
+                <input type="hidden" id="ev-jenis">
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('editViolationModal')" class="btn">Batal</button>
+                <button onclick="submitEditViolation()" class="btn btn-primary" id="submit-ev-btn">Simpan
+                    Perubahan</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbwJYcC9UtR6N4jDLcfKBIxiZ57GG2XGB1B9bsJS8b2kDZPo8Fr_cn9jPus6zpDHR0GH1w/exec';
 
-        let masterRequests = [];
-        let allRequests = [];
-        let masterViolations = [];
-        let allViolations = [];
-        let allScores = {};
-        let scoreChart = null;
-        let violationChart = null;
-        let currentApproveId = null;
-        let currentEditId = null;
+        const CACHE_DURATION = 5 * 60 * 1000;
+        const CACHE_KEYS = { REQUESTS: 'kendaraan_requests', VIOLATIONS: 'kendaraan_violations', SCORES: 'kendaraan_scores' };
 
-        // Pagination state
-        let requestsCurrentPage = 1;
-        let violationsCurrentPage = 1;
+        let masterRequests = [], allRequests = [];
+        let masterViolations = [], allViolations = [];
+        let allScores = {}, scoreChart = null, violationChart = null;
+        let currentApproveId = null;
+        let requestsCurrentPage = 1, violationsCurrentPage = 1;
         const itemsPerPage = 10;
 
-        // ================== MOBILE MENU ==================
-        function toggleMobileMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            const overlay = document.querySelector('.sidebar-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
+        function saveToCache(key, data) { try { localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() })); } catch (e) { } }
+        function getFromCache(key) { try { const c = localStorage.getItem(key); if (!c) return null; const p = JSON.parse(c); if (Date.now() - p.timestamp < CACHE_DURATION) return p.data; localStorage.removeItem(key); return null; } catch (e) { return null; } }
+        function clearCache() { Object.values(CACHE_KEYS).forEach(k => localStorage.removeItem(k)); }
+        function showCacheIndicator() { const el = document.getElementById('cache-indicator'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2000); }
 
-        // Close sidebar when clicking nav item on mobile
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth < 1024) {
-                    toggleMobileMenu();
-                }
-            });
-        });
+        function toggleMobileMenu() { document.querySelector('.sidebar').classList.toggle('open'); document.querySelector('.sidebar-overlay').classList.toggle('active'); }
+        document.querySelectorAll('.nav-item').forEach(item => { item.addEventListener('click', () => { if (window.innerWidth < 1024) toggleMobileMenu(); }); });
 
-        // ================== TOAST ==================
         const Toast = {
             container: null,
-            init() {
-                if (!this.container) {
-                    this.container = document.createElement('div');
-                    this.container.className = 'toast-container';
-                    document.body.appendChild(this.container);
-                }
-            },
-            show(message, type = 'success') {
-                this.init();
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
-                toast.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        ${type === 'success'
-                        ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
-                        : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
-                    }
-                    </svg>
-                    <span>${message}</span>
-                `;
-                this.container.appendChild(toast);
-                setTimeout(() => toast.remove(), 3000);
-            },
-            success(msg) { this.show(msg, 'success'); },
-            error(msg) { this.show(msg, 'error'); }
+            init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
+            show(message, type = 'success') { this.init(); const t = document.createElement('div'); t.className = `toast ${type}`; const icon = type === 'success' ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>' : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'; t.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">${icon}</svg><span>${message}</span>`; this.container.appendChild(t); setTimeout(() => t.remove(), 3000); },
+            success(m) { this.show(m, 'success'); }, error(m) { this.show(m, 'error'); }
         };
 
-        // ================== API HELPER (JSONP) ==================
         function callAPI(params) {
             return new Promise((resolve, reject) => {
-                const callbackName = 'callback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-
-                window[callbackName] = function (data) {
-                    cleanup();
-                    resolve(data);
-                };
-
-                const queryParams = new URLSearchParams();
-                for (const [key, value] of Object.entries(params)) {
-                    queryParams.append(key, value);
-                }
-                queryParams.append('callback', callbackName);
-
+                const cb = 'jsonp_cb_' + Math.round(100000 * Math.random());
+                window[cb] = function (data) { delete window[cb]; const s = document.getElementById(cb); if (s) s.remove(); resolve(data); };
+                const qs = new URLSearchParams({ ...params, callback: cb }).toString();
                 const script = document.createElement('script');
-                script.src = `${API_URL}?${queryParams.toString()}`;
-
-                const timeoutId = setTimeout(() => {
-                    cleanup();
-                    reject(new Error('Request timeout'));
-                }, 15000);
-
-                function cleanup() {
-                    clearTimeout(timeoutId);
-                    if (script.parentNode) script.parentNode.removeChild(script);
-                    delete window[callbackName];
-                }
-
-                script.onerror = () => {
-                    cleanup();
-                    reject(new Error('Network error'));
-                };
-
+                script.id = cb; script.src = `${API_URL}?${qs}`;
+                const tid = setTimeout(() => { delete window[cb]; script.remove(); reject(new Error('Timeout')); }, 15000);
+                script.onerror = () => { clearTimeout(tid); delete window[cb]; reject(new Error('Network error')); };
                 document.body.appendChild(script);
             });
         }
 
-        // ================== AUTH CHECK ==================
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!user.email || user.role !== 'admin') {
-            window.location.href = 'login.html';
-        }
-
+        if (!user.email || user.role !== 'admin') window.location.href = 'login.html';
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
+        function logout() { if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); localStorage.clear(); window.location.href = 'login.html'; } }
 
-        function logout() {
-            if (confirm("Apakah Anda yakin ingin keluar?")) {
-                localStorage.clear();
-                window.location.href = 'login.html';
-            }
-        }
-
-        // ================== TAB SWITCHING ==================
-        function switchTab(tabName) {
+        function switchTab(tabName, event) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-
+            if (event && event.target) event.target.classList.add('active');
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
-
-            if (tabName === 'requests') {
-                loadRequests();
-            } else if (tabName === 'violations') {
-                loadViolations();
-            } else if (tabName === 'scores') {
-                loadScores();
-            }
+            if (tabName === 'requests') loadRequests();
+            else if (tabName === 'violations') loadViolations();
+            else if (tabName === 'scores') loadScores();
         }
-
         function switchTabFromDropdown(tabName) {
-            document.getElementById('mobile-tab-select').value = tabName;
-
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
-
-            if (tabName === 'requests') {
-                loadRequests();
-            } else if (tabName === 'violations') {
-                loadViolations();
-            } else if (tabName === 'scores') {
-                loadScores();
-            }
+            if (tabName === 'requests') loadRequests();
+            else if (tabName === 'violations') loadViolations();
+            else if (tabName === 'scores') loadScores();
         }
+        function createStatusBadge(status) { const s = (status || '').toLowerCase(); if (s === 'approved') return '<span class="badge badge-approved">Disetujui</span>'; if (s === 'rejected') return '<span class="badge badge-rejected">Ditolak</span>'; return '<span class="badge badge-pending">Menunggu</span>'; }
+        function formatTime(t) { if (!t) return '-'; if (typeof t === 'string' && t.includes('T')) return t.split('T')[1].substring(0, 5); return t; }
 
-        // ================== STATUS BADGE ==================
-        function createStatusBadge(status) {
-            const labels = { pending: 'Menunggu', approved: 'Disetujui', rejected: 'Ditolak' };
-            const classes = { pending: 'badge-pending', approved: 'badge-approved', rejected: 'badge-rejected' };
-            return `<span class="badge ${classes[status]}">${labels[status]}</span>`;
-        }
-
-        // ================== TAB 1: REQUESTS WITH PAGINATION ==================
-        async function loadRequests() {
-            // 1. Cek apakah ada data di cache (localStorage)
-            const cachedData = localStorage.getItem('cache_requests');
-            if (cachedData) {
-                masterRequests = JSON.parse(cachedData);
-                allRequests = [...masterRequests];
-                renderPaginatedRequests();
-                console.log('Memuat data dari cache');
-            }
-
-            // 2. Tetap panggil API di background untuk memperbarui data terbaru
+        // ═══ TAB 1: REQUESTS ═══
+        async function loadRequests(forceRefresh = false) {
             try {
+                if (!forceRefresh) { const cached = getFromCache(CACHE_KEYS.REQUESTS); if (cached) { masterRequests = cached; allRequests = [...masterRequests]; requestsCurrentPage = 1; renderPaginatedRequests(); showCacheIndicator(); return; } }
                 const response = await callAPI({ action: 'getRequests' });
-                const newData = Array.isArray(response) ? response : [];
-
-                // 3. Jika data dari API berbeda dengan cache, perbarui tampilan dan simpan ke cache
-                if (JSON.stringify(newData) !== cachedData) {
-                    masterRequests = newData;
-                    allRequests = [...masterRequests];
-                    localStorage.setItem('cache_requests', JSON.stringify(newData)); // Simpan ke cache
-                    renderPaginatedRequests();
-                    console.log('Cache diperbarui dari server');
-                }
-            } catch (error) {
-                console.error('Load error:', error);
-                if (!cachedData) Toast.error('Gagal memuat data');
-            }
+                masterRequests = Array.isArray(response) ? response : []; allRequests = [...masterRequests]; requestsCurrentPage = 1;
+                saveToCache(CACHE_KEYS.REQUESTS, masterRequests); renderPaginatedRequests();
+            } catch (error) { console.error(error); Toast.error('Gagal memuat data'); }
         }
-
         function renderPaginatedRequests() {
-            const tbody = document.getElementById('requests-tbody');
-            const cardsContainer = document.getElementById('requests-cards');
-            const paginationContainer = document.getElementById('requests-pagination');
-
-            if (allRequests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #94a3b8;">Tidak ada pengajuan</td></tr>';
-                cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
-                paginationContainer.innerHTML = '';
-                return;
-            }
-
-            const totalPages = Math.ceil(allRequests.length / itemsPerPage);
-            const startIndex = (requestsCurrentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const currentItems = allRequests.slice(startIndex, endIndex);
-
-            const formatTime = (timeStr) => {
-                if (!timeStr) return '-';
-                if (typeof timeStr === 'string' && timeStr.includes('T')) {
-                    return timeStr.split('T')[1].substring(0, 5);
-                }
-                return timeStr;
-            };
-
-            // Render table for desktop
-            tbody.innerHTML = currentItems.map((req) => `
-                <tr>
-                    <td style="font-weight: 500;">${req.nama_pegawai || '-'}</td>
-                    <td>${req.unit_eselon || '-'}</td>
-                    <td>${req.tanggal_penggunaan || '-'}</td>
-                    <td>${formatTime(req.waktu_penjemputan)} - ${formatTime(req.waktu_pengembalian)}</td>
-                    
-                    <td style="font-family: monospace; font-weight: bold; color: #1e293b;">
-                        ${req.nomorKendaraan && req.nomorKendaraan !== '-' ? req.nomorKendaraan : '<span style="color: #94a3b8; font-weight: normal;">Belum Ada</span>'}
-                    </td>
-
-                    <td>
-                        ${req.status === 'pending' ? `
-                            <div class="action-buttons">
-                                <button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve">✓ Setujui</button>
-                                <button onclick="quickReject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button>
-                            </div>
-                        ` : createStatusBadge(req.status)}
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
-                            <button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>
-                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-
-            // Render cards for mobile
-            cardsContainer.innerHTML = currentItems.map((req) => {
-                let actionButtons = '';
-                if (req.status === 'pending') {
-                    actionButtons = `
-                        <button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve" style="flex: 1;">✓ Setujui</button>
-                        <button onclick="quickReject('${req.id}')" class="btn btn-sm btn-reject" style="flex: 1;">✕ Tolak</button>
-                    `;
-                }
-
-                return `
-                    <div class="requests-card">
-                        <div class="requests-card-header">
-                            <div style="flex: 1;">
-                                <div class="requests-card-title">${req.nama_pegawai || '-'}</div>
-                                <div class="requests-card-subtitle">${req.unit_eselon || '-'}</div>
-                            </div>
-                            ${req.status !== 'pending' ? createStatusBadge(req.status) : ''}
-                        </div>
-                        <div class="requests-card-body">
-                            <div class="requests-card-row">
-                                <span class="requests-card-label">Tanggal</span>
-                                <span class="requests-card-value">${req.tanggal_penggunaan || '-'}</span>
-                            </div>
-                            <div class="requests-card-row">
-                                <span class="requests-card-label">Waktu</span>
-                                <span class="requests-card-value">${formatTime(req.waktu_penjemputan)} - ${formatTime(req.waktu_pengembalian)}</span>
-                            </div>
-                            <div class="requests-card-row">
-                                <span class="requests-card-label">Kendaraan</span>
-                                <span class="requests-card-value" style="font-weight: bold;">${req.nomorKendaraan || '-'}</span>
-                            </div>
-                        </div>
-                        <div class="requests-card-footer">
-                            ${req.status === 'pending' ? `<div style="display: flex; gap: 8px;">${actionButtons}</div>` : ''}
-                            <div style="display: flex; gap: 8px;">
-                                <button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex: 1;">👁 Detail</button>
-                                <button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit" style="flex: 1;">✏️ Edit</button>
-                                <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete" style="flex: 1;">🗑️ Hapus</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            const tbody = document.getElementById('requests-tbody'), cards = document.getElementById('requests-cards'), pgn = document.getElementById('requests-pagination');
+            if (allRequests.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">Tidak ada pengajuan</td></tr>'; cards.innerHTML = '<div style="text-align:center;padding:2rem;color:#64748b;">Data tidak ditemukan</div>'; pgn.innerHTML = ''; return; }
+            const totalPages = Math.ceil(allRequests.length / itemsPerPage), start = (requestsCurrentPage - 1) * itemsPerPage, items = allRequests.slice(start, start + itemsPerPage);
+            tbody.innerHTML = items.map(req => {
+                const statusCell = (req.status || '').toLowerCase() === 'pending' ? `<div class="action-buttons"><button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve">✓ Setujui</button><button onclick="quickReject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button></div>` : createStatusBadge(req.status);
+                const kendaraan = (req.nomorKendaraan && req.nomorKendaraan !== '-') ? `<span style="font-family:monospace;font-weight:bold;">${req.nomorKendaraan}</span>` : `<span style="color:#94a3b8;">Belum Ada</span>`;
+                return `<tr><td style="font-weight:500;">${req.nama_pegawai || '-'}</td><td>${req.unit_eselon || '-'}</td><td>${req.tanggal_penggunaan || '-'}</td><td>${formatTime(req.waktu_penjemputan)} – ${formatTime(req.waktu_pengembalian)}</td><td>${kendaraan}</td><td>${statusCell}</td><td><div class="action-buttons"><button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button><button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button><button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete">🗑️ Hapus</button></div></td></tr>`;
             }).join('');
-
-            // Render pagination
-            paginationContainer.innerHTML = `
-                <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>
-                    ‹ Prev
-                </button>
-                <span class="pagination-info">
-                    Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)
-                </span>
-                <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>
-                    Next ›
-                </button>
-            `;
+            cards.innerHTML = items.map(req => {
+                const isPending = (req.status || '').toLowerCase() === 'pending';
+                const kendaraan = (req.nomorKendaraan && req.nomorKendaraan !== '-') ? req.nomorKendaraan : '-';
+                return `<div class="requests-card"><div class="requests-card-header"><div style="flex:1;"><div class="requests-card-title">${req.nama_pegawai || '-'}</div><div class="requests-card-subtitle">${req.unit_eselon || '-'}</div></div>${!isPending ? createStatusBadge(req.status) : ''}</div><div class="requests-card-body"><div class="requests-card-row"><span class="requests-card-label">Tanggal</span><span class="requests-card-value">${req.tanggal_penggunaan || '-'}</span></div><div class="requests-card-row"><span class="requests-card-label">Waktu</span><span class="requests-card-value">${formatTime(req.waktu_penjemputan)} – ${formatTime(req.waktu_pengembalian)}</span></div><div class="requests-card-row"><span class="requests-card-label">Kendaraan</span><span class="requests-card-value" style="font-weight:bold;">${kendaraan}</span></div></div><div class="requests-card-footer">${isPending ? `<div style="display:flex;gap:8px;margin-bottom:8px;"><button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve" style="flex:1;">✓ Setujui</button><button onclick="quickReject('${req.id}')" class="btn btn-sm btn-reject" style="flex:1;">✕ Tolak</button></div>` : ''}<div style="display:flex;gap:8px;"><button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex:1;">👁 Detail</button><button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button><button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button></div></div></div>`;
+            }).join('');
+            pgn.innerHTML = `<button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button><span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span><button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
+        function changeRequestsPage(page) { const total = Math.ceil(allRequests.length / itemsPerPage); if (page < 1 || page > total) return; requestsCurrentPage = page; renderPaginatedRequests(); }
+        function viewDetail(id) { const req = allRequests.find(r => r.id == id); if (!req) return; document.getElementById('modal-body').innerHTML = `<div class="info-grid"><div class="info-item"><label class="input-label">Nama Pegawai</label><p style="font-weight:500;">${req.nama_pegawai || '-'}</p></div><div class="info-item"><label class="input-label">Unit Eselon</label><p style="font-weight:500;">${req.unit_eselon || '-'}</p></div></div><div class="info-grid"><div class="info-item"><label class="input-label">Tanggal</label><p style="font-weight:500;">${req.tanggal_penggunaan || '-'}</p></div><div class="info-item"><label class="input-label">Waktu</label><p style="font-weight:500;">${formatTime(req.waktu_penjemputan)} – ${formatTime(req.waktu_pengembalian)}</p></div></div><div style="margin-bottom:16px;"><label class="input-label">Nomor Kendaraan</label><p style="font-weight:500;">${req.nomorKendaraan || 'Belum Ditentukan'}</p></div><div style="margin-bottom:16px;"><label class="input-label">Keperluan</label><p style="font-weight:500;">${req.tujuan || req.keterangan || '-'}</p></div><div style="margin-bottom:16px;"><label class="input-label">Alamat</label><p style="font-weight:500;">${req.alamat || '-'}</p></div><div><label class="input-label">Status</label><div>${createStatusBadge(req.status)}</div></div>`; openModal('detailModal'); }
+        function openApproveModal(id) { currentApproveId = id; document.getElementById('vehicle-number-select').value = ''; openModal('approveModal'); }
+        async function confirmApprove() { const v = document.getElementById('vehicle-number-select').value; if (!v) { Toast.error('Pilih nomor kendaraan terlebih dahulu'); return; } const btn = document.getElementById('confirm-approve-btn'), orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyetujui...'; try { const res = await callAPI({ action: 'updateRequest', id: currentApproveId, status: 'approved', nomorKendaraan: v }); if (res.success) { Toast.success('Pengajuan disetujui dengan kendaraan ' + v); closeModal('approveModal'); clearCache(); await loadRequests(true); } else Toast.error(res.message || 'Gagal'); } catch (e) { Toast.error('Gagal: ' + e.message); } finally { btn.disabled = false; btn.innerHTML = orig; } }
+        async function quickReject(id) { if (!confirm('Tolak pengajuan ini?')) return; try { const res = await callAPI({ action: 'updateRequest', id, status: 'rejected' }); if (res.success) { Toast.success('Pengajuan ditolak'); clearCache(); await loadRequests(true); } else Toast.error(res.message || 'Gagal'); } catch (e) { Toast.error('Gagal: ' + e.message); } }
+        function openEditModal(id) { const req = allRequests.find(r => r.id == id); if (!req) { Toast.error('Data tidak ditemukan'); return; } document.getElementById('edit-status').value = (req.status || 'pending').toLowerCase(); document.getElementById('edit-nomor-kendaraan').value = req.nomorKendaraan || ''; document.getElementById('edit-nama').value = req.nama_pegawai || ''; document.getElementById('edit-unit').value = req.unit_eselon || ''; document.getElementById('edit-tanggal').value = req.tanggal_penggunaan || ''; document.getElementById('edit-id').value = id; openModal('editModal'); }
+        async function submitEdit() { const btn = document.getElementById('submit-edit-btn'), orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...'; try { const res = await callAPI({ action: 'updateRequest', id: document.getElementById('edit-id').value, status: document.getElementById('edit-status').value, nomorKendaraan: document.getElementById('edit-nomor-kendaraan').value }); if (res.success) { Toast.success('Data berhasil diperbarui!'); closeModal('editModal'); clearCache(); await loadRequests(true); } else Toast.error(res.message || 'Gagal'); } catch (e) { Toast.error('Error: ' + e.message); } finally { btn.disabled = false; btn.innerHTML = orig; } }
+        async function deleteRequest(id) { if (!confirm('Hapus pengajuan ini? Tindakan ini tidak dapat dibatalkan.')) return; try { const res = await callAPI({ action: 'deleteRequest', id }); if (res.success) { Toast.success('Pengajuan berhasil dihapus'); clearCache(); await loadRequests(true); } else Toast.error(res.message || 'Gagal'); } catch (e) { Toast.error('Gagal: ' + e.message); } }
+        document.getElementById('search-input').addEventListener('input', e => { const term = e.target.value.toLowerCase(); allRequests = masterRequests.filter(r => (r.nama_pegawai || '').toLowerCase().includes(term) || (r.unit_eselon || '').toLowerCase().includes(term)); requestsCurrentPage = 1; renderPaginatedRequests(); });
 
-        function changeRequestsPage(page) {
-            const totalPages = Math.ceil(allRequests.length / itemsPerPage);
-            if (page < 1 || page > totalPages) return;
-            requestsCurrentPage = page;
-            renderPaginatedRequests();
-
-            // Scroll to top
-            if (window.innerWidth < 1024) {
-                document.querySelector('#requests-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function viewDetail(id) {
-            const request = allRequests.find(r => r.id == id);
-            if (!request) return;
-
-            const modal = document.getElementById('modal-body');
-            modal.innerHTML = `
-                <div class="info-grid">
-                    <div class="info-item">
-                        <label class="input-label">Nama Pegawai</label>
-                        <p style="font-weight: 500;">${request.nama_pegawai || '-'}</p>
-                    </div>
-                    <div class="info-item">
-                        <label class="input-label">Unit Eselon</label>
-                        <p style="font-weight: 500;">${request.unit_eselon || '-'}</p>
-                    </div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <label class="input-label">Tanggal</label>
-                        <p style="font-weight: 500;">${request.tanggal_penggunaan || '-'}</p>
-                    </div>
-                    <div class="info-item">
-                        <label class="input-label">Waktu</label>
-                        <p style="font-weight: 500;">${request.waktu_penjemputan} - ${request.waktu_pengembalian}</p>
-                    </div>
-                </div>
-                <div style="margin-bottom: 16px;">
-                    <label class="input-label">Nomor Kendaraan</label>
-                    <p style="font-weight: 500;">${request.nomorKendaraan || 'Belum Ditentukan'}</p>
-                </div>
-                <div style="margin-bottom: 16px;">
-                    <label class="input-label">Keperluan</label>
-                    <p style="font-weight: 500;">${request.tujuan || request.keterangan || '-'}</p>
-                </div>
-                <div style="margin-bottom: 16px;">
-                    <label class="input-label">Alamat</label>
-                    <p style="font-weight: 500;">${request.alamat || '-'}</p>
-                </div>
-                <div>
-                    <label class="input-label">Status</label>
-                    <div>${createStatusBadge(request.status)}</div>
-                </div>
-            `;
-
-            openModal('detailModal');
-        }
-
-        // ================== APPROVE WITH VEHICLE NUMBER ==================
-        function openApproveModal(id) {
-            currentApproveId = id;
-            document.getElementById('vehicle-number-select').value = '';
-            openModal('approveModal');
-        }
-
-        async function confirmApprove() {
-            const vehicleNumber = document.getElementById('vehicle-number-select').value;
-
-            if (!vehicleNumber) {
-                Toast.error('Pilih nomor kendaraan terlebih dahulu');
-                return;
-            }
-
-            const confirmBtn = document.getElementById('confirm-approve-btn');
-            const originalText = confirmBtn.innerHTML;
-            confirmBtn.disabled = true;
-            confirmBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyetujui...';
-
+        // ═══ TAB 2: VIOLATIONS — dengan Edit & Delete ═══
+        async function loadViolations(forceRefresh = false) {
             try {
-                const res = await callAPI({
-                    action: 'updateRequest',
-                    id: currentApproveId,
-                    status: 'approved',
-                    nomorKendaraan: vehicleNumber
-                });
-
-                if (res.success) {
-                    Toast.success('Pengajuan disetujui dengan kendaraan ' + vehicleNumber);
-                    closeModal('approveModal');
-                    masterRequests = [];
-                    allRequests = [];
-                    localStorage.removeItem('cache_requests');
-                    loadRequests();
-                } else {
-                    Toast.error(res.message || 'Gagal menyetujui');
-                }
-            } catch (error) {
-                Toast.error('Gagal: ' + error.message);
-            } finally {
-                confirmBtn.disabled = false;
-                confirmBtn.innerHTML = originalText;
-            }
-        }
-
-        async function quickReject(id) {
-            if (!confirm('Tolak pengajuan ini?')) return;
-            try {
-                const res = await callAPI({ action: 'updateRequest', id, status: 'rejected' });
-                if (res.success) {
-                    Toast.success('Pengajuan ditolak');
-                    masterRequests = [];
-                    allRequests = [];
-                    localStorage.removeItem('cache_requests');
-                    loadRequests();
-                }
-            } catch (error) {
-                Toast.error('Gagal: ' + error.message);
-            }
-        }
-
-        // ================== EDIT REQUEST ==================
-        function openEditModal(id) {
-            const request = allRequests.find(r => r.id == id);
-            if (!request) {
-                Toast.error('Data tidak ditemukan');
-                return;
-            }
-
-            currentEditId = id;
-
-            // Isi field yang bisa diedit
-            document.getElementById('edit-status').value = request.status || 'pending';
-            document.getElementById('edit-nomor-kendaraan').value = request.nomorKendaraan || '';
-
-            // Isi field readonly sebagai informasi
-            document.getElementById('edit-nama').value = request.nama_pegawai || '';
-            document.getElementById('edit-tanggal').value = request.tanggal_penggunaan || '';
-            document.getElementById('edit-id').value = id;
-
-            openModal('editModal');
-        }
-
-        async function submitEdit() {
-            const submitBtn = document.getElementById('submit-edit-btn');
-            const originalText = submitBtn.innerHTML;
-
-            // Ambil nilai yang diubah oleh admin
-            const updatedStatus = document.getElementById('edit-status').value;
-            const updatedVehicle = document.getElementById('edit-nomor-kendaraan').value;
-            const requestId = document.getElementById('edit-id').value;
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
-
-            try {
-                const res = await callAPI({
-                    action: 'updateRequest',
-                    id: requestId,
-                    status: updatedStatus,
-                    nomorKendaraan: updatedVehicle
-                });
-
-                if (res.success) {
-                    Toast.success('Data Berhasil Diperbarui!');
-                    localStorage.removeItem('cache_requests');
-                    closeModal('editModal');
-                    loadRequests(); // Muat ulang tabel
-                } else {
-                    Toast.error(res.message || 'Gagal menyimpan');
-                }
-            } catch (error) {
-                Toast.error('Koneksi Error: ' + error.message);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-            }
-        }
-
-        // ================== DELETE REQUEST ==================
-        async function deleteRequest(id) {
-            if (!confirm('Hapus pengajuan ini? Tindakan ini tidak dapat dibatalkan.')) return;
-
-            try {
-                const res = await callAPI({
-                    action: 'deleteRequest',
-                    id: id
-                });
-
-                if (res.success) {
-                    Toast.success('Pengajuan berhasil dihapus');
-                    masterRequests = [];
-                    allRequests = [];
-                    localStorage.removeItem('cache_requests');
-                    loadRequests();
-                } else {
-                    Toast.error(res.message || 'Gagal menghapus');
-                }
-            } catch (error) {
-                Toast.error('Gagal: ' + error.message);
-            }
-        }
-
-        // ================== SEARCH ==================
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            allRequests = masterRequests.filter(req =>
-                (req.nama_pegawai || '').toLowerCase().includes(searchTerm) ||
-                (req.unit_eselon || '').toLowerCase().includes(searchTerm)
-            );
-            requestsCurrentPage = 1;
-            renderPaginatedRequests();
-        });
-
-        // ================== TAB 2: VIOLATIONS WITH PAGINATION ==================
-        async function loadViolations() {
-            try {
+                if (!forceRefresh) { const cached = getFromCache(CACHE_KEYS.VIOLATIONS); if (cached) { masterViolations = cached; allViolations = [...masterViolations]; violationsCurrentPage = 1; renderPaginatedViolations(); showCacheIndicator(); return; } }
                 const response = await callAPI({ action: 'getVehicleViolations' });
-                masterViolations = Array.isArray(response) ? response : [];
-                allViolations = [...masterViolations];
-                violationsCurrentPage = 1;
-                renderPaginatedViolations();
-            } catch (error) {
-                console.error('Error:', error);
-                Toast.error('Gagal memuat data pelanggaran');
-            }
+                masterViolations = Array.isArray(response) ? response : []; allViolations = [...masterViolations]; violationsCurrentPage = 1;
+                saveToCache(CACHE_KEYS.VIOLATIONS, masterViolations); renderPaginatedViolations();
+            } catch (error) { console.error(error); Toast.error('Gagal memuat data pelanggaran'); }
         }
 
         function renderPaginatedViolations() {
-            const tbody = document.getElementById('violations-tbody');
-            const cardsContainer = document.getElementById('violations-cards');
-            const paginationContainer = document.getElementById('violations-pagination');
+            const tbody = document.getElementById('violations-tbody'), cards = document.getElementById('violations-cards'), pgn = document.getElementById('violations-pagination');
+            if (allViolations.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;">Tidak ada catatan pelanggaran</td></tr>'; cards.innerHTML = '<div style="text-align:center;padding:2rem;color:#64748b;">Data tidak ditemukan</div>'; pgn.innerHTML = ''; return; }
+            const totalPages = Math.ceil(allViolations.length / itemsPerPage), start = (violationsCurrentPage - 1) * itemsPerPage, items = allViolations.slice(start, start + itemsPerPage);
 
-            if (allViolations.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">Tidak ada catatan pelanggaran</td></tr>';
-                cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
-                paginationContainer.innerHTML = '';
-                return;
-            }
+            // Gunakan index global (start+idx) sebagai referensi ke allViolations
+            tbody.innerHTML = items.map((v, idx) => {
+                const gi = start + idx;
+                return `<tr><td>${v.bulan}</td><td>${v.unit}</td><td>${v.tanggal}</td><td>${v.jenis}</td><td>${v.laporan}</td><td><div class="action-buttons"><button onclick="openEditViolationModal(${gi})" class="btn btn-sm btn-edit">✏️ Edit</button><button onclick="deleteViolation(${gi})" class="btn btn-sm btn-delete">🗑️ Hapus</button></div></td></tr>`;
+            }).join('');
 
-            const totalPages = Math.ceil(allViolations.length / itemsPerPage);
-            const startIndex = (violationsCurrentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const currentItems = allViolations.slice(startIndex, endIndex);
+            cards.innerHTML = items.map((v, idx) => {
+                const gi = start + idx;
+                return `<div class="violation-card"><div class="violation-card-header"><div><div class="violation-card-title">${v.unit}</div><div class="violation-card-subtitle">Bulan ${v.bulan}</div></div></div><div class="violation-card-body"><div class="violation-card-item"><div class="violation-card-label">Tanggal</div><div class="violation-card-value">${v.tanggal}</div></div><div class="violation-card-item"><div class="violation-card-label">Jenis</div><div class="violation-card-value">${v.jenis}</div></div><div class="violation-card-item" style="grid-column:1/-1;"><div class="violation-card-label">Laporan</div><div class="violation-card-value">${v.laporan}</div></div></div><div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9;"><button onclick="openEditViolationModal(${gi})" class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button><button onclick="deleteViolation(${gi})" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button></div></div>`;
+            }).join('');
 
-            // Render table for desktop
-            tbody.innerHTML = currentItems.map(v => `
-                <tr>
-                    <td>${v.bulan}</td>
-                    <td>${v.unit}</td>
-                    <td>${v.tanggal}</td>
-                    <td>${v.jenis}</td>
-                    <td>${v.laporan}</td>
-                </tr>
-            `).join('');
-
-            // Render cards for mobile
-            cardsContainer.innerHTML = currentItems.map(v => `
-                <div class="violation-card">
-                    <div class="violation-card-header">
-                        <div>
-                            <div class="violation-card-title">${v.unit}</div>
-                            <div class="violation-card-subtitle">Bulan ${v.bulan}</div>
-                        </div>
-                    </div>
-                    <div class="violation-card-body">
-                        <div class="violation-card-item">
-                            <div class="violation-card-label">Tanggal</div>
-                            <div class="violation-card-value">${v.tanggal}</div>
-                        </div>
-                        <div class="violation-card-item">
-                            <div class="violation-card-label">Jenis</div>
-                            <div class="violation-card-value">${v.jenis}</div>
-                        </div>
-                        <div class="violation-card-item" style="grid-column: 1 / -1;">
-                            <div class="violation-card-label">Laporan</div>
-                            <div class="violation-card-value">${v.laporan}</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            // Render pagination
-            paginationContainer.innerHTML = `
-                <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>
-                    ‹ Prev
-                </button>
-                <span class="pagination-info">
-                    Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)
-                </span>
-                <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>
-                    Next ›
-                </button>
-            `;
+            pgn.innerHTML = `<button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button><span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span><button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
-        function changeViolationsPage(page) {
-            const totalPages = Math.ceil(allViolations.length / itemsPerPage);
-            if (page < 1 || page > totalPages) return;
-            violationsCurrentPage = page;
-            renderPaginatedViolations();
-
-            // Scroll to top
-            if (window.innerWidth < 1024) {
-                document.querySelector('#violations-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function openAddViolationModal() {
-            document.getElementById('violationForm').reset();
-            openModal('addViolationModal');
-        }
-
-        async function submitViolation() {
-            const form = document.getElementById('violationForm');
-            const submitBtn = document.getElementById('submit-violation-btn');
-
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Menyimpan...';
-
-            const jenis = document.getElementById('violation-jenis').value;
-            const bulan = document.getElementById('violation-bulan').value;
-            const unit = document.getElementById('violation-unit').value;
-            const tanggal = document.getElementById('violation-tanggal').value;
-            const laporan = document.getElementById('violation-laporan').value;
-
-            try {
-                const dateObj = new Date(tanggal);
-                const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-
-                const result = await callAPI({
-                    action: 'createVehicleViolation',
-                    jenis: jenis,
-                    bulan: bulan,
-                    unit: unit,
-                    tanggal: formattedDate,
-                    laporan: laporan
-                });
-
-                if (result.success) {
-                    Toast.success('Catatan pelanggaran berhasil ditambahkan!');
-                    closeModal('addViolationModal');
-                    loadViolations();
-                    loadScores();
-                } else {
-                    Toast.error(result.message || 'Gagal menambahkan catatan');
-                }
-            } catch (error) {
-                Toast.error('Gagal menambahkan catatan: ' + error);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            }
-        }
-
-        async function exportViolations() {
-            const bulan = document.getElementById('filter-bulan').value;
-            const unit = document.getElementById('filter-unit').value;
-            const jenis = document.getElementById('filter-jenis').value;
-
-            if (!confirm('Export catatan ke sheet baru di spreadsheet?')) return;
-
-            try {
-                Toast.show('Mengekspor data...', 'success');
-
-                let jenisParam = '';
-                if (jenis === 'Kealpaan Pengembalian Kunci') {
-                    jenisParam = 'KUNCI';
-                } else if (jenis === 'Kealpaan Membersihkan Mobil') {
-                    jenisParam = 'KEBERSIHAN';
-                }
-
-                const result = await callAPI({
-                    action: 'exportVehicleViolationsReport',
-                    bulan: bulan || '',
-                    unit: unit || '',
-                    jenis: jenisParam
-                });
-
-                if (result.success) {
-                    Toast.success(`Berhasil export ${result.recordCount} catatan!`);
-                    if (result.url) {
-                        const openLink = confirm('Buka spreadsheet di tab baru?');
-                        if (openLink) {
-                            window.open(result.url, '_blank');
-                        }
-                    }
-                } else {
-                    Toast.error(result.message || 'Gagal export');
-                }
-            } catch (error) {
-                Toast.error('Gagal export: ' + error);
-            }
-        }
+        function changeViolationsPage(page) { const total = Math.ceil(allViolations.length / itemsPerPage); if (page < 1 || page > total) return; violationsCurrentPage = page; renderPaginatedViolations(); }
 
         document.getElementById('filter-bulan').addEventListener('change', filterViolations);
         document.getElementById('filter-unit').addEventListener('change', filterViolations);
         document.getElementById('filter-jenis').addEventListener('change', filterViolations);
+        function filterViolations() { const b = document.getElementById('filter-bulan').value, u = document.getElementById('filter-unit').value, j = document.getElementById('filter-jenis').value; allViolations = masterViolations.filter(v => (b === '' || v.bulan === b) && (u === '' || v.unit === u) && (j === '' || v.jenis === j)); violationsCurrentPage = 1; renderPaginatedViolations(); }
 
-        function filterViolations() {
-            const filterBulan = document.getElementById('filter-bulan').value;
-            const filterUnit = document.getElementById('filter-unit').value;
-            const filterJenis = document.getElementById('filter-jenis').value;
-
-            allViolations = masterViolations.filter(v => {
-                const matchBulan = filterBulan === "" || v.bulan === filterBulan;
-                const matchUnit = filterUnit === "" || v.unit === filterUnit;
-                const matchJenis = filterJenis === "" || v.jenis === filterJenis;
-
-                return matchBulan && matchUnit && matchJenis;
-            });
-
-            violationsCurrentPage = 1;
-            renderPaginatedViolations();
-        }
-
-        // ================== TAB 3: SCORES ==================
-        async function loadScores() {
-            const bulan = document.getElementById('filter-score-bulan').value;
-            const mode = document.getElementById('score-mode-filter').value;
-
+        function openAddViolationModal() { document.getElementById('violationForm').reset(); openModal('addViolationModal'); }
+        async function submitViolation() {
+            const form = document.getElementById('violationForm'); if (!form.checkValidity()) { form.reportValidity(); return; }
+            const btn = document.getElementById('submit-violation-btn'), orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
             try {
-                const data = await callAPI({
-                    action: 'getVehicleScores',
-                    bulan: bulan,
-                    jenis: mode
-                });
-
-                if (data.success) {
-                    allScores = {
-                        sanksi: data.sanksiPerPelanggaran,
-                        scores: data.scores
-                    };
-                    renderScoresUI(allScores);
-                }
-            } catch (error) {
-                Toast.error('Gagal memuat penilaian');
-            }
+                const d = new Date(document.getElementById('violation-tanggal').value), fmt = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+                const res = await callAPI({ action: 'createVehicleViolation', jenis: document.getElementById('violation-jenis').value, bulan: document.getElementById('violation-bulan').value, unit: document.getElementById('violation-unit').value, tanggal: fmt, laporan: document.getElementById('violation-laporan').value });
+                if (res.success) { Toast.success('Catatan pelanggaran berhasil ditambahkan!'); closeModal('addViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(res.message || 'Gagal');
+            } catch (e) { Toast.error('Gagal: ' + e); } finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
-        document.getElementById('filter-score-bulan').addEventListener('change', loadScores);
-        document.getElementById('score-mode-filter').addEventListener('change', loadScores);
-
-        function renderScoresUI(data) {
-            document.getElementById('sanksi-value').textContent = `${data.sanksi} poin`;
-
-            if (!document.getElementById('filter-score-bulan').value) {
-                const monthNames = ['', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI',
-                    'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-                const currentMonth = monthNames[new Date().getMonth() + 1];
-                document.getElementById('filter-score-bulan').value = currentMonth;
-            }
-
-            renderScores();
+        // ── Edit Violation ──
+        function openEditViolationModal(idx) {
+            const v = allViolations[idx];
+            if (!v) { Toast.error('Data tidak ditemukan'); return; }
+            let jenisKode = 'KUNCI';
+            if (v.jenis === 'Kealpaan Membersihkan Mobil') jenisKode = 'KEBERSIHAN';
+            document.getElementById('ev-bulan').value = v.bulan;
+            document.getElementById('ev-unit').value = v.unit;
+            document.getElementById('ev-jenis-display').value = v.jenis;
+            document.getElementById('ev-tanggal').value = v.tanggal;
+            document.getElementById('ev-laporan').value = v.laporan;
+            document.getElementById('ev-id').value = v.id || '';
+            document.getElementById('ev-jenis').value = jenisKode;
+            openModal('editViolationModal');
+        }
+        async function submitEditViolation() {
+            const tanggal = document.getElementById('ev-tanggal').value.trim();
+            const laporan = document.getElementById('ev-laporan').value.trim();
+            const bulan = document.getElementById('ev-bulan').value;
+            const unit = document.getElementById('ev-unit').value;
+            const jenis = document.getElementById('ev-jenis').value;
+            const id = document.getElementById('ev-id').value;
+            if (!tanggal || !laporan) { Toast.error('Tanggal dan laporan harus diisi'); return; }
+            const btn = document.getElementById('submit-ev-btn'), orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            try {
+                const res = await callAPI({ action: 'updateVehicleViolation', id, jenis, bulan, unit, tanggal, laporan });
+                if (res.success) { Toast.success('Catatan berhasil diperbarui!'); closeModal('editViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(res.message || 'Gagal menyimpan');
+            } catch (e) { Toast.error('Error: ' + e.message); } finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
+        // ── Delete Violation ──
+        async function deleteViolation(idx) {
+            const v = allViolations[idx];
+            if (!v) { Toast.error('Data tidak ditemukan'); return; }
+            if (!confirm(`Hapus catatan pelanggaran ini?\n\nUnit: ${v.unit}\nBulan: ${v.bulan}\nTanggal: ${v.tanggal}\n\nTindakan ini tidak dapat dibatalkan.`)) return;
+            let jenisKode = 'KUNCI';
+            if (v.jenis === 'Kealpaan Membersihkan Mobil') jenisKode = 'KEBERSIHAN';
+            try {
+                const res = await callAPI({ action: 'deleteVehicleViolation', id: v.id || '', jenis: jenisKode, bulan: v.bulan, unit: v.unit });
+                if (res.success) { Toast.success('Catatan pelanggaran berhasil dihapus'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(res.message || 'Gagal menghapus');
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+        }
+
+        async function exportViolations() {
+            const bulan = document.getElementById('filter-bulan').value, unit = document.getElementById('filter-unit').value, jenis = document.getElementById('filter-jenis').value;
+            if (!confirm('Export catatan ke sheet baru di spreadsheet?')) return;
+            try {
+                Toast.show('Mengekspor data...', 'success');
+                let jenisParam = ''; if (jenis === 'Kealpaan Pengembalian Kunci') jenisParam = 'KUNCI'; else if (jenis === 'Kealpaan Membersihkan Mobil') jenisParam = 'KEBERSIHAN';
+                const res = await callAPI({ action: 'exportVehicleViolationsReport', bulan: bulan || '', unit: unit || '', jenis: jenisParam });
+                if (res.success) { Toast.success(`Berhasil export ${res.recordCount} catatan!`); if (res.url && confirm('Buka spreadsheet di tab baru?')) window.open(res.url, '_blank'); }
+                else Toast.error(res.message || 'Gagal');
+            } catch (e) { Toast.error('Gagal export: ' + e); }
+        }
+
+        // ═══ TAB 3: SCORES ═══
+        async function loadScores(forceRefresh = false) {
+            try {
+                const bulan = document.getElementById('filter-score-bulan').value, mode = document.getElementById('score-mode-filter').value;
+                const cacheKey = `${CACHE_KEYS.SCORES}_${bulan}_${mode}`;
+                if (!forceRefresh && bulan) { const cached = getFromCache(cacheKey); if (cached) { allScores = cached; renderScoresUI(allScores); showCacheIndicator(); return; } }
+                const data = await callAPI({ action: 'getVehicleScores', bulan, jenis: mode });
+                if (data.success) { allScores = { sanksi: data.sanksiPerPelanggaran, scores: data.scores }; if (bulan) saveToCache(cacheKey, allScores); renderScoresUI(allScores); }
+            } catch (e) { Toast.error('Gagal memuat penilaian'); }
+        }
+        document.getElementById('filter-score-bulan').addEventListener('change', () => loadScores(false));
+        document.getElementById('score-mode-filter').addEventListener('change', () => loadScores(false));
+        function renderScoresUI(data) { document.getElementById('sanksi-value').textContent = `${data.sanksi} poin`; if (!document.getElementById('filter-score-bulan').value) { const m = ['', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER']; document.getElementById('filter-score-bulan').value = m[new Date().getMonth() + 1]; } renderScores(); }
         function renderScores() {
-            const bulan = document.getElementById('filter-score-bulan').value;
-            const mode = document.getElementById('score-mode-filter').value;
-            const container = document.getElementById('scores-container');
-
-            if (!bulan) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📊</div>
-                        <p>Pilih bulan untuk melihat penilaian</p>
-                    </div>
-                `;
-                if (scoreChart) scoreChart.destroy();
-                if (violationChart) violationChart.destroy();
-                return;
-            }
-
-            if (!allScores.scores) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⚠️</div>
-                        <p style="color: #ef4444;">Data penilaian tidak tersedia</p>
-                    </div>
-                `;
-                return;
-            }
-
+            const bulan = document.getElementById('filter-score-bulan').value, mode = document.getElementById('score-mode-filter').value, container = document.getElementById('scores-container');
+            if (!bulan) { container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>'; if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return; }
+            if (!allScores.scores) { container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color:#ef4444;">Data penilaian tidak tersedia</p></div>'; return; }
             const monthScores = allScores.scores.filter(s => s.bulan === bulan);
-
-            if (monthScores.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <p>Tidak ada data untuk bulan ini</p>
-                    </div>
-                `;
-                if (scoreChart) scoreChart.destroy();
-                if (violationChart) violationChart.destroy();
-                return;
-            }
-
+            if (monthScores.length === 0) { container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>'; if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return; }
             renderCharts(monthScores, mode);
-
             const modeLabel = mode === 'KUNCI' ? 'Kealpaan Pengembalian Kunci' : 'Kealpaan Membersihkan Mobil';
-
-            container.innerHTML = `
-                <div style="margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #0f172a;">
-                    <p style="font-size: 14px; font-weight: 600; color: #1e293b;">Mode Penilaian: ${modeLabel}</p>
-                </div>
-            ` + monthScores.map(score => {
-                const scoreClass = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
-
-                return `
-                    <div class="score-card">
-                        <div class="score-header">
-                            <div>
-                                <div class="score-unit-name">${score.unit}</div>
-                                <div class="score-month">Bulan ${score.bulan}</div>
-                            </div>
-                            <div class="score-value ${scoreClass}">${score.skorAkhir.toFixed(2)}</div>
-                        </div>
-                        <div class="score-details">
-                            <div class="score-detail-item">
-                                <div class="score-detail-label">Skor Utuh</div>
-                                <div class="score-detail-value">${score.skorUtuh}</div>
-                            </div>
-                            <div class="score-detail-item">
-                                <div class="score-detail-label">Pelanggaran</div>
-                                <div class="score-detail-value">${score.jumlahPelanggaran}</div>
-                            </div>
-                            <div class="score-detail-item">
-                                <div class="score-detail-label">Sanksi</div>
-                                <div class="score-detail-value" style="color: #ef4444;">-${score.jumlahSanksi.toFixed(2)}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            container.innerHTML = `<div style="margin-bottom:16px;padding:12px;background:#f8fafc;border-radius:8px;border-left:4px solid #0f172a;"><p style="font-size:14px;font-weight:600;color:#1e293b;">Mode Penilaian: ${modeLabel}</p></div>` +
+                monthScores.map(score => { const cls = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger'; return `<div class="score-card"><div class="score-header"><div><div class="score-unit-name">${score.unit}</div><div class="score-month">Bulan ${score.bulan}</div></div><div class="score-value ${cls}">${score.skorAkhir.toFixed(2)}</div></div><div class="score-details"><div class="score-detail-item"><div class="score-detail-label">Skor Utuh</div><div class="score-detail-value">${score.skorUtuh}</div></div><div class="score-detail-item"><div class="score-detail-label">Pelanggaran</div><div class="score-detail-value">${score.jumlahPelanggaran}</div></div><div class="score-detail-item"><div class="score-detail-label">Sanksi</div><div class="score-detail-value" style="color:#ef4444;">-${score.jumlahSanksi.toFixed(2)}</div></div></div></div>`; }).join('');
         }
-
         function renderCharts(monthScores, mode) {
-            const units = monthScores.map(s => {
-                const unitName = s.unit;
-                if (unitName.length > 25) {
-                    return unitName.substring(0, 22) + '...';
-                }
-                return unitName;
-            });
-            const scores = monthScores.map(s => s.skorAkhir);
-            const violations = monthScores.map(s => s.jumlahPelanggaran);
-
+            const units = monthScores.map(s => s.unit.length > 25 ? s.unit.substring(0, 22) + '...' : s.unit);
+            const scores = monthScores.map(s => s.skorAkhir), violations = monthScores.map(s => s.jumlahPelanggaran);
             const modeLabel = mode === 'KUNCI' ? 'Pengembalian Kunci' : 'Membersihkan Mobil';
-
             if (scoreChart) scoreChart.destroy();
-            const scoreCtx = document.getElementById('scoreChart').getContext('2d');
-            scoreChart = new Chart(scoreCtx, {
-                type: 'bar',
-                data: {
-                    labels: units,
-                    datasets: [{
-                        label: 'Skor Akhir',
-                        data: scores,
-                        backgroundColor: scores.map(s =>
-                            s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'
-                        ),
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: (context) => `Skor: ${context.parsed.y.toFixed(2)}`
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: `Mode: ${modeLabel}`,
-                            font: { size: 12, weight: 'normal' },
-                            color: '#64748b'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 5,
-                            ticks: {
-                                stepSize: 0.5
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                font: { size: 11 }
-                            }
-                        }
-                    }
-                }
-            });
-
+            scoreChart = new Chart(document.getElementById('scoreChart').getContext('2d'), { type: 'bar', data: { labels: units, datasets: [{ label: 'Skor Akhir', data: scores, backgroundColor: scores.map(s => s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: `Mode: ${modeLabel}`, font: { size: 12, weight: 'normal' }, color: '#64748b' } }, scales: { y: { beginAtZero: true, max: 5, ticks: { stepSize: 0.5 } }, x: { ticks: { font: { size: 11 } } } } } });
             if (violationChart) violationChart.destroy();
-            const violationCtx = document.getElementById('violationChart').getContext('2d');
-            violationChart = new Chart(violationCtx, {
-                type: 'bar',
-                data: {
-                    labels: units,
-                    datasets: [{
-                        label: 'Jumlah Pelanggaran',
-                        data: violations,
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: `Mode: ${modeLabel}`,
-                            font: { size: 12, weight: 'normal' },
-                            color: '#64748b'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                font: { size: 11 }
-                            }
-                        }
-                    }
-                }
-            });
+            violationChart = new Chart(document.getElementById('violationChart').getContext('2d'), { type: 'bar', data: { labels: units, datasets: [{ label: 'Jumlah Pelanggaran', data: violations, backgroundColor: '#3b82f6', borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: `Mode: ${modeLabel}`, font: { size: 12, weight: 'normal' }, color: '#64748b' } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 11 } } } } } });
         }
 
-        // ================== MODAL FUNCTIONS ==================
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        window.onclick = e => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; };
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        window.onclick = function (event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.style.display = 'none';
-            }
-        }
-
-        // ================== INIT ==================
         loadRequests();
     </script>
 </body>
