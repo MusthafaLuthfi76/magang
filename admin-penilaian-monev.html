@@ -23,7 +23,7 @@
             min-height: 100vh;
         }
 
-        /* ============ TOAST ============ */
+        /* TOAST */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -65,7 +65,7 @@
             }
         }
 
-        /* ============ SIDEBAR ============ */
+        /* SIDEBAR */
         .mobile-menu-btn {
             display: none;
             position: fixed;
@@ -226,7 +226,7 @@
             background: #f8fafc;
         }
 
-        /* ============ MAIN ============ */
+        /* MAIN */
         .main-content {
             flex: 1;
             display: flex;
@@ -256,7 +256,7 @@
             padding: 24px 32px;
         }
 
-        /* ============ TABS ============ */
+        /* TABS */
         .tabs {
             display: flex;
             gap: 8px;
@@ -297,7 +297,7 @@
             display: block;
         }
 
-        /* ============ CARDS ============ */
+        /* CARDS */
         .card {
             background: white;
             border-radius: 8px;
@@ -326,7 +326,7 @@
             padding: 24px;
         }
 
-        /* ============ STATS ============ */
+        /* STATS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -353,7 +353,7 @@
             color: #1e293b;
         }
 
-        /* ============ FORM ============ */
+        /* FORM */
         .filter-container {
             display: flex;
             gap: 12px;
@@ -401,7 +401,7 @@
             min-height: 80px;
         }
 
-        /* ============ TABLE ============ */
+        /* TABLE */
         .table-container {
             overflow-x: auto;
         }
@@ -434,7 +434,7 @@
             background: #fafbfc;
         }
 
-        /* ============ BUTTONS ============ */
+        /* BUTTONS */
         .btn {
             padding: 8px 16px;
             border-radius: 6px;
@@ -486,6 +486,16 @@
             background: #d97706;
         }
 
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
         .btn-sm {
             padding: 5px 12px;
             font-size: 12px;
@@ -496,7 +506,7 @@
             cursor: not-allowed;
         }
 
-        /* ============ BADGES ============ */
+        /* BADGES */
         .badge {
             padding: 4px 12px;
             border-radius: 16px;
@@ -520,7 +530,7 @@
             color: #92400e;
         }
 
-        /* ============ MODAL ============ */
+        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -540,7 +550,6 @@
             width: 100%;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             margin: auto;
-            /* center vertically */
         }
 
         .modal-header {
@@ -573,7 +582,7 @@
             border-radius: 0 0 12px 12px;
         }
 
-        /* ============ SCORE SECTIONS ============ */
+        /* SCORE SECTIONS */
         .score-section {
             background: #f8fafc;
             border-radius: 8px;
@@ -589,7 +598,6 @@
             margin-bottom: 12px;
         }
 
-        /* CHECKBOX ROWS */
         .check-item {
             display: flex;
             align-items: flex-start;
@@ -660,7 +668,6 @@
             color: #991b1b;
         }
 
-        /* Sub-input that appears when unchecked */
         .sub-input-group {
             margin-top: 10px;
             padding: 12px;
@@ -682,7 +689,7 @@
             border-color: #fde68a;
         }
 
-        /* ============ SCORE PREVIEW ============ */
+        /* SCORE PREVIEW */
         .score-preview {
             background: white;
             border: 2px solid #e5e7eb;
@@ -731,7 +738,7 @@
             color: #1e293b;
         }
 
-        /* ============ INFO BANNER ============ */
+        /* INFO BANNER */
         .info-banner {
             background: #eff6ff;
             border-left: 4px solid #3b82f6;
@@ -742,7 +749,7 @@
             color: #1e3a8a;
         }
 
-        /* ============ REKAP TABLE ============ */
+        /* REKAP TABLE */
         .rekap-table th {
             background: #1F4E79;
             color: white;
@@ -768,7 +775,7 @@
             font-weight: 700;
         }
 
-        /* ============ CHART ============ */
+        /* CHART */
         .chart-container {
             position: relative;
             height: 320px;
@@ -781,8 +788,14 @@
             margin-bottom: 24px;
         }
 
-        /* ============ SPINNER ============ */
+        /* SPINNER */
         @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinBtn {
             to {
                 transform: rotate(360deg);
             }
@@ -795,10 +808,20 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: #fff;
+            animation: spinBtn 0.8s linear infinite;
+        }
+
+        .spinner-table {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #94a3b8;
+            border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
-        /* ============ UNIT INFO STRIP ============ */
+        /* UNIT INFO STRIP */
         .unit-strip {
             background: #f8fafc;
             border: 1px solid #e5e7eb;
@@ -823,7 +846,42 @@
             color: #64748b;
         }
 
-        @media (max-width: 1023px) {
+        /* LAST UPDATED BAR */
+        .last-updated-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .last-updated-bar.visible {
+            opacity: 1;
+        }
+
+        .last-updated-bar.loading {
+            background: #eff6ff;
+            color: #1e40af;
+            border-color: #bfdbfe;
+            opacity: 1;
+        }
+
+        .last-updated-bar.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
+            opacity: 1;
+        }
+
+        @media (max-width:1023px) {
             .mobile-menu-btn {
                 display: block;
             }
@@ -866,7 +924,7 @@
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width:640px) {
             .score-breakdown {
                 grid-template-columns: 1fr;
             }
@@ -968,12 +1026,20 @@
                 </svg>
                 Penilaian Monev
             </a>
+            <a href="admin-manageacc.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                Manajemen Akun
+            </a>
         </div>
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-name" id="admin-name">Administrator</div>
-                <div class="user-email" id="admin-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                        data-cfemail="48292c252126082c2126293b662f273e66212c">[email&#160;protected]</a></div>
+                <div class="user-email" id="admin-email">admin@dinas.gov.id</div>
             </div>
             <button onclick="logout()" class="logout-btn">
                 <svg class="nav-icon" viewBox="0 0 24 24">
@@ -994,6 +1060,9 @@
         </div>
 
         <div class="container">
+            <!-- STATUS BAR KECIL -->
+            <div class="last-updated-bar" id="last-updated-bar"></div>
+
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('input', event)">📥 Input Penilaian</button>
                 <button class="tab" onclick="switchTab('rekap', event)">📊 Rekapitulasi</button>
@@ -1060,8 +1129,10 @@
                             </thead>
                             <tbody id="input-tbody">
                                 <tr>
-                                    <td colspan="11" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan
-                                        untuk melihat data</td>
+                                    <td colspan="11" style="text-align:center;padding:40px;color:#94a3b8;">
+                                        <div class="spinner-table"></div>
+                                        <div style="margin-top:12px;">Memuat data...</div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1127,8 +1198,10 @@
                                 </thead>
                                 <tbody id="rekap-tbody">
                                     <tr>
-                                        <td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">Memuat
-                                            data...</td>
+                                        <td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">
+                                            <div class="spinner-table"></div>
+                                            <div style="margin-top:12px;">Memuat data...</div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1139,7 +1212,7 @@
         </div>
     </div>
 
-    <!-- ============ MODAL INPUT ============ -->
+    <!-- MODAL INPUT -->
     <div id="inputModal" class="modal-overlay" style="display:none;">
         <div class="modal">
             <div class="modal-header">
@@ -1154,7 +1227,6 @@
 
                 <input type="hidden" id="input-unit">
 
-                <!-- UNIT STRIP -->
                 <div class="unit-strip">
                     <div>
                         <div class="unit-strip-name" id="modal-unit-name">—</div>
@@ -1255,7 +1327,7 @@
                     </div>
                 </div>
 
-                <!-- 5. PARTISIPASI PPTK -->
+                <!-- 5. PARTISIPASI -->
                 <div class="score-section" style="border-left-color:#ec4899;">
                     <div class="score-section-title">5️⃣ Partisipasi PPTK <span
                             style="color:#64748b;font-weight:400;font-size:12px;">(Maks 5 poin)</span></div>
@@ -1290,7 +1362,6 @@
                         </div>
                         <span class="check-item-badge" id="badge-tindaklanjut">+5 poin</span>
                     </div>
-                    <!-- No sub-input needed: if unchecked = 0 poin, no sub-category -->
                     <div class="sub-input-group" id="sub-tindaklanjut">
                         <p style="font-size:13px;color:#92400e;margin:0;">⚠️ Tindak lanjut tidak dilaksanakan: <strong>0
                                 poin</strong> untuk indikator ini.</p>
@@ -1346,10 +1417,6 @@
                         <span
                             style="background:#fef3c7;color:#92400e;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;">Opsional</span>
                     </div>
-                    <div style="font-size:12px;color:#f59e0b;margin-bottom:12px;">⚠️ Upload jika diperlukan sebagai
-                        dokumentasi</div>
-
-                    <!-- EXISTING FILE PANEL (shown only on Edit if linkBukti exists) -->
                     <div id="existing-bukti-panel" style="display:none;margin-bottom:12px;">
                         <div style="font-size:12px;font-weight:600;color:#1e40af;margin-bottom:6px;">📌 File Bukti
                             Tersimpan:</div>
@@ -1361,31 +1428,26 @@
                             <div style="flex:1;min-width:0;">
                                 <div style="font-size:13px;font-weight:600;color:#1e293b;">File bukti sebelumnya</div>
                                 <a id="existing-bukti-link" href="#" target="_blank" rel="noopener"
-                                    style="font-size:12px;color:#3b82f6;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:2px;">
-                                    🔗 Lihat file di Google Drive
-                                </a>
+                                    style="font-size:12px;color:#3b82f6;text-decoration:none;">🔗 Lihat file di Google
+                                    Drive</a>
                             </div>
                             <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0;">
-                                <button onclick="replaceExistingBukti()" title="Ganti file"
-                                    style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#0369a1;cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;">
-                                    🔄 Ganti File
-                                </button>
-                                <button onclick="deleteExistingBukti()" title="Hapus file bukti"
-                                    style="background:#fff1f2;border:1px solid #fecdd3;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#be123c;cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;">
-                                    🗑️ Hapus Bukti
-                                </button>
+                                <button onclick="replaceExistingBukti()"
+                                    style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#0369a1;cursor:pointer;">🔄
+                                    Ganti File</button>
+                                <button onclick="deleteExistingBukti()"
+                                    style="background:#fff1f2;border:1px solid #fecdd3;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#be123c;cursor:pointer;">🗑️
+                                    Hapus Bukti</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- NEW FILE UPLOAD ZONE (always visible on new, shown when replacing on edit) -->
                     <div id="new-file-upload-zone">
                         <div style="position:relative;cursor:pointer;">
                             <input type="file" id="bukti-file-input" accept=".jpg,.jpeg,.png,.pdf"
                                 style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;"
                                 onchange="handleBuktiFileSelect(event)">
                             <div id="file-upload-ui"
-                                style="border:2px dashed #e2e8f0;border-radius:8px;padding:16px;text-align:center;background:white;transition:all 0.2s;">
+                                style="border:2px dashed #e2e8f0;border-radius:8px;padding:16px;text-align:center;background:white;">
                                 <div style="font-size:24px;margin-bottom:4px;">📁</div>
                                 <div style="font-size:13px;color:#64748b;"><strong style="color:#3b82f6;">Klik untuk
                                         pilih file</strong> atau drag & drop</div>
@@ -1402,18 +1464,14 @@
                                 style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:#dbeafe;">
                                 📄</div>
                             <div style="flex:1;min-width:0;">
-                                <div id="bukti-preview-name"
-                                    style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                                    —</div>
+                                <div id="bukti-preview-name" style="font-size:13px;font-weight:600;">—</div>
                                 <div id="bukti-preview-size" style="font-size:11px;color:#94a3b8;margin-top:2px;">—
                                 </div>
                             </div>
                             <button onclick="cancelNewFile()"
-                                style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:18px;padding:4px;"
-                                title="Batal">✕</button>
+                                style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:18px;padding:4px;">✕</button>
                         </div>
                     </div>
-
                     <div id="upload-progress" style="display:none;margin-top:10px;">
                         <div style="height:4px;background:#e5e7eb;border-radius:10px;overflow:hidden;">
                             <div id="upload-progress-fill"
@@ -1433,9 +1491,8 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytRA8QRKTqQezKM8CDKRFS1X8JmIn-i3xzo61y-W-D7BZYpFassY0vluquieEmEERU/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxwvQtZzZCYRmSX4UIL-7ars1HQX3Zp6pW0g9vlcffp2lXHTacIMX8I6PYkQtzRDaua/exec';
 
         const UNITS = [
             "Balai Layanan Usaha Terpadu KUMKM",
@@ -1448,70 +1505,124 @@
         const SHORT_UNITS = ['BLUT', 'Kewirausahaan', 'Koperasi', 'UKM', 'Usaha Mikro', 'Sekretariat'];
         const MONTHS = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
         const MAX_FILE_SIZE = 10 * 1024 * 1024;
+        const CACHE_KEY = 'monev_data_v3';
 
-        let selectedBuktiFile = null;       // new file selected by user
-        let selectedBuktiBase64 = null;     // base64 of new file
-        let existingLinkBukti = '';         // saved Drive link from previous upload
-        let existingBuktiDeleted = false;   // true when user explicitly deletes existing file
+        let selectedBuktiFile = null;
+        let selectedBuktiBase64 = null;
+        let existingLinkBukti = '';
+        let existingBuktiDeleted = false;
 
-        // ============ MOBILE MENU ============
+        // ─── MOBILE MENU ─────────────────────────────────────
         function toggleMobileMenu() {
             document.getElementById('sidebar').classList.toggle('mobile-open');
             document.getElementById('sidebar-overlay').classList.toggle('active');
         }
 
-        // ============ LOCAL STORAGE ============
-        function getLocalData() { return JSON.parse(localStorage.getItem('monev_data') || '{}'); }
-        function setLocalData(d) { localStorage.setItem('monev_data', JSON.stringify(d)); }
+        // ─── CACHE ───────────────────────────────────────────
+        function getLocalData() { return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); }
+        function setLocalData(d) { localStorage.setItem(CACHE_KEY, JSON.stringify(d)); }
 
-        // Demo data
-        (function initDemoData() {
-            if (Object.keys(getLocalData()).length > 0) return;
-            setLocalData({
-                "JANUARI": {
-                    "Balai Layanan Usaha Terpadu KUMKM": {
-                        waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "Tepat waktu", linkBukti: "",
-                        _state: { waktuOk: true, kelengkapanOk: true, fisikOk: true, keuanganOk: true, partisipasiOk: true, tindakLanjutOk: true, selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili' }
-                    },
-                    "Bidang Kewirausahaan": {
-                        waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindakLanjut: 5, total: 40, catatan: "", linkBukti: "",
-                        _state: { waktuOk: true, kelengkapanOk: true, fisikOk: true, keuanganOk: true, partisipasiOk: true, tindakLanjutOk: true, selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili' }
-                    },
-                    "Bidang Usaha Mikro": {
-                        waktu: 2, kelengkapan: 3, fisik: 5, keuangan: 5, partisipasi: 3, tindakLanjut: 5, total: 23, catatan: "Terlambat", linkBukti: "",
-                        _state: { waktuOk: false, kelengkapanOk: false, fisikOk: false, keuanganOk: false, partisipasiOk: false, tindakLanjutOk: true, selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili' }
-                    }
-                }
-            });
-        })();
+        // ─── STATUS BAR ──────────────────────────────────────
+        function setStatusBar(type, text) {
+            const bar = document.getElementById('last-updated-bar');
+            bar.className = 'last-updated-bar ' + type + (type ? ' visible' : '');
+            bar.textContent = text;
+        }
 
-        // ============ SCORE CALC ============
+        // ─── INLINE TABLE LOADING ─────────────────────────────
+        function showTableLoading() {
+            document.getElementById('input-tbody').innerHTML = `
+                <tr>
+                    <td colspan="11" style="text-align:center;padding:40px;color:#94a3b8;">
+                        <div class="spinner-table"></div>
+                        <div style="margin-top:12px;">Memuat data dari server...</div>
+                    </td>
+                </tr>`;
+        }
+
+        // ─── SCORE CALC ──────────────────────────────────────
         function calcScores(state) {
-            // Waktu
             let waktu = state.waktuOk ? 5 : Math.max(0, 5 - parseInt(state.selKeterlambatan || 3));
-            // Kelengkapan
             let kelengkapan = state.kelengkapanOk ? 5 : Math.max(0, 5 - parseInt(state.selKualitas || 2));
-            // Fisik
             let fisik = state.fisikOk ? 10 : Math.max(0, 10 - parseInt(state.selDeviasiFisik || 5));
-            // Keuangan
             let keuangan = state.keuanganOk ? 10 : Math.max(0, 10 - parseInt(state.selDeviasiKeuangan || 5));
-            // Partisipasi
-            let partisipasi;
-            if (state.partisipasiOk) {
-                partisipasi = 5;
-            } else {
-                partisipasi = (state.selPartisipasi === 'tidak-hadir') ? 0 : 3;
-            }
-            // Tindak Lanjut
+            let partisipasi = state.partisipasiOk ? 5 : (state.selPartisipasi === 'tidak-hadir' ? 0 : 3);
             let tindakLanjut = state.tindakLanjutOk ? 5 : 0;
-
             return {
                 waktu, kelengkapan, fisik, keuangan, partisipasi, tindakLanjut,
                 total: waktu + kelengkapan + fisik + keuangan + partisipasi + tindakLanjut
             };
         }
 
-        // ============ TAB SWITCHING ============
+        // ─── LOAD FROM SERVER (JSONP) ────────────────────────
+        function callAPIGet(params) {
+            return new Promise((resolve, reject) => {
+                const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+                const timeout = setTimeout(() => { cleanup(); reject(new Error('Timeout 30 detik')); }, 30000);
+                function cleanup() {
+                    clearTimeout(timeout); delete window[cbName];
+                    const el = document.getElementById('script_' + cbName);
+                    if (el) el.remove();
+                }
+                window[cbName] = function (data) { cleanup(); resolve(data); };
+                const qs = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])).join('&');
+                const script = document.createElement('script');
+                script.id = 'script_' + cbName;
+                script.src = APPS_SCRIPT_URL + '?' + qs + '&callback=' + cbName;
+                script.onerror = () => { cleanup(); reject(new Error('Gagal koneksi ke server')); };
+                document.head.appendChild(script);
+            });
+        }
+
+        // ─── POST ─────────────────────────────────────────────
+        function callAPIPost(params) {
+            return new Promise((resolve, reject) => {
+                const t = setTimeout(() => reject(new Error('timeout')), 30000);
+                const body = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k] || '')).join('&');
+                fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body, redirect: 'follow' })
+                    .then(r => r.text())
+                    .then(text => {
+                        clearTimeout(t);
+                        try { resolve(JSON.parse(text)); }
+                        catch (e) { resolve({ status: 'success', linkBukti: '' }); }
+                    })
+                    .catch(err => { clearTimeout(t); reject(err); });
+            });
+        }
+
+        // ─── LOAD DATA DARI SERVER ────────────────────────────
+        async function loadDataFromServer() {
+            showTableLoading();
+            setStatusBar('loading', '⏳ Memuat data dari server...');
+            try {
+                const result = await callAPIGet({ action: 'getAllSheetData' });
+                if (result && result.status === 'success') {
+                    setLocalData(result.data || {});
+                    const now = new Date().toLocaleTimeString('id-ID');
+                    setStatusBar('visible', '✅ Data dimuat dari server · ' + now);
+                } else {
+                    throw new Error((result && result.message) || 'Respons tidak valid');
+                }
+            } catch (err) {
+                console.warn('Load server error:', err);
+                const cached = getLocalData();
+                if (Object.keys(cached).length > 0) {
+                    setStatusBar('error', '⚠️ Gagal koneksi server — menampilkan data cache lokal');
+                } else {
+                    setStatusBar('error', '⚠️ Gagal memuat data: ' + err.message);
+                }
+            } finally {
+                const bulan = document.getElementById('select-bulan-input').value;
+                if (bulan) { renderInputTable(bulan); updateStats(bulan); }
+                else {
+                    document.getElementById('input-tbody').innerHTML =
+                        '<tr><td colspan="11" style="text-align:center;padding:40px;color:#94a3b8;">Pilih bulan untuk melihat data</td></tr>';
+                }
+                renderRekap();
+            }
+        }
+
+        // ─── TAB SWITCHING ────────────────────────────────────
         function switchTab(name, e) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -1520,7 +1631,7 @@
             if (name === 'rekap') renderRekap();
         }
 
-        // ============ STATS ============
+        // ─── STATS ────────────────────────────────────────────
         function updateStats(bulan) {
             const data = getLocalData();
             if (!bulan || !data[bulan]) {
@@ -1530,12 +1641,12 @@
                 return;
             }
             const vals = Object.values(data[bulan]).map(u => u.total);
-            document.getElementById('avg-score-this-month').textContent = (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1);
+            document.getElementById('avg-score-this-month').textContent = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '—';
             document.getElementById('units-assessed').textContent = vals.length;
             document.getElementById('units-pending').textContent = Math.max(0, 6 - vals.length);
         }
 
-        // ============ RENDER TABLE ============
+        // ─── RENDER TABLE ─────────────────────────────────────
         document.getElementById('select-bulan-input').addEventListener('change', function () {
             renderInputTable(this.value); updateStats(this.value);
         });
@@ -1550,71 +1661,63 @@
             tbody.innerHTML = UNITS.map(unit => {
                 const u = monthData[unit];
                 if (!u) return `<tr>
-                <td style="font-weight:500;">${unit}</td>
-                <td>${bulan}</td>
-                <td colspan="6" style="color:#94a3b8;font-style:italic;">Belum dinilai</td>
-                <td>—</td><td>—</td>
-                <td><button onclick="openInputModal('${unit.replace(/'/g, "\\'")}','${bulan}')" class="btn btn-sm btn-primary">+ Isi Nilai</button></td>
-            </tr>`;
+            <td style="font-weight:500;">${unit}</td>
+            <td>${bulan}</td>
+            <td colspan="6" style="color:#94a3b8;font-style:italic;">Belum dinilai</td>
+            <td>—</td><td>—</td>
+            <td><button onclick="openInputModal('${esc(unit)}','${bulan}')" class="btn btn-sm btn-primary">+ Isi Nilai</button></td>
+        </tr>`;
                 const badgeClass = u.total >= 35 ? 'badge-green' : u.total >= 25 ? 'badge-yellow' : 'badge-red';
                 const buktiCell = u.linkBukti
                     ? `<a href="${u.linkBukti}" target="_blank" style="color:#3b82f6;font-size:12px;text-decoration:none;">📎 Lihat</a>`
                     : `<span style="color:#94a3b8;font-size:12px;">—</span>`;
                 return `<tr>
-                <td style="font-weight:500;">${unit}</td>
-                <td>${bulan}</td>
-                <td>${u.waktu}</td><td>${u.kelengkapan}</td><td>${u.fisik}</td>
-                <td>${u.keuangan}</td><td>${u.partisipasi}</td><td>${u.tindakLanjut}</td>
-                <td><span class="badge ${badgeClass}">${u.total}</span></td>
-                <td>${buktiCell}</td>
-                <td style="white-space:nowrap;">
-                    <button onclick="openInputModal('${unit.replace(/'/g, "\\'")}','${bulan}')" class="btn btn-sm">✏️ Edit</button>
-                    <button onclick="deleteEntry('${unit.replace(/'/g, "\\'")}','${bulan}')" class="btn btn-sm" style="color:#ef4444;margin-left:4px;">🗑️</button>
-                </td>
-            </tr>`;
+            <td style="font-weight:500;">${unit}</td>
+            <td>${bulan}</td>
+            <td>${u.waktu}</td><td>${u.kelengkapan}</td><td>${u.fisik}</td>
+            <td>${u.keuangan}</td><td>${u.partisipasi}</td><td>${u.tindakLanjut}</td>
+            <td><span class="badge ${badgeClass}">${u.total}</span></td>
+            <td>${buktiCell}</td>
+            <td style="white-space:nowrap;">
+                <button onclick="openInputModal('${esc(unit)}','${bulan}')" class="btn btn-sm">✏️ Edit</button>
+                <button onclick="deleteEntry('${esc(unit)}','${bulan}')" class="btn btn-sm btn-danger" style="margin-left:4px;">🗑️ Hapus</button>
+            </td>
+        </tr>`;
             }).join('');
         }
 
-        // ============ TOGGLE CHECK ============
+        function esc(s) { return s.replace(/'/g, "\\'"); }
+
+        // ─── TOGGLE CHECK ─────────────────────────────────────
         function toggleCheck(key) {
             const cb = document.getElementById('check-' + key);
             cb.checked = !cb.checked;
             syncCheckItem(key);
             updateModalScore();
         }
-
         function syncCheckItem(key) {
             const cb = document.getElementById('check-' + key);
             const item = document.getElementById('check-' + key + '-item');
             const sub = document.getElementById('sub-' + key);
             const badge = document.getElementById('badge-' + key);
-
             const maxPoints = { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindaklanjut: 5 };
             const mp = maxPoints[key];
-
             if (cb.checked) {
-                item.classList.add('checked');
-                item.classList.remove('unchecked-state');
-                badge.textContent = `+${mp} poin`;
-                sub.classList.remove('show');
+                item.classList.add('checked'); item.classList.remove('unchecked-state');
+                badge.textContent = `+${mp} poin`; sub.classList.remove('show');
             } else {
-                item.classList.remove('checked');
-                item.classList.add('unchecked-state');
-                sub.classList.add('show');
-                // Update badge to show reduced
-                updateBadge(key);
+                item.classList.remove('checked'); item.classList.add('unchecked-state');
+                sub.classList.add('show'); updateBadge(key);
             }
         }
-
         function updateBadge(key) {
             const badge = document.getElementById('badge-' + key);
             const scores = calcScores(getModalState());
-            const scoreMap = { waktu: 'waktu', kelengkapan: 'kelengkapan', fisik: 'fisik', keuangan: 'keuangan', partisipasi: 'partisipasi', tindaklanjut: 'tindakLanjut' };
-            const val = scores[scoreMap[key]];
+            const map = { waktu: 'waktu', kelengkapan: 'kelengkapan', fisik: 'fisik', keuangan: 'keuangan', partisipasi: 'partisipasi', tindaklanjut: 'tindakLanjut' };
             const maxPoints = { waktu: 5, kelengkapan: 5, fisik: 10, keuangan: 10, partisipasi: 5, tindaklanjut: 5 };
+            const val = scores[map[key]];
             badge.textContent = val === maxPoints[key] ? `+${val} poin` : `${val} poin ⬇`;
         }
-
         function getModalState() {
             return {
                 waktuOk: document.getElementById('check-waktu').checked,
@@ -1630,7 +1733,6 @@
                 selPartisipasi: document.getElementById('sel-partisipasi').value,
             };
         }
-
         function updateModalScore() {
             const s = calcScores(getModalState());
             document.getElementById('score-waktu').textContent = s.waktu;
@@ -1640,30 +1742,21 @@
             document.getElementById('score-partisipasi').textContent = s.partisipasi;
             document.getElementById('score-tindak-lanjut').textContent = s.tindakLanjut;
             document.getElementById('modal-total-nilai').textContent = s.total;
-            // Update all badges
             ['waktu', 'kelengkapan', 'fisik', 'keuangan', 'partisipasi', 'tindaklanjut'].forEach(k => {
-                const cb = document.getElementById('check-' + k);
-                if (!cb.checked) updateBadge(k);
+                if (!document.getElementById('check-' + k).checked) updateBadge(k);
             });
         }
 
-        // Add change listeners for selects
-        document.querySelectorAll('#sub-waktu select, #sub-kelengkapan select, #sub-fisik select, #sub-keuangan select, #sub-partisipasi select').forEach(sel => {
-            sel.addEventListener('change', updateModalScore);
-        });
-
-        // ============ OPEN MODAL ============
+        // ─── OPEN MODAL ───────────────────────────────────────
         function openInputModal(unit, bulan) {
             if (!bulan) {
                 bulan = document.getElementById('select-bulan-input').value;
                 if (!bulan) { Toast.error('Pilih bulan terlebih dahulu'); return; }
             }
-
             const data = getLocalData();
             const existing = (data[bulan] || {})[unit];
             const isEdit = !!existing;
 
-            // Update header
             document.getElementById('modal-title-text').textContent = isEdit ? 'Edit Penilaian Monev' : 'Input Penilaian Monev';
             document.getElementById('modal-bulan-label').textContent = `Bulan: ${bulan}`;
             document.getElementById('modal-unit-name').textContent = unit;
@@ -1671,90 +1764,63 @@
             document.getElementById('modal-existing-badge').style.display = isEdit ? 'block' : 'none';
             document.getElementById('input-unit').value = unit;
 
-            // Change submit button style
             const submitBtn = document.getElementById('submit-input-btn');
             if (isEdit) {
-                submitBtn.className = 'btn btn-warning';
-                submitBtn.style.flex = '1';
+                submitBtn.className = 'btn btn-warning'; submitBtn.style.flex = '1';
                 submitBtn.innerHTML = '💾 Update Penilaian';
             } else {
-                submitBtn.className = 'btn btn-success';
-                submitBtn.style.flex = '1';
+                submitBtn.className = 'btn btn-success'; submitBtn.style.flex = '1';
                 submitBtn.innerHTML = '💾 Simpan Penilaian';
             }
 
-            // Restore state from saved data if editing
-            const state = isEdit && existing._state ? existing._state : {
+            const state = (isEdit && existing._state) ? existing._state : {
                 waktuOk: true, kelengkapanOk: true, fisikOk: true, keuanganOk: true,
                 partisipasiOk: true, tindakLanjutOk: true,
-                selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5',
-                selDeviasiKeuangan: '5', selPartisipasi: 'diwakili'
+                selKeterlambatan: '3', selKualitas: '2', selDeviasiFisik: '5', selDeviasiKeuangan: '5', selPartisipasi: 'diwakili'
             };
 
-            // Set checkboxes
             document.getElementById('check-waktu').checked = state.waktuOk;
             document.getElementById('check-kelengkapan').checked = state.kelengkapanOk;
             document.getElementById('check-fisik').checked = state.fisikOk;
             document.getElementById('check-keuangan').checked = state.keuanganOk;
             document.getElementById('check-partisipasi').checked = state.partisipasiOk;
             document.getElementById('check-tindaklanjut').checked = state.tindakLanjutOk;
-
-            // Set select values
             document.getElementById('sel-keterlambatan').value = state.selKeterlambatan || '3';
             document.getElementById('sel-kualitas').value = state.selKualitas || '2';
             document.getElementById('sel-deviasi-fisik').value = state.selDeviasiFisik || '5';
             document.getElementById('sel-deviasi-keuangan').value = state.selDeviasiKeuangan || '5';
             document.getElementById('sel-partisipasi').value = state.selPartisipasi || 'diwakili';
 
-            // Sync visual state for all check items
             ['waktu', 'kelengkapan', 'fisik', 'keuangan', 'partisipasi', 'tindaklanjut'].forEach(k => syncCheckItem(k));
-
             document.getElementById('input-catatan').value = existing ? existing.catatan : '';
 
-            // ---- Restore file bukti state ----
-            // Reset new-file selection
-            selectedBuktiFile = null;
-            selectedBuktiBase64 = null;
-            existingBuktiDeleted = false;
+            selectedBuktiFile = null; selectedBuktiBase64 = null; existingBuktiDeleted = false;
             document.getElementById('bukti-file-input').value = '';
             document.getElementById('bukti-file-preview').style.display = 'none';
             document.getElementById('bukti-file-error').style.display = 'none';
             document.getElementById('upload-progress').style.display = 'none';
 
             if (isEdit && existing && existing.linkBukti) {
-                // Show existing file panel, hide upload zone
                 existingLinkBukti = existing.linkBukti;
                 document.getElementById('existing-bukti-link').href = existingLinkBukti;
                 document.getElementById('existing-bukti-panel').style.display = 'block';
                 document.getElementById('new-file-upload-zone').style.display = 'none';
             } else {
-                // New entry or no previous file — just show upload zone
                 existingLinkBukti = '';
                 document.getElementById('existing-bukti-panel').style.display = 'none';
                 document.getElementById('new-file-upload-zone').style.display = 'block';
             }
             updateModalScore();
 
-            // Show modal and scroll to top
             const modal = document.getElementById('inputModal');
             modal.style.display = 'flex';
-            // Scroll modal content to top
-            setTimeout(() => {
-                const modalEl = modal.querySelector('.modal');
-                if (modalEl) modalEl.scrollTop = 0;
-            }, 0);
+            setTimeout(() => { const m = modal.querySelector('.modal'); if (m) m.scrollTop = 0; }, 0);
         }
 
-        function closeInputModal() {
-            document.getElementById('inputModal').style.display = 'none';
-        }
+        function closeInputModal() { document.getElementById('inputModal').style.display = 'none'; }
+        document.getElementById('inputModal').addEventListener('click', function (e) { if (e.target === this) closeInputModal(); });
 
-        // Click overlay to close
-        document.getElementById('inputModal').addEventListener('click', function (e) {
-            if (e.target === this) closeInputModal();
-        });
-
-        // ============ SUBMIT ============
+        // ─── SUBMIT ───────────────────────────────────────────
         async function submitInputNilai() {
             const bulan = document.getElementById('select-bulan-input').value;
             const unit = document.getElementById('input-unit').value;
@@ -1779,7 +1845,6 @@
             };
 
             if (selectedBuktiFile && selectedBuktiBase64) {
-                // Case 1: User picked a NEW file — upload it
                 setUploadProgress(20, 'Mempersiapkan file...');
                 const ext = selectedBuktiFile.name.split('.').pop().toLowerCase();
                 const safeUnit = unit.replace(/[^a-zA-Z0-9]/g, '_');
@@ -1789,19 +1854,12 @@
             }
 
             setUploadProgress(50, 'Mengirim ke server...');
-
             let linkBukti = '';
             try {
                 const result = await callAPIPost(payload);
                 if (result && result.status === 'success') {
-                    if (selectedBuktiFile && selectedBuktiBase64) {
-                        // Case 1: New file uploaded — use the new link
-                        linkBukti = result.linkBukti || '';
-                    } else if (!existingBuktiDeleted && existingLinkBukti) {
-                        // Case 2: No new file, existing not deleted — keep old link
-                        linkBukti = existingLinkBukti;
-                    }
-                    // Case 3: existingBuktiDeleted = true → linkBukti stays ''
+                    linkBukti = (selectedBuktiFile && selectedBuktiBase64) ? (result.linkBukti || '') :
+                        (!existingBuktiDeleted && existingLinkBukti ? existingLinkBukti : '');
                     setUploadProgress(100, 'Berhasil!');
                 } else {
                     Toast.error('Gagal simpan: ' + (result?.message || 'Unknown error'));
@@ -1810,7 +1868,6 @@
                 Toast.error('Gagal menghubungi server: ' + err.message);
             }
 
-            // Save locally with _state so Edit can restore it
             const localData = getLocalData();
             if (!localData[bulan]) localData[bulan] = {};
             localData[bulan][unit] = { ...scores, catatan, linkBukti, _state: state };
@@ -1820,23 +1877,38 @@
             closeInputModal();
             renderInputTable(bulan);
             updateStats(bulan);
-            Toast.success(`Nilai ${unit} bulan ${bulan} berhasil disimpan!${linkBukti ? ' (Bukti terupload)' : ''}`);
-
+            Toast.success(`Nilai ${unit} bulan ${bulan} berhasil disimpan!`);
             submitBtn.disabled = false;
             submitBtn.innerHTML = '💾 Simpan Penilaian';
         }
 
-        function deleteEntry(unit, bulan) {
-            if (!confirm(`Hapus penilaian ${unit} bulan ${bulan}?`)) return;
+        // ─── DELETE ENTRY ──────────────────────────────────────
+        async function deleteEntry(unit, bulan) {
+            if (!confirm(`Hapus penilaian ${unit} bulan ${bulan}?\n\nData akan dihapus dari spreadsheet.`)) return;
+
             const data = getLocalData();
             if (data[bulan]) delete data[bulan][unit];
             setLocalData(data);
             renderInputTable(bulan);
             updateStats(bulan);
-            Toast.success('Penilaian dihapus.');
+
+            try {
+                const result = await callAPIPost({
+                    action: 'deleteMonevData',
+                    bulan: bulan,
+                    unit: unit
+                });
+                if (result && result.status === 'success') {
+                    Toast.success(`Data ${unit} bulan ${bulan} berhasil dihapus dari spreadsheet.`);
+                } else {
+                    Toast.error('Hapus lokal berhasil, tapi gagal hapus di server: ' + (result?.message || 'Unknown'));
+                }
+            } catch (err) {
+                Toast.error('Hapus lokal berhasil, tapi gagal koneksi server: ' + err.message);
+            }
         }
 
-        // ============ REKAP ============
+        // ─── REKAP ────────────────────────────────────────────
         let chartIndikator = null, chartTotal = null;
 
         function renderRekap() {
@@ -1853,14 +1925,14 @@
             const tot = UNITS.map(u => (monthData[u]?.total) || 0);
 
             document.getElementById('rekap-tbody').innerHTML = `
-            <tr><td>1</td><td style="font-weight:500;text-align:left;">Ketepatan Waktu</td>${w.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
-            <tr><td>2</td><td style="font-weight:500;text-align:left;">Kelengkapan Data</td>${kl.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
-            <tr><td>3</td><td style="font-weight:500;text-align:left;">Capaian Fisik</td>${f.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
-            <tr><td>4</td><td style="font-weight:500;text-align:left;">Capaian Keuangan</td>${ke.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
-            <tr><td>5</td><td style="font-weight:500;text-align:left;">Partisipasi PPTK</td>${p.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
-            <tr><td>6</td><td style="font-weight:500;text-align:left;">Tindak Lanjut</td>${tl.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
-            <tr><td></td><td style="font-weight:700;text-align:left;">TOTAL NILAI</td>${tot.map(v => `<td style="font-weight:700;color:${v >= 35 ? '#065f46' : v >= 25 ? '#92400e' : '#991b1b'};">${v}</td>`).join('')}</tr>
-        `;
+        <tr><td>1</td><td style="font-weight:500;text-align:left;">Ketepatan Waktu</td>${w.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+        <tr><td>2</td><td style="font-weight:500;text-align:left;">Kelengkapan Data</td>${kl.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+        <tr><td>3</td><td style="font-weight:500;text-align:left;">Capaian Fisik</td>${f.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+        <tr><td>4</td><td style="font-weight:500;text-align:left;">Capaian Keuangan</td>${ke.map(v => `<td class="${v < 10 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+        <tr><td>5</td><td style="font-weight:500;text-align:left;">Partisipasi PPTK</td>${p.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+        <tr><td>6</td><td style="font-weight:500;text-align:left;">Tindak Lanjut</td>${tl.map(v => `<td class="${v < 5 ? 'rekap-bad' : 'rekap-good'}">${v}</td>`).join('')}</tr>
+        <tr><td></td><td style="font-weight:700;text-align:left;">TOTAL NILAI</td>${tot.map(v => `<td style="font-weight:700;color:${v >= 35 ? '#065f46' : v >= 25 ? '#92400e' : '#991b1b'};">${v}</td>`).join('')}</tr>
+    `;
 
             if (chartIndikator) chartIndikator.destroy();
             if (chartTotal) chartTotal.destroy();
@@ -1902,15 +1974,12 @@
 
         document.getElementById('select-bulan-rekap').addEventListener('change', renderRekap);
 
-        // ============ FILE HANDLING ============
-
-        // User picked a new file from disk
+        // ─── FILE HANDLING ────────────────────────────────────
         function handleBuktiFileSelect(event) {
             const file = event.target.files[0];
             const errEl = document.getElementById('bukti-file-error');
             errEl.style.display = 'none';
             if (!file) return;
-
             if (!['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'].includes(file.type)) {
                 errEl.textContent = '❌ Format tidak didukung. Gunakan JPG, PNG, atau PDF.';
                 errEl.style.display = 'block'; event.target.value = ''; return;
@@ -1924,55 +1993,35 @@
             document.getElementById('bukti-preview-size').textContent = formatFileSize(file.size);
             document.getElementById('bukti-preview-icon').textContent = file.type === 'application/pdf' ? '📄' : '🖼️';
             document.getElementById('bukti-file-preview').style.display = 'flex';
-
             const reader = new FileReader();
             reader.onload = e => { selectedBuktiBase64 = e.target.result.split(',')[1]; };
             reader.readAsDataURL(file);
         }
-
-        // User clicked "Ganti File" on the existing-file panel
         function replaceExistingBukti() {
-            // Hide existing panel, show upload zone so user can pick a new file
             document.getElementById('existing-bukti-panel').style.display = 'none';
             document.getElementById('new-file-upload-zone').style.display = 'block';
-            // Existing link is still preserved in existingLinkBukti
-            // until a new file is actually selected
         }
-
-        // User clicked "Hapus Bukti" — wants to remove the existing file link
         function deleteExistingBukti() {
-            if (!confirm('Hapus bukti yang tersimpan? Tindakan ini tidak bisa dibatalkan setelah disimpan.')) return;
-            existingLinkBukti = '';
-            existingBuktiDeleted = true;
+            if (!confirm('Hapus bukti yang tersimpan?')) return;
+            existingLinkBukti = ''; existingBuktiDeleted = true;
             document.getElementById('existing-bukti-panel').style.display = 'none';
             document.getElementById('new-file-upload-zone').style.display = 'block';
-            Toast.show('Bukti akan dihapus saat penilaian disimpan.', 'error');
         }
-
-        // User clicked ✕ on the new-file preview (cancel new selection, go back to existing if any)
         function cancelNewFile() {
-            selectedBuktiFile = null;
-            selectedBuktiBase64 = null;
+            selectedBuktiFile = null; selectedBuktiBase64 = null;
             document.getElementById('bukti-file-input').value = '';
             document.getElementById('bukti-file-preview').style.display = 'none';
             document.getElementById('bukti-file-error').style.display = 'none';
-
-            // If there was an existing file and user hasn't deleted it, restore the panel
             if (existingLinkBukti && !existingBuktiDeleted) {
                 document.getElementById('existing-bukti-panel').style.display = 'block';
                 document.getElementById('new-file-upload-zone').style.display = 'none';
             }
         }
-
-        // Legacy alias kept so nothing breaks
-        function removeBuktiFile() { cancelNewFile(); }
-
         function formatFileSize(b) {
             if (b < 1024) return b + ' B';
             if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
             return (b / 1048576).toFixed(2) + ' MB';
         }
-
         function setUploadProgress(pct, label) {
             document.getElementById('upload-progress').style.display = 'block';
             document.getElementById('upload-progress-fill').style.width = pct + '%';
@@ -1983,30 +2032,14 @@
             document.getElementById('upload-progress-fill').style.width = '0%';
         }
 
-        // ============ API ============
-        function callAPIPost(params) {
-            return new Promise((resolve, reject) => {
-                const t = setTimeout(() => reject(new Error('timeout')), 30000);
-                const body = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k] || '')).join('&');
-                fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body, redirect: 'follow' })
-                    .then(r => r.text())
-                    .then(text => {
-                        clearTimeout(t);
-                        try { resolve(JSON.parse(text)); }
-                        catch (e) { console.warn('Non-JSON:', text.slice(0, 200)); resolve({ status: 'success', linkBukti: '' }); }
-                    })
-                    .catch(err => { clearTimeout(t); reject(err); });
-            });
-        }
-
-        // ============ AUTH ============
+        // ─── AUTH ─────────────────────────────────────────────
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         let currentUser = user;
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
         function logout() { if (confirm('Keluar?')) { localStorage.clear(); location.href = 'login.html'; } }
 
-        // ============ TOAST ============
+        // ─── TOAST ────────────────────────────────────────────
         const Toast = {
             container: null,
             init() { if (!this.container) { this.container = document.createElement('div'); this.container.className = 'toast-container'; document.body.appendChild(this.container); } },
@@ -2016,17 +2049,18 @@
                 el.innerHTML = `<span>${msg}</span>`; this.container.appendChild(el);
                 setTimeout(() => el.remove(), 4000);
             },
-            success(m) { this.show(m, 'success'); }, error(m) { this.show(m, 'error'); }
+            success(m) { this.show(m, 'success'); },
+            error(m) { this.show(m, 'error'); }
         };
 
-        // ============ AUTO-SELECT CURRENT MONTH ============
+        // ─── INIT ─────────────────────────────────────────────
         const currentMonthName = MONTHS[new Date().getMonth()];
         if (currentMonthName) {
-            const selInput = document.getElementById('select-bulan-input');
-            const selRekap = document.getElementById('select-bulan-rekap');
-            selInput.value = currentMonthName; renderInputTable(currentMonthName); updateStats(currentMonthName);
-            selRekap.value = currentMonthName; renderRekap();
+            document.getElementById('select-bulan-input').value = currentMonthName;
+            document.getElementById('select-bulan-rekap').value = currentMonthName;
         }
+
+        loadDataFromServer();
     </script>
 </body>
 
