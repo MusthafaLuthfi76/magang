@@ -175,11 +175,6 @@
 
         .empty-state { text-align: center; padding: 48px 20px; color: #64748b; font-size: 14px; }
 
-        /* ── DATA SOURCE DEBUG ── */
-        .data-source-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
-        .ds-api { background: #d1fae5; color: #065f46; }
-        .ds-local { background: #fef3c7; color: #92400e; }
-
         /* ── USER INFO ── */
         .user-info { padding: 0 12px; margin-bottom: 12px; }
         .user-name { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
@@ -464,8 +459,14 @@
 // ════════════════════════════════════════
 // CONFIG
 // ════════════════════════════════════════
-const API_OP  = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
-const API_SPJ = 'https://script.google.com/macros/s/AKfycbyE0dBi4Wa6I2OxJbI6w0KVJF97D1-hpXp29LPBJmXH0TuHZYIFAHxb0GlRJxKlOxQf/exec';
+const API_OP    = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
+const API_SPJ   = 'https://script.google.com/macros/s/AKfycbyE0dBi4Wa6I2OxJbI6w0KVJF97D1-hpXp29LPBJmXH0TuHZYIFAHxb0GlRJxKlOxQf/exec';
+
+// ════════════════════════════════════════
+// ★ GANTI URL INI dengan URL deployment Apps Script Monev Anda
+// URL yang sama dengan yang dipakai di admin-penilaian-monev.html
+// ════════════════════════════════════════
+const API_MONEV = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
 
 const UNITS = [
     'Sekretariat','Bidang Koperasi','Bidang UKM',
@@ -489,7 +490,6 @@ const TOTAL_MAX = 60;
 const MONEV_MAX = 40;
 const UC = ['#3b82f6','#f59e0b','#8b5cf6','#ef4444','#10b981','#ec4899'];
 
-// Bulan dalam Bahasa Indonesia (title case) → UPPERCASE
 const MONTH_MAP = {
     'januari':'JANUARI','februari':'FEBRUARI','maret':'MARET','april':'APRIL',
     'mei':'MEI','juni':'JUNI','juli':'JULI','agustus':'AGUSTUS',
@@ -497,6 +497,8 @@ const MONTH_MAP = {
 };
 
 let S = { bulan: '', scores: {}, allMonth: {}, loading: false };
+// ★ Cache data monev dari API agar tidak perlu fetch ulang setiap bulan
+let MONEV_CACHE = null;
 let C = {};
 let activeCat = 'bbm';
 
@@ -536,11 +538,10 @@ function api(url, params) {
 }
 
 // ════════════════════════════════════════
-// NORMALIZE BULAN: "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
+// NORMALIZE BULAN
 // ════════════════════════════════════════
 function normalizeBulan(str) {
     if (!str) return '';
-    // Ambil kata pertama saja, lowercase, lalu lookup
     const first = String(str).trim().toLowerCase().split(/[\s,\/\-]+/)[0];
     return MONTH_MAP[first] || String(str).trim().toUpperCase().split(/[\s,\/\-]+/)[0];
 }
@@ -558,25 +559,42 @@ async function loadAll() {
     document.getElementById('stkNote').textContent = bL;
 
     try {
-        const [roomR, vkR, vbR, bbmR, docsR, spjR] = await Promise.allSettled([
-            api(API_OP,  { action: 'getRoomScores' }),
-            api(API_OP,  { action: 'getVehicleScores', jenis: 'KUNCI' }),
-            api(API_OP,  { action: 'getVehicleScores', jenis: 'BERSIH' }),
-            api(API_OP,  { action: 'getBBMScores' }),
-            api(API_OP,  { action: 'getDocuments' }),   // returns array directly
-            api(API_SPJ, { action: 'getAllSPJKeuangan' }),
+        // ★ Fetch semua data paralel, termasuk monev dari API
+        const [roomR, vkR, vbR, bbmR, docsR, spjR, monevR] = await Promise.allSettled([
+            api(API_OP,    { action: 'getRoomScores' }),
+            api(API_OP,    { action: 'getVehicleScores', jenis: 'KUNCI' }),
+            api(API_OP,    { action: 'getVehicleScores', jenis: 'BERSIH' }),
+            api(API_OP,    { action: 'getBBMScores' }),
+            api(API_OP,    { action: 'getDocuments' }),
+            api(API_SPJ,   { action: 'getAllSPJKeuangan' }),
+            // ★ Fetch semua data monev sekaligus (lebih efisien dari per-bulan)
+            api(API_MONEV, { action: 'getAllSheetData' }),
         ]);
+
+        // ★ Parse & cache data monev
+        // getAllSheetData mengembalikan { status:'success', data: { JANUARI: { UnitA: {total:...}, ... }, ... } }
+        if (monevR.status === 'fulfilled' && monevR.value?.status === 'success') {
+            MONEV_CACHE = monevR.value.data || {};
+            console.log('[Monev] Data berhasil dimuat, bulan tersedia:', Object.keys(MONEV_CACHE));
+        } else {
+            console.warn('[Monev] Gagal fetch dari API, fallback ke localStorage');
+            MONEV_CACHE = null;
+        }
 
         // Build current-month scores
         const sc = {};
         UNITS.forEach(u => { sc[u] = { bbm:null, kendaraan:null, ruang:null, kearsipan:null, spj:null, monev:null }; });
-        fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR, true);
+        fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR);
+        fillMonev(sc, S.bulan);
         S.scores = sc;
 
         // Build all-month scores
         const am = {};
         MONTHS.forEach(m => { am[m] = {}; UNITS.forEach(u => { am[m][u] = { bbm:null, kendaraan:null, ruang:null, kearsipan:null, spj:null, monev:null }; }); });
-        MONTHS.forEach(m => { fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR, false); });
+        MONTHS.forEach(m => {
+            fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR);
+            fillMonev(am[m], m);
+        });
         S.allMonth = am;
 
         render();
@@ -592,9 +610,52 @@ async function loadAll() {
 }
 
 // ════════════════════════════════════════
-// fillScores — FIXED
+// ★ fillMonev — DIPISAH agar lebih jelas
+// Prioritas: API (MONEV_CACHE) → localStorage (fallback lama)
 // ════════════════════════════════════════
-function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
+function fillMonev(sc, bulan) {
+    // Strategi 1: Dari cache API (getAllSheetData)
+    if (MONEV_CACHE) {
+        // Cari key bulan (case-insensitive)
+        const bulanKey = Object.keys(MONEV_CACHE).find(k => k.toUpperCase() === bulan.toUpperCase());
+        const bulanData = bulanKey ? MONEV_CACHE[bulanKey] : {};
+
+        UNITS.forEach(u => {
+            // Cari unit key (exact → case-insensitive → partial)
+            const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+
+            const unitData = unitKey ? bulanData[unitKey] : null;
+            if (unitData && unitData.total !== undefined) {
+                const v = parseFloat(unitData.total);
+                if (!isNaN(v) && v >= 0) {
+                    sc[u].monev = v;
+                    console.log(`[Monev API] ${bulan} | ${u} = ${v}`);
+                }
+            }
+        });
+        return; // Sudah dapat dari API, tidak perlu fallback
+    }
+
+    // Strategi 2: Fallback ke localStorage (format lama: monev_BULAN_UNIT)
+    console.warn('[Monev] Menggunakan localStorage fallback untuk bulan:', bulan);
+    UNITS.forEach(u => {
+        try {
+            const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
+            // Coba field 'totalScore' (format lama) atau 'total'
+            const v = d?.totalScore ?? d?.total ?? null;
+            if (v !== null && !isNaN(parseFloat(v))) {
+                sc[u].monev = parseFloat(v);
+                console.log(`[Monev LS] ${bulan} | ${u} = ${sc[u].monev}`);
+            }
+        } catch {}
+    });
+}
+
+// ════════════════════════════════════════
+// fillScores — tanpa monev (monev dihandle fillMonev)
+// ════════════════════════════════════════
+function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
 
     // ── RUANG RAPAT ──────────────────────────────────────────
     if (ok(roomR)) {
@@ -620,53 +681,39 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
     }
 
     // ── KEARSIPAN ────────────────────────────────────────────
-    // FIX: getDocuments() mengembalikan ARRAY langsung (bukan {success, data})
-    // Tidak boleh menggunakan ok() yang cek .success
     let docsArray = [];
     if (docsR.status === 'fulfilled') {
         const val = docsR.value;
-        // Handle both: plain array OR {success, data: [...]}
         if (Array.isArray(val)) {
             docsArray = val;
         } else if (val && Array.isArray(val.data)) {
             docsArray = val.data;
-        } else if (val && val.success === false) {
-            docsArray = []; // explicit error
         }
     }
 
-    console.log("[Kearsipan Debug] docsArray.length:", docsArray.length, "| Mencari bulan:", bulan);
     if (docsArray.length > 0) {
-        const dm = {}; // unit_normalized → [nilai]
+        const dm = {};
         docsArray.forEach(d => {
-            // Skip dokumen belum dinilai / pending
             if (!d.nilai || d.nilai === '' || d.nilai === '-' || !d.unit) return;
-            // Nilai bisa berformat "3,7" atau "3.7"
             const nilaiStr = String(d.nilai).replace(',', '.');
             const nilaiNum = parseFloat(nilaiStr);
             if (isNaN(nilaiNum) || nilaiNum <= 0) return;
 
-            // Normalisasi bulan dokumen → uppercase
             const bulanDoc = normalizeBulan(d.bulan);
             if (bulanDoc !== bulan) return;
 
-            // Normalisasi unit — trim whitespace
             const unitRaw = String(d.unit).trim();
-
-            // Cari unit yang cocok di UNITS (exact match dulu, lalu partial)
             const matchedUnit = UNITS.find(u => u.trim() === unitRaw)
                 || UNITS.find(u => u.trim().toLowerCase() === unitRaw.toLowerCase())
                 || UNITS.find(u => unitRaw.toLowerCase().includes(u.trim().toLowerCase()) || u.trim().toLowerCase().includes(unitRaw.toLowerCase()));
 
             if (!matchedUnit) return;
-
             if (!dm[matchedUnit]) dm[matchedUnit] = [];
             dm[matchedUnit].push(nilaiNum);
         });
 
         UNITS.forEach(u => {
             if (dm[u] && dm[u].length > 0) {
-                // Rata-rata nilai (nilai kearsipan sudah skala 0–5)
                 const avg = dm[u].reduce((a, c) => a + c, 0) / dm[u].length;
                 sc[u].kearsipan = +Math.min(5, avg).toFixed(2);
             }
@@ -674,11 +721,6 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
     }
 
     // ── SPJ KEUANGAN ─────────────────────────────────────────
-    // STRATEGY: Cek API backend dulu, lalu SELALU cek localStorage
-    // Ini karena admin-spj-keuangan.html menyimpan ke localStorage
-    // sementara API backend mungkin kosong
-
-    // Step 1: Coba dari API backend
     if (ok(spjR)) {
         const rekap = spjR.value.rekap || {};
         const bulanKey = Object.keys(rekap).find(k => k.toUpperCase() === bulan.toUpperCase());
@@ -693,45 +735,27 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
         });
     }
 
-    // Step 2: SELALU cek localStorage juga — isi yang masih null
+    // Fallback SPJ dari localStorage
     try {
         const localData = JSON.parse(localStorage.getItem('spj_keuangan_data') || '{}');
-        console.log('[SPJ Debug] localStorage keys:', Object.keys(localData), '| Mencari bulan:', bulan);
-
-        // Cari key bulan di localStorage (case-insensitive)
         const localBulanKey = Object.keys(localData).find(k => k.toUpperCase() === bulan.toUpperCase());
         const monthData = localBulanKey ? localData[localBulanKey] : {};
-        console.log('[SPJ Debug] monthData keys:', Object.keys(monthData));
-
         UNITS.forEach(u => {
-            if (sc[u].spj !== null) return; // sudah dapat dari API, skip
-            // Cari unit key (exact, lalu case-insensitive)
+            if (sc[u].spj !== null) return;
             const unitKey = Object.keys(monthData).find(k => k.trim() === u.trim())
                 || Object.keys(monthData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
             const unitData = unitKey ? monthData[unitKey] : null;
             if (unitData && unitData.totalNilai !== undefined) {
                 const v = parseFloat(unitData.totalNilai);
-                if (!isNaN(v)) { sc[u].spj = v; console.log('[SPJ Debug] Set', u, '=', v); }
-            } else if (Object.keys(monthData).length > 0) {
-                console.log('[SPJ Debug] Unit tidak match:', u, '| Keys ada:', Object.keys(monthData));
+                if (!isNaN(v)) sc[u].spj = v;
             }
         });
     } catch(e) {
         console.warn('SPJ localStorage error:', e);
     }
-
-    // ── MONEV (localStorage) ─────────────────────────────────
-    if (withMonev) {
-        UNITS.forEach(u => {
-            try {
-                const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
-                if (d?.totalScore !== undefined) sc[u].monev = d.totalScore;
-            } catch {}
-        });
-    }
 }
 
-// ok() helper — hanya untuk response yang mengembalikan {success: true, ...}
+// ok() helper
 function ok(r) { return r.status==='fulfilled' && r.value?.success; }
 
 // ════════════════════════════════════════
@@ -1104,7 +1128,6 @@ function showToast(msg, type = '') {
     setTimeout(() => { toast.style.opacity='0'; toast.style.transition='opacity .3s'; setTimeout(()=>toast.remove(),300); }, 3500);
 }
 
-// Set first panel active on load
 document.getElementById('pTotal').setAttribute('data-active','1');
 </script>
 </body>
