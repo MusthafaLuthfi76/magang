@@ -9,865 +9,168 @@
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #1e293b;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* ── TOAST ── */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-
-        .toast {
-            background: white;
-            padding: 16px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            margin-bottom: 10px;
-            min-width: 300px;
-            animation: slideIn 0.3s ease-out;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-
-        .toast.error {
-            border-left: 4px solid #ef4444;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* ── MOBILE TOGGLE ── */
-        .mobile-menu-toggle {
-            display: none;
-            position: absolute;
-            top: 28px;
-            left: 20px;
-            z-index: 100;
-            background: transparent;
-            border: none;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu-toggle svg {
-            width: 24px;
-            height: 24px;
-            stroke: #1e293b;
-            fill: none;
-            stroke-width: 2.5;
-        }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        /* ── SIDEBAR ── */
-        .sidebar {
-            width: 252px;
-            background: white;
-            border-right: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar-header {
-            padding: 20px 16px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .sidebar-header-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar-icon {
-            width: 40px;
-            height: 40px;
-            background: #0f172a;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            overflow: hidden;
-        }
-
-        .sidebar-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .sidebar-subtitle {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 16px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            overflow-y: auto;
-        }
-
-        .sidebar-footer {
-            padding: 16px 12px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 15px;
-            color: #0f172a;
-            text-decoration: none;
-            position: relative;
-            transition: all 0.15s ease;
-        }
-
-        .nav-item:hover {
-            background: #f8fafc;
-        }
-
-        .nav-item.active {
-            background: #f1f5f9;
-        }
-
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            bottom: 8px;
-            width: 4px;
-            background: #0f172a;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.8;
-        }
-
-        /* ── MAIN ── */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-left: 252px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 24px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .header-left .header-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .header-left .header-subtitle {
-            font-size: 14px;
-            color: #64748b;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .month-selector {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 8px 14px;
-        }
-
-        .month-selector label {
-            font-size: 13px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .month-selector select {
-            background: none;
-            border: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            color: #1e293b;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .btn-primary {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-
-        .btn-primary:hover {
-            background: #1e293b;
-        }
-
-        .btn-primary.loading svg {
-            animation: spin 0.7s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .container {
-            padding: 24px 32px;
-            width: 100%;
-        }
-
-        /* ── BANNER ── */
-        .banner {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-            border-radius: 10px;
-            padding: 20px 24px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .banner-left .banner-title {
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .banner-left .banner-sub {
-            color: #94a3b8;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-
-        .banner-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .pill {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #e2e8f0;
-        }
-
-        .pill-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* ── STAT CARDS ── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: box-shadow 0.2s;
-        }
-
-        .stat-card:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .stat-card-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            font-weight: 500;
-            color: #64748b;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-size: 30px;
-            font-weight: 800;
-            color: #1e293b;
-            line-height: 1;
-        }
-
-        .stat-footer {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 6px;
-        }
-
-        .sk {
-            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-            background-size: 200% 100%;
-            animation: shim 1.3s infinite;
-            border-radius: 6px;
-        }
-
-        @keyframes shim {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        /* ── SECTION HEAD ── */
-        .section-head {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .section-note {
-            font-size: 13px;
-            color: #94a3b8;
-        }
-
-        /* ── TAB BAR ── */
-        .chart-tabs {
-            display: flex;
-            gap: 4px;
-            background: #f1f5f9;
-            border-radius: 10px;
-            padding: 4px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .chart-tab {
-            flex: 1;
-            min-width: 120px;
-            padding: 9px 14px;
-            border-radius: 8px;
-            border: none;
-            background: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.15s;
-            white-space: nowrap;
-            text-align: center;
-        }
-
-        .chart-tab.active {
-            background: white;
-            color: #1e293b;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ── CARD ── */
-        .card {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .card-note {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .card-content {
-            padding: 20px;
-        }
-
-        /* ── GRID ── */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 3fr 2fr;
-            gap: 18px;
-            margin-bottom: 20px;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        /* ── CHART WRAP ── */
-        .chart-wrap {
-            position: relative;
-        }
-
-        .chart-wrap.h-380 {
-            height: 380px;
-        }
-
-        .chart-wrap.h-300 {
-            height: 300px;
-        }
-
-        .chart-wrap.h-230 {
-            height: 230px;
-        }
-
-        /* ── CAT BUTTONS ── */
-        .cat-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .cat-btn {
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s;
-            background: #f1f5f9;
-            color: #64748b;
-        }
-
-        /* ── TABLE ── */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table.rekap {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-        table.rekap thead tr {
-            background: #0f172a;
-        }
-
-        table.rekap th {
-            padding: 11px 14px;
-            text-align: left;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: white;
-        }
-
-        table.rekap th.center {
-            text-align: center;
-        }
-
-        table.rekap td {
-            padding: 11px 14px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: middle;
-        }
-
-        table.rekap tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        table.rekap tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            min-width: 44px;
-        }
-
-        .chip-none {
-            background: #f1f5f9;
-            color: #94a3b8;
-        }
-
-        .chip-great {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .chip-good {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .chip-fair {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .chip-poor {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .total-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5px 14px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 14px;
-        }
-
-        .total-great {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .total-good {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .total-fair {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .total-poor {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .total-none {
-            background: #f1f5f9;
-            color: #94a3b8;
-        }
-
-        .rank-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            border-radius: 6px;
-            background: #f1f5f9;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 700;
-            margin-right: 4px;
-        }
-
-        .prog-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            min-width: 120px;
-        }
-
-        .prog-bar {
-            flex: 1;
-            height: 6px;
-            background: #f1f5f9;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .prog-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s;
-        }
-
-        .prog-label {
-            font-size: 11px;
-            color: #64748b;
-            font-weight: 600;
-            width: 34px;
-            text-align: right;
-        }
-
-        /* ── TABLE LEGEND ── */
-        .table-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding: 12px 20px;
-            border-top: 1px solid #f1f5f9;
-            background: #fafafa;
-            font-size: 11px;
-            color: #64748b;
-        }
-
-        .leg-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .leg-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 48px 20px;
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        /* ── USER INFO ── */
-        .user-info {
-            padding: 0 12px;
-            margin-bottom: 12px;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 2px;
-        }
-
-        .user-email {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .logout-btn {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.15s;
-        }
-
-        .logout-btn:hover {
-            background: #fef2f2;
-            color: #dc2626;
-            border-color: #fca5a5;
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 1200px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-
-            .grid-3 {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #1e293b; display: flex; min-height: 100vh; }
+
+        /* TOAST */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+        .toast { background: white; padding: 16px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 12px; }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* MOBILE */
+        .mobile-menu-toggle { display: none; position: absolute; top: 28px; left: 20px; z-index: 100; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .mobile-menu-toggle svg { width: 24px; height: 24px; stroke: #1e293b; fill: none; stroke-width: 2.5; }
+        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+
+        /* SIDEBAR */
+        .sidebar { width: 252px; background: white; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; position: fixed; height: 100vh; left: 0; top: 0; z-index: 1000; transition: transform 0.3s ease; }
+        .sidebar-header { padding: 20px 16px; border-bottom: 1px solid #e5e7eb; }
+        .sidebar-header-content { display: flex; align-items: center; gap: 12px; }
+        .sidebar-icon { width: 40px; height: 40px; background: #0f172a; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
+        .sidebar-title { font-size: 16px; font-weight: 600; color: #1e293b; }
+        .sidebar-subtitle { font-size: 12px; color: #64748b; }
+        .sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid #e5e7eb; }
+        .nav-item { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; font-weight: 500; font-size: 15px; color: #0f172a; text-decoration: none; position: relative; transition: all 0.15s ease; }
+        .nav-item:hover { background: #f8fafc; }
+        .nav-item.active { background: #f1f5f9; }
+        .nav-item.active::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 4px; background: #0f172a; border-radius: 0 4px 4px 0; }
+        .nav-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+        /* MAIN */
+        .main-content { flex: 1; display: flex; flex-direction: column; margin-left: 252px; transition: margin-left 0.3s ease; }
+        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .header-left .header-title { font-size: 24px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+        .header-left .header-subtitle { font-size: 14px; color: #64748b; }
+        .header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .month-selector { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 14px; }
+        .month-selector label { font-size: 13px; color: #64748b; font-weight: 500; }
+        .month-selector select { background: none; border: none; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: #1e293b; cursor: pointer; outline: none; }
+        .btn { padding: 8px 16px; border-radius: 8px; border: 1px solid #e5e7eb; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; background: white; color: #1e293b; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+        .btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .btn-primary { background: #0f172a; color: white; border-color: #0f172a; }
+        .btn-primary:hover { background: #1e293b; }
+        .btn-primary.loading svg { animation: spin 0.7s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .container { padding: 24px 32px; width: 100%; }
+
+        /* BANNER */
+        .banner { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .banner-left .banner-title { color: white; font-size: 16px; font-weight: 700; }
+        .banner-left .banner-sub { color: #94a3b8; font-size: 12px; margin-top: 4px; }
+        .banner-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pill { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 600; color: #e2e8f0; }
+        .pill-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        /* STAT CARDS */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px; position: relative; overflow: hidden; transition: box-shadow 0.2s; }
+        .stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+        .stat-card-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; }
+        .stat-label { font-size: 13px; font-weight: 500; color: #64748b; margin-bottom: 10px; }
+        .stat-value { font-size: 30px; font-weight: 800; color: #1e293b; line-height: 1; }
+        .stat-footer { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+        .sk { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: shim 1.3s infinite; border-radius: 6px; }
+        @keyframes shim { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* SECTION */
+        .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #1e293b; }
+        .section-note { font-size: 13px; color: #94a3b8; }
+
+        /* TAB BAR */
+        .chart-tabs { display: flex; gap: 4px; background: #f1f5f9; border-radius: 10px; padding: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+        .chart-tab { flex: 1; min-width: 120px; padding: 9px 14px; border-radius: 8px; border: none; background: none; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #64748b; cursor: pointer; transition: all 0.15s; white-space: nowrap; text-align: center; }
+        .chart-tab.active { background: white; color: #1e293b; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+        /* CARD */
+        .card { background: white; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .card-header { padding: 18px 24px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .card-title { font-size: 16px; font-weight: 600; color: #1e293b; }
+        .card-note { font-size: 12px; color: #94a3b8; }
+        .card-content { padding: 20px; }
+
+        /* GRID */
+        .grid-2 { display: grid; grid-template-columns: 3fr 2fr; gap: 18px; margin-bottom: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+
+        /* CHART WRAP */
+        .chart-wrap { position: relative; }
+        .chart-wrap.h-380 { height: 380px; }
+        .chart-wrap.h-300 { height: 300px; }
+        .chart-wrap.h-230 { height: 230px; }
+
+        /* CAT BUTTONS */
+        .cat-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .cat-btn { padding: 6px 14px; border-radius: 20px; border: none; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; background: #f1f5f9; color: #64748b; }
+
+        /* TABLE */
+        .table-container { overflow-x: auto; }
+        table.rekap { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+        table.rekap thead tr { background: #0f172a; }
+        table.rekap th { padding: 11px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: white; }
+        table.rekap th.center { text-align: center; }
+        table.rekap td { padding: 11px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        table.rekap tbody tr:last-child td { border-bottom: none; }
+        table.rekap tbody tr:hover { background: #f8fafc; }
+
+        .chip { display: inline-flex; align-items: center; justify-content: center; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; min-width: 44px; }
+        .chip-none { background: #f1f5f9; color: #94a3b8; }
+        .chip-great { background: #d1fae5; color: #065f46; }
+        .chip-good { background: #dbeafe; color: #1e40af; }
+        .chip-fair { background: #fef3c7; color: #92400e; }
+        .chip-poor { background: #fee2e2; color: #991b1b; }
+
+        .total-chip { display: inline-flex; align-items: center; justify-content: center; padding: 5px 14px; border-radius: 8px; font-weight: 800; font-size: 14px; }
+        .total-great { background: #d1fae5; color: #065f46; }
+        .total-good { background: #dbeafe; color: #1e40af; }
+        .total-fair { background: #fef3c7; color: #92400e; }
+        .total-poor { background: #fee2e2; color: #991b1b; }
+        .total-none { background: #f1f5f9; color: #94a3b8; }
+
+        .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; background: #f1f5f9; color: #64748b; font-size: 11px; font-weight: 700; margin-right: 4px; }
+        .prog-wrap { display: flex; align-items: center; gap: 8px; min-width: 120px; }
+        .prog-bar { flex: 1; height: 6px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
+        .prog-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+        .prog-label { font-size: 11px; color: #64748b; font-weight: 600; width: 34px; text-align: right; }
+
+        /* TABLE LEGEND */
+        .table-legend { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px 20px; border-top: 1px solid #f1f5f9; background: #fafafa; font-size: 11px; color: #64748b; }
+        .leg-item { display: flex; align-items: center; gap: 5px; }
+        .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .empty-state { text-align: center; padding: 48px 20px; color: #64748b; font-size: 14px; }
+
+        /* USER INFO */
+        .user-info { padding: 0 12px; margin-bottom: 12px; }
+        .user-name { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+        .user-email { font-size: 12px; color: #64748b; }
+        .logout-btn { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; font-weight: 500; color: #1e293b; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+        .logout-btn:hover { background: #fef2f2; color: #dc2626; border-color: #fca5a5; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 1023px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .header {
-                padding: 24px 20px;
-                padding-left: 60px;
-            }
-
-            .container {
-                padding: 16px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .banner-pills {
-                display: none;
-            }
+            .mobile-menu-toggle { display: block; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0; }
+            .header { padding: 24px 20px; padding-left: 60px; }
+            .container { padding: 16px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .banner-pills { display: none; }
         }
-
         @media (max-width: 640px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .header-left .header-title {
-                font-size: 20px;
-            }
+            .stats-grid { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .header-left .header-title { font-size: 20px; }
         }
     </style>
 </head>
 
 <body>
-
     <div class="toast-container" id="toastContainer"></div>
 
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -895,82 +198,43 @@
         </div>
         <nav class="sidebar-nav">
             <a href="admin-dashboard.html" class="nav-item active">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <rect x="3" y="3" width="7" height="7" rx="1" />
-                    <rect x="14" y="3" width="7" height="7" rx="1" />
-                    <rect x="3" y="14" width="7" height="7" rx="1" />
-                    <rect x="14" y="14" width="7" height="7" rx="1" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                 Dashboard
             </a>
             <a href="admin-requests.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-                    <path d="M14 3v6h6" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
                 Kendaraan Dinas
             </a>
             <a href="admin-voucher-bbm.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                 Voucher BBM
             </a>
             <a href="admin-ruang-rapat.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 Ruang Rapat
             </a>
             <a href="admin-kearsipan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                 Kearsipan Internal
             </a>
             <a href="admin-spj-keuangan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <line x1="12" y1="1" x2="12" y2="23" />
-                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                 Penilaian SPJ Keuangan
             </a>
             <a href="admin-spj-pengumpulan.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 Pengumpulan SPJ
             </a>
             <a href="admin-pengajuan-dana.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="12" y1="18" x2="12" y2="12" />
-                    <line x1="9" y1="15" x2="15" y2="15" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 Pengajuan Dana
             </a>
             <a href="admin-penilaian-monev.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M9 11l3 3L22 4" />
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 Penilaian Monev
             </a>
             <a href="admin-manageacc.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 Manajemen Akun
             </a>
         </nav>
@@ -980,11 +244,7 @@
                 <div class="user-email" id="adminEmail">admin@dinas.gov.id</div>
             </div>
             <button onclick="logout()" class="logout-btn">
-                <svg class="nav-icon" viewBox="0 0 24 24">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                    <polyline points="16 17 21 12 16 7" />
-                    <line x1="21" y1="12" x2="9" y2="12" />
-                </svg>
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 Keluar
             </button>
         </div>
@@ -1016,11 +276,10 @@
                     </select>
                 </div>
                 <button class="btn btn-primary" id="btnRefresh" onclick="loadAll()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2.5">
-                        <path d="M23 4v6h-6" />
-                        <path d="M1 20v-6h6" />
-                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M23 4v6h-6"/>
+                        <path d="M1 20v-6h6"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
                     </svg>
                     Refresh
                 </button>
@@ -1032,46 +291,26 @@
             <!-- Banner -->
             <div class="banner">
                 <div class="banner-left">
-                    <div class="banner-title">Sistem Penilaian Kinerja — Total Maksimal 60 Poin</div>
-                    <div class="banner-sub">Monev (40 poin) adalah penilaian terpisah dan tidak dijumlah ke total 60
-                    </div>
+                    <div class="banner-title">Sistem Penilaian Kinerja — Total Maksimal 100 Poin</div>
+                    <div class="banner-sub">BBM /5 + Kendaraan /10 + Ruang Rapat /5 + Kearsipan /5 + SPJ Keuangan /35 + Monev /40 = 100</div>
                 </div>
                 <div class="banner-pills">
-                    <div class="pill">
-                        <div class="pill-dot" style="background:#0ea5e9"></div>BBM /5
-                    </div>
-                    <div class="pill">
-                        <div class="pill-dot" style="background:#f59e0b"></div>Kendaraan /10
-                    </div>
-                    <div class="pill">
-                        <div class="pill-dot" style="background:#8b5cf6"></div>Ruang Rapat /5
-                    </div>
-                    <div class="pill">
-                        <div class="pill-dot" style="background:#22c55e"></div>Kearsipan /5
-                    </div>
-                    <div class="pill">
-                        <div class="pill-dot" style="background:#10b981"></div>SPJ Keuangan /35
-                    </div>
-                    <div class="pill">
-                        <div class="pill-dot" style="background:#ec4899"></div>Monev /40 ★
-                    </div>
+                    <div class="pill"><div class="pill-dot" style="background:#0ea5e9"></div>BBM /5</div>
+                    <div class="pill"><div class="pill-dot" style="background:#f59e0b"></div>Kendaraan /10</div>
+                    <div class="pill"><div class="pill-dot" style="background:#8b5cf6"></div>Ruang Rapat /5</div>
+                    <div class="pill"><div class="pill-dot" style="background:#22c55e"></div>Kearsipan /5</div>
+                    <div class="pill"><div class="pill-dot" style="background:#10b981"></div>SPJ Keuangan /35</div>
+                    <div class="pill"><div class="pill-dot" style="background:#ec4899"></div>Monev ★ /40</div>
+                    <div class="pill"><div class="pill-dot" style="background:#f8fafc"></div>Total /100</div>
                 </div>
             </div>
 
             <!-- Stat Cards -->
             <div class="stats-grid" id="statsGrid">
-                <div class="stat-card">
-                    <div class="sk" style="height:72px"></div>
-                </div>
-                <div class="stat-card">
-                    <div class="sk" style="height:72px"></div>
-                </div>
-                <div class="stat-card">
-                    <div class="sk" style="height:72px"></div>
-                </div>
-                <div class="stat-card">
-                    <div class="sk" style="height:72px"></div>
-                </div>
+                <div class="stat-card"><div class="sk" style="height:72px"></div></div>
+                <div class="stat-card"><div class="sk" style="height:72px"></div></div>
+                <div class="stat-card"><div class="sk" style="height:72px"></div></div>
+                <div class="stat-card"><div class="sk" style="height:72px"></div></div>
             </div>
 
             <!-- Section: Grafik -->
@@ -1117,7 +356,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Tren Total Nilai Lintas Bulan — per Divisi</span>
-                        <span class="card-note">Semua 12 bulan, nilai /60</span>
+                        <span class="card-note">Semua 12 bulan, nilai /100</span>
                     </div>
                     <div class="card-content">
                         <div class="chart-wrap h-380"><canvas id="cTrend"></canvas></div>
@@ -1173,45 +412,28 @@
                             <tr>
                                 <th>#</th>
                                 <th>Divisi / Unit</th>
-                                <th class="center"><span style="color:#0ea5e9">●</span> BBM <small
-                                        style="opacity:.6">/5</small></th>
-                                <th class="center"><span style="color:#f59e0b">●</span> Kendaraan <small
-                                        style="opacity:.6">/10</small></th>
-                                <th class="center"><span style="color:#8b5cf6">●</span> Ruang Rapat <small
-                                        style="opacity:.6">/5</small></th>
-                                <th class="center"><span style="color:#22c55e">●</span> Kearsipan <small
-                                        style="opacity:.6">/5</small></th>
-                                <th class="center"><span style="color:#10b981">●</span> SPJ Keuangan <small
-                                        style="opacity:.6">/35</small></th>
-                                <th class="center" style="background:#1a2942">Total <small
-                                        style="opacity:.6">/60</small></th>
-                                <th class="center"><span style="color:#ec4899">●</span> Monev ★ <small
-                                        style="opacity:.6">/40</small></th>
-                                <th class="center">Progress /60</th>
+                                <th class="center"><span style="color:#0ea5e9">●</span> BBM <small style="opacity:.6">/5</small></th>
+                                <th class="center"><span style="color:#f59e0b">●</span> Kendaraan <small style="opacity:.6">/10</small></th>
+                                <th class="center"><span style="color:#8b5cf6">●</span> Ruang Rapat <small style="opacity:.6">/5</small></th>
+                                <th class="center"><span style="color:#22c55e">●</span> Kearsipan <small style="opacity:.6">/5</small></th>
+                                <th class="center"><span style="color:#10b981">●</span> SPJ Keuangan <small style="opacity:.6">/35</small></th>
+                                <th class="center"><span style="color:#ec4899">●</span> Monev ★ <small style="opacity:.6">/40</small></th>
+                                <th class="center" style="background:#1a2942">Total <small style="opacity:.6">/100</small></th>
+                                <th class="center">Progress /100</th>
                             </tr>
                         </thead>
                         <tbody id="rekapTbody">
-                            <tr>
-                                <td colspan="10" class="empty-state">⏳ Memuat data...</td>
-                            </tr>
+                            <tr><td colspan="10" class="empty-state">⏳ Memuat data...</td></tr>
+                            <!-- 10 kolom: #, Divisi, BBM, Kendaraan, Ruang Rapat, Kearsipan, SPJ, Monev, Total, Progress -->
                         </tbody>
                     </table>
                 </div>
                 <div class="table-legend">
-                    <div class="leg-item">
-                        <div class="leg-dot" style="background:#d1fae5"></div>Sangat Baik ≥80%
-                    </div>
-                    <div class="leg-item">
-                        <div class="leg-dot" style="background:#dbeafe"></div>Baik ≥60%
-                    </div>
-                    <div class="leg-item">
-                        <div class="leg-dot" style="background:#fef3c7"></div>Cukup ≥40%
-                    </div>
-                    <div class="leg-item">
-                        <div class="leg-dot" style="background:#fee2e2"></div>Kurang &lt;40%
-                    </div>
-                    <div class="leg-item" style="margin-left:auto;color:#94a3b8;font-style:italic">★ Monev tidak
-                        termasuk Total /60</div>
+                    <div class="leg-item"><div class="leg-dot" style="background:#d1fae5"></div>Sangat Baik ≥80%</div>
+                    <div class="leg-item"><div class="leg-dot" style="background:#dbeafe"></div>Baik ≥60%</div>
+                    <div class="leg-item"><div class="leg-dot" style="background:#fef3c7"></div>Cukup ≥40%</div>
+                    <div class="leg-item"><div class="leg-dot" style="background:#fee2e2"></div>Kurang &lt;40%</div>
+                    <div class="leg-item" style="margin-left:auto;color:#94a3b8;font-style:italic">★ Monev termasuk dalam Total /100</div>
                 </div>
             </div>
 
@@ -1224,35 +446,35 @@
 // ════════════════════════════════════════
 const API_OP    = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
 const API_SPJ   = 'https://script.google.com/macros/s/AKfycbyE0dBi4Wa6I2OxJbI6w0KVJF97D1-hpXp29LPBJmXH0TuHZYIFAHxb0GlRJxKlOxQf/exec';
-
-// ════════════════════════════════════════
-// ★ GANTI URL INI dengan URL deployment Apps Script Monev Anda
-// URL yang sama dengan yang dipakai di admin-penilaian-monev.html
-// ════════════════════════════════════════
 const API_MONEV = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
 
-        const UNITS = [
-            'Sekretariat', 'Bidang Koperasi', 'Bidang UKM',
-            'Bidang Usaha Mikro', 'Bidang Kewirausahaan', 'Balai Layanan Usaha Terpadu KUMKM'
-        ];
-        const US = {
-            'Sekretariat': 'Sekretariat', 'Bidang Koperasi': 'Bid. Koperasi',
-            'Bidang UKM': 'Bid. UKM', 'Bidang Usaha Mikro': 'Bid. Usaha Mikro',
-            'Bidang Kewirausahaan': 'Bid. Kewirausahaan', 'Balai Layanan Usaha Terpadu KUMKM': 'Balai KUMKM'
-        };
-        const MONTHS = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-        const MOS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
-        const MODS = [
-            { key: 'bbm', label: 'BBM', color: '#0ea5e9', max: 5 },
-            { key: 'kendaraan', label: 'Kendaraan', color: '#f59e0b', max: 10 },
-            { key: 'ruang', label: 'Ruang Rapat', color: '#8b5cf6', max: 5 },
-            { key: 'kearsipan', label: 'Kearsipan', color: '#22c55e', max: 5 },
-            { key: 'spj', label: 'SPJ Keuangan', color: '#10b981', max: 35 },
-        ];
-        const TOTAL_MAX = 60;
-        const MONEV_MAX = 40;
-        const UC = ['#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#10b981', '#ec4899'];
+const UNITS = [
+    'Sekretariat', 'Bidang Koperasi', 'Bidang UKM',
+    'Bidang Usaha Mikro', 'Bidang Kewirausahaan', 'Balai Layanan Usaha Terpadu KUMKM'
+];
+const US = {
+    'Sekretariat': 'Sekretariat',
+    'Bidang Koperasi': 'Bid. Koperasi',
+    'Bidang UKM': 'Bid. UKM',
+    'Bidang Usaha Mikro': 'Bid. Usaha Mikro',
+    'Bidang Kewirausahaan': 'Bid. Kewirausahaan',
+    'Balai Layanan Usaha Terpadu KUMKM': 'Balai KUMKM'
+};
+const MONTHS = ['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];
+const MOS    = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'];
+const MODS   = [
+    { key: 'bbm',       label: 'BBM',          color: '#0ea5e9', max: 5  },
+    { key: 'kendaraan', label: 'Kendaraan',    color: '#f59e0b', max: 10 },
+    { key: 'ruang',     label: 'Ruang Rapat',  color: '#8b5cf6', max: 5  },
+    { key: 'kearsipan', label: 'Kearsipan',    color: '#22c55e', max: 5  },
+    { key: 'spj',       label: 'SPJ Keuangan', color: '#10b981', max: 35 },
+    { key: 'monev',     label: 'Monev ★',      color: '#ec4899', max: 40 },
+];
+const TOTAL_MAX = 100;
+const MONEV_MAX = 40;
+const UC = ['#3b82f6','#f59e0b','#8b5cf6','#ef4444','#10b981','#ec4899'];
 
+// Mapping nama bulan lowercase → uppercase canonical
 const MONTH_MAP = {
     'januari':'JANUARI','februari':'FEBRUARI','maret':'MARET','april':'APRIL',
     'mei':'MEI','juni':'JUNI','juli':'JULI','agustus':'AGUSTUS',
@@ -1260,23 +482,24 @@ const MONTH_MAP = {
 };
 
 let S = { bulan: '', scores: {}, allMonth: {}, loading: false };
-// ★ Cache data monev dari API agar tidak perlu fetch ulang setiap bulan
-let MONEV_CACHE = null;
-let C = {};
+let MONEV_CACHE = null;   // cache dari API getAllSheetData
+let C = {};               // chart instances
 let activeCat = 'bbm';
 
-        // ════════════════════════════════════════
-        // INIT
-        // ════════════════════════════════════════
-        document.addEventListener('DOMContentLoaded', () => {
-            const u = JSON.parse(localStorage.getItem('user') || '{}');
-            document.getElementById('adminName').textContent = u.name || 'Administrator';
-            document.getElementById('adminEmail').textContent = u.email || 'admin@dinas.gov.id';
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    const u = JSON.parse(localStorage.getItem('user') || '{}');
+    document.getElementById('adminName').textContent  = u.name  || 'Administrator';
+    document.getElementById('adminEmail').textContent = u.email || 'admin@dinas.gov.id';
 
-            const now = new Date();
-            document.getElementById('bulanSelect').value = MONTHS[now.getMonth()];
-            S.bulan = MONTHS[now.getMonth()];
-            document.getElementById('headerDate').textContent = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const now = new Date();
+    document.getElementById('bulanSelect').value = MONTHS[now.getMonth()];
+    S.bulan = MONTHS[now.getMonth()];
+    document.getElementById('headerDate').textContent = now.toLocaleDateString('id-ID', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
 
     buildCatRow();
     loadAll();
@@ -1287,14 +510,14 @@ let activeCat = 'bbm';
 // ════════════════════════════════════════
 function api(url, params) {
     return new Promise((res, rej) => {
-        const cb = '__x' + Date.now() + (Math.random() * 9999 | 0);
-        const qs = new URLSearchParams({ ...params, callback: cb }).toString();
-        const s  = document.createElement('script');
-        let done = false;
+        const cb   = '__x' + Date.now() + (Math.random() * 9999 | 0);
+        const qs   = new URLSearchParams({ ...params, callback: cb }).toString();
+        const s    = document.createElement('script');
+        let done   = false;
         const clean = () => { done = true; delete window[cb]; s.parentNode?.removeChild(s); };
-        window[cb] = d => { clean(); res(d); };
-        s.onerror  = () => { clean(); rej(new Error('net')); };
-        s.src = url + '?' + qs;
+        window[cb]  = d => { clean(); res(d); };
+        s.onerror   = () => { clean(); rej(new Error('net')); };
+        s.src       = url + '?' + qs;
         setTimeout(() => { if (!done) { clean(); rej(new Error('timeout')); } }, 20000);
         document.head.appendChild(s);
     });
@@ -1302,6 +525,8 @@ function api(url, params) {
 
 // ════════════════════════════════════════
 // NORMALIZE BULAN
+// Mengubah berbagai format bulan → uppercase canonical
+// Contoh: "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
 // ════════════════════════════════════════
 function normalizeBulan(str) {
     if (!str) return '';
@@ -1310,7 +535,14 @@ function normalizeBulan(str) {
 }
 
 // ════════════════════════════════════════
-// LOAD
+// HELPER: cek response API yang mengembalikan { success: true, ... }
+// ════════════════════════════════════════
+function ok(r) {
+    return r.status === 'fulfilled' && r.value?.success;
+}
+
+// ════════════════════════════════════════
+// LOAD ALL DATA
 // ════════════════════════════════════════
 async function loadAll() {
     if (S.loading) return;
@@ -1319,10 +551,10 @@ async function loadAll() {
     S.bulan = document.getElementById('bulanSelect').value;
     const bL = cap(S.bulan);
     document.getElementById('sectionNote').textContent = bL;
-    document.getElementById('stkNote').textContent = bL;
+    document.getElementById('stkNote').textContent     = bL;
 
     try {
-        // ★ Fetch semua data paralel, termasuk monev dari API
+        // Fetch semua sumber data secara paralel
         const [roomR, vkR, vbR, bbmR, docsR, spjR, monevR] = await Promise.allSettled([
             api(API_OP,    { action: 'getRoomScores' }),
             api(API_OP,    { action: 'getVehicleScores', jenis: 'KUNCI' }),
@@ -1330,30 +562,35 @@ async function loadAll() {
             api(API_OP,    { action: 'getBBMScores' }),
             api(API_OP,    { action: 'getDocuments' }),
             api(API_SPJ,   { action: 'getAllSPJKeuangan' }),
-            // ★ Fetch semua data monev sekaligus (lebih efisien dari per-bulan)
             api(API_MONEV, { action: 'getAllSheetData' }),
         ]);
 
-        // ★ Parse & cache data monev
-        // getAllSheetData mengembalikan { status:'success', data: { JANUARI: { UnitA: {total:...}, ... }, ... } }
+        // Cache data monev dari API
         if (monevR.status === 'fulfilled' && monevR.value?.status === 'success') {
             MONEV_CACHE = monevR.value.data || {};
-            console.log('[Monev] Data berhasil dimuat, bulan tersedia:', Object.keys(MONEV_CACHE));
+            console.log('[Monev] Berhasil dimuat, bulan tersedia:', Object.keys(MONEV_CACHE));
         } else {
-            console.warn('[Monev] Gagal fetch dari API, fallback ke localStorage');
+            console.warn('[Monev] Gagal dari API, akan fallback ke localStorage');
             MONEV_CACHE = null;
         }
 
-        // Build current-month scores
+        // Build skor bulan aktif
         const sc = {};
-        UNITS.forEach(u => { sc[u] = { bbm:null, kendaraan:null, ruang:null, kearsipan:null, spj:null, monev:null }; });
+        UNITS.forEach(u => {
+            sc[u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null };
+        });
         fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR);
         fillMonev(sc, S.bulan);
         S.scores = sc;
 
-        // Build all-month scores
+        // Build skor semua bulan (untuk chart tren)
         const am = {};
-        MONTHS.forEach(m => { am[m] = {}; UNITS.forEach(u => { am[m][u] = { bbm:null, kendaraan:null, ruang:null, kearsipan:null, spj:null, monev:null }; }); });
+        MONTHS.forEach(m => {
+            am[m] = {};
+            UNITS.forEach(u => {
+                am[m][u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null };
+            });
+        });
         MONTHS.forEach(m => {
             fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR);
             fillMonev(am[m], m);
@@ -1373,60 +610,19 @@ async function loadAll() {
 }
 
 // ════════════════════════════════════════
-// ★ fillMonev — DIPISAH agar lebih jelas
-// Prioritas: API (MONEV_CACHE) → localStorage (fallback lama)
-// ════════════════════════════════════════
-function fillMonev(sc, bulan) {
-    // Strategi 1: Dari cache API (getAllSheetData)
-    if (MONEV_CACHE) {
-        // Cari key bulan (case-insensitive)
-        const bulanKey = Object.keys(MONEV_CACHE).find(k => k.toUpperCase() === bulan.toUpperCase());
-        const bulanData = bulanKey ? MONEV_CACHE[bulanKey] : {};
-
-        UNITS.forEach(u => {
-            // Cari unit key (exact → case-insensitive → partial)
-            const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
-                || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
-
-            const unitData = unitKey ? bulanData[unitKey] : null;
-            if (unitData && unitData.total !== undefined) {
-                const v = parseFloat(unitData.total);
-                if (!isNaN(v) && v >= 0) {
-                    sc[u].monev = v;
-                    console.log(`[Monev API] ${bulan} | ${u} = ${v}`);
-                }
-            }
-        });
-        return; // Sudah dapat dari API, tidak perlu fallback
-    }
-
-    // Strategi 2: Fallback ke localStorage (format lama: monev_BULAN_UNIT)
-    console.warn('[Monev] Menggunakan localStorage fallback untuk bulan:', bulan);
-    UNITS.forEach(u => {
-        try {
-            const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
-            // Coba field 'totalScore' (format lama) atau 'total'
-            const v = d?.totalScore ?? d?.total ?? null;
-            if (v !== null && !isNaN(parseFloat(v))) {
-                sc[u].monev = parseFloat(v);
-                console.log(`[Monev LS] ${bulan} | ${u} = ${sc[u].monev}`);
-            }
-        } catch {}
-    });
-}
-
-// ════════════════════════════════════════
-// fillScores — tanpa monev (monev dihandle fillMonev)
+// fillScores — mengisi sc[unit].{bbm,kendaraan,ruang,kearsipan,spj}
+// Monev dihandle terpisah oleh fillMonev()
 // ════════════════════════════════════════
 function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
 
-    // ── RUANG RAPAT ──────────────────────────────────────────
+    // ── RUANG RAPAT ──────────────────────────────────────
     if (ok(roomR)) {
         (roomR.value.scores || []).forEach(s => {
             if (s.bulan === bulan && sc[s.unit]) sc[s.unit].ruang = s.skorAkhir;
         });
+    }
 
-    // ── KENDARAAN ────────────────────────────────────────────
+    // ── KENDARAAN (gabung KUNCI + BERSIH) ────────────────
     const km = {}, bm = {};
     if (ok(vkR)) (vkR.value.scores || []).forEach(s => { if (s.bulan === bulan) km[s.unit] = s.skorAkhir; });
     if (ok(vbR)) (vbR.value.scores || []).forEach(s => { if (s.bulan === bulan) bm[s.unit] = s.skorAkhir; });
@@ -1435,241 +631,144 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
         if (k !== null || b !== null) sc[u].kendaraan = (k ?? 0) + (b ?? 0);
     });
 
-    // ── BBM ──────────────────────────────────────────────────
+    // ── BBM ──────────────────────────────────────────────
     if (ok(bbmR)) {
         (bbmR.value.scores || []).forEach(s => {
             if (s.bulan === bulan && sc[s.unit]) sc[s.unit].bbm = s.skorAkhir;
         });
     }
 
-    // ── KEARSIPAN ────────────────────────────────────────────
+    // ── KEARSIPAN ────────────────────────────────────────
+    // getDocuments() mengembalikan array langsung ATAU {success, data:[...]}
     let docsArray = [];
     if (docsR.status === 'fulfilled') {
         const val = docsR.value;
-        if (Array.isArray(val)) {
-            docsArray = val;
-        } else if (val && Array.isArray(val.data)) {
-            docsArray = val.data;
-        }
+        if (Array.isArray(val))            docsArray = val;
+        else if (Array.isArray(val?.data)) docsArray = val.data;
+    }
 
-        // ════════════════════════════════════════
-        // NORMALIZE BULAN: "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
-        // ════════════════════════════════════════
-        function normalizeBulan(str) {
-            if (!str) return '';
-            // Ambil kata pertama saja, lowercase, lalu lookup
-            const first = String(str).trim().toLowerCase().split(/[\s,\/\-]+/)[0];
-            return MONTH_MAP[first] || String(str).trim().toUpperCase().split(/[\s,\/\-]+/)[0];
-        }
+    if (docsArray.length > 0) {
+        const dm = {}; // unit → [nilai]
+        docsArray.forEach(d => {
+            if (!d.nilai || d.nilai === '' || d.nilai === '-' || !d.unit) return;
+            const nilaiNum = parseFloat(String(d.nilai).replace(',', '.'));
+            if (isNaN(nilaiNum) || nilaiNum <= 0) return;
 
-        // ════════════════════════════════════════
-        // LOAD
-        // ════════════════════════════════════════
-        async function loadAll() {
-            if (S.loading) return;
-            S.loading = true;
-            setRefreshLoading(true);
-            S.bulan = document.getElementById('bulanSelect').value;
-            const bL = cap(S.bulan);
-            document.getElementById('sectionNote').textContent = bL;
-            document.getElementById('stkNote').textContent = bL;
+            const bulanDoc = normalizeBulan(d.bulan);
+            if (bulanDoc !== bulan) return;
 
-            try {
-                const [roomR, vkR, vbR, bbmR, docsR, spjR] = await Promise.allSettled([
-                    api(API_OP, { action: 'getRoomScores' }),
-                    api(API_OP, { action: 'getVehicleScores', jenis: 'KUNCI' }),
-                    api(API_OP, { action: 'getVehicleScores', jenis: 'BERSIH' }),
-                    api(API_OP, { action: 'getBBMScores' }),
-                    api(API_OP, { action: 'getDocuments' }),   // returns array directly
-                    api(API_SPJ, { action: 'getAllSPJKeuangan' }),
-                ]);
+            const unitRaw = String(d.unit).trim();
+            const matchedUnit = UNITS.find(u => u.trim() === unitRaw)
+                || UNITS.find(u => u.trim().toLowerCase() === unitRaw.toLowerCase())
+                || UNITS.find(u =>
+                    unitRaw.toLowerCase().includes(u.trim().toLowerCase()) ||
+                    u.trim().toLowerCase().includes(unitRaw.toLowerCase())
+                );
+            if (!matchedUnit) return;
 
-                // Build current-month scores
-                const sc = {};
-                UNITS.forEach(u => { sc[u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null }; });
-                fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR, true);
-                S.scores = sc;
+            if (!dm[matchedUnit]) dm[matchedUnit] = [];
+            dm[matchedUnit].push(nilaiNum);
+        });
 
-                // Build all-month scores
-                const am = {};
-                MONTHS.forEach(m => { am[m] = {}; UNITS.forEach(u => { am[m][u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null }; }); });
-                MONTHS.forEach(m => { fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR, false); });
-                S.allMonth = am;
-
-                render();
-                showToast('Data berhasil dimuat', 'success');
-            } catch (e) {
-                console.error(e);
-                showToast('Gagal memuat sebagian data', 'error');
-                render();
-            } finally {
-                S.loading = false;
-                setRefreshLoading(false);
+        UNITS.forEach(u => {
+            if (dm[u] && dm[u].length > 0) {
+                const avg = dm[u].reduce((a, c) => a + c, 0) / dm[u].length;
+                sc[u].kearsipan = +Math.min(5, avg).toFixed(2);
             }
-        }
+        });
+    }
 
-        // ════════════════════════════════════════
-        // fillScores — FIXED
-        // ════════════════════════════════════════
-        function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
+    // ── SPJ KEUANGAN ─────────────────────────────────────
+    // Prioritas: API backend → localStorage fallback
 
-            // ── RUANG RAPAT ──────────────────────────────────────────
-            if (ok(roomR)) {
-                (roomR.value.scores || []).forEach(s => {
-                    if (s.bulan === bulan && sc[s.unit]) sc[s.unit].ruang = s.skorAkhir;
-                });
+    // Step 1: dari API
+    if (ok(spjR)) {
+        const rekap = spjR.value.rekap || {};
+        const bulanKey = Object.keys(rekap).find(k => k.toUpperCase() === bulan.toUpperCase());
+        const bd = bulanKey ? rekap[bulanKey] : {};
+        UNITS.forEach(u => {
+            const unitKey = Object.keys(bd).find(k => k.trim() === u.trim());
+            const unitData = unitKey ? bd[unitKey] : null;
+            if (unitData && unitData.totalNilai !== undefined) {
+                const v = parseFloat(unitData.totalNilai);
+                if (!isNaN(v) && v >= 0) sc[u].spj = v;
             }
+        });
+    }
 
-            // ── KENDARAAN ────────────────────────────────────────────
-            const km = {}, bm = {};
-            if (ok(vkR)) (vkR.value.scores || []).forEach(s => { if (s.bulan === bulan) km[s.unit] = s.skorAkhir; });
-            if (ok(vbR)) (vbR.value.scores || []).forEach(s => { if (s.bulan === bulan) bm[s.unit] = s.skorAkhir; });
-            UNITS.forEach(u => {
-                const k = km[u] ?? null, b = bm[u] ?? null;
-                if (k !== null || b !== null) sc[u].kendaraan = (k ?? 0) + (b ?? 0);
-            });
+    // Step 2: localStorage fallback (untuk data yang belum di API)
+    try {
+        const localData  = JSON.parse(localStorage.getItem('spj_keuangan_data') || '{}');
+        const localBulanKey = Object.keys(localData).find(k => k.toUpperCase() === bulan.toUpperCase());
+        const monthData  = localBulanKey ? localData[localBulanKey] : {};
 
-            // ── BBM ──────────────────────────────────────────────────
-            if (ok(bbmR)) {
-                (bbmR.value.scores || []).forEach(s => {
-                    if (s.bulan === bulan && sc[s.unit]) sc[s.unit].bbm = s.skorAkhir;
-                });
+        UNITS.forEach(u => {
+            if (sc[u].spj !== null) return; // sudah dapat dari API
+            const unitKey = Object.keys(monthData).find(k => k.trim() === u.trim())
+                || Object.keys(monthData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+            const unitData = unitKey ? monthData[unitKey] : null;
+            if (unitData && unitData.totalNilai !== undefined) {
+                const v = parseFloat(unitData.totalNilai);
+                if (!isNaN(v)) sc[u].spj = v;
             }
+        });
+    } catch (e) {
+        console.warn('SPJ localStorage error:', e);
+    }
+}
 
-            // ── KEARSIPAN ────────────────────────────────────────────
-            // FIX: getDocuments() mengembalikan ARRAY langsung (bukan {success, data})
-            // Tidak boleh menggunakan ok() yang cek .success
-            let docsArray = [];
-            if (docsR.status === 'fulfilled') {
-                const val = docsR.value;
-                // Handle both: plain array OR {success, data: [...]}
-                if (Array.isArray(val)) {
-                    docsArray = val;
-                } else if (val && Array.isArray(val.data)) {
-                    docsArray = val.data;
-                } else if (val && val.success === false) {
-                    docsArray = []; // explicit error
-                }
+// ════════════════════════════════════════
+// fillMonev — mengisi sc[unit].monev
+// Prioritas: MONEV_CACHE (API) → localStorage fallback
+// ════════════════════════════════════════
+function fillMonev(sc, bulan) {
+    // Strategi 1: dari cache API (getAllSheetData)
+    if (MONEV_CACHE) {
+        const bulanKey  = Object.keys(MONEV_CACHE).find(k => k.toUpperCase() === bulan.toUpperCase());
+        const bulanData = bulanKey ? MONEV_CACHE[bulanKey] : {};
+
+        UNITS.forEach(u => {
+            const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+            const unitData = unitKey ? bulanData[unitKey] : null;
+            if (unitData && unitData.total !== undefined) {
+                const v = parseFloat(unitData.total);
+                if (!isNaN(v) && v >= 0) sc[u].monev = v;
             }
+        });
+        return; // cukup dari API
+    }
 
-            console.log("[Kearsipan Debug] docsArray.length:", docsArray.length, "| Mencari bulan:", bulan);
-            if (docsArray.length > 0) {
-                const dm = {}; // unit_normalized → [nilai]
-                docsArray.forEach(d => {
-                    // Skip dokumen belum dinilai / pending
-                    if (!d.nilai || d.nilai === '' || d.nilai === '-' || !d.unit) return;
-                    // Nilai bisa berformat "3,7" atau "3.7"
-                    const nilaiStr = String(d.nilai).replace(',', '.');
-                    const nilaiNum = parseFloat(nilaiStr);
-                    if (isNaN(nilaiNum) || nilaiNum <= 0) return;
+    // Strategi 2: fallback ke localStorage (format lama: monev_BULAN_UNIT)
+    console.warn('[Monev] Menggunakan localStorage fallback, bulan:', bulan);
+    UNITS.forEach(u => {
+        try {
+            const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
+            const v = d?.totalScore ?? d?.total ?? null;
+            if (v !== null && !isNaN(parseFloat(v))) sc[u].monev = parseFloat(v);
+        } catch {}
+    });
+}
 
-                    // Normalisasi bulan dokumen → uppercase
-                    const bulanDoc = normalizeBulan(d.bulan);
-                    if (bulanDoc !== bulan) return;
+// ════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════
+function render() { renderStats(); renderTable(); renderPanel(); }
 
-                    // Normalisasi unit — trim whitespace
-                    const unitRaw = String(d.unit).trim();
-
-                    // Cari unit yang cocok di UNITS (exact match dulu, lalu partial)
-                    const matchedUnit = UNITS.find(u => u.trim() === unitRaw)
-                        || UNITS.find(u => u.trim().toLowerCase() === unitRaw.toLowerCase())
-                        || UNITS.find(u => unitRaw.toLowerCase().includes(u.trim().toLowerCase()) || u.trim().toLowerCase().includes(unitRaw.toLowerCase()));
-
-                    if (!matchedUnit) return;
-
-                    if (!dm[matchedUnit]) dm[matchedUnit] = [];
-                    dm[matchedUnit].push(nilaiNum);
-                });
-
-                UNITS.forEach(u => {
-                    if (dm[u] && dm[u].length > 0) {
-                        // Rata-rata nilai (nilai kearsipan sudah skala 0–5)
-                        const avg = dm[u].reduce((a, c) => a + c, 0) / dm[u].length;
-                        sc[u].kearsipan = +Math.min(5, avg).toFixed(2);
-                    }
-                });
-            }
-
-            // ── SPJ KEUANGAN ─────────────────────────────────────────
-            // STRATEGY: Cek API backend dulu, lalu SELALU cek localStorage
-            // Ini karena admin-spj-keuangan.html menyimpan ke localStorage
-            // sementara API backend mungkin kosong
-
-            // Step 1: Coba dari API backend
-            if (ok(spjR)) {
-                const rekap = spjR.value.rekap || {};
-                const bulanKey = Object.keys(rekap).find(k => k.toUpperCase() === bulan.toUpperCase());
-                const bd = bulanKey ? rekap[bulanKey] : {};
-                UNITS.forEach(u => {
-                    const unitKey = Object.keys(bd).find(k => k.trim() === u.trim());
-                    const unitData = unitKey ? bd[unitKey] : null;
-                    if (unitData && unitData.totalNilai !== undefined) {
-                        const v = parseFloat(unitData.totalNilai);
-                        if (!isNaN(v) && v >= 0) sc[u].spj = v;
-                    }
-                });
-            }
-
-            // Step 2: SELALU cek localStorage juga — isi yang masih null
-            try {
-                const localData = JSON.parse(localStorage.getItem('spj_keuangan_data') || '{}');
-                console.log('[SPJ Debug] localStorage keys:', Object.keys(localData), '| Mencari bulan:', bulan);
-
-                // Cari key bulan di localStorage (case-insensitive)
-                const localBulanKey = Object.keys(localData).find(k => k.toUpperCase() === bulan.toUpperCase());
-                const monthData = localBulanKey ? localData[localBulanKey] : {};
-                console.log('[SPJ Debug] monthData keys:', Object.keys(monthData));
-
-                UNITS.forEach(u => {
-                    if (sc[u].spj !== null) return; // sudah dapat dari API, skip
-                    // Cari unit key (exact, lalu case-insensitive)
-                    const unitKey = Object.keys(monthData).find(k => k.trim() === u.trim())
-                        || Object.keys(monthData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
-                    const unitData = unitKey ? monthData[unitKey] : null;
-                    if (unitData && unitData.totalNilai !== undefined) {
-                        const v = parseFloat(unitData.totalNilai);
-                        if (!isNaN(v)) { sc[u].spj = v; console.log('[SPJ Debug] Set', u, '=', v); }
-                    } else if (Object.keys(monthData).length > 0) {
-                        console.log('[SPJ Debug] Unit tidak match:', u, '| Keys ada:', Object.keys(monthData));
-                    }
-                });
-            } catch (e) {
-                console.warn('SPJ localStorage error:', e);
-            }
-
-            // ── MONEV (localStorage) ─────────────────────────────────
-            if (withMonev) {
-                UNITS.forEach(u => {
-                    try {
-                        const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
-                        if (d?.totalScore !== undefined) sc[u].monev = d.totalScore;
-                    } catch { }
-                });
-            }
-        }
-
-        // ok() helper — hanya untuk response yang mengembalikan {success: true, ...}
-        function ok(r) { return r.status === 'fulfilled' && r.value?.success; }
-
-        // ════════════════════════════════════════
-        // RENDER
-        // ════════════════════════════════════════
-        function render() { renderStats(); renderTable(); renderPanel(); }
-
-        function renderStats() {
-            const rows = mkRows();
-            const wd = rows.filter(r => r.has);
-            const tots = wd.map(r => r.tot);
-            const avg = tots.length ? tots.reduce((a, c) => a + c, 0) / tots.length : 0;
-            const best = tots.length ? Math.max(...tots) : 0;
-            const worst = tots.length ? Math.min(...tots) : 0;
-            const bestU = rows.find(r => r.tot === best)?.unit || '—';
-            document.getElementById('statsGrid').innerHTML = `
+function renderStats() {
+    const rows = mkRows();
+    const wd   = rows.filter(r => r.has);
+    const tots = wd.map(r => r.tot);
+    const avg  = tots.length ? tots.reduce((a, c) => a + c, 0) / tots.length : 0;
+    const best = tots.length ? Math.max(...tots) : 0;
+    const worst = tots.length ? Math.min(...tots) : 0;
+    const bestU = rows.find(r => r.tot === best)?.unit || '—';
+    document.getElementById('statsGrid').innerHTML = `
         <div class="stat-card">
             <div class="stat-card-bar" style="background:#3b82f6"></div>
             <div class="stat-label">Rata-rata Total Nilai</div>
             <div class="stat-value">${fn(avg)}</div>
-            <div class="stat-footer">dari ${TOTAL_MAX} poin · ${((avg / TOTAL_MAX) * 100).toFixed(0)}%</div>
+            <div class="stat-footer">dari ${TOTAL_MAX} poin · ${((avg/TOTAL_MAX)*100).toFixed(0)}%</div>
         </div>
         <div class="stat-card">
             <div class="stat-card-bar" style="background:#10b981"></div>
@@ -1689,169 +788,166 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
             <div class="stat-value">${wd.length}</div>
             <div class="stat-footer">dari ${UNITS.length} divisi</div>
         </div>`;
-        }
+}
 
-        function renderTable() {
-            const rows = mkRows();
-            rows.sort((a, b) => { if (a.has !== b.has) return a.has ? -1 : 1; return b.tot - a.tot; });
-            if (rows.every(r => !r.has)) {
-                document.getElementById('rekapTbody').innerHTML = `<tr><td colspan="10" class="empty-state">📭 Belum ada data penilaian untuk bulan <strong>${cap(S.bulan)}</strong></td></tr>`;
-                return;
-            }
-            document.getElementById('rekapTbody').innerHTML = rows.map((r, i) => {
-                const pct = r.has ? (r.tot / TOTAL_MAX * 100) : 0;
-                const progColor = pct >= 80 ? '#10b981' : pct >= 60 ? '#3b82f6' : pct >= 40 ? '#f59e0b' : '#ef4444';
-                const cell = (key, max) => {
-                    const v = r.vals[key];
-                    if (v === null) return `<td style="text-align:center"><span class="chip chip-none">—</span></td>`;
-                    const p = v / max * 100;
-                    const cls = p >= 80 ? 'chip-great' : p >= 60 ? 'chip-good' : p >= 40 ? 'chip-fair' : 'chip-poor';
-                    return `<td style="text-align:center"><span class="chip ${cls}">${fn(v)}</span></td>`;
-                };
-                const monCell = () => {
-                    const v = r.vals.monev;
-                    if (v === null) return `<td style="text-align:center"><span class="chip chip-none">—</span></td>`;
-                    const p = v / MONEV_MAX * 100;
-                    const cls = p >= 80 ? 'chip-great' : p >= 60 ? 'chip-good' : p >= 40 ? 'chip-fair' : 'chip-poor';
-                    return `<td style="text-align:center"><span class="chip ${cls}">${fn(v)}</span></td>`;
-                };
-                const totalCls = !r.has ? 'total-none' : pct >= 80 ? 'total-great' : pct >= 60 ? 'total-good' : pct >= 40 ? 'total-fair' : 'total-poor';
-                return `<tr>
+function renderTable() {
+    const rows = mkRows();
+    rows.sort((a, b) => {
+        if (a.has !== b.has) return a.has ? -1 : 1;
+        return b.tot - a.tot;
+    });
+    if (rows.every(r => !r.has)) {
+        document.getElementById('rekapTbody').innerHTML =
+            `<tr><td colspan="10" class="empty-state">📭 Belum ada data penilaian untuk bulan <strong>${cap(S.bulan)}</strong></td></tr>`;
+        return;
+    }
+    document.getElementById('rekapTbody').innerHTML = rows.map((r, i) => {
+        const pct = r.has ? (r.tot / TOTAL_MAX * 100) : 0;
+        const progColor = pct >= 80 ? '#10b981' : pct >= 60 ? '#3b82f6' : pct >= 40 ? '#f59e0b' : '#ef4444';
+        const cell = (key, max) => {
+            const v = r.vals[key];
+            if (v === null) return `<td style="text-align:center"><span class="chip chip-none">—</span></td>`;
+            const p = v / max * 100;
+            const cls = p >= 80 ? 'chip-great' : p >= 60 ? 'chip-good' : p >= 40 ? 'chip-fair' : 'chip-poor';
+            return `<td style="text-align:center"><span class="chip ${cls}">${fn(v)}</span></td>`;
+        };
+        const totalCls = !r.has ? 'total-none' : pct >= 80 ? 'total-great' : pct >= 60 ? 'total-good' : pct >= 40 ? 'total-fair' : 'total-poor';
+        return `<tr>
             <td><span class="rank-badge">${i + 1}</span></td>
             <td style="font-weight:600;min-width:170px">${r.unit}</td>
-            ${cell('bbm', 5)} ${cell('kendaraan', 10)} ${cell('ruang', 5)} ${cell('kearsipan', 5)} ${cell('spj', 35)}
+            ${cell('bbm',5)} ${cell('kendaraan',10)} ${cell('ruang',5)} ${cell('kearsipan',5)} ${cell('spj',35)} ${cell('monev',40)}
             <td style="text-align:center"><span class="total-chip ${totalCls}">${r.has ? fn(r.tot) : '—'}</span></td>
-            ${monCell()}
             <td>
                 <div class="prog-wrap">
-                    <div class="prog-bar"><div class="prog-fill" style="width:${pct.toFixed(0)}%;background:${progColor}"></div></div>
-                    <span class="prog-label">${r.has ? pct.toFixed(0) + '%' : '—'}</span>
+                    <div class="prog-bar"><div class="prog-fill" style="width:${Math.min(pct,100).toFixed(0)}%;background:${progColor}"></div></div>
+                    <span class="prog-label">${r.has ? pct.toFixed(0)+'%' : '—'}</span>
                 </div>
             </td>
         </tr>`;
-            }).join('');
-        }
+    }).join('');
+}
 
-        // ════════════════════════════════════════
-        // CHARTS
-        // ════════════════════════════════════════
-        function renderPanel() {
-            const panels = ['pTotal', 'pTrend', 'pCat', 'pProfil'];
-            const active = panels.find(id => document.getElementById(id).hasAttribute('data-active')) || 'pTotal';
-            if (active === 'pTotal') drawTotal();
-            else if (active === 'pTrend') drawTrend();
-            else if (active === 'pCat') drawCat();
-            else if (active === 'pProfil') drawProfil();
-        }
+// ════════════════════════════════════════
+// CHARTS
+// ════════════════════════════════════════
+function renderPanel() {
+    const panels = ['pTotal','pTrend','pCat','pProfil'];
+    const active = panels.find(id => document.getElementById(id).hasAttribute('data-active')) || 'pTotal';
+    if      (active === 'pTotal')  drawTotal();
+    else if (active === 'pTrend')  drawTrend();
+    else if (active === 'pCat')    drawCat();
+    else if (active === 'pProfil') drawProfil();
+}
 
-        function goTab(name, btn) {
-            document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const map = { total: 'pTotal', trend: 'pTrend', cat: 'pCat', profil: 'pProfil' };
-            ['pTotal', 'pTrend', 'pCat', 'pProfil'].forEach(id => {
-                const el = document.getElementById(id);
-                el.style.display = 'none';
-                el.removeAttribute('data-active');
-            });
-            const el = document.getElementById(map[name]);
-            el.style.display = '';
-            el.setAttribute('data-active', '1');
-            if (name === 'total') drawTotal();
-            else if (name === 'trend') drawTrend();
-            else if (name === 'cat') drawCat();
-            else if (name === 'profil') drawProfil();
-        }
+function goTab(name, btn) {
+    document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const map = { total:'pTotal', trend:'pTrend', cat:'pCat', profil:'pProfil' };
+    ['pTotal','pTrend','pCat','pProfil'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.display = 'none';
+        el.removeAttribute('data-active');
+    });
+    const el = document.getElementById(map[name]);
+    el.style.display = '';
+    el.setAttribute('data-active', '1');
+    if      (name === 'total')  drawTotal();
+    else if (name === 'trend')  drawTrend();
+    else if (name === 'cat')    drawCat();
+    else if (name === 'profil') drawProfil();
+}
 
-        function drawTotal() {
-            kill('cStacked'); kill('cRadarMain');
-            const labels = UNITS.map(u => US[u]);
-            const ds = MODS.map(m => ({
-                label: m.label,
-                data: UNITS.map(u => +(S.scores[u]?.[m.key] ?? 0)),
-                backgroundColor: m.color + 'bb', borderColor: m.color, borderWidth: 1, borderRadius: 3
-            }));
-            C.cStacked = new Chart(document.getElementById('cStacked'), {
-                type: 'bar', data: { labels, datasets: ds },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 }, padding: 10, boxWidth: 10 } },
-                        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw} poin` } }
-                    },
-                    scales: {
-                        x: { stacked: true, grid: { display: false }, ticks: { font: { family: 'Inter', size: 11 } } },
-                        y: {
-                            stacked: true, max: TOTAL_MAX, grid: { color: '#f1f5f9' },
-                            ticks: { font: { family: 'Inter', size: 11 } },
-                            title: { display: true, text: 'Total Nilai (/60)', font: { family: 'Inter', size: 11 } }
-                        }
-                    }
+function drawTotal() {
+    kill('cStacked'); kill('cRadarMain');
+    const labels = UNITS.map(u => US[u]);
+    const ds = MODS.map(m => ({
+        label: m.label,
+        data: UNITS.map(u => +(S.scores[u]?.[m.key] ?? 0)),
+        backgroundColor: m.color + 'bb', borderColor: m.color, borderWidth: 1, borderRadius: 3
+    }));
+    C.cStacked = new Chart(document.getElementById('cStacked'), {
+        type: 'bar', data: { labels, datasets: ds },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { family:'Inter', size:11 }, padding:10, boxWidth:10 } },
+                tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw} poin` } }
+            },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { font: { family:'Inter', size:11 } } },
+                y: {
+                    stacked: true, max: TOTAL_MAX, grid: { color: '#f1f5f9' },
+                    ticks: { font: { family:'Inter', size:11 } },
+                    title: { display: true, text: 'Total Nilai (/100)', font: { family:'Inter', size:11 } }
                 }
-            });
-
-            const rd = MODS.map(m => {
-                const vs = UNITS.map(u => S.scores[u]?.[m.key] ?? null).filter(v => v !== null);
-                return vs.length ? +((vs.reduce((a, c) => a + c, 0) / vs.length / m.max * 100).toFixed(1)) : 0;
-            });
-            C.cRadarMain = new Chart(document.getElementById('cRadarMain'), {
-                type: 'radar',
-                data: {
-                    labels: MODS.map(m => m.label),
-                    datasets: [{
-                        label: 'Rata-rata %', data: rd,
-                        backgroundColor: 'rgba(15,23,42,.08)', borderColor: '#0f172a', borderWidth: 2,
-                        pointBackgroundColor: MODS.map(m => m.color), pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw}% dari maks.` } } },
-                    scales: {
-                        r: {
-                            min: 0, max: 100, ticks: { stepSize: 25, font: { family: 'Inter', size: 10 }, color: '#94a3b8' },
-                            pointLabels: { font: { family: 'Inter', size: 11 } }, grid: { color: '#f1f5f9' }
-                        }
-                    }
-                }
-            });
+            }
         }
+    });
 
-        function drawTrend() {
-            kill('cTrend');
-            Object.keys(C).filter(k => k.startsWith('sm_')).forEach(k => { C[k].destroy(); delete C[k]; });
-
-            const ds = UNITS.map((u, i) => ({
-                label: US[u],
-                data: MONTHS.map(m => {
-                    const sc = S.allMonth[m]?.[u]; if (!sc) return null;
-                    let t = 0, h = false;
-                    MODS.forEach(mo => { if (sc[mo.key] !== null && sc[mo.key] !== undefined) { t += sc[mo.key]; h = true; } });
-                    return h ? +t.toFixed(2) : null;
-                }),
-                borderColor: UC[i], backgroundColor: UC[i] + '22', borderWidth: 2,
-                pointRadius: 4, pointBackgroundColor: UC[i], pointBorderColor: '#fff', pointBorderWidth: 2,
-                fill: false, tension: .35, spanGaps: true
-            }));
-            C.cTrend = new Chart(document.getElementById('cTrend'), {
-                type: 'line', data: { labels: MOS, datasets: ds },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 }, padding: 10, boxWidth: 10 } },
-                        tooltip: { callbacks: { label: c => c.raw !== null ? `${c.dataset.label}: ${c.raw}/${TOTAL_MAX}` : '—' } }
-                    },
-                    scales: {
-                        x: { grid: { color: '#f8fafc' }, ticks: { font: { family: 'Inter', size: 11 } } },
-                        y: {
-                            min: 0, max: TOTAL_MAX, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter', size: 11 } },
-                            title: { display: true, text: 'Total (/60)', font: { family: 'Inter', size: 11 } }
-                        }
-                    }
+    const rd = MODS.map(m => {
+        const vs = UNITS.map(u => S.scores[u]?.[m.key] ?? null).filter(v => v !== null);
+        return vs.length ? +((vs.reduce((a,c)=>a+c,0) / vs.length / m.max * 100).toFixed(1)) : 0;
+    });
+    C.cRadarMain = new Chart(document.getElementById('cRadarMain'), {
+        type: 'radar',
+        data: {
+            labels: MODS.map(m => m.label),
+            datasets: [{
+                label: 'Rata-rata %', data: rd,
+                backgroundColor: 'rgba(15,23,42,.08)', borderColor: '#0f172a', borderWidth: 2,
+                pointBackgroundColor: MODS.map(m => m.color), pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw}% dari maks.` } } },
+            scales: {
+                r: {
+                    min: 0, max: 100,
+                    ticks: { stepSize: 25, font: { family:'Inter', size:10 }, color: '#94a3b8' },
+                    pointLabels: { font: { family:'Inter', size:11 } }, grid: { color: '#f1f5f9' }
                 }
-            });
+            }
+        }
+    });
+}
 
-            const grid = document.getElementById('trendSmall');
-            grid.innerHTML = UNITS.map((u, i) => `
+function drawTrend() {
+    kill('cTrend');
+    Object.keys(C).filter(k => k.startsWith('sm_')).forEach(k => { C[k].destroy(); delete C[k]; });
+
+    const ds = UNITS.map((u, i) => ({
+        label: US[u],
+        data: MONTHS.map(m => {
+            const sc = S.allMonth[m]?.[u]; if (!sc) return null;
+            let t = 0, h = false;
+            MODS.forEach(mo => { if (sc[mo.key] !== null && sc[mo.key] !== undefined) { t += sc[mo.key]; h = true; } });
+            return h ? +t.toFixed(2) : null;
+        }),
+        borderColor: UC[i], backgroundColor: UC[i]+'22', borderWidth: 2,
+        pointRadius: 4, pointBackgroundColor: UC[i], pointBorderColor: '#fff', pointBorderWidth: 2,
+        fill: false, tension: .35, spanGaps: true
+    }));
+    C.cTrend = new Chart(document.getElementById('cTrend'), {
+        type: 'line', data: { labels: MOS, datasets: ds },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { family:'Inter', size:11 }, padding:10, boxWidth:10 } },
+                tooltip: { callbacks: { label: c => c.raw !== null ? `${c.dataset.label}: ${c.raw}/${TOTAL_MAX}` : '—' } }
+            },
+            scales: {
+                x: { grid: { color: '#f8fafc' }, ticks: { font: { family:'Inter', size:11 } } },
+                y: {
+                    min: 0, max: TOTAL_MAX, grid: { color: '#f1f5f9' }, ticks: { font: { family:'Inter', size:11 } },
+                    title: { display: true, text: 'Total (/100)', font: { family:'Inter', size:11 } }
+                }
+            }
+        }
+    });
+
+    const grid = document.getElementById('trendSmall');
+    grid.innerHTML = UNITS.map((u, i) => `
         <div class="card">
             <div class="card-header" style="padding:12px 18px">
                 <span class="card-title" style="color:${UC[i]};font-size:14px">${US[u]}</span>
@@ -1861,90 +957,93 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
             </div>
         </div>`).join('');
 
-            UNITS.forEach((u, i) => {
-                const smDs = MODS.map(m => ({
-                    label: m.label,
-                    data: MONTHS.map(mo => +(S.allMonth[mo]?.[u]?.[m.key] ?? 0).toFixed(2)),
-                    backgroundColor: m.color + 'aa', borderColor: m.color, borderWidth: 1, borderRadius: 2
-                }));
-                C[`sm_${i}`] = new Chart(document.getElementById(`sm_${i}`), {
-                    type: 'bar', data: { labels: MOS, datasets: smDs },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw}` } } },
-                        scales: {
-                            x: { stacked: true, grid: { display: false }, ticks: { font: { family: 'Inter', size: 9 } } },
-                            y: { stacked: true, max: TOTAL_MAX, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter', size: 9 } } }
-                        }
-                    }
-                });
-            });
-        }
-
-        function drawCat() {
-            kill('cCat'); kill('cCat2');
-            const mod = MODS.find(m => m.key === activeCat);
-            document.getElementById('catTitle').textContent = `${mod.label} — Semua Divisi, ${cap(S.bulan)}`;
-            document.getElementById('catNote').textContent = `Maks. ${mod.max} poin per divisi`;
-            document.getElementById('catTitle2').textContent = `${mod.label} — Tren Lintas Bulan per Divisi`;
-
-            C.cCat = new Chart(document.getElementById('cCat'), {
-                type: 'bar',
-                data: {
-                    labels: UNITS.map(u => US[u]),
-                    datasets: [{
-                        label: mod.label,
-                        data: UNITS.map(u => +(S.scores[u]?.[activeCat] ?? 0).toFixed(2)),
-                        backgroundColor: UNITS.map(u => { const v = S.scores[u]?.[activeCat] ?? 0, p = v / mod.max * 100; return p >= 80 ? '#10b981bb' : p >= 60 ? '#3b82f6bb' : p >= 40 ? '#f59e0bbb' : '#ef4444bb'; }),
-                        borderColor: mod.color, borderWidth: 2, borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { callbacks: { label: c => `${c.raw} / ${mod.max} poin (${(c.raw / mod.max * 100).toFixed(0)}%)` } }
-                    },
-                    scales: {
-                        x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12 } } },
-                        y: {
-                            min: 0, max: mod.max, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter', size: 11 } },
-                            title: { display: true, text: `Nilai ${mod.label} (/${mod.max})`, font: { family: 'Inter', size: 11 } }
-                        }
-                    }
+    UNITS.forEach((u, i) => {
+        const smDs = MODS.map(m => ({
+            label: m.label,
+            data: MONTHS.map(mo => +(S.allMonth[mo]?.[u]?.[m.key] ?? 0).toFixed(2)),
+            backgroundColor: m.color+'aa', borderColor: m.color, borderWidth: 1, borderRadius: 2
+        }));
+        C[`sm_${i}`] = new Chart(document.getElementById(`sm_${i}`), {
+            type: 'bar', data: { labels: MOS, datasets: smDs },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw}` } } },
+                scales: {
+                    x: { stacked: true, grid: { display: false }, ticks: { font: { family:'Inter', size:9 } } },
+                    y: { stacked: true, max: TOTAL_MAX, grid: { color: '#f1f5f9' }, ticks: { font: { family:'Inter', size:9 } } }
                 }
-            });
+            }
+        });
+    });
+}
 
-            const ds2 = UNITS.map((u, i) => ({
-                label: US[u],
-                data: MONTHS.map(m => +(S.allMonth[m]?.[u]?.[activeCat] ?? 0).toFixed(2)),
-                borderColor: UC[i], backgroundColor: UC[i] + '22', borderWidth: 2,
-                pointRadius: 4, pointBackgroundColor: UC[i], pointBorderColor: '#fff', pointBorderWidth: 2,
-                fill: false, tension: .35, spanGaps: true
-            }));
-            C.cCat2 = new Chart(document.getElementById('cCat2'), {
-                type: 'line', data: { labels: MOS, datasets: ds2 },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 }, padding: 8, boxWidth: 10 } },
-                        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw}/${mod.max}` } }
-                    },
-                    scales: {
-                        x: { grid: { color: '#f8fafc' }, ticks: { font: { family: 'Inter', size: 11 } } },
-                        y: {
-                            min: 0, max: mod.max, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter', size: 11 } },
-                            title: { display: true, text: `/${mod.max}`, font: { family: 'Inter', size: 11 } }
-                        }
-                    }
+function drawCat() {
+    kill('cCat'); kill('cCat2');
+    const mod = MODS.find(m => m.key === activeCat);
+    document.getElementById('catTitle').textContent  = `${mod.label} — Semua Divisi, ${cap(S.bulan)}`;
+    document.getElementById('catNote').textContent   = `Maks. ${mod.max} poin per divisi`;
+    document.getElementById('catTitle2').textContent = `${mod.label} — Tren Lintas Bulan per Divisi`;
+
+    C.cCat = new Chart(document.getElementById('cCat'), {
+        type: 'bar',
+        data: {
+            labels: UNITS.map(u => US[u]),
+            datasets: [{
+                label: mod.label,
+                data: UNITS.map(u => +(S.scores[u]?.[activeCat] ?? 0).toFixed(2)),
+                backgroundColor: UNITS.map(u => {
+                    const v = S.scores[u]?.[activeCat] ?? 0, p = v / mod.max * 100;
+                    return p >= 80 ? '#10b981bb' : p >= 60 ? '#3b82f6bb' : p >= 40 ? '#f59e0bbb' : '#ef4444bb';
+                }),
+                borderColor: mod.color, borderWidth: 2, borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: c => `${c.raw} / ${mod.max} poin (${(c.raw/mod.max*100).toFixed(0)}%)` } }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { family:'Inter', size:12 } } },
+                y: {
+                    min: 0, max: mod.max, grid: { color: '#f1f5f9' }, ticks: { font: { family:'Inter', size:11 } },
+                    title: { display: true, text: `Nilai ${mod.label} (/${mod.max})`, font: { family:'Inter', size:11 } }
                 }
-            });
+            }
         }
+    });
 
-        function drawProfil() {
-            Object.keys(C).filter(k => k.startsWith('rd_')).forEach(k => { C[k].destroy(); delete C[k]; });
-            const grid = document.getElementById('radarGrid');
-            grid.innerHTML = UNITS.map((u, i) => `
+    const ds2 = UNITS.map((u, i) => ({
+        label: US[u],
+        data: MONTHS.map(m => +(S.allMonth[m]?.[u]?.[activeCat] ?? 0).toFixed(2)),
+        borderColor: UC[i], backgroundColor: UC[i]+'22', borderWidth: 2,
+        pointRadius: 4, pointBackgroundColor: UC[i], pointBorderColor: '#fff', pointBorderWidth: 2,
+        fill: false, tension: .35, spanGaps: true
+    }));
+    C.cCat2 = new Chart(document.getElementById('cCat2'), {
+        type: 'line', data: { labels: MOS, datasets: ds2 },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { family:'Inter', size:11 }, padding:8, boxWidth:10 } },
+                tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw}/${mod.max}` } }
+            },
+            scales: {
+                x: { grid: { color: '#f8fafc' }, ticks: { font: { family:'Inter', size:11 } } },
+                y: {
+                    min: 0, max: mod.max, grid: { color: '#f1f5f9' }, ticks: { font: { family:'Inter', size:11 } },
+                    title: { display: true, text: `/${mod.max}`, font: { family:'Inter', size:11 } }
+                }
+            }
+        }
+    });
+}
+
+function drawProfil() {
+    Object.keys(C).filter(k => k.startsWith('rd_')).forEach(k => { C[k].destroy(); delete C[k]; });
+    const grid = document.getElementById('radarGrid');
+    grid.innerHTML = UNITS.map((u, i) => `
         <div class="card">
             <div class="card-header" style="padding:12px 18px">
                 <span class="card-title" style="color:${UC[i]}">${US[u]}</span>
@@ -1953,112 +1052,123 @@ function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
             <div class="card-content" style="padding:14px">
                 <div class="chart-wrap h-230"><canvas id="rd_${i}"></canvas></div>
                 <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
-                    ${MODS.map(m => { const v = S.scores[u]?.[m.key] ?? null; return `<span style="font-size:10px;font-weight:600;color:${m.color}">${m.label}: ${v !== null ? fn(v) : '—'}/${m.max}</span>`; }).join('<span style="color:#e5e7eb">|</span>')}
+                    ${MODS.map(m => {
+                        const v = S.scores[u]?.[m.key] ?? null;
+                        return `<span style="font-size:10px;font-weight:600;color:${m.color}">${m.label}: ${v !== null ? fn(v) : '—'}/${m.max}</span>`;
+                    }).join('<span style="color:#e5e7eb">|</span>')}
                 </div>
             </div>
         </div>`).join('');
 
-            UNITS.forEach((u, i) => {
-                const data = MODS.map(m => { const v = S.scores[u]?.[m.key] ?? null; return v !== null ? +((v / m.max) * 100).toFixed(1) : 0; });
-                C[`rd_${i}`] = new Chart(document.getElementById(`rd_${i}`), {
-                    type: 'radar',
-                    data: {
-                        labels: MODS.map(m => m.label),
-                        datasets: [{
-                            label: US[u], data,
-                            backgroundColor: UC[i] + '22', borderColor: UC[i], borderWidth: 2,
-                            pointBackgroundColor: MODS.map(m => m.color), pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw}%` } } },
-                        scales: {
-                            r: {
-                                min: 0, max: 100,
-                                ticks: { stepSize: 50, font: { size: 9 }, color: '#94a3b8' },
-                                pointLabels: { font: { family: 'Inter', size: 10 } }, grid: { color: '#f1f5f9' }
-                            }
-                        }
+    UNITS.forEach((u, i) => {
+        const data = MODS.map(m => {
+            const v = S.scores[u]?.[m.key] ?? null;
+            return v !== null ? +((v / m.max) * 100).toFixed(1) : 0;
+        });
+        C[`rd_${i}`] = new Chart(document.getElementById(`rd_${i}`), {
+            type: 'radar',
+            data: {
+                labels: MODS.map(m => m.label),
+                datasets: [{
+                    label: US[u], data,
+                    backgroundColor: UC[i]+'22', borderColor: UC[i], borderWidth: 2,
+                    pointBackgroundColor: MODS.map(m => m.color), pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw}%` } } },
+                scales: {
+                    r: {
+                        min: 0, max: 100,
+                        ticks: { stepSize: 50, font: { size: 9 }, color: '#94a3b8' },
+                        pointLabels: { font: { family:'Inter', size:10 } }, grid: { color: '#f1f5f9' }
                     }
-                });
-            });
-        }
+                }
+            }
+        });
+    });
+}
 
-        // ════════════════════════════════════════
-        // CATEGORY BUTTONS
-        // ════════════════════════════════════════
-        function buildCatRow() {
-            const wrap = document.getElementById('catRow');
-            MODS.forEach(m => {
-                const b = document.createElement('button');
-                b.className = 'cat-btn';
-                b.textContent = m.label;
-                if (m.key === activeCat) { b.style.background = m.color; b.style.color = '#fff'; }
-                b.onclick = () => {
-                    activeCat = m.key;
-                    wrap.querySelectorAll('.cat-btn').forEach(bb => { bb.style.background = '#f1f5f9'; bb.style.color = '#64748b'; });
-                    b.style.background = m.color; b.style.color = '#fff';
-                    drawCat();
-                };
-                wrap.appendChild(b);
-            });
-        }
+// ════════════════════════════════════════
+// CATEGORY BUTTONS
+// ════════════════════════════════════════
+function buildCatRow() {
+    const wrap = document.getElementById('catRow');
+    MODS.forEach(m => {
+        const b = document.createElement('button');
+        b.className   = 'cat-btn';
+        b.textContent = m.label;
+        if (m.key === activeCat) { b.style.background = m.color; b.style.color = '#fff'; }
+        b.onclick = () => {
+            activeCat = m.key;
+            wrap.querySelectorAll('.cat-btn').forEach(bb => { bb.style.background = '#f1f5f9'; bb.style.color = '#64748b'; });
+            b.style.background = m.color; b.style.color = '#fff';
+            drawCat();
+        };
+        wrap.appendChild(b);
+    });
+}
 
-        // ════════════════════════════════════════
-        // HELPERS
-        // ════════════════════════════════════════
-        function mkRows() {
-            return UNITS.map(u => {
-                const s = S.scores[u] || {}; let tot = 0, has = false; const vals = {};
-                MODS.forEach(m => { vals[m.key] = s[m.key] ?? null; if (vals[m.key] !== null) { tot += vals[m.key]; has = true; } });
-                vals.monev = s.monev ?? null;
-                return { unit: u, vals, tot, has };
-            });
-        }
-        function fn(v) { if (v === null || v === undefined) return '—'; const n = parseFloat(v); return isNaN(n) ? '—' : (n % 1 === 0 ? String(n) : n.toFixed(1)); }
-        function cap(s) { return s ? s[0] + s.slice(1).toLowerCase() : ''; }
-        function kill(id) { if (C[id]) { C[id].destroy(); delete C[id]; } }
-        function onBulanChange() { S.bulan = document.getElementById('bulanSelect').value; loadAll(); }
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+function mkRows() {
+    return UNITS.map(u => {
+        const s = S.scores[u] || {}; let tot = 0, has = false; const vals = {};
+        MODS.forEach(m => {
+            vals[m.key] = s[m.key] ?? null;
+            if (vals[m.key] !== null) { tot += vals[m.key]; has = true; }
+        });
+        return { unit: u, vals, tot, has };
+    });
+}
 
-        function setRefreshLoading(on) {
-            const btn = document.getElementById('btnRefresh');
-            btn.classList.toggle('loading', on);
-            btn.disabled = on;
-        }
+function fn(v) {
+    if (v === null || v === undefined) return '—';
+    const n = parseFloat(v);
+    return isNaN(n) ? '—' : (n % 1 === 0 ? String(n) : n.toFixed(1));
+}
+function cap(s) { return s ? s[0] + s.slice(1).toLowerCase() : ''; }
+function kill(id) { if (C[id]) { C[id].destroy(); delete C[id]; } }
+function onBulanChange() { S.bulan = document.getElementById('bulanSelect').value; loadAll(); }
 
-        function toggleMobileMenu() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('sidebarOverlay').classList.toggle('active');
-        }
+function setRefreshLoading(on) {
+    const btn = document.getElementById('btnRefresh');
+    btn.classList.toggle('loading', on);
+    btn.disabled = on;
+}
 
-        function logout() {
-            if (confirm('Yakin keluar?')) { localStorage.clear(); window.location.href = 'login.html'; }
-        }
+function toggleMobileMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+}
 
-        function showToast(msg, type = '') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
+function logout() {
+    if (confirm('Yakin keluar?')) { localStorage.clear(); window.location.href = 'login.html'; }
+}
+
+function showToast(msg, type = '') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             ${type === 'success'
-                    ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
-                    : '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'}
+                ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
+                : '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'}
         </svg>
         <span>${msg}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .3s'; setTimeout(() => toast.remove(), 300); }, 3500);
-        }
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity    = '0';
+        toast.style.transition = 'opacity .3s';
+        setTimeout(() => toast.remove(), 300);
+    }, 3500);
+}
 
-<<<<<<< HEAD
-document.getElementById('pTotal').setAttribute('data-active','1');
+// Set panel aktif saat load
+document.getElementById('pTotal').setAttribute('data-active', '1');
 </script>
-=======
-        // Set first panel active on load
-        document.getElementById('pTotal').setAttribute('data-active', '1');
-    </script>
->>>>>>> 1430d0227cba8283f8e5bd102cb6e5a3687885c9
 </body>
-
 </html>
