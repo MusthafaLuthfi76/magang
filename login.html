@@ -292,6 +292,7 @@
         </div>
     </div>
 
+    <script src="auth.js"></script>
     <script>
         /* ================== KONFIGURASI ================== */
         // GANTI dengan URL deployment Apps Script Anda!
@@ -448,10 +449,7 @@
                         Toast.success('Login berhasil!');
 
                         setTimeout(() => {
-                            const role = res.user.role.toLowerCase();
-                            location.href = role === 'admin'
-                                ? 'admin-dashboard.html'
-                                : 'user-dashboard.html';
+                            AUTH.redirectAfterLogin(res.user);
                         }, 600);
                     } else {
                         throw new Error(res.message || 'Login gagal');
@@ -488,13 +486,10 @@
 
         /* ================== AUTO LOGIN ================== */
         (() => {
-            const saved = localStorage.getItem('user');
-            if (!saved) return;
-
+            const user = AUTH.getUser();
+            if (!user) return;
             try {
-                const user = JSON.parse(saved);
-                const role = user.role.toLowerCase();
-                location.href = role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html';
+                AUTH.redirectAfterLogin(user);
             } catch (e) {
                 localStorage.removeItem('user');
             }

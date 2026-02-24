@@ -125,6 +125,7 @@
             align-items: center;
             justify-content: center;
             color: white;
+            overflow: hidden;
         }
 
         .sidebar-title {
@@ -150,19 +151,6 @@
         .sidebar-footer {
             padding: 16px 12px;
             border-top: 1px solid #e5e7eb;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 15px;
-            color: #0f172a;
-            text-decoration: none;
-            transition: all 0.15s ease;
         }
 
         .nav-item {
@@ -489,6 +477,56 @@
             color: #1e40af;
         }
 
+        /* Loading state */
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #64748b;
+            gap: 16px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #0f172a;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .spinner-sm {
+            width: 14px;
+            height: 14px;
+            border-width: 2px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Error state */
+        .error-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #ef4444;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .error-state p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -498,17 +536,6 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
         }
 
         .modal {
@@ -738,33 +765,6 @@
             margin-bottom: 24px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #64748b;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e5e7eb;
-            border-top-color: #0f172a;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        .spinner-sm {
-            width: 16px;
-            height: 16px;
-            border-width: 2px;
-        }
-
-        button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
         .pagination {
             display: flex;
             justify-content: center;
@@ -809,6 +809,7 @@
             padding: 0 8px;
         }
 
+        /* Mobile cards */
         .requests-card {
             display: none;
             padding: 16px;
@@ -816,8 +817,6 @@
             border-radius: 8px;
             margin-bottom: 12px;
             background: white;
-            overflow: hidden;
-            box-sizing: border-box;
         }
 
         .requests-card-header {
@@ -930,30 +929,9 @@
             word-wrap: break-word;
         }
 
-        .cache-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 8px 12px;
-            background: #10b981;
-            color: white;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1000;
-            pointer-events: none;
-        }
-
-        .cache-indicator.show {
-            opacity: 1;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         @media (max-width: 1023px) {
@@ -1061,33 +1039,27 @@
             }
         }
     </style>
+    <script src="auth.js"></script>
 </head>
 
 <body>
-    <!-- Cache Indicator -->
-    <div class="cache-indicator" id="cache-indicator">
-        📦 Data dari cache
-    </div>
 
     <!-- Mobile Menu Toggle -->
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <svg viewBox="0 0 24 24">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
     </button>
-
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
                 <div class="sidebar-icon">
                     <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj"
-                        alt="Logo Dinas Koperasi UKM"
-                        style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
+                        alt="Logo" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
                 </div>
                 <div>
                     <div class="sidebar-title">Admin Panel</div>
@@ -1095,7 +1067,6 @@
                 </div>
             </div>
         </div>
-
         <div class="sidebar-nav">
             <a href="admin-dashboard.html" class="nav-item">
                 <svg class="nav-icon" viewBox="0 0 24 24">
@@ -1148,7 +1119,6 @@
                     <polyline points="14 2 14 8 20 8" />
                     <line x1="16" y1="13" x2="8" y2="13" />
                     <line x1="16" y1="17" x2="8" y2="17" />
-                    <polyline points="10 9 9 9 8 9" />
                 </svg>
                 Pengumpulan SPJ
             </a>
@@ -1178,7 +1148,6 @@
                 Manajemen Akun
             </a>
         </div>
-
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-name" id="admin-name">Administrator</div>
@@ -1202,16 +1171,18 @@
         </div>
 
         <div class="container">
-            <!-- Tabs -->
+            <!-- Tabs Desktop -->
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('requests')">📋 Permintaan</button>
-                <button class="tab" onclick="switchTab('violations')">⚠️ Catatan Pelanggaran</button>
-                <button class="tab" onclick="switchTab('scores')">📊 Penilaian</button>
+                <button class="tab active" id="tab-btn-requests" onclick="switchTab('requests',  this)">📋
+                    Permintaan</button>
+                <button class="tab" id="tab-btn-violations" onclick="switchTab('violations', this)">⚠️ Catatan
+                    Pelanggaran</button>
+                <button class="tab" id="tab-btn-scores" onclick="switchTab('scores',     this)">📊 Penilaian</button>
             </div>
 
-            <!-- Dropdown untuk Mobile -->
+            <!-- Tabs Mobile Dropdown -->
             <div class="tabs-dropdown">
-                <select id="mobile-tab-select" onchange="switchTabFromDropdown(this.value)">
+                <select id="mobile-tab-select" onchange="switchTab(this.value, null)">
                     <option value="requests">📋 Permintaan</option>
                     <option value="violations">⚠️ Catatan Pelanggaran</option>
                     <option value="scores">📊 Penilaian</option>
@@ -1243,9 +1214,11 @@
                             </thead>
                             <tbody id="requests-tbody">
                                 <tr>
-                                    <td colspan="7" class="loading">
-                                        <div class="spinner"></div>
-                                        <p style="margin-top: 16px;">Memuat data...</p>
+                                    <td colspan="7">
+                                        <div class="loading-state">
+                                            <div class="spinner"></div>
+                                            <span>Memuat data permintaan...</span>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1286,9 +1259,7 @@
                                 <option value="Bidang Kewirausahaan">Bidang Kewirausahaan</option>
                                 <option value="Balai Layanan Usaha Terpadu KUMKM">BLUT KUMKM</option>
                             </select>
-                            <button onclick="exportViolations()" class="btn" title="Export ke Sheet Baru">
-                                📊 Export Laporan
-                            </button>
+                            <button onclick="exportViolations()" class="btn">📊 Export Laporan</button>
                             <button onclick="openAddViolationModal()" class="btn btn-primary">+ Tambah Catatan</button>
                         </div>
                     </div>
@@ -1306,7 +1277,8 @@
                             </thead>
                             <tbody id="violations-tbody">
                                 <tr>
-                                    <td colspan="6" style="text-align: center; padding: 20px;">Memuat data...</td>
+                                    <td colspan="6" style="text-align:center;padding:40px;color:#94a3b8;">Klik tab untuk
+                                        memuat data</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1340,35 +1312,28 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <div style="margin-bottom: 24px; padding: 16px; background: #f8fafc; border-radius: 8px;">
-                            <p style="font-size: 14px; color: #64748b;">Sanksi per Ketidakrapian:</p>
-                            <p style="font-size: 20px; font-weight: 700; color: #1e293b;" id="sanksi-value">0.1 poin</p>
+                        <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;">
+                            <p style="font-size:14px;color:#64748b;">Sanksi per Ketidakrapian:</p>
+                            <p style="font-size:20px;font-weight:700;color:#1e293b;" id="sanksi-value">—</p>
                         </div>
-
                         <div class="charts-grid">
-                            <div class="card" style="margin: 0;">
-                                <div class="card-header" style="padding: 16px;">
-                                    <h3 style="font-size: 16px; font-weight: 600;">Skor Akhir Per Unit</h3>
+                            <div class="card" style="margin:0;">
+                                <div class="card-header" style="padding:16px;">
+                                    <h3 style="font-size:16px;font-weight:600;">Skor Akhir Per Unit</h3>
                                 </div>
                                 <div class="card-content">
-                                    <div class="chart-container">
-                                        <canvas id="scoreChart"></canvas>
-                                    </div>
+                                    <div class="chart-container"><canvas id="scoreChart"></canvas></div>
                                 </div>
                             </div>
-
-                            <div class="card" style="margin: 0;">
-                                <div class="card-header" style="padding: 16px;">
-                                    <h3 style="font-size: 16px; font-weight: 600;">Jumlah Pelanggaran Per Unit</h3>
+                            <div class="card" style="margin:0;">
+                                <div class="card-header" style="padding:16px;">
+                                    <h3 style="font-size:16px;font-weight:600;">Jumlah Pelanggaran Per Unit</h3>
                                 </div>
                                 <div class="card-content">
-                                    <div class="chart-container">
-                                        <canvas id="violationChart"></canvas>
-                                    </div>
+                                    <div class="chart-container"><canvas id="violationChart"></canvas></div>
                                 </div>
                             </div>
                         </div>
-
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -1388,13 +1353,11 @@
                 <h2 class="modal-title">Detail Permintaan Ruang Rapat</h2>
             </div>
             <div class="modal-content" id="modal-body"></div>
-            <div class="modal-footer">
-                <button onclick="closeModal('detailModal')" class="btn">Tutup</button>
-            </div>
+            <div class="modal-footer"><button onclick="closeModal('detailModal')" class="btn">Tutup</button></div>
         </div>
     </div>
 
-    <!-- Modal Approve dengan Pilihan Ruang Rapat -->
+    <!-- Modal Approve -->
     <div id="approveModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1405,20 +1368,20 @@
                     <label class="input-label">Pilih Ruang Rapat</label>
                     <select class="form-input" id="room-select" required>
                         <option value="">Pilih Ruang Rapat</option>
-                        <option value="Ruang Sekar Polo">Ruang Sekar Polo</option>
-                        <option value="Ruang Purbonegoro">Ruang Purbonegoro</option>
-                        <option value="Ruang Sekar Asem">Ruang Sekar Asem</option>
-                        <option value="Ruang Sido Luhur">Ruang Sido Luhur</option>
-                        <option value="Ruang Sekar Jagad">Ruang Sekar Jagad</option>
-                        <option value="Ruang Sido Asih">Ruang Sido Asih</option>
-                        <option value="Ruang Semen Rante">Ruang Semen Rante</option>
-                        <option value="Ruang Truntum">Ruang Truntum</option>
-                        <option value="Ruang Bokor Kencana">Ruang Bokor Kencana</option>
-                        <option value="Ruang Pamiluto">Ruang Pamiluto</option>
-                        <option value="Ruang Wahyu Tumurun">Ruang Wahyu Tumurun</option>
-                        <option value="Ruang Ratu Ratih">Ruang Ratu Ratih</option>
-                        <option value="Open Space">Open Space</option>
-                        <option value="Coworking Space">Coworking Space</option>
+                        <option>Ruang Sekar Polo</option>
+                        <option>Ruang Purbonegoro</option>
+                        <option>Ruang Sekar Asem</option>
+                        <option>Ruang Sido Luhur</option>
+                        <option>Ruang Sekar Jagad</option>
+                        <option>Ruang Sido Asih</option>
+                        <option>Ruang Semen Rante</option>
+                        <option>Ruang Truntum</option>
+                        <option>Ruang Bokor Kencana</option>
+                        <option>Ruang Pamiluto</option>
+                        <option>Ruang Wahyu Tumurun</option>
+                        <option>Ruang Ratu Ratih</option>
+                        <option>Open Space</option>
+                        <option>Coworking Space</option>
                     </select>
                 </div>
             </div>
@@ -1436,36 +1399,34 @@
                 <h2 class="modal-title">Edit Permintaan Ruang Rapat</h2>
             </div>
             <div class="modal-content">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label class="input-label">Ruang Rapat</label>
-                        <select class="form-input" id="edit-room" required>
-                            <option value="">Pilih Ruang Rapat</option>
-                            <option value="Ruang Sekar Polo">Ruang Sekar Polo</option>
-                            <option value="Ruang Purbonegoro">Ruang Purbonegoro</option>
-                            <option value="Ruang Sekar Asem">Ruang Sekar Asem</option>
-                            <option value="Ruang Sido Luhur">Ruang Sido Luhur</option>
-                            <option value="Ruang Sekar Jagad">Ruang Sekar Jagad</option>
-                            <option value="Ruang Sido Asih">Ruang Sido Asih</option>
-                            <option value="Ruang Semen Rante">Ruang Semen Rante</option>
-                            <option value="Ruang Truntum">Ruang Truntum</option>
-                            <option value="Ruang Bokor Kencana">Ruang Bokor Kencana</option>
-                            <option value="Ruang Pamiluto">Ruang Pamiluto</option>
-                            <option value="Ruang Wahyu Tumurun">Ruang Wahyu Tumurun</option>
-                            <option value="Ruang Ratu Ratih">Ruang Ratu Ratih</option>
-                            <option value="Open Space">Open Space</option>
-                            <option value="Coworking Space">Coworking Space</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label">Status</label>
-                        <select class="form-input" id="edit-status" required>
-                            <option value="PENDING">Pending</option>
-                            <option value="APPROVED">Disetujui</option>
-                            <option value="COMPLETED">Selesai</option>
-                        </select>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label class="input-label">Ruang Rapat</label>
+                    <select class="form-input" id="edit-room" required>
+                        <option value="">Pilih Ruang Rapat</option>
+                        <option>Ruang Sekar Polo</option>
+                        <option>Ruang Purbonegoro</option>
+                        <option>Ruang Sekar Asem</option>
+                        <option>Ruang Sido Luhur</option>
+                        <option>Ruang Sekar Jagad</option>
+                        <option>Ruang Sido Asih</option>
+                        <option>Ruang Semen Rante</option>
+                        <option>Ruang Truntum</option>
+                        <option>Ruang Bokor Kencana</option>
+                        <option>Ruang Pamiluto</option>
+                        <option>Ruang Wahyu Tumurun</option>
+                        <option>Ruang Ratu Ratih</option>
+                        <option>Open Space</option>
+                        <option>Coworking Space</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="input-label">Status</label>
+                    <select class="form-input" id="edit-status" required>
+                        <option value="PENDING">Pending</option>
+                        <option value="APPROVED">Disetujui</option>
+                        <option value="COMPLETED">Selesai</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button onclick="closeModal('editModal')" class="btn">Batal</button>
@@ -1474,7 +1435,7 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Catatan Pelanggaran -->
+    <!-- Modal Tambah Pelanggaran -->
     <div id="addViolationModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1520,20 +1481,20 @@
                         <label class="input-label">Nama Ruang</label>
                         <select class="form-input" id="violation-ruang" required>
                             <option value="">Pilih Ruang</option>
-                            <option value="Ruang Sekar Polo">Ruang Sekar Polo</option>
-                            <option value="Ruang Purbonegoro">Ruang Purbonegoro</option>
-                            <option value="Ruang Sekar Asem">Ruang Sekar Asem</option>
-                            <option value="Ruang Sido Luhur">Ruang Sido Luhur</option>
-                            <option value="Ruang Sekar Jagad">Ruang Sekar Jagad</option>
-                            <option value="Ruang Sido Asih">Ruang Sido Asih</option>
-                            <option value="Ruang Semen Rante">Ruang Semen Rante</option>
-                            <option value="Ruang Truntum">Ruang Truntum</option>
-                            <option value="Ruang Bokor Kencana">Ruang Bokor Kencana</option>
-                            <option value="Ruang Pamiluto">Ruang Pamiluto</option>
-                            <option value="Ruang Wahyu Tumurun">Ruang Wahyu Tumurun</option>
-                            <option value="Ruang Ratu Ratih">Ruang Ratu Ratih</option>
-                            <option value="Open Space">Open Space</option>
-                            <option value="Coworking Space">Coworking Space</option>
+                            <option>Ruang Sekar Polo</option>
+                            <option>Ruang Purbonegoro</option>
+                            <option>Ruang Sekar Asem</option>
+                            <option>Ruang Sido Luhur</option>
+                            <option>Ruang Sekar Jagad</option>
+                            <option>Ruang Sido Asih</option>
+                            <option>Ruang Semen Rante</option>
+                            <option>Ruang Truntum</option>
+                            <option>Ruang Bokor Kencana</option>
+                            <option>Ruang Pamiluto</option>
+                            <option>Ruang Wahyu Tumurun</option>
+                            <option>Ruang Ratu Ratih</option>
+                            <option>Open Space</option>
+                            <option>Coworking Space</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1550,7 +1511,7 @@
         </div>
     </div>
 
-    <!-- Modal Edit Violation -->
+    <!-- Modal Edit Pelanggaran -->
     <div id="editViolationModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1566,20 +1527,20 @@
                         <label class="input-label">Nama Ruang</label>
                         <select class="form-input" id="edit-violation-ruang" required>
                             <option value="">Pilih Ruang</option>
-                            <option value="Ruang Sekar Polo">Ruang Sekar Polo</option>
-                            <option value="Ruang Purbonegoro">Ruang Purbonegoro</option>
-                            <option value="Ruang Sekar Asem">Ruang Sekar Asem</option>
-                            <option value="Ruang Sido Luhur">Ruang Sido Luhur</option>
-                            <option value="Ruang Sekar Jagad">Ruang Sekar Jagad</option>
-                            <option value="Ruang Sido Asih">Ruang Sido Asih</option>
-                            <option value="Ruang Semen Rante">Ruang Semen Rante</option>
-                            <option value="Ruang Truntum">Ruang Truntum</option>
-                            <option value="Ruang Bokor Kencana">Ruang Bokor Kencana</option>
-                            <option value="Ruang Pamiluto">Ruang Pamiluto</option>
-                            <option value="Ruang Wahyu Tumurun">Ruang Wahyu Tumurun</option>
-                            <option value="Ruang Ratu Ratih">Ruang Ratu Ratih</option>
-                            <option value="Open Space">Open Space</option>
-                            <option value="Coworking Space">Coworking Space</option>
+                            <option>Ruang Sekar Polo</option>
+                            <option>Ruang Purbonegoro</option>
+                            <option>Ruang Sekar Asem</option>
+                            <option>Ruang Sido Luhur</option>
+                            <option>Ruang Sekar Jagad</option>
+                            <option>Ruang Sido Asih</option>
+                            <option>Ruang Semen Rante</option>
+                            <option>Ruang Truntum</option>
+                            <option>Ruang Bokor Kencana</option>
+                            <option>Ruang Pamiluto</option>
+                            <option>Ruang Wahyu Tumurun</option>
+                            <option>Ruang Ratu Ratih</option>
+                            <option>Open Space</option>
+                            <option>Coworking Space</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1597,283 +1558,288 @@
     </div>
 
     <script>
+        AUTH.init();
+        // ═══════════════════════════════════════════
+        // CONFIG
+        // ═══════════════════════════════════════════
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFv1O9uSAzJd0ozDDROSxQFj4etIl_Rgc2SLOWWwbPEgTb_qlHdIeGW2X2hr3C8AGaEw/exec';
-
         const CACHE_DURATION = 5 * 60 * 1000;
-        const CACHE_KEYS = {
-            REQUESTS: 'ruang_rapat_requests',
-            VIOLATIONS: 'ruang_rapat_violations',
-            SCORES: 'ruang_rapat_scores'
-        };
+        const CACHE_KEYS = { REQUESTS: 'ruang_rapat_requests', VIOLATIONS: 'ruang_rapat_violations', SCORES: 'ruang_rapat_scores' };
 
-        const CACHE_DURATION = 5 * 60 * 1000;
-        const CACHE_KEYS = {
-            REQUESTS: 'ruang_rapat_requests',
-            VIOLATIONS: 'ruang_rapat_violations',
-            SCORES: 'ruang_rapat_scores'
-        };
-
-        let masterRequests = [];
-        let allRequests = [];
-        let masterViolations = [];
-        let allViolations = [];
+        // ═══════════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════════
+        let masterRequests = [], allRequests = [];
+        let masterViolations = [], allViolations = [];
         let allScores = {};
-        let scoreChart = null;
-        let violationChart = null;
-        let currentApproveId = null;
-        let currentEditId = null;
-        let currentEditViolationId = null;
-        let currentEditViolationBulan = null;
-        let currentEditViolationUnit = null;
-
-        let requestsCurrentPage = 1;
-        let violationsCurrentPage = 1;
+        let scoreChart = null, violationChart = null;
+        let currentApproveId = null, currentEditId = null;
+        let currentEditViolationId = null, currentEditViolationBulan = null, currentEditViolationUnit = null;
+        let requestsCurrentPage = 1, violationsCurrentPage = 1;
         const itemsPerPage = 10;
 
+        // ═══════════════════════════════════════════
+        // CACHE
+        // ═══════════════════════════════════════════
         function saveToCache(key, data) {
-            const cacheData = { data: data, timestamp: Date.now() };
-            try { localStorage.setItem(key, JSON.stringify(cacheData)); } catch (e) { console.warn('Cache storage failed:', e); }
+            try { localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() })); } catch (e) { }
         }
-
         function getFromCache(key) {
             try {
-                const cached = localStorage.getItem(key);
-                if (!cached) return null;
-                const cacheData = JSON.parse(cached);
-                const age = Date.now() - cacheData.timestamp;
-                if (age < CACHE_DURATION) { return cacheData.data; } else { localStorage.removeItem(key); return null; }
-            } catch (e) { console.warn('Cache retrieval failed:', e); return null; }
+                const c = JSON.parse(localStorage.getItem(key) || 'null');
+                if (!c) return null;
+                if (Date.now() - c.timestamp < CACHE_DURATION) return c.data;
+                localStorage.removeItem(key); return null;
+            } catch (e) { return null; }
         }
+        function clearCache() { Object.values(CACHE_KEYS).forEach(k => localStorage.removeItem(k)); }
 
-        function showCacheIndicator() {
-            const indicator = document.getElementById('cache-indicator');
-            indicator.classList.add('show');
-            setTimeout(() => { indicator.classList.remove('show'); }, 2000);
-        }
-
-        function clearCache() {
-            Object.values(CACHE_KEYS).forEach(key => { localStorage.removeItem(key); });
-        }
-
-        function toggleMobileMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            const overlay = document.querySelector('.sidebar-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => { if (window.innerWidth < 1024) { toggleMobileMenu(); } });
-        });
-
+        // ═══════════════════════════════════════════
+        // TOAST
+        // ═══════════════════════════════════════════
         const Toast = {
-            container: null,
-            init() {
-                if (!this.container) {
-                    this.container = document.createElement('div');
-                    this.container.className = 'toast-container';
-                    document.body.appendChild(this.container);
-                }
-            },
-            show(message, type = 'success') {
-                this.init();
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
-                toast.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">${type === 'success' ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>' : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'}</svg><span>${message}</span>`;
-                this.container.appendChild(toast);
-                setTimeout(() => toast.remove(), 3000);
+            show(msg, type = 'success') {
+                let c = document.querySelector('.toast-container');
+                if (!c) { c = document.createElement('div'); c.className = 'toast-container'; document.body.appendChild(c); }
+                const t = document.createElement('div');
+                t.className = `toast ${type}`;
+                t.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">${type === 'success' ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>' : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'}</svg><span>${msg}</span>`;
+                c.appendChild(t);
+                setTimeout(() => t.remove(), 3000);
             },
             success(msg) { this.show(msg, 'success'); },
             error(msg) { this.show(msg, 'error'); }
         };
 
-        async function fetchAPI(action, params = {}) {
+        // ═══════════════════════════════════════════
+        // API (JSONP)
+        // ═══════════════════════════════════════════
+        function fetchAPI(action, params = {}) {
             return new Promise((resolve, reject) => {
-                const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
-                window[callbackName] = function (data) {
-                    delete window[callbackName];
-                    const script = document.getElementById(callbackName);
-                    if (script) script.remove();
-                    if (data && data.success === false) reject(data.message);
+                const cb = 'jsonp_' + Date.now() + '_' + (Math.random() * 1e6 | 0);
+                window[cb] = data => {
+                    delete window[cb];
+                    document.getElementById(cb)?.remove();
+                    if (data && data.success === false) reject(new Error(data.message || 'API error'));
                     else resolve(data);
                 };
-                const queryString = new URLSearchParams({ action, callback: callbackName, ...params }).toString();
-                const script = document.createElement('script');
-                script.id = callbackName;
-                script.src = `${APPS_SCRIPT_URL}?${queryString}`;
-                script.onerror = () => { delete window[callbackName]; reject(new Error('Network error')); };
-                document.body.appendChild(script);
+                const qs = new URLSearchParams({ action, callback: cb, ...params }).toString();
+                const s = document.createElement('script');
+                s.id = cb;
+                s.onerror = () => { delete window[cb]; reject(new Error('Network error')); };
+                // Timeout 20 detik
+                const timer = setTimeout(() => {
+                    if (window[cb]) { delete window[cb]; s.remove(); reject(new Error('Request timeout')); }
+                }, 20000);
+                window[cb] = data => {
+                    clearTimeout(timer);
+                    delete window[cb]; s.remove();
+                    if (data && data.success === false) reject(new Error(data.message || 'API error'));
+                    else resolve(data);
+                };
+                s.src = `${APPS_SCRIPT_URL}?${qs}`;
+                document.head.appendChild(s);
             });
         }
 
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!user.email || user.role !== 'admin') { window.location.href = 'login.html'; }
-
+        // ═══════════════════════════════════════════
+        // AUTH
+        // ═══════════════════════════════════════════
+        const user = AUTH.getUser() || {};
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
-
         function logout() {
-            if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); localStorage.clear(); window.location.href = 'login.html'; }
+            if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); AUTH.logout(); }
+        }
+        // ═══════════════════════════════════════════
+        // MOBILE MENU
+        // ═══════════════════════════════════════════
+        function toggleMobileMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
         }
 
-        function switchTab(tabName) {
+        // ═══════════════════════════════════════════
+        // TABS — FIX: terima btn sebagai parameter, tidak pakai global event.target
+        // ═══════════════════════════════════════════
+        function switchTab(tabName, btn) {
+            // Update tombol aktif (desktop)
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
+            if (btn) btn.classList.add('active');
+            else {
+                // Dipanggil dari dropdown — sinkronkan tombol desktop
+                const desktopBtn = document.getElementById(`tab-btn-${tabName}`);
+                if (desktopBtn) desktopBtn.classList.add('active');
+            }
+
+            // Sinkronkan dropdown mobile
+            const dropdown = document.getElementById('mobile-tab-select');
+            if (dropdown) dropdown.value = tabName;
+
+            // Tampilkan panel yang sesuai
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
-            if (tabName === 'requests') { loadRoomRequests(); }
-            else if (tabName === 'violations') { loadViolations(); }
-            else if (tabName === 'scores') { loadScores(); }
+
+            // Tutup sidebar mobile jika terbuka
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('sidebarOverlay').classList.remove('active');
+            }
+
+            // Load data untuk tab yang dibuka
+            if (tabName === 'requests') loadRoomRequests();
+            if (tabName === 'violations') loadViolations();
+            if (tabName === 'scores') loadScores();
         }
 
-        function switchTabFromDropdown(tabName) {
-            document.getElementById('mobile-tab-select').value = tabName;
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            if (tabName === 'requests') { loadRoomRequests(); }
-            else if (tabName === 'violations') { loadViolations(); }
-            else if (tabName === 'scores') { loadScores(); }
-        }
-
+        // ═══════════════════════════════════════════
+        // HELPER
+        // ═══════════════════════════════════════════
         function createStatusBadge(status) {
-            const s = status.toLowerCase();
+            const s = (status || '').toLowerCase();
             if (s === 'approved') return '<span class="badge badge-approved">Disetujui</span>';
             if (s === 'completed' || s === 'selesai') return '<span class="badge badge-completed">Selesai</span>';
             return '<span class="badge badge-pending">Pending</span>';
         }
 
+        function showLoadingTable(tbodyId, cols) {
+            document.getElementById(tbodyId).innerHTML = `<tr><td colspan="${cols}"><div class="loading-state"><div class="spinner"></div><span>Memuat data...</span></div></td></tr>`;
+        }
+
+        function showErrorTable(tbodyId, cols, msg) {
+            document.getElementById(tbodyId).innerHTML = `<tr><td colspan="${cols}"><div class="error-state"><span style="font-size:2rem">⚠️</span><b>${msg}</b><p>Periksa koneksi internet Anda lalu coba refresh halaman.</p></div></td></tr>`;
+        }
+
+        // ═══════════════════════════════════════════
+        // TAB 1: PERMINTAAN
+        // ═══════════════════════════════════════════
         async function loadRoomRequests(forceRefresh = false) {
+            showLoadingTable('requests-tbody', 7);
             try {
                 if (!forceRefresh) {
                     const cached = getFromCache(CACHE_KEYS.REQUESTS);
-                    if (cached) {
-                        masterRequests = cached; allRequests = [...masterRequests];
-                        requestsCurrentPage = 1; renderPaginatedRequests(); showCacheIndicator(); return;
-                    }
+                    if (cached) { masterRequests = cached; allRequests = [...masterRequests]; requestsCurrentPage = 1; renderPaginatedRequests(); return; }
                 }
                 const response = await fetchAPI('getRoomRequests');
-                masterRequests = Array.isArray(response) ? response : [];
-                allRequests = [...masterRequests]; requestsCurrentPage = 1;
-                saveToCache(CACHE_KEYS.REQUESTS, masterRequests); renderPaginatedRequests();
-            } catch (error) { console.error('Load error:', error); Toast.error('Gagal memuat data'); }
+                masterRequests = Array.isArray(response) ? response : (response?.data || []);
+                allRequests = [...masterRequests];
+                requestsCurrentPage = 1;
+                saveToCache(CACHE_KEYS.REQUESTS, masterRequests);
+                renderPaginatedRequests();
+            } catch (err) {
+                console.error('loadRoomRequests error:', err);
+                showErrorTable('requests-tbody', 7, 'Gagal memuat data permintaan');
+                document.getElementById('requests-cards').innerHTML = '<div class="error-state"><span style="font-size:2rem">⚠️</span><b>Gagal memuat data</b><p>Periksa koneksi Anda.</p></div>';
+                Toast.error('Gagal memuat data permintaan: ' + err.message);
+            }
         }
 
         function renderPaginatedRequests() {
             const tbody = document.getElementById('requests-tbody');
-            const cardsContainer = document.getElementById('requests-cards');
-            const paginationContainer = document.getElementById('requests-pagination');
+            const cards = document.getElementById('requests-cards');
+            const pagination = document.getElementById('requests-pagination');
 
             if (allRequests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">Tidak ada permintaan</td></tr>';
-                cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
-                paginationContainer.innerHTML = ''; return;
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">Tidak ada permintaan</td></tr>';
+                cards.innerHTML = '<div style="text-align:center;padding:2rem;color:#64748b;">Data tidak ditemukan</div>';
+                pagination.innerHTML = ''; return;
             }
 
             const totalPages = Math.ceil(allRequests.length / itemsPerPage);
             const startIndex = (requestsCurrentPage - 1) * itemsPerPage;
             const currentItems = allRequests.slice(startIndex, startIndex + itemsPerPage);
 
-            tbody.innerHTML = currentItems.map((req) => {
-                let statusDisplay = '';
-                if (req.status.toLowerCase() === 'pending') {
-                    statusDisplay = `<div class="action-buttons"><button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve">✓ Setujui</button></div>`;
-                } else { statusDisplay = createStatusBadge(req.status); }
-
-                let actionButtons = '';
-                if (req.status.toLowerCase() === 'approved') {
-                    actionButtons = `<button onclick="markAsCompleted('${req.id}')" class="btn btn-sm btn-complete">✓ Selesai</button>`;
-                }
-
+            tbody.innerHTML = currentItems.map(req => {
+                const s = (req.status || '').toLowerCase();
+                const approveBtn = s === 'pending' ? `<button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve">✓ Setujui</button>` : '';
+                const completeBtn = s === 'approved' ? `<button onclick="markAsCompleted('${req.id}', this)" class="btn btn-sm btn-complete">✓ Selesai</button>` : '';
+                const editBtn = s !== 'pending' ? `<button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>` : '';
+                const statusCell = s === 'pending' ? `<div class="action-buttons">${approveBtn}</div>` : createStatusBadge(req.status);
                 return `<tr>
-                <td style="font-weight: 500;">#${req.id.toString().substring(0, 6)}</td>
-                <td>${req.nama_pemohon}</td>
-                <td>${req.tanggal}</td>
-                <td>${req.waktu_mulai} - ${req.waktu_selesai}</td>
-                <td>${req.namaRuang || '-'}</td>
-                <td>${statusDisplay}</td>
-                <td>
-                    <div class="action-buttons">
-                        ${actionButtons}
-                        <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
-                        ${req.status.toLowerCase() !== 'pending' ? `<button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>` : ''}
-                    </div>
-                </td>
-            </tr>`;
+            <td style="font-weight:500;">#${String(req.id).substring(0, 6)}</td>
+            <td>${req.nama_pemohon || '—'}</td>
+            <td>${req.tanggal || '—'}</td>
+            <td>${req.waktu_mulai || '—'} - ${req.waktu_selesai || '—'}</td>
+            <td>${req.namaRuang || '-'}</td>
+            <td>${statusCell}</td>
+            <td><div class="action-buttons">${completeBtn}<button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>${editBtn}</div></td>
+        </tr>`;
             }).join('');
 
-            cardsContainer.innerHTML = currentItems.map((req) => {
-                let actionButtons = '';
-                if (req.status.toLowerCase() === 'pending') {
-                    actionButtons = `<button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve" style="flex: 1;">✓ Setujui</button>`;
-                } else if (req.status.toLowerCase() === 'approved') {
-                    actionButtons = `<button onclick="markAsCompleted('${req.id}')" class="btn btn-sm btn-complete" style="flex: 1;">✓ Selesai</button>`;
-                }
+            cards.innerHTML = currentItems.map(req => {
+                const s = (req.status || '').toLowerCase();
+                const actionBtn = s === 'pending' ? `<button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve" style="flex:1">✓ Setujui</button>` :
+                    s === 'approved' ? `<button onclick="markAsCompleted('${req.id}', this)" class="btn btn-sm btn-complete" style="flex:1">✓ Selesai</button>` : '';
+                const editBtn = s !== 'pending' ? `<button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit" style="flex:1">✏️ Edit</button>` : '';
                 return `<div class="requests-card">
-                <div class="requests-card-header">
-                    <div style="flex: 1;"><div class="requests-card-title">${req.nama_pemohon}</div><div class="requests-card-subtitle">#${req.id.toString().substring(0, 6)}</div></div>
-                    ${req.status.toLowerCase() === 'pending' ? '' : createStatusBadge(req.status)}
-                </div>
-                <div class="requests-card-body">
-                    <div class="requests-card-row"><span class="requests-card-label">Tanggal</span><span class="requests-card-value">${req.tanggal}</span></div>
-                    <div class="requests-card-row"><span class="requests-card-label">Waktu</span><span class="requests-card-value">${req.waktu_mulai} - ${req.waktu_selesai}</span></div>
-                    <div class="requests-card-row"><span class="requests-card-label">Ruangan</span><span class="requests-card-value">${req.namaRuang || '-'}</span></div>
-                    <div class="requests-card-row"><span class="requests-card-label">Keperluan</span><span class="requests-card-value">${req.kegiatan || req.keperluan}</span></div>
-                </div>
-                <div class="requests-card-footer">
-                    <div style="display: flex; gap: 8px;">
-                        ${actionButtons}
-                        <button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex: 1;">👁 Detail</button>
-                        ${req.status.toLowerCase() !== 'pending' ? `<button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit" style="flex: 1;">✏️ Edit</button>` : ''}
-                    </div>
-                </div>
-            </div>`;
+            <div class="requests-card-header">
+                <div style="flex:1"><div class="requests-card-title">${req.nama_pemohon || '—'}</div><div class="requests-card-subtitle">#${String(req.id).substring(0, 6)}</div></div>
+                ${s !== 'pending' ? createStatusBadge(req.status) : ''}
+            </div>
+            <div class="requests-card-body">
+                <div class="requests-card-row"><span class="requests-card-label">Tanggal</span><span class="requests-card-value">${req.tanggal || '—'}</span></div>
+                <div class="requests-card-row"><span class="requests-card-label">Waktu</span><span class="requests-card-value">${req.waktu_mulai || '—'} - ${req.waktu_selesai || '—'}</span></div>
+                <div class="requests-card-row"><span class="requests-card-label">Ruangan</span><span class="requests-card-value">${req.namaRuang || '-'}</span></div>
+                <div class="requests-card-row"><span class="requests-card-label">Keperluan</span><span class="requests-card-value">${req.kegiatan || req.keperluan || '—'}</span></div>
+            </div>
+            <div class="requests-card-footer">
+                <div style="display:flex;gap:8px">${actionBtn}<button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex:1">👁 Detail</button>${editBtn}</div>
+            </div>
+        </div>`;
             }).join('');
 
-            paginationContainer.innerHTML = `
-            <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-            <span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span>
-            <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+            pagination.innerHTML = `
+        <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+        <span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span>
+        <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function changeRequestsPage(page) {
             const totalPages = Math.ceil(allRequests.length / itemsPerPage);
             if (page < 1 || page > totalPages) return;
             requestsCurrentPage = page; renderPaginatedRequests();
-            if (window.innerWidth < 1024) { document.querySelector('#requests-cards').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-            else { document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         }
 
+        document.getElementById('search-requests').addEventListener('input', e => {
+            const term = e.target.value.toLowerCase();
+            allRequests = masterRequests.filter(req =>
+                (req.nama_pemohon || '').toLowerCase().includes(term) ||
+                (req.kegiatan || '').toLowerCase().includes(term) ||
+                (req.keperluan || '').toLowerCase().includes(term)
+            );
+            requestsCurrentPage = 1; renderPaginatedRequests();
+        });
+
+        // Approve
         function openApproveModal(id) { currentApproveId = id; document.getElementById('room-select').value = ''; openModal('approveModal'); }
 
         async function confirmApprove() {
-            const roomNumber = document.getElementById('room-select').value;
-            if (!roomNumber) { Toast.error('Pilih ruang rapat terlebih dahulu'); return; }
-            const confirmBtn = document.getElementById('confirm-approve-btn');
-            const originalText = confirmBtn.innerHTML;
-            confirmBtn.disabled = true;
-            confirmBtn.innerHTML = '<span class="spinner spinner-sm"></span> Menyetujui...';
+            const ruang = document.getElementById('room-select').value;
+            if (!ruang) { Toast.error('Pilih ruang rapat terlebih dahulu'); return; }
+            const btn = document.getElementById('confirm-approve-btn');
+            const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyetujui...';
             try {
-                const res = await fetchAPI('updateRoomRequest', { id: currentApproveId, status: 'APPROVED', namaRuang: roomNumber });
-                if (res.success) { Toast.success('Permintaan disetujui dengan ruang ' + roomNumber); closeModal('approveModal'); clearCache(); await loadRoomRequests(true); }
+                const res = await fetchAPI('updateRoomRequest', { id: currentApproveId, status: 'APPROVED', namaRuang: ruang });
+                if (res.success) { Toast.success('Permintaan disetujui: ' + ruang); closeModal('approveModal'); clearCache(); await loadRoomRequests(true); }
                 else { Toast.error(res.message || 'Gagal menyetujui'); }
-            } catch (error) { Toast.error('Gagal: ' + error.message); }
-            finally { confirmBtn.disabled = false; confirmBtn.innerHTML = originalText; }
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+            finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
-        async function markAsCompleted(id) {
+        // Complete
+        async function markAsCompleted(id, btnEl) {
             if (!confirm('Tandai permintaan ini sebagai selesai?')) return;
-            const button = event.target;
-            const originalText = button.innerHTML;
-            button.disabled = true;
-            button.innerHTML = '<span class="spinner spinner-sm"></span> Proses...';
+            const orig = btnEl.innerHTML; btnEl.disabled = true; btnEl.innerHTML = '<span class="spinner spinner-sm"></span>';
             try {
-                const result = await fetchAPI('updateRoomRequest', { id: id, status: 'COMPLETED' });
-                if (result.success) { Toast.success('Status berhasil diperbarui menjadi selesai!'); clearCache(); await loadRoomRequests(true); }
-            } catch (error) { Toast.error("Gagal memperbarui status"); button.disabled = false; button.innerHTML = originalText; }
+                const res = await fetchAPI('updateRoomRequest', { id, status: 'COMPLETED' });
+                if (res.success) { Toast.success('Status diperbarui menjadi Selesai'); clearCache(); await loadRoomRequests(true); }
+                else { Toast.error(res.message || 'Gagal'); btnEl.disabled = false; btnEl.innerHTML = orig; }
+            } catch (e) { Toast.error('Gagal: ' + e.message); btnEl.disabled = false; btnEl.innerHTML = orig; }
         }
 
+        // Edit
         function openEditModal(id) {
-            const req = allRequests.find(r => r.id == id);
+            const req = allRequests.find(r => String(r.id) === String(id));
             if (!req) { Toast.error('Permintaan tidak ditemukan'); return; }
             currentEditId = id;
             document.getElementById('edit-room').value = req.namaRuang || '';
@@ -1882,199 +1848,121 @@
         }
 
         async function submitEdit() {
-            const form = document.getElementById('editForm');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-            const submitBtn = document.getElementById('submit-edit-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            const btn = document.getElementById('submit-edit-btn');
+            const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
             try {
-                const res = await fetchAPI('updateRoomRequest', { id: currentEditId, status: document.getElementById('edit-status').value, namaRuang: document.getElementById('edit-room').value });
+                const res = await fetchAPI('updateRoomRequest', {
+                    id: currentEditId,
+                    status: document.getElementById('edit-status').value,
+                    namaRuang: document.getElementById('edit-room').value
+                });
                 if (res.success) { Toast.success('Permintaan berhasil diperbarui'); closeModal('editModal'); clearCache(); await loadRoomRequests(true); }
                 else { Toast.error(res.message || 'Gagal memperbarui'); }
-            } catch (error) { Toast.error('Gagal: ' + error.message); }
-            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+            finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
+        // Detail
         function viewDetail(id) {
-            const req = allRequests.find(r => r.id == id);
+            const req = allRequests.find(r => String(r.id) === String(id));
             if (!req) return;
-            const modalBody = document.getElementById('modal-body');
-            modalBody.innerHTML = `
-            <div class="info-grid">
-                <div class="info-item"><span class="input-label">No. Booking</span><p><strong>#${req.id}</strong></p></div>
-                <div class="info-item"><span class="input-label">Status</span><div>${createStatusBadge(req.status)}</div></div>
-            </div>
-            <hr style="margin-bottom: 16px; border: 0; border-top: 1px solid #eee;">
-            <div class="info-grid">
-                <div class="info-item"><span class="input-label">Nama Pemohon</span><p>${req.nama_pemohon}</p></div>
-                <div class="info-item"><span class="input-label">Unit Kerja / Bidang</span><p>${req.unit_eselon || '-'}</p></div>
-                <div class="info-item"><span class="input-label">Tanggal Penggunaan</span><p>${req.tanggal}</p></div>
-                <div class="info-item"><span class="input-label">Waktu</span><p>${req.waktu_mulai} s/d ${req.waktu_selesai}</p></div>
-            </div>
-            <div class="info-item" style="margin-top: 16px;"><span class="input-label">Ruang Rapat</span><div style="padding: 12px; background: #f8fafc; border-radius: 6px; font-weight: 600;">${req.namaRuang || 'Belum Ditentukan'}</div></div>
-            <div class="info-item" style="margin-top: 16px;"><span class="input-label">Agenda / Kegiatan</span><div style="padding: 12px; background: #f8fafc; border-radius: 6px;">${req.kegiatan || req.keperluan}</div></div>
-            <div class="info-item" style="margin-top: 16px;"><span class="input-label">Jumlah Peserta</span><p>${req.jumlah_peserta || '0'} Orang</p></div>`;
+            document.getElementById('modal-body').innerHTML = `
+        <div class="info-grid">
+            <div class="info-item"><span class="input-label">No. Booking</span><p><strong>#${req.id}</strong></p></div>
+            <div class="info-item"><span class="input-label">Status</span>${createStatusBadge(req.status)}</div>
+        </div>
+        <hr style="margin-bottom:16px;border:0;border-top:1px solid #eee">
+        <div class="info-grid">
+            <div class="info-item"><span class="input-label">Nama Pemohon</span><p>${req.nama_pemohon || '—'}</p></div>
+            <div class="info-item"><span class="input-label">Unit Kerja</span><p>${req.unit_eselon || '—'}</p></div>
+            <div class="info-item"><span class="input-label">Tanggal</span><p>${req.tanggal || '—'}</p></div>
+            <div class="info-item"><span class="input-label">Waktu</span><p>${req.waktu_mulai || '—'} s/d ${req.waktu_selesai || '—'}</p></div>
+        </div>
+        <div class="info-item" style="margin-top:16px"><span class="input-label">Ruang Rapat</span><div style="padding:12px;background:#f8fafc;border-radius:6px;font-weight:600">${req.namaRuang || 'Belum Ditentukan'}</div></div>
+        <div class="info-item" style="margin-top:16px"><span class="input-label">Agenda / Kegiatan</span><div style="padding:12px;background:#f8fafc;border-radius:6px">${req.kegiatan || req.keperluan || '—'}</div></div>
+        <div class="info-item" style="margin-top:16px"><span class="input-label">Jumlah Peserta</span><p>${req.jumlah_peserta || '0'} Orang</p></div>`;
             openModal('detailModal');
         }
 
-        document.getElementById('search-requests').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            allRequests = masterRequests.filter(req => req.nama_pemohon.toLowerCase().includes(term) || (req.kegiatan && req.kegiatan.toLowerCase().includes(term)));
-            requestsCurrentPage = 1; renderPaginatedRequests();
-        });
-
+        // ═══════════════════════════════════════════
+        // TAB 2: PELANGGARAN
+        // ═══════════════════════════════════════════
         async function loadViolations(forceRefresh = false) {
+            showLoadingTable('violations-tbody', 6);
             try {
                 if (!forceRefresh) {
                     const cached = getFromCache(CACHE_KEYS.VIOLATIONS);
-                    if (cached) { masterViolations = cached; allViolations = [...masterViolations]; violationsCurrentPage = 1; renderPaginatedViolations(); showCacheIndicator(); return; }
+                    if (cached) { masterViolations = cached; allViolations = [...masterViolations]; violationsCurrentPage = 1; renderPaginatedViolations(); return; }
                 }
                 const response = await fetchAPI('getRoomViolations');
-                masterViolations = Array.isArray(response) ? response : [];
-                allViolations = [...masterViolations]; violationsCurrentPage = 1;
-                saveToCache(CACHE_KEYS.VIOLATIONS, masterViolations); renderPaginatedViolations();
-            } catch (error) { console.error('Error:', error); Toast.error('Gagal memuat data keterlambatan'); }
+                masterViolations = Array.isArray(response) ? response : (response?.data || []);
+                allViolations = [...masterViolations];
+                violationsCurrentPage = 1;
+                saveToCache(CACHE_KEYS.VIOLATIONS, masterViolations);
+                renderPaginatedViolations();
+            } catch (err) {
+                console.error('loadViolations error:', err);
+                showErrorTable('violations-tbody', 6, 'Gagal memuat data pelanggaran');
+                Toast.error('Gagal memuat data pelanggaran: ' + err.message);
+            }
         }
 
         function renderPaginatedViolations() {
             const tbody = document.getElementById('violations-tbody');
-            const cardsContainer = document.getElementById('violations-cards');
-            const paginationContainer = document.getElementById('violations-pagination');
+            const cards = document.getElementById('violations-cards');
+            const pagination = document.getElementById('violations-pagination');
 
             if (allViolations.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">Tidak ada catatan pelanggaran</td></tr>';
-                cardsContainer.innerHTML = '<div style="text-align:center; padding: 2rem; color: #64748b;">Data tidak ditemukan</div>';
-                paginationContainer.innerHTML = ''; return;
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#94a3b8;">Tidak ada catatan pelanggaran</td></tr>';
+                cards.innerHTML = '<div style="text-align:center;padding:2rem;color:#64748b;">Data tidak ditemukan</div>';
+                pagination.innerHTML = ''; return;
             }
 
             const totalPages = Math.ceil(allViolations.length / itemsPerPage);
             const startIndex = (violationsCurrentPage - 1) * itemsPerPage;
             const currentItems = allViolations.slice(startIndex, startIndex + itemsPerPage);
 
-            // ✅ FIXED: Tombol Edit & Delete sekarang konsisten dengan Kendaraan Dinas
             tbody.innerHTML = currentItems.map(v => `
-            <tr>
-                <td>${v.bulan}</td>
-                <td>${v.unit}</td>
-                <td>${v.tanggal}</td>
-                <td>${v.namaRuang}</td>
-                <td>${v.laporan}</td>
-                <td>
-                    <div class="action-buttons">
-                        <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit">✏️ Edit</button>
-                        <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
-                    </div>
-                </td>
-            </tr>
-        `).join('');
+        <tr>
+            <td>${v.bulan || '—'}</td>
+            <td>${v.unit || '—'}</td>
+            <td>${v.tanggal || '—'}</td>
+            <td>${v.namaRuang || '—'}</td>
+            <td>${v.laporan || '—'}</td>
+            <td>
+                <div class="action-buttons">
+                    <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit">✏️ Edit</button>
+                    <button onclick="deleteViolation('${v.id}','${v.bulan}','${v.unit}')" class="btn btn-sm btn-delete">🗑️ Hapus</button>
+                </div>
+            </td>
+        </tr>`).join('');
 
-            cardsContainer.innerHTML = currentItems.map(v => `
-            <div class="violation-card">
-                <div class="violation-card-header">
-                    <div><div class="violation-card-title">${v.unit}</div><div class="violation-card-subtitle">Bulan ${v.bulan}</div></div>
-                </div>
-                <div class="violation-card-body">
-                    <div class="violation-card-item"><div class="violation-card-label">Tanggal</div><div class="violation-card-value">${v.tanggal}</div></div>
-                    <div class="violation-card-item"><div class="violation-card-label">Nama Ruang</div><div class="violation-card-value">${v.namaRuang}</div></div>
-                    <div class="violation-card-item" style="grid-column: 1 / -1;"><div class="violation-card-label">Laporan</div><div class="violation-card-value">${v.laporan}</div></div>
-                </div>
-                <div style="display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f1f5f9;">
-                    <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit" style="flex: 1;">✏️ Edit</button>
-                    <button onclick="deleteViolation('${v.id}', '${v.bulan}', '${v.unit}')" class="btn btn-sm btn-delete" style="flex: 1;">🗑️ Hapus</button>
-                </div>
+            cards.innerHTML = currentItems.map(v => `
+        <div class="violation-card">
+            <div class="violation-card-header">
+                <div><div class="violation-card-title">${v.unit || '—'}</div><div class="violation-card-subtitle">Bulan ${v.bulan || '—'}</div></div>
             </div>
-        `).join('');
+            <div class="violation-card-body">
+                <div class="violation-card-item"><div class="violation-card-label">Tanggal</div><div class="violation-card-value">${v.tanggal || '—'}</div></div>
+                <div class="violation-card-item"><div class="violation-card-label">Nama Ruang</div><div class="violation-card-value">${v.namaRuang || '—'}</div></div>
+                <div class="violation-card-item" style="grid-column:1/-1"><div class="violation-card-label">Laporan</div><div class="violation-card-value">${v.laporan || '—'}</div></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9">
+                <button onclick='openEditViolationModal(${JSON.stringify(v).replace(/'/g, "&#39;")})' class="btn btn-sm btn-edit" style="flex:1">✏️ Edit</button>
+                <button onclick="deleteViolation('${v.id}','${v.bulan}','${v.unit}')" class="btn btn-sm btn-delete" style="flex:1">🗑️ Hapus</button>
+            </div>
+        </div>`).join('');
 
-            paginationContainer.innerHTML = `
-            <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-            <span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span>
-            <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+            pagination.innerHTML = `
+        <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+        <span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span>
+        <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function changeViolationsPage(page) {
             const totalPages = Math.ceil(allViolations.length / itemsPerPage);
             if (page < 1 || page > totalPages) return;
             violationsCurrentPage = page; renderPaginatedViolations();
-            if (window.innerWidth < 1024) { document.querySelector('#violations-cards').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-            else { document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        }
-
-        function openAddViolationModal() { document.getElementById('violationForm').reset(); openModal('addViolationModal'); }
-
-        async function submitViolation() {
-            const form = document.getElementById('violationForm');
-            const submitBtn = document.getElementById('submit-violation-btn');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
-            const bulan = document.getElementById('violation-bulan').value;
-            const unit = document.getElementById('violation-unit').value;
-            const tanggal = document.getElementById('violation-tanggal').value;
-            const namaRuang = document.getElementById('violation-ruang').value;
-            const laporan = document.getElementById('violation-laporan').value;
-            try {
-                const dateObj = new Date(tanggal);
-                const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-                const result = await fetchAPI('createRoomViolation', { bulan, unit, tanggal: formattedDate, namaRuang, laporan });
-                if (result.success) { Toast.success('Catatan pelanggaran berhasil ditambahkan!'); closeModal('addViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
-                else { Toast.error(result.message || 'Gagal menambahkan catatan'); }
-            } catch (error) { Toast.error('Gagal menambahkan catatan: ' + error); }
-            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnText; }
-        }
-
-        function openEditViolationModal(violation) {
-            currentEditViolationId = violation.id;
-            currentEditViolationBulan = violation.bulan;
-            currentEditViolationUnit = violation.unit;
-            const parts = violation.tanggal.split('-');
-            const formattedDate = parts.length === 3 ? `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}` : '';
-            document.getElementById('edit-violation-tanggal').value = formattedDate;
-            document.getElementById('edit-violation-ruang').value = violation.namaRuang || '';
-            document.getElementById('edit-violation-laporan').value = violation.laporan || '';
-            openModal('editViolationModal');
-        }
-
-        async function submitEditViolation() {
-            const form = document.getElementById('editViolationForm');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-            const submitBtn = document.getElementById('submit-edit-violation-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
-            try {
-                const tanggalInput = document.getElementById('edit-violation-tanggal').value;
-                const dateObj = new Date(tanggalInput);
-                const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-                const res = await fetchAPI('updateRoomViolation', { id: currentEditViolationId, bulan: currentEditViolationBulan, unit: currentEditViolationUnit, tanggal: formattedDate, namaRuang: document.getElementById('edit-violation-ruang').value, laporan: document.getElementById('edit-violation-laporan').value });
-                if (res.success) { Toast.success('Catatan berhasil diupdate'); closeModal('editViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
-                else { Toast.error(res.message || 'Gagal update'); }
-            } catch (error) { Toast.error('Gagal: ' + error); }
-            finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
-        }
-
-        async function deleteViolation(id, bulan, unit) {
-            if (!confirm('Hapus catatan pelanggaran ini?')) return;
-            try {
-                const res = await fetchAPI('deleteRoomViolation', { id, bulan, unit });
-                if (res.success) { Toast.success('Catatan berhasil dihapus'); clearCache(); await loadViolations(true); await loadScores(true); }
-                else { Toast.error(res.message || 'Gagal menghapus'); }
-            } catch (error) { Toast.error('Gagal: ' + error); }
-        }
-
-        async function exportViolations() {
-            const bulan = document.getElementById('filter-bulan').value;
-            const unit = document.getElementById('filter-unit').value;
-            if (!confirm('Export catatan ke sheet baru di spreadsheet?')) return;
-            try {
-                Toast.show('Mengekspor data...', 'success');
-                const result = await fetchAPI('exportViolationsReport', { bulan: bulan || '', unit: unit || '' });
-                if (result.success) {
-                    Toast.success(`Berhasil export ${result.recordCount} catatan!`);
-                    if (result.url) { const openLink = confirm('Buka spreadsheet di tab baru?'); if (openLink) { window.open(result.url, '_blank'); } }
-                } else { Toast.error(result.message || 'Gagal export'); }
-            } catch (error) { Toast.error('Gagal export: ' + error); }
         }
 
         document.getElementById('filter-bulan').addEventListener('change', filterViolations);
@@ -2083,32 +1971,120 @@
         function filterViolations() {
             const bulan = document.getElementById('filter-bulan').value;
             const unit = document.getElementById('filter-unit').value;
-            allViolations = masterViolations.filter(v => { const matchBulan = bulan === "" || v.bulan === bulan; const matchUnit = unit === "" || v.unit === unit; return matchBulan && matchUnit; });
+            allViolations = masterViolations.filter(v =>
+                (!bulan || v.bulan === bulan) && (!unit || v.unit === unit)
+            );
             violationsCurrentPage = 1; renderPaginatedViolations();
         }
 
-        async function loadScores(forceRefresh = false) {
+        function openAddViolationModal() { document.getElementById('violationForm').reset(); openModal('addViolationModal'); }
+
+        async function submitViolation() {
+            const form = document.getElementById('violationForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const btn = document.getElementById('submit-violation-btn');
+            const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
             try {
-                const bulan = document.getElementById('filter-score-bulan').value;
-                const cacheKey = `${CACHE_KEYS.SCORES}_${bulan}`;
-                if (!forceRefresh && bulan) {
-                    const cached = getFromCache(cacheKey);
-                    if (cached) { allScores = cached; renderScoresUI(allScores); showCacheIndicator(); return; }
-                }
-                const data = await fetchAPI('getRoomScores');
-                if (data.success) {
-                    allScores = { sanksi: data.sanksiPerPelanggaran, scores: data.scores };
-                    if (bulan) { saveToCache(cacheKey, allScores); }
-                    renderScoresUI(allScores);
-                }
-            } catch (error) { console.error("Gagal load scores:", error); Toast.error('Gagal memuat penilaian'); }
+                const tanggal = document.getElementById('violation-tanggal').value;
+                const d = new Date(tanggal);
+                const res = await fetchAPI('createRoomViolation', {
+                    bulan: document.getElementById('violation-bulan').value,
+                    unit: document.getElementById('violation-unit').value,
+                    tanggal: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`,
+                    namaRuang: document.getElementById('violation-ruang').value,
+                    laporan: document.getElementById('violation-laporan').value
+                });
+                if (res.success) { Toast.success('Catatan berhasil ditambahkan'); closeModal('addViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else { Toast.error(res.message || 'Gagal menambahkan'); }
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+            finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
-        function renderScoresUI(data) {
-            document.getElementById('sanksi-value').textContent = `${data.sanksi} poin`;
+        function openEditViolationModal(v) {
+            currentEditViolationId = v.id;
+            currentEditViolationBulan = v.bulan;
+            currentEditViolationUnit = v.unit;
+            const parts = (v.tanggal || '').split('-');
+            document.getElementById('edit-violation-tanggal').value = parts.length === 3 ? `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}` : '';
+            document.getElementById('edit-violation-ruang').value = v.namaRuang || '';
+            document.getElementById('edit-violation-laporan').value = v.laporan || '';
+            openModal('editViolationModal');
+        }
+
+        async function submitEditViolation() {
+            const form = document.getElementById('editViolationForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const btn = document.getElementById('submit-edit-violation-btn');
+            const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            try {
+                const tanggal = document.getElementById('edit-violation-tanggal').value;
+                const d = new Date(tanggal);
+                const res = await fetchAPI('updateRoomViolation', {
+                    id: currentEditViolationId,
+                    bulan: currentEditViolationBulan,
+                    unit: currentEditViolationUnit,
+                    tanggal: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`,
+                    namaRuang: document.getElementById('edit-violation-ruang').value,
+                    laporan: document.getElementById('edit-violation-laporan').value
+                });
+                if (res.success) { Toast.success('Catatan berhasil diupdate'); closeModal('editViolationModal'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else { Toast.error(res.message || 'Gagal update'); }
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+            finally { btn.disabled = false; btn.innerHTML = orig; }
+        }
+
+        async function deleteViolation(id, bulan, unit) {
+            if (!confirm('Hapus catatan pelanggaran ini?')) return;
+            try {
+                const res = await fetchAPI('deleteRoomViolation', { id, bulan, unit });
+                if (res.success) { Toast.success('Catatan berhasil dihapus'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else { Toast.error(res.message || 'Gagal menghapus'); }
+            } catch (e) { Toast.error('Gagal: ' + e.message); }
+        }
+
+        async function exportViolations() {
+            const bulan = document.getElementById('filter-bulan').value;
+            const unit = document.getElementById('filter-unit').value;
+            if (!confirm('Export catatan ke sheet baru di spreadsheet?')) return;
+            try {
+                Toast.success('Mengekspor data...');
+                const res = await fetchAPI('exportViolationsReport', { bulan: bulan || '', unit: unit || '' });
+                if (res.success) {
+                    Toast.success(`Berhasil export ${res.recordCount || ''} catatan!`);
+                    if (res.url && confirm('Buka spreadsheet di tab baru?')) window.open(res.url, '_blank');
+                } else { Toast.error(res.message || 'Gagal export'); }
+            } catch (e) { Toast.error('Gagal export: ' + e.message); }
+        }
+
+        // ═══════════════════════════════════════════
+        // TAB 3: PENILAIAN
+        // ═══════════════════════════════════════════
+        async function loadScores(forceRefresh = false) {
+            const bulan = document.getElementById('filter-score-bulan').value;
+            const cacheKey = `${CACHE_KEYS.SCORES}_${bulan}`;
+            try {
+                if (!forceRefresh && bulan) {
+                    const cached = getFromCache(cacheKey);
+                    if (cached) { allScores = cached; renderScoresUI(); return; }
+                }
+                const data = await fetchAPI('getRoomScores');
+                if (data && data.success) {
+                    allScores = { sanksi: data.sanksiPerPelanggaran, scores: data.scores };
+                    if (bulan) saveToCache(cacheKey, allScores);
+                    renderScoresUI();
+                } else { throw new Error(data?.message || 'Respons tidak valid'); }
+            } catch (err) {
+                console.error('loadScores error:', err);
+                Toast.error('Gagal memuat penilaian: ' + err.message);
+            }
+        }
+
+        function renderScoresUI() {
+            document.getElementById('sanksi-value').textContent = allScores.sanksi != null ? `${allScores.sanksi} poin` : '—';
+            // Auto-pilih bulan saat ini jika belum dipilih
             if (!document.getElementById('filter-score-bulan').value) {
-                const monthNames = ['', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-                document.getElementById('filter-score-bulan').value = monthNames[new Date().getMonth() + 1];
+                const mn = ['', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+                document.getElementById('filter-score-bulan').value = mn[new Date().getMonth() + 1];
             }
             renderScores();
         }
@@ -2117,31 +2093,31 @@
             const bulan = document.getElementById('filter-score-bulan').value;
             const container = document.getElementById('scores-container');
             if (!bulan) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>`;
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>';
                 if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return;
             }
             if (!allScores.scores) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color: #ef4444;">Data penilaian tidak tersedia</p></div>`; return;
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color:#ef4444">Data penilaian tidak tersedia</p></div>'; return;
             }
             const monthScores = allScores.scores.filter(s => s.bulan === bulan);
             if (monthScores.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>`;
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>';
                 if (scoreChart) scoreChart.destroy(); if (violationChart) violationChart.destroy(); return;
             }
             renderCharts(monthScores);
             container.innerHTML = monthScores.map(score => {
-                const scoreClass = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
+                const cls = score.skorAkhir >= 4.5 ? 'score-good' : score.skorAkhir >= 3 ? 'score-warning' : 'score-danger';
                 return `<div class="score-card">
-                <div class="score-header">
-                    <div><div class="score-unit-name">${score.unit}</div><div class="score-month">Bulan ${score.bulan}</div></div>
-                    <div class="score-value ${scoreClass}">${score.skorAkhir.toFixed(2)}</div>
-                </div>
-                <div class="score-details">
-                    <div class="score-detail-item"><div class="score-detail-label">Skor Utuh</div><div class="score-detail-value">${score.skorUtuh}</div></div>
-                    <div class="score-detail-item"><div class="score-detail-label">Pelanggaran</div><div class="score-detail-value">${score.jumlahPelanggaran}</div></div>
-                    <div class="score-detail-item"><div class="score-detail-label">Sanksi</div><div class="score-detail-value" style="color: #ef4444;">-${score.jumlahSanksi.toFixed(2)}</div></div>
-                </div>
-            </div>`;
+            <div class="score-header">
+                <div><div class="score-unit-name">${score.unit}</div><div class="score-month">Bulan ${score.bulan}</div></div>
+                <div class="score-value ${cls}">${Number(score.skorAkhir).toFixed(2)}</div>
+            </div>
+            <div class="score-details">
+                <div class="score-detail-item"><div class="score-detail-label">Skor Utuh</div><div class="score-detail-value">${score.skorUtuh}</div></div>
+                <div class="score-detail-item"><div class="score-detail-label">Pelanggaran</div><div class="score-detail-value">${score.jumlahPelanggaran}</div></div>
+                <div class="score-detail-item"><div class="score-detail-label">Sanksi</div><div class="score-detail-value" style="color:#ef4444">-${Number(score.jumlahSanksi).toFixed(2)}</div></div>
+            </div>
+        </div>`;
             }).join('');
         }
 
@@ -2150,20 +2126,31 @@
             const scores = monthScores.map(s => s.skorAkhir);
             const violations = monthScores.map(s => s.jumlahPelanggaran);
             if (scoreChart) scoreChart.destroy();
-            const scoreCtx = document.getElementById('scoreChart').getContext('2d');
-            scoreChart = new Chart(scoreCtx, { type: 'bar', data: { labels: units, datasets: [{ label: 'Skor Akhir', data: scores, backgroundColor: scores.map(s => s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => `Skor: ${context.parsed.y.toFixed(2)}` } } }, scales: { y: { beginAtZero: true, max: 5, ticks: { stepSize: 0.5 } }, x: { ticks: { font: { size: 11 } } } } } });
             if (violationChart) violationChart.destroy();
-            const violationCtx = document.getElementById('violationChart').getContext('2d');
-            violationChart = new Chart(violationCtx, { type: 'bar', data: { labels: units, datasets: [{ label: 'Jumlah Pelanggaran', data: violations, backgroundColor: '#3b82f6', borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 11 } } } } } });
+            scoreChart = new Chart(document.getElementById('scoreChart').getContext('2d'), {
+                type: 'bar',
+                data: { labels: units, datasets: [{ label: 'Skor Akhir', data: scores, backgroundColor: scores.map(s => s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `Skor: ${Number(c.parsed.y).toFixed(2)}` } } }, scales: { y: { beginAtZero: true, max: 5, ticks: { stepSize: 0.5 } } } }
+            });
+            violationChart = new Chart(document.getElementById('violationChart').getContext('2d'), {
+                type: 'bar',
+                data: { labels: units, datasets: [{ label: 'Jumlah Pelanggaran', data: violations, backgroundColor: '#3b82f6', borderRadius: 6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            });
         }
 
         document.getElementById('filter-score-bulan').addEventListener('change', () => loadScores(false));
 
-        function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        // ═══════════════════════════════════════════
+        // MODAL HELPERS
+        // ═══════════════════════════════════════════
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        window.onclick = e => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; };
 
-        window.onclick = function (event) { if (event.target.classList.contains('modal-overlay')) { event.target.style.display = 'none'; } }
-
+        // ═══════════════════════════════════════════
+        // INIT — load data tab pertama langsung
+        // ═══════════════════════════════════════════
         loadRoomRequests();
     </script>
 </body>

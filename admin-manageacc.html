@@ -153,16 +153,6 @@
             border-top: 1px solid #e5e7eb;
         }
 
-        .nav-section-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #94a3b8;
-            padding: 8px 16px 4px;
-            margin-top: 4px;
-        }
-
         .nav-item {
             display: flex;
             align-items: center;
@@ -397,7 +387,7 @@
         }
 
         .select-input {
-            min-width: 140px;
+            min-width: 160px;
         }
 
         /* ── TABLE ── */
@@ -501,31 +491,41 @@
             border-radius: 50%;
         }
 
-        .badge-super {
+        /* Role badge colours */
+        .badge-superadmin {
             background: #1e293b;
             color: white;
         }
 
-        .badge-super .badge-dot {
+        .badge-superadmin .badge-dot {
             background: #f59e0b;
         }
 
-        .badge-admin {
+        .badge-subumum {
             background: #eff6ff;
             color: #1d4ed8;
         }
 
-        .badge-admin .badge-dot {
+        .badge-subumum .badge-dot {
             background: #3b82f6;
         }
 
-        .badge-viewer {
+        .badge-subkeuangan {
             background: #f0fdf4;
             color: #166534;
         }
 
-        .badge-viewer .badge-dot {
+        .badge-subkeuangan .badge-dot {
             background: #22c55e;
+        }
+
+        .badge-sekretariat {
+            background: #fdf4ff;
+            color: #7e22ce;
+        }
+
+        .badge-sekretariat .badge-dot {
+            background: #a855f7;
         }
 
         /* ── MOBILE CARDS ── */
@@ -655,7 +655,7 @@
         .modal {
             background: white;
             border-radius: 8px;
-            max-width: 520px;
+            max-width: 540px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -777,11 +777,11 @@
             display: none;
         }
 
-        /* Role picker */
+        /* Role picker — 2x2 grid */
         .role-opts {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .role-opt {
@@ -800,7 +800,7 @@
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            padding: 12px 8px;
+            padding: 14px 10px;
             border: 2px solid #e5e7eb;
             border-radius: 10px;
             cursor: pointer;
@@ -814,7 +814,7 @@
         }
 
         .role-opt-label .role-ico {
-            font-size: 20px;
+            font-size: 22px;
         }
 
         .role-opt-label .role-nm {
@@ -826,6 +826,7 @@
         .role-opt-label .role-ds {
             font-size: 10px;
             color: #94a3b8;
+            line-height: 1.3;
         }
 
         /* Confirm modal */
@@ -906,10 +907,6 @@
             align-items: center;
             gap: 16px;
             flex-wrap: wrap;
-        }
-
-        .superadmin-banner-icon {
-            font-size: 28px;
         }
 
         .superadmin-banner-title {
@@ -1124,7 +1121,7 @@
             }
 
             .role-opts {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             .superadmin-badge {
@@ -1132,6 +1129,7 @@
             }
         }
     </style>
+    <script src="auth.js"></script>
 </head>
 
 <body>
@@ -1298,23 +1296,23 @@
                 <div class="superadmin-badge">SUPER ADMIN ACCESS</div>
             </div>
 
-            <!-- Stat Cards -->
+            <!-- Stat Cards — 4 role -->
             <div class="stats-grid">
-                <div class="stat-card" style="border-left:4px solid #10b981">
-                    <div class="stat-label">Total Akun</div>
-                    <div class="stat-value" id="statTotal">0</div>
-                </div>
-                <div class="stat-card" style="border-left:4px solid #3b82f6">
-                    <div class="stat-label">Admin</div>
-                    <div class="stat-value" id="statAdmin">0</div>
-                </div>
-                <div class="stat-card" style="border-left:4px solid #22c55e">
-                    <div class="stat-label">Viewer</div>
-                    <div class="stat-value" id="statViewer">0</div>
-                </div>
-                <div class="stat-card" style="border-left:4px solid #8b5cf6">
+                <div class="stat-card" style="border-left:4px solid #1e293b;">
                     <div class="stat-label">Super Admin</div>
                     <div class="stat-value" id="statSuper">0</div>
+                </div>
+                <div class="stat-card" style="border-left:4px solid #3b82f6;">
+                    <div class="stat-label">Sub Bag. Umum</div>
+                    <div class="stat-value" id="statUmum">0</div>
+                </div>
+                <div class="stat-card" style="border-left:4px solid #22c55e;">
+                    <div class="stat-label">Sub Bag. Keuangan</div>
+                    <div class="stat-value" id="statKeuangan">0</div>
+                </div>
+                <div class="stat-card" style="border-left:4px solid #a855f7;">
+                    <div class="stat-label">Sekretariat</div>
+                    <div class="stat-value" id="statSekretariat">0</div>
                 </div>
             </div>
 
@@ -1326,8 +1324,9 @@
                         <select class="select-input" id="fltRole" onchange="applyFilter()">
                             <option value="">Semua Role</option>
                             <option value="superadmin">Super Admin</option>
-                            <option value="admin">Admin</option>
-                            <option value="viewer">Viewer</option>
+                            <option value="subumum">Sub Bagian Umum</option>
+                            <option value="subkeuangan">Sub Bagian Keuangan</option>
+                            <option value="sekretariat">Sekretariat</option>
                         </select>
                         <input type="text" class="search-input" id="searchQ" placeholder="Cari nama / email..."
                             oninput="applyFilter()">
@@ -1406,31 +1405,41 @@
                         password</div>
                     <div class="field-err" id="ePassword">Password minimal 8 karakter</div>
                 </div>
+
+                <!-- Role picker: 2x2 grid, 4 role -->
                 <div class="form-group" style="margin-bottom:0">
                     <label class="input-label">Role Akun <span class="req">*</span></label>
                     <div class="role-opts">
                         <div class="role-opt">
-                            <input type="radio" name="fRole" id="rSuper" value="superadmin">
-                            <label class="role-opt-label" for="rSuper">
+                            <input type="radio" name="fRole" id="rSuperAdmin" value="superadmin">
+                            <label class="role-opt-label" for="rSuperAdmin">
                                 <span class="role-ico">🛡️</span>
                                 <span class="role-nm">Super Admin</span>
-                                <span class="role-ds">Akses penuh + kelola akun</span>
+                                <span class="role-ds">Akses penuh & kelola akun</span>
                             </label>
                         </div>
                         <div class="role-opt">
-                            <input type="radio" name="fRole" id="rAdmin" value="admin" checked>
-                            <label class="role-opt-label" for="rAdmin">
-                                <span class="role-ico">⚙️</span>
-                                <span class="role-nm">Admin</span>
-                                <span class="role-ds">Input & kelola data</span>
+                            <input type="radio" name="fRole" id="rSubUmum" value="subumum" checked>
+                            <label class="role-opt-label" for="rSubUmum">
+                                <span class="role-ico">📋</span>
+                                <span class="role-nm">Sub Bag. Umum</span>
+                                <span class="role-ds">Pengelolaan administrasi umum</span>
                             </label>
                         </div>
                         <div class="role-opt">
-                            <input type="radio" name="fRole" id="rViewer" value="viewer">
-                            <label class="role-opt-label" for="rViewer">
-                                <span class="role-ico">👁️</span>
-                                <span class="role-nm">Viewer</span>
-                                <span class="role-ds">Baca data saja</span>
+                            <input type="radio" name="fRole" id="rSubKeuangan" value="subkeuangan">
+                            <label class="role-opt-label" for="rSubKeuangan">
+                                <span class="role-ico">💰</span>
+                                <span class="role-nm">Sub Bag. Keuangan</span>
+                                <span class="role-ds">Pengelolaan keuangan & SPJ</span>
+                            </label>
+                        </div>
+                        <div class="role-opt">
+                            <input type="radio" name="fRole" id="rSekretariat" value="sekretariat">
+                            <label class="role-opt-label" for="rSekretariat">
+                                <span class="role-ico">🏛️</span>
+                                <span class="role-nm">Sekretariat</span>
+                                <span class="role-ds">Koordinasi & kearsipan</span>
                             </label>
                         </div>
                     </div>
@@ -1530,11 +1539,21 @@
     </div>
 
     <script>
+        AUTH.init();
         // ═══════════════════════════════════════════════════════
         // KONFIGURASI
         // ═══════════════════════════════════════════════════════
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbwdoNgul4b9i-bzHvWFgnFa9kAj5JDw-UIbSoVpUuQhvaAvSRIJOyK_-1wBqDe1VIhh/exec';
-        // Contoh: 'https://script.google.com/macros/s/AKfycbxXXXXXXXXX/exec'
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbyaEDOcK0ZFQFZoG7ia-CMbtvF68un2f1k87ECYSSOewowjRSAyJYvCiveCY6T8v9gJkg/exec';
+
+        // ═══════════════════════════════════════════════════════
+        // ROLE CONFIG — satu tempat, semua ikut
+        // ═══════════════════════════════════════════════════════
+        const ROLES = {
+            superadmin: { label: 'Super Admin', icon: '🛡️', badgeClass: 'badge-superadmin' },
+            subumum: { label: 'Sub Bagian Umum', icon: '📋', badgeClass: 'badge-subumum' },
+            subkeuangan: { label: 'Sub Bagian Keuangan', icon: '💰', badgeClass: 'badge-subkeuangan' },
+            sekretariat: { label: 'Sekretariat', icon: '🏛️', badgeClass: 'badge-sekretariat' },
+        };
 
         // ═══════════════════════════════════════════════════════
         // STATE
@@ -1588,13 +1607,13 @@
                 const t = document.createElement('div');
                 t.className = `toast ${type}`;
                 t.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="color:${type === 'success' ? '#10b981' : '#ef4444'};flex-shrink:0">
-                ${type === 'success'
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="color:${type === 'success' ? '#10b981' : '#ef4444'};flex-shrink:0">
+                        ${type === 'success'
                         ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
                         : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
                     }
-            </svg>
-            <span>${esc(msg)}</span>`;
+                    </svg>
+                    <span>${esc(msg)}</span>`;
                 c.appendChild(t);
                 setTimeout(() => t.remove(), 3500);
             },
@@ -1603,7 +1622,7 @@
         };
 
         // ═══════════════════════════════════════════════════════
-        // JSONP – GAS request wrapper
+        // JSONP – GAS request wrappers
         // ═══════════════════════════════════════════════════════
         function gasRequest(payload) {
             return new Promise((resolve, reject) => {
@@ -1613,7 +1632,7 @@
                 const script = document.createElement('script');
                 let done = false;
                 window[cb] = data => { done = true; delete window[cb]; script.remove(); resolve(data); };
-                script.onerror = () => { if (done) return; delete window[cb]; script.remove(); reject(new Error('Gagal terhubung. Pastikan GAS_URL sudah benar.')); };
+                script.onerror = () => { if (done) return; delete window[cb]; script.remove(); reject(new Error('Gagal terhubung.')); };
                 setTimeout(() => { if (done) return; delete window[cb]; script.remove(); reject(new Error('Request timeout (15s)')); }, 15000);
                 script.src = url;
                 document.head.appendChild(script);
@@ -1674,10 +1693,10 @@
         }
 
         function renderStats() {
-            document.getElementById('statTotal').textContent = allUsers.length;
-            document.getElementById('statAdmin').textContent = allUsers.filter(u => u.role === 'admin').length;
-            document.getElementById('statViewer').textContent = allUsers.filter(u => u.role === 'viewer').length;
             document.getElementById('statSuper').textContent = allUsers.filter(u => u.role === 'superadmin').length;
+            document.getElementById('statUmum').textContent = allUsers.filter(u => u.role === 'subumum').length;
+            document.getElementById('statKeuangan').textContent = allUsers.filter(u => u.role === 'subkeuangan').length;
+            document.getElementById('statSekretariat').textContent = allUsers.filter(u => u.role === 'sekretariat').length;
         }
 
         function render() {
@@ -1689,10 +1708,10 @@
 
             if (filteredUsers.length === 0) {
                 const emptyHtml = `<div class="empty-state">
-            <div class="empty-state-icon">🔍</div>
-            <div class="empty-state-text">Tidak ada akun yang sesuai</div>
-            <div class="empty-state-sub">Coba ubah kata kunci atau filter pencarian</div>
-        </div>`;
+                    <div class="empty-state-icon">🔍</div>
+                    <div class="empty-state-text">Tidak ada akun yang sesuai</div>
+                    <div class="empty-state-sub">Coba ubah kata kunci atau filter pencarian</div>
+                </div>`;
                 tbody.innerHTML = `<tr><td colspan="5">${emptyHtml}</td></tr>`;
                 cards.innerHTML = emptyHtml;
                 pager.innerHTML = '';
@@ -1705,33 +1724,33 @@
                 const ini = initials(u.name);
                 const col = avColor(u.email);
                 return `<tr>
-            <td style="color:#94a3b8;font-weight:600;font-size:12px">${no}</td>
-            <td>
-                <div class="user-cell">
-                    <div class="avatar" style="background:${col}">${ini}</div>
-                    <div>
-                        <div class="user-cell-name">${esc(u.name)}</div>
-                        <div class="user-cell-email">${esc(u.email)}</div>
-                        <div class="user-cell-id">${esc(u.id)}</div>
-                    </div>
-                </div>
-            </td>
-            <td>${roleBadge(u.role)}</td>
-            <td style="font-size:13px;color:#64748b">${fmtDate(u.createdAt)}</td>
-            <td>
-                <div class="action-buttons" style="justify-content:center">
-                    <button onclick="viewUser('${escA(u.id)}')" class="btn btn-sm" title="Detail">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </button>
-                    <button onclick="openForm('edit','${escA(u.id)}')" class="btn btn-sm" title="Edit">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                    </button>
-                    <button onclick="confirmDelete('${escA(u.id)}')" class="btn btn-sm btn-danger" title="Hapus">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                    </button>
-                </div>
-            </td>
-        </tr>`;
+                    <td style="color:#94a3b8;font-weight:600;font-size:12px">${no}</td>
+                    <td>
+                        <div class="user-cell">
+                            <div class="avatar" style="background:${col}">${ini}</div>
+                            <div>
+                                <div class="user-cell-name">${esc(u.name)}</div>
+                                <div class="user-cell-email">${esc(u.email)}</div>
+                                <div class="user-cell-id">${esc(u.id)}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${roleBadge(u.role)}</td>
+                    <td style="font-size:13px;color:#64748b">${fmtDate(u.createdAt)}</td>
+                    <td>
+                        <div class="action-buttons" style="justify-content:center">
+                            <button onclick="viewUser('${escA(u.id)}')" class="btn btn-sm" title="Detail">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                            <button onclick="openForm('edit','${escA(u.id)}')" class="btn btn-sm" title="Edit">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            </button>
+                            <button onclick="confirmDelete('${escA(u.id)}')" class="btn btn-sm btn-danger" title="Hapus">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
             }).join('');
 
             // Mobile cards
@@ -1739,41 +1758,41 @@
                 const ini = initials(u.name);
                 const col = avColor(u.email);
                 return `<div class="documents-card">
-            <div class="documents-card-header">
-                <div style="display:flex;align-items:center;gap:10px;flex:1">
-                    <div class="avatar" style="background:${col}">${ini}</div>
-                    <div>
-                        <div class="documents-card-title">${esc(u.name)}</div>
-                        <div class="documents-card-subtitle">${esc(u.email)}</div>
+                    <div class="documents-card-header">
+                        <div style="display:flex;align-items:center;gap:10px;flex:1">
+                            <div class="avatar" style="background:${col}">${ini}</div>
+                            <div>
+                                <div class="documents-card-title">${esc(u.name)}</div>
+                                <div class="documents-card-subtitle">${esc(u.email)}</div>
+                            </div>
+                        </div>
+                        ${roleBadge(u.role)}
                     </div>
-                </div>
-                ${roleBadge(u.role)}
-            </div>
-            <div class="documents-card-body">
-                <div class="documents-card-row">
-                    <span class="documents-card-label">User ID</span>
-                    <span class="documents-card-value" style="font-family:monospace;font-size:11px">${esc(u.id)}</span>
-                </div>
-                <div class="documents-card-row">
-                    <span class="documents-card-label">Dibuat</span>
-                    <span class="documents-card-value">${fmtDate(u.createdAt)}</span>
-                </div>
-            </div>
-            <div class="documents-card-footer">
-                <button onclick="viewUser('${escA(u.id)}')" class="btn btn-sm" style="flex:1">👁️ Detail</button>
-                <button onclick="openForm('edit','${escA(u.id)}')" class="btn btn-sm" style="flex:1">✏️ Edit</button>
-                <button onclick="confirmDelete('${escA(u.id)}')" class="btn btn-sm btn-danger" style="flex:1">🗑️ Hapus</button>
-            </div>
-        </div>`;
+                    <div class="documents-card-body">
+                        <div class="documents-card-row">
+                            <span class="documents-card-label">User ID</span>
+                            <span class="documents-card-value" style="font-family:monospace;font-size:11px">${esc(u.id)}</span>
+                        </div>
+                        <div class="documents-card-row">
+                            <span class="documents-card-label">Dibuat</span>
+                            <span class="documents-card-value">${fmtDate(u.createdAt)}</span>
+                        </div>
+                    </div>
+                    <div class="documents-card-footer">
+                        <button onclick="viewUser('${escA(u.id)}')"       class="btn btn-sm" style="flex:1">👁️ Detail</button>
+                        <button onclick="openForm('edit','${escA(u.id)}')" class="btn btn-sm" style="flex:1">✏️ Edit</button>
+                        <button onclick="confirmDelete('${escA(u.id)}')"  class="btn btn-sm btn-danger" style="flex:1">🗑️ Hapus</button>
+                    </div>
+                </div>`;
             }).join('');
 
             // Pagination
             const totalPages = Math.ceil(filteredUsers.length / PAGE_SIZE);
             if (totalPages <= 1) { pager.innerHTML = ''; return; }
             pager.innerHTML = `
-        <button onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-        <span class="pagination-info">Halaman ${currentPage} dari ${totalPages} (${filteredUsers.length} akun)</span>
-        <button onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+                <button onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+                <span class="pagination-info">Halaman ${currentPage} dari ${totalPages} (${filteredUsers.length} akun)</span>
+                <button onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
         }
 
         function goPage(p) {
@@ -1815,11 +1834,12 @@
                 document.getElementById('fPassword').value = '';
                 const r = document.querySelector(`input[name="fRole"][value="${u.role}"]`);
                 if (r) r.checked = true;
+                else document.getElementById('rSubUmum').checked = true; // fallback
             } else {
                 document.getElementById('fName').value = '';
                 document.getElementById('fEmail').value = '';
                 document.getElementById('fPassword').value = '';
-                document.querySelector('input[name="fRole"][value="admin"]').checked = true;
+                document.getElementById('rSubUmum').checked = true;
             }
 
             closeModal('ovView');
@@ -1831,7 +1851,7 @@
             const name = document.getElementById('fName').value.trim();
             const email = document.getElementById('fEmail').value.trim();
             const password = document.getElementById('fPassword').value;
-            const role = document.querySelector('input[name="fRole"]:checked')?.value || 'admin';
+            const role = document.querySelector('input[name="fRole"]:checked')?.value || 'subumum';
             let valid = true;
 
             if (!name) { showErr('eName', 'fName'); valid = false; }
@@ -1925,7 +1945,6 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // Close on overlay background click
         document.querySelectorAll('.modal-overlay').forEach(ov => {
             ov.addEventListener('click', e => { if (e.target === ov) ov.style.display = 'none'; });
         });
@@ -1956,11 +1975,12 @@
         // UTIL
         // ═══════════════════════════════════════════════════════
         function roleBadge(role) {
-            if (role === 'superadmin') return `<span class="badge badge-super"><span class="badge-dot"></span>Super Admin</span>`;
-            if (role === 'admin') return `<span class="badge badge-admin"><span class="badge-dot"></span>Admin</span>`;
-            return `<span class="badge badge-viewer"><span class="badge-dot"></span>Viewer</span>`;
+            const r = ROLES[role] || { label: role, badgeClass: 'badge-subumum' };
+            return `<span class="badge ${r.badgeClass}"><span class="badge-dot"></span>${r.label}</span>`;
         }
-        function roleLabel(role) { return { superadmin: 'Super Admin', admin: 'Admin', viewer: 'Viewer' }[role] || role; }
+        function roleLabel(role) {
+            return (ROLES[role] || { label: role }).label;
+        }
         function fmtDate(d) {
             if (!d || d === '—') return '—';
             try { const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }); }

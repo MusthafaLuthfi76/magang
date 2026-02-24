@@ -23,7 +23,7 @@
             min-height: 100vh;
         }
 
-        /* ── TOAST ── */
+        /* TOAST */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -64,7 +64,7 @@
             }
         }
 
-        /* ── MOBILE TOGGLE ── */
+        /* MOBILE */
         .mobile-menu-toggle {
             display: none;
             position: absolute;
@@ -93,7 +93,7 @@
             z-index: 999;
         }
 
-        /* ── SIDEBAR ── */
+        /* SIDEBAR */
         .sidebar {
             width: 252px;
             background: white;
@@ -197,7 +197,7 @@
             stroke-width: 1.8;
         }
 
-        /* ── MAIN ── */
+        /* MAIN */
         .main-content {
             flex: 1;
             display: flex;
@@ -309,7 +309,7 @@
             width: 100%;
         }
 
-        /* ── BANNER ── */
+        /* BANNER */
         .banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
             border-radius: 10px;
@@ -360,7 +360,7 @@
             flex-shrink: 0;
         }
 
-        /* ── STAT CARDS ── */
+        /* STAT CARDS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -427,7 +427,7 @@
             }
         }
 
-        /* ── SECTION HEAD ── */
+        /* SECTION */
         .section-head {
             display: flex;
             align-items: baseline;
@@ -448,7 +448,7 @@
             color: #94a3b8;
         }
 
-        /* ── TAB BAR ── */
+        /* TAB BAR */
         .chart-tabs {
             display: flex;
             gap: 4px;
@@ -482,7 +482,7 @@
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* ── CARD ── */
+        /* CARD */
         .card {
             background: white;
             border-radius: 8px;
@@ -516,7 +516,7 @@
             padding: 20px;
         }
 
-        /* ── GRID ── */
+        /* GRID */
         .grid-2 {
             display: grid;
             grid-template-columns: 3fr 2fr;
@@ -531,7 +531,7 @@
             margin-bottom: 20px;
         }
 
-        /* ── CHART WRAP ── */
+        /* CHART WRAP */
         .chart-wrap {
             position: relative;
         }
@@ -548,7 +548,7 @@
             height: 230px;
         }
 
-        /* ── CAT BUTTONS ── */
+        /* CAT BUTTONS */
         .cat-row {
             display: flex;
             flex-wrap: wrap;
@@ -569,7 +569,7 @@
             color: #64748b;
         }
 
-        /* ── TABLE ── */
+        /* TABLE */
         .table-container {
             overflow-x: auto;
         }
@@ -727,7 +727,7 @@
             text-align: right;
         }
 
-        /* ── TABLE LEGEND ── */
+        /* TABLE LEGEND */
         .table-legend {
             display: flex;
             flex-wrap: wrap;
@@ -758,28 +758,7 @@
             font-size: 14px;
         }
 
-        /* ── DATA SOURCE DEBUG ── */
-        .data-source-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .ds-api {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .ds-local {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        /* ── USER INFO ── */
+        /* USER INFO */
         .user-info {
             padding: 0 12px;
             margin-bottom: 12px;
@@ -821,7 +800,7 @@
             border-color: #fca5a5;
         }
 
-        /* ── RESPONSIVE ── */
+        /* RESPONSIVE */
         @media (max-width: 1200px) {
             .grid-2 {
                 grid-template-columns: 1fr;
@@ -885,10 +864,10 @@
             }
         }
     </style>
+    <script src="auth.js"></script>
 </head>
 
 <body>
-
     <div class="toast-container" id="toastContainer"></div>
 
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -1053,9 +1032,9 @@
             <!-- Banner -->
             <div class="banner">
                 <div class="banner-left">
-                    <div class="banner-title">Sistem Penilaian Kinerja — Total Maksimal 60 Poin</div>
-                    <div class="banner-sub">Monev (40 poin) adalah penilaian terpisah dan tidak dijumlah ke total 60
-                    </div>
+                    <div class="banner-title">Sistem Penilaian Kinerja — Total Maksimal 100 Poin</div>
+                    <div class="banner-sub">BBM /5 + Kendaraan /10 + Ruang Rapat /5 + Kearsipan /5 + SPJ Keuangan /35 +
+                        Monev /40 = 100</div>
                 </div>
                 <div class="banner-pills">
                     <div class="pill">
@@ -1074,7 +1053,10 @@
                         <div class="pill-dot" style="background:#10b981"></div>SPJ Keuangan /35
                     </div>
                     <div class="pill">
-                        <div class="pill-dot" style="background:#ec4899"></div>Monev /40 ★
+                        <div class="pill-dot" style="background:#ec4899"></div>Monev /40
+                    </div>
+                    <div class="pill">
+                        <div class="pill-dot" style="background:#f8fafc"></div>Total /100
                     </div>
                 </div>
             </div>
@@ -1138,7 +1120,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Tren Total Nilai Lintas Bulan — per Divisi</span>
-                        <span class="card-note">Semua 12 bulan, nilai /60</span>
+                        <span class="card-note">Semua 12 bulan, nilai /100</span>
                     </div>
                     <div class="card-content">
                         <div class="chart-wrap h-380"><canvas id="cTrend"></canvas></div>
@@ -1204,11 +1186,11 @@
                                         style="opacity:.6">/5</small></th>
                                 <th class="center"><span style="color:#10b981">●</span> SPJ Keuangan <small
                                         style="opacity:.6">/35</small></th>
-                                <th class="center" style="background:#1a2942">Total <small
-                                        style="opacity:.6">/60</small></th>
-                                <th class="center"><span style="color:#ec4899">●</span> Monev ★ <small
+                                <th class="center"><span style="color:#ec4899">●</span> Monev <small
                                         style="opacity:.6">/40</small></th>
-                                <th class="center">Progress /60</th>
+                                <th class="center" style="background:#1a2942">Total <small
+                                        style="opacity:.6">/100</small></th>
+                                <th class="center">Progress /100</th>
                             </tr>
                         </thead>
                         <tbody id="rekapTbody">
@@ -1231,8 +1213,8 @@
                     <div class="leg-item">
                         <div class="leg-dot" style="background:#fee2e2"></div>Kurang &lt;40%
                     </div>
-                    <div class="leg-item" style="margin-left:auto;color:#94a3b8;font-style:italic">★ Monev tidak
-                        termasuk Total /60</div>
+                    <div class="leg-item" style="margin-left:auto;color:#94a3b8;font-style:italic">Monev termasuk
+                        dalam Total /100</div>
                 </div>
             </div>
 
@@ -1240,20 +1222,25 @@
     </div>
 
     <script>
+        AUTH.init();
         // ════════════════════════════════════════
-        // CONFIG
+        // CONFIG — 3 API terpisah
         // ════════════════════════════════════════
         const API_OP = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
         const API_SPJ = 'https://script.google.com/macros/s/AKfycbyE0dBi4Wa6I2OxJbI6w0KVJF97D1-hpXp29LPBJmXH0TuHZYIFAHxb0GlRJxKlOxQf/exec';
+        const API_MONEV = 'https://script.google.com/macros/s/AKfycbxwvQtZzZCYRmSX4UIL-7ars1HQX3Zp6pW0g9vlcffp2lXHTacIMX8I6PYkQtzRDaua/exec';
 
         const UNITS = [
             'Sekretariat', 'Bidang Koperasi', 'Bidang UKM',
             'Bidang Usaha Mikro', 'Bidang Kewirausahaan', 'Balai Layanan Usaha Terpadu KUMKM'
         ];
         const US = {
-            'Sekretariat': 'Sekretariat', 'Bidang Koperasi': 'Bid. Koperasi',
-            'Bidang UKM': 'Bid. UKM', 'Bidang Usaha Mikro': 'Bid. Usaha Mikro',
-            'Bidang Kewirausahaan': 'Bid. Kewirausahaan', 'Balai Layanan Usaha Terpadu KUMKM': 'Balai KUMKM'
+            'Sekretariat': 'Sekretariat',
+            'Bidang Koperasi': 'Bid. Koperasi',
+            'Bidang UKM': 'Bid. UKM',
+            'Bidang Usaha Mikro': 'Bid. Usaha Mikro',
+            'Bidang Kewirausahaan': 'Bid. Kewirausahaan',
+            'Balai Layanan Usaha Terpadu KUMKM': 'Balai KUMKM'
         };
         const MONTHS = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
         const MOS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
@@ -1263,12 +1250,11 @@
             { key: 'ruang', label: 'Ruang Rapat', color: '#8b5cf6', max: 5 },
             { key: 'kearsipan', label: 'Kearsipan', color: '#22c55e', max: 5 },
             { key: 'spj', label: 'SPJ Keuangan', color: '#10b981', max: 35 },
+            { key: 'monev', label: 'Monev', color: '#ec4899', max: 40 },
         ];
-        const TOTAL_MAX = 60;
-        const MONEV_MAX = 40;
+        const TOTAL_MAX = 100;
         const UC = ['#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#10b981', '#ec4899'];
 
-        // Bulan dalam Bahasa Indonesia (title case) → UPPERCASE
         const MONTH_MAP = {
             'januari': 'JANUARI', 'februari': 'FEBRUARI', 'maret': 'MARET', 'april': 'APRIL',
             'mei': 'MEI', 'juni': 'JUNI', 'juli': 'JULI', 'agustus': 'AGUSTUS',
@@ -1276,6 +1262,7 @@
         };
 
         let S = { bulan: '', scores: {}, allMonth: {}, loading: false };
+        let MONEV_CACHE = null;  // hasil dari API_MONEV getAllSheetData / getAllMonev
         let C = {};
         let activeCat = 'bbm';
 
@@ -1290,7 +1277,9 @@
             const now = new Date();
             document.getElementById('bulanSelect').value = MONTHS[now.getMonth()];
             S.bulan = MONTHS[now.getMonth()];
-            document.getElementById('headerDate').textContent = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('headerDate').textContent = now.toLocaleDateString('id-ID', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
 
             buildCatRow();
             loadAll();
@@ -1315,17 +1304,21 @@
         }
 
         // ════════════════════════════════════════
-        // NORMALIZE BULAN: "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
+        // NORMALIZE BULAN
+        // "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
         // ════════════════════════════════════════
         function normalizeBulan(str) {
             if (!str) return '';
-            // Ambil kata pertama saja, lowercase, lalu lookup
             const first = String(str).trim().toLowerCase().split(/[\s,\/\-]+/)[0];
             return MONTH_MAP[first] || String(str).trim().toUpperCase().split(/[\s,\/\-]+/)[0];
         }
 
+        function ok(r) {
+            return r.status === 'fulfilled' && r.value?.success;
+        }
+
         // ════════════════════════════════════════
-        // LOAD
+        // LOAD ALL
         // ════════════════════════════════════════
         async function loadAll() {
             if (S.loading) return;
@@ -1337,25 +1330,83 @@
             document.getElementById('stkNote').textContent = bL;
 
             try {
-                const [roomR, vkR, vbR, bbmR, docsR, spjR] = await Promise.allSettled([
+                // ── Fetch semua API secara paralel ──
+                // API_MONEV: coba action getAllSheetData terlebih dahulu,
+                // jika gagal akan fallback ke getAllMonev / localStorage
+                const [roomR, vkR, vbR, bbmR, docsR, spjR, monevR] = await Promise.allSettled([
                     api(API_OP, { action: 'getRoomScores' }),
                     api(API_OP, { action: 'getVehicleScores', jenis: 'KUNCI' }),
                     api(API_OP, { action: 'getVehicleScores', jenis: 'BERSIH' }),
                     api(API_OP, { action: 'getBBMScores' }),
-                    api(API_OP, { action: 'getDocuments' }),   // returns array directly
+                    api(API_OP, { action: 'getDocuments' }),
                     api(API_SPJ, { action: 'getAllSPJKeuangan' }),
+                    api(API_MONEV, { action: 'getAllSheetData' }),
                 ]);
 
-                // Build current-month scores
+                // ── Parse hasil API Monev ──
+                // Respons yang mungkin diterima dari API_MONEV:
+                //   Format A: { status: 'success', data: { JANUARI: { 'Sekretariat': { total: 32, ... }, ... }, ... } }
+                //   Format B: { success: true, rekap: { JANUARI: { 'Sekretariat': { totalNilai: 32, ... } } } }
+                //   Format C: { success: true, data: [ { bulan, unit, total, ... }, ... ] }  (array)
+                //   Format D: response langsung adalah array [ { bulan, unit, total } ]
+                MONEV_CACHE = null;
+                if (monevR.status === 'fulfilled' && monevR.value) {
+                    const val = monevR.value;
+                    console.log('[Monev API] Raw response keys:', Object.keys(val));
+
+                    if (val.status === 'success' && val.data && !Array.isArray(val.data)) {
+                        // Format A — nested object per bulan per unit
+                        MONEV_CACHE = { type: 'nested', data: val.data };
+                        console.log('[Monev API] Format A — nested. Bulan tersedia:', Object.keys(val.data));
+
+                    } else if ((val.success || val.status === 'success') && val.rekap) {
+                        // Format B — rekap object
+                        MONEV_CACHE = { type: 'rekap', data: val.rekap };
+                        console.log('[Monev API] Format B — rekap. Bulan tersedia:', Object.keys(val.rekap));
+
+                    } else if (Array.isArray(val.data)) {
+                        // Format C — array of records
+                        MONEV_CACHE = { type: 'array', data: val.data };
+                        console.log('[Monev API] Format C — array. Jumlah record:', val.data.length);
+
+                    } else if (Array.isArray(val)) {
+                        // Format D — response langsung array
+                        MONEV_CACHE = { type: 'array', data: val };
+                        console.log('[Monev API] Format D — direct array. Jumlah record:', val.length);
+
+                    } else if (val.success && val.data && typeof val.data === 'object') {
+                        // Format E — { success: true, data: { BULAN: { UNIT: { total } } } }
+                        MONEV_CACHE = { type: 'nested', data: val.data };
+                        console.log('[Monev API] Format E — nested via success. Bulan:', Object.keys(val.data));
+
+                    } else {
+                        console.warn('[Monev API] Format tidak dikenal, fallback ke localStorage:', val);
+                    }
+                } else {
+                    console.warn('[Monev API] Request gagal/timeout, fallback ke localStorage');
+                }
+
+                // ── Build scores bulan aktif ──
                 const sc = {};
-                UNITS.forEach(u => { sc[u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null }; });
-                fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR, true);
+                UNITS.forEach(u => {
+                    sc[u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null };
+                });
+                fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR);
+                fillMonev(sc, S.bulan);
                 S.scores = sc;
 
-                // Build all-month scores
+                // ── Build scores semua bulan (tren) ──
                 const am = {};
-                MONTHS.forEach(m => { am[m] = {}; UNITS.forEach(u => { am[m][u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null }; }); });
-                MONTHS.forEach(m => { fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR, false); });
+                MONTHS.forEach(m => {
+                    am[m] = {};
+                    UNITS.forEach(u => {
+                        am[m][u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null };
+                    });
+                });
+                MONTHS.forEach(m => {
+                    fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR);
+                    fillMonev(am[m], m);
+                });
                 S.allMonth = am;
 
                 render();
@@ -1371,18 +1422,18 @@
         }
 
         // ════════════════════════════════════════
-        // fillScores — FIXED
+        // fillScores — BBM, Kendaraan, Ruang, Kearsipan, SPJ
         // ════════════════════════════════════════
-        function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR, withMonev) {
+        function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
 
-            // ── RUANG RAPAT ──────────────────────────────────────────
+            // ── RUANG RAPAT ──────────────────────────────────────
             if (ok(roomR)) {
                 (roomR.value.scores || []).forEach(s => {
                     if (s.bulan === bulan && sc[s.unit]) sc[s.unit].ruang = s.skorAkhir;
                 });
             }
 
-            // ── KENDARAAN ────────────────────────────────────────────
+            // ── KENDARAAN (KUNCI + BERSIH) ────────────────────────
             const km = {}, bm = {};
             if (ok(vkR)) (vkR.value.scores || []).forEach(s => { if (s.bulan === bulan) km[s.unit] = s.skorAkhir; });
             if (ok(vbR)) (vbR.value.scores || []).forEach(s => { if (s.bulan === bulan) bm[s.unit] = s.skorAkhir; });
@@ -1391,73 +1442,45 @@
                 if (k !== null || b !== null) sc[u].kendaraan = (k ?? 0) + (b ?? 0);
             });
 
-            // ── BBM ──────────────────────────────────────────────────
+            // ── BBM ──────────────────────────────────────────────
             if (ok(bbmR)) {
                 (bbmR.value.scores || []).forEach(s => {
                     if (s.bulan === bulan && sc[s.unit]) sc[s.unit].bbm = s.skorAkhir;
                 });
             }
 
-            // ── KEARSIPAN ────────────────────────────────────────────
-            // FIX: getDocuments() mengembalikan ARRAY langsung (bukan {success, data})
-            // Tidak boleh menggunakan ok() yang cek .success
+            // ── KEARSIPAN ─────────────────────────────────────────
             let docsArray = [];
             if (docsR.status === 'fulfilled') {
                 const val = docsR.value;
-                // Handle both: plain array OR {success, data: [...]}
-                if (Array.isArray(val)) {
-                    docsArray = val;
-                } else if (val && Array.isArray(val.data)) {
-                    docsArray = val.data;
-                } else if (val && val.success === false) {
-                    docsArray = []; // explicit error
-                }
+                if (Array.isArray(val)) docsArray = val;
+                else if (Array.isArray(val?.data)) docsArray = val.data;
             }
-
-            console.log("[Kearsipan Debug] docsArray.length:", docsArray.length, "| Mencari bulan:", bulan);
             if (docsArray.length > 0) {
-                const dm = {}; // unit_normalized → [nilai]
+                const dm = {};
                 docsArray.forEach(d => {
-                    // Skip dokumen belum dinilai / pending
                     if (!d.nilai || d.nilai === '' || d.nilai === '-' || !d.unit) return;
-                    // Nilai bisa berformat "3,7" atau "3.7"
-                    const nilaiStr = String(d.nilai).replace(',', '.');
-                    const nilaiNum = parseFloat(nilaiStr);
+                    const nilaiNum = parseFloat(String(d.nilai).replace(',', '.'));
                     if (isNaN(nilaiNum) || nilaiNum <= 0) return;
-
-                    // Normalisasi bulan dokumen → uppercase
-                    const bulanDoc = normalizeBulan(d.bulan);
-                    if (bulanDoc !== bulan) return;
-
-                    // Normalisasi unit — trim whitespace
+                    if (normalizeBulan(d.bulan) !== bulan) return;
                     const unitRaw = String(d.unit).trim();
-
-                    // Cari unit yang cocok di UNITS (exact match dulu, lalu partial)
                     const matchedUnit = UNITS.find(u => u.trim() === unitRaw)
                         || UNITS.find(u => u.trim().toLowerCase() === unitRaw.toLowerCase())
                         || UNITS.find(u => unitRaw.toLowerCase().includes(u.trim().toLowerCase()) || u.trim().toLowerCase().includes(unitRaw.toLowerCase()));
-
                     if (!matchedUnit) return;
-
                     if (!dm[matchedUnit]) dm[matchedUnit] = [];
                     dm[matchedUnit].push(nilaiNum);
                 });
-
                 UNITS.forEach(u => {
-                    if (dm[u] && dm[u].length > 0) {
-                        // Rata-rata nilai (nilai kearsipan sudah skala 0–5)
+                    if (dm[u]?.length > 0) {
                         const avg = dm[u].reduce((a, c) => a + c, 0) / dm[u].length;
                         sc[u].kearsipan = +Math.min(5, avg).toFixed(2);
                     }
                 });
             }
 
-            // ── SPJ KEUANGAN ─────────────────────────────────────────
-            // STRATEGY: Cek API backend dulu, lalu SELALU cek localStorage
-            // Ini karena admin-spj-keuangan.html menyimpan ke localStorage
-            // sementara API backend mungkin kosong
-
-            // Step 1: Coba dari API backend
+            // ── SPJ KEUANGAN ──────────────────────────────────────
+            // Step 1: dari API backend
             if (ok(spjR)) {
                 const rekap = spjR.value.rekap || {};
                 const bulanKey = Object.keys(rekap).find(k => k.toUpperCase() === bulan.toUpperCase());
@@ -1465,53 +1488,124 @@
                 UNITS.forEach(u => {
                     const unitKey = Object.keys(bd).find(k => k.trim() === u.trim());
                     const unitData = unitKey ? bd[unitKey] : null;
-                    if (unitData && unitData.totalNilai !== undefined) {
+                    if (unitData?.totalNilai !== undefined) {
                         const v = parseFloat(unitData.totalNilai);
                         if (!isNaN(v) && v >= 0) sc[u].spj = v;
                     }
                 });
             }
-
-            // Step 2: SELALU cek localStorage juga — isi yang masih null
+            // Step 2: localStorage fallback
             try {
                 const localData = JSON.parse(localStorage.getItem('spj_keuangan_data') || '{}');
-                console.log('[SPJ Debug] localStorage keys:', Object.keys(localData), '| Mencari bulan:', bulan);
-
-                // Cari key bulan di localStorage (case-insensitive)
                 const localBulanKey = Object.keys(localData).find(k => k.toUpperCase() === bulan.toUpperCase());
                 const monthData = localBulanKey ? localData[localBulanKey] : {};
-                console.log('[SPJ Debug] monthData keys:', Object.keys(monthData));
-
                 UNITS.forEach(u => {
-                    if (sc[u].spj !== null) return; // sudah dapat dari API, skip
-                    // Cari unit key (exact, lalu case-insensitive)
+                    if (sc[u].spj !== null) return;
                     const unitKey = Object.keys(monthData).find(k => k.trim() === u.trim())
                         || Object.keys(monthData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
                     const unitData = unitKey ? monthData[unitKey] : null;
-                    if (unitData && unitData.totalNilai !== undefined) {
+                    if (unitData?.totalNilai !== undefined) {
                         const v = parseFloat(unitData.totalNilai);
-                        if (!isNaN(v)) { sc[u].spj = v; console.log('[SPJ Debug] Set', u, '=', v); }
-                    } else if (Object.keys(monthData).length > 0) {
-                        console.log('[SPJ Debug] Unit tidak match:', u, '| Keys ada:', Object.keys(monthData));
+                        if (!isNaN(v)) sc[u].spj = v;
                     }
                 });
-            } catch (e) {
-                console.warn('SPJ localStorage error:', e);
-            }
-
-            // ── MONEV (localStorage) ─────────────────────────────────
-            if (withMonev) {
-                UNITS.forEach(u => {
-                    try {
-                        const d = JSON.parse(localStorage.getItem(`monev_${bulan}_${u}`) || 'null');
-                        if (d?.totalScore !== undefined) sc[u].monev = d.totalScore;
-                    } catch { }
-                });
-            }
+            } catch (e) { console.warn('SPJ localStorage error:', e); }
         }
 
-        // ok() helper — hanya untuk response yang mengembalikan {success: true, ...}
-        function ok(r) { return r.status === 'fulfilled' && r.value?.success; }
+        // ════════════════════════════════════════
+        // fillMonev — mengisi sc[unit].monev
+        // Prioritas: MONEV_CACHE (API_MONEV) → localStorage fallback
+        // Mendukung berbagai format respons API
+        // ════════════════════════════════════════
+        function fillMonev(sc, bulan) {
+
+            if (MONEV_CACHE) {
+                const { type, data } = MONEV_CACHE;
+
+                // ── Format A / E: nested object { BULAN: { UNIT: { total/totalNilai/nilai, ... } } }
+                if (type === 'nested') {
+                    const bulanKey = Object.keys(data).find(k => normalizeBulan(k) === bulan);
+                    const bulanData = bulanKey ? data[bulanKey] : {};
+                    UNITS.forEach(u => {
+                        const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                            || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+                        const unitData = unitKey ? bulanData[unitKey] : null;
+                        if (unitData !== null && unitData !== undefined) {
+                            // Coba berbagai nama field untuk nilai total
+                            const raw = unitData.total ?? unitData.totalNilai ?? unitData.nilai
+                                ?? unitData.score ?? unitData.skor ?? unitData.totalScore ?? null;
+                            if (raw !== null) {
+                                const v = parseFloat(raw);
+                                if (!isNaN(v) && v >= 0) sc[u].monev = v;
+                            }
+                        }
+                    });
+                    return;
+                }
+
+                // ── Format B: rekap { BULAN: { UNIT: { totalNilai/total } } }
+                if (type === 'rekap') {
+                    const bulanKey = Object.keys(data).find(k => normalizeBulan(k) === bulan);
+                    const bulanData = bulanKey ? data[bulanKey] : {};
+                    UNITS.forEach(u => {
+                        const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                            || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+                        const unitData = unitKey ? bulanData[unitKey] : null;
+                        if (unitData !== null && unitData !== undefined) {
+                            const raw = unitData.totalNilai ?? unitData.total ?? unitData.nilai
+                                ?? unitData.score ?? unitData.skor ?? unitData.totalScore ?? null;
+                            if (raw !== null) {
+                                const v = parseFloat(raw);
+                                if (!isNaN(v) && v >= 0) sc[u].monev = v;
+                            }
+                        }
+                    });
+                    return;
+                }
+
+                // ── Format C / D: array [ { bulan, unit, total/totalNilai, ... } ]
+                if (type === 'array') {
+                    const records = data.filter(d => {
+                        const b = normalizeBulan(d.bulan || d.month || d.periode || '');
+                        return b === bulan;
+                    });
+                    records.forEach(d => {
+                        const unitRaw = String(d.unit || d.divisi || d.bidang || '').trim();
+                        const matchedUnit = UNITS.find(u => u.trim() === unitRaw)
+                            || UNITS.find(u => u.trim().toLowerCase() === unitRaw.toLowerCase());
+                        if (!matchedUnit) return;
+                        const raw = d.total ?? d.totalNilai ?? d.nilai ?? d.score ?? d.skor ?? d.totalScore ?? null;
+                        if (raw !== null) {
+                            const v = parseFloat(raw);
+                            if (!isNaN(v) && v >= 0) sc[matchedUnit].monev = v;
+                        }
+                    });
+                    return;
+                }
+            }
+
+            // ── Fallback: localStorage (format lama dari admin-penilaian-monev.html) ──
+            console.warn('[Monev] Menggunakan localStorage fallback untuk bulan:', bulan);
+            UNITS.forEach(u => {
+                try {
+                    // Coba beberapa key format yang mungkin disimpan
+                    const keys = [
+                        `monev_${bulan}_${u}`,
+                        `monev_${bulan.toLowerCase()}_${u}`,
+                        `monev_${cap(bulan)}_${u}`,
+                    ];
+                    for (const key of keys) {
+                        const d = JSON.parse(localStorage.getItem(key) || 'null');
+                        if (!d) continue;
+                        const v = d.totalScore ?? d.total ?? d.totalNilai ?? d.nilai ?? d.score ?? null;
+                        if (v !== null && !isNaN(parseFloat(v))) {
+                            sc[u].monev = parseFloat(v);
+                            break;
+                        }
+                    }
+                } catch { }
+            });
+        }
 
         // ════════════════════════════════════════
         // RENDER
@@ -1555,9 +1649,13 @@
 
         function renderTable() {
             const rows = mkRows();
-            rows.sort((a, b) => { if (a.has !== b.has) return a.has ? -1 : 1; return b.tot - a.tot; });
+            rows.sort((a, b) => {
+                if (a.has !== b.has) return a.has ? -1 : 1;
+                return b.tot - a.tot;
+            });
             if (rows.every(r => !r.has)) {
-                document.getElementById('rekapTbody').innerHTML = `<tr><td colspan="10" class="empty-state">📭 Belum ada data penilaian untuk bulan <strong>${cap(S.bulan)}</strong></td></tr>`;
+                document.getElementById('rekapTbody').innerHTML =
+                    `<tr><td colspan="10" class="empty-state">📭 Belum ada data penilaian untuk bulan <strong>${cap(S.bulan)}</strong></td></tr>`;
                 return;
             }
             document.getElementById('rekapTbody').innerHTML = rows.map((r, i) => {
@@ -1570,23 +1668,15 @@
                     const cls = p >= 80 ? 'chip-great' : p >= 60 ? 'chip-good' : p >= 40 ? 'chip-fair' : 'chip-poor';
                     return `<td style="text-align:center"><span class="chip ${cls}">${fn(v)}</span></td>`;
                 };
-                const monCell = () => {
-                    const v = r.vals.monev;
-                    if (v === null) return `<td style="text-align:center"><span class="chip chip-none">—</span></td>`;
-                    const p = v / MONEV_MAX * 100;
-                    const cls = p >= 80 ? 'chip-great' : p >= 60 ? 'chip-good' : p >= 40 ? 'chip-fair' : 'chip-poor';
-                    return `<td style="text-align:center"><span class="chip ${cls}">${fn(v)}</span></td>`;
-                };
                 const totalCls = !r.has ? 'total-none' : pct >= 80 ? 'total-great' : pct >= 60 ? 'total-good' : pct >= 40 ? 'total-fair' : 'total-poor';
                 return `<tr>
             <td><span class="rank-badge">${i + 1}</span></td>
             <td style="font-weight:600;min-width:170px">${r.unit}</td>
-            ${cell('bbm', 5)} ${cell('kendaraan', 10)} ${cell('ruang', 5)} ${cell('kearsipan', 5)} ${cell('spj', 35)}
+            ${cell('bbm', 5)} ${cell('kendaraan', 10)} ${cell('ruang', 5)} ${cell('kearsipan', 5)} ${cell('spj', 35)} ${cell('monev', 40)}
             <td style="text-align:center"><span class="total-chip ${totalCls}">${r.has ? fn(r.tot) : '—'}</span></td>
-            ${monCell()}
             <td>
                 <div class="prog-wrap">
-                    <div class="prog-bar"><div class="prog-fill" style="width:${pct.toFixed(0)}%;background:${progColor}"></div></div>
+                    <div class="prog-bar"><div class="prog-fill" style="width:${Math.min(pct, 100).toFixed(0)}%;background:${progColor}"></div></div>
                     <span class="prog-label">${r.has ? pct.toFixed(0) + '%' : '—'}</span>
                 </div>
             </td>
@@ -1645,7 +1735,7 @@
                         y: {
                             stacked: true, max: TOTAL_MAX, grid: { color: '#f1f5f9' },
                             ticks: { font: { family: 'Inter', size: 11 } },
-                            title: { display: true, text: 'Total Nilai (/60)', font: { family: 'Inter', size: 11 } }
+                            title: { display: true, text: 'Total Nilai (/100)', font: { family: 'Inter', size: 11 } }
                         }
                     }
                 }
@@ -1670,7 +1760,8 @@
                     plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw}% dari maks.` } } },
                     scales: {
                         r: {
-                            min: 0, max: 100, ticks: { stepSize: 25, font: { family: 'Inter', size: 10 }, color: '#94a3b8' },
+                            min: 0, max: 100,
+                            ticks: { stepSize: 25, font: { family: 'Inter', size: 10 }, color: '#94a3b8' },
                             pointLabels: { font: { family: 'Inter', size: 11 } }, grid: { color: '#f1f5f9' }
                         }
                     }
@@ -1706,7 +1797,7 @@
                         x: { grid: { color: '#f8fafc' }, ticks: { font: { family: 'Inter', size: 11 } } },
                         y: {
                             min: 0, max: TOTAL_MAX, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter', size: 11 } },
-                            title: { display: true, text: 'Total (/60)', font: { family: 'Inter', size: 11 } }
+                            title: { display: true, text: 'Total (/100)', font: { family: 'Inter', size: 11 } }
                         }
                     }
                 }
@@ -1757,7 +1848,10 @@
                     datasets: [{
                         label: mod.label,
                         data: UNITS.map(u => +(S.scores[u]?.[activeCat] ?? 0).toFixed(2)),
-                        backgroundColor: UNITS.map(u => { const v = S.scores[u]?.[activeCat] ?? 0, p = v / mod.max * 100; return p >= 80 ? '#10b981bb' : p >= 60 ? '#3b82f6bb' : p >= 40 ? '#f59e0bbb' : '#ef4444bb'; }),
+                        backgroundColor: UNITS.map(u => {
+                            const v = S.scores[u]?.[activeCat] ?? 0, p = v / mod.max * 100;
+                            return p >= 80 ? '#10b981bb' : p >= 60 ? '#3b82f6bb' : p >= 40 ? '#f59e0bbb' : '#ef4444bb';
+                        }),
                         borderColor: mod.color, borderWidth: 2, borderRadius: 6
                     }]
                 },
@@ -1815,13 +1909,19 @@
             <div class="card-content" style="padding:14px">
                 <div class="chart-wrap h-230"><canvas id="rd_${i}"></canvas></div>
                 <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
-                    ${MODS.map(m => { const v = S.scores[u]?.[m.key] ?? null; return `<span style="font-size:10px;font-weight:600;color:${m.color}">${m.label}: ${v !== null ? fn(v) : '—'}/${m.max}</span>`; }).join('<span style="color:#e5e7eb">|</span>')}
+                    ${MODS.map(m => {
+                const v = S.scores[u]?.[m.key] ?? null;
+                return `<span style="font-size:10px;font-weight:600;color:${m.color}">${m.label}: ${v !== null ? fn(v) : '—'}/${m.max}</span>`;
+            }).join('<span style="color:#e5e7eb">|</span>')}
                 </div>
             </div>
         </div>`).join('');
 
             UNITS.forEach((u, i) => {
-                const data = MODS.map(m => { const v = S.scores[u]?.[m.key] ?? null; return v !== null ? +((v / m.max) * 100).toFixed(1) : 0; });
+                const data = MODS.map(m => {
+                    const v = S.scores[u]?.[m.key] ?? null;
+                    return v !== null ? +((v / m.max) * 100).toFixed(1) : 0;
+                });
                 C[`rd_${i}`] = new Chart(document.getElementById(`rd_${i}`), {
                     type: 'radar',
                     data: {
@@ -1873,12 +1973,19 @@
         function mkRows() {
             return UNITS.map(u => {
                 const s = S.scores[u] || {}; let tot = 0, has = false; const vals = {};
-                MODS.forEach(m => { vals[m.key] = s[m.key] ?? null; if (vals[m.key] !== null) { tot += vals[m.key]; has = true; } });
-                vals.monev = s.monev ?? null;
+                MODS.forEach(m => {
+                    vals[m.key] = s[m.key] ?? null;
+                    if (vals[m.key] !== null) { tot += vals[m.key]; has = true; }
+                });
                 return { unit: u, vals, tot, has };
             });
         }
-        function fn(v) { if (v === null || v === undefined) return '—'; const n = parseFloat(v); return isNaN(n) ? '—' : (n % 1 === 0 ? String(n) : n.toFixed(1)); }
+
+        function fn(v) {
+            if (v === null || v === undefined) return '—';
+            const n = parseFloat(v);
+            return isNaN(n) ? '—' : (n % 1 === 0 ? String(n) : n.toFixed(1));
+        }
         function cap(s) { return s ? s[0] + s.slice(1).toLowerCase() : ''; }
         function kill(id) { if (C[id]) { C[id].destroy(); delete C[id]; } }
         function onBulanChange() { S.bulan = document.getElementById('bulanSelect').value; loadAll(); }
@@ -1895,7 +2002,7 @@
         }
 
         function logout() {
-            if (confirm('Yakin keluar?')) { localStorage.clear(); window.location.href = 'login.html'; }
+            if (confirm('Yakin keluar?')) { AUTH.logout(); }
         }
 
         function showToast(msg, type = '') {
@@ -1910,10 +2017,13 @@
         </svg>
         <span>${msg}</span>`;
             container.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .3s'; setTimeout(() => toast.remove(), 300); }, 3500);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity .3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
         }
 
-        // Set first panel active on load
         document.getElementById('pTotal').setAttribute('data-active', '1');
     </script>
 </body>
