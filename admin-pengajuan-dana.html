@@ -116,6 +116,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            overflow-y: auto;
         }
 
         .sidebar-footer {
@@ -317,7 +318,6 @@
             background: #fafbfc;
         }
 
-        /* Sub Kegiatan cell — truncate jika panjang */
         .sub-kegiatan-cell {
             max-width: 200px;
             white-space: nowrap;
@@ -372,6 +372,16 @@
             background: #059669;
         }
 
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
         .btn-danger {
             background: #ef4444;
             color: white;
@@ -385,6 +395,11 @@
         .btn-sm {
             padding: 5px 10px;
             font-size: 12px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         /* ============ BADGES ============ */
@@ -462,6 +477,7 @@
             cursor: pointer;
         }
 
+        /* ============ SPINNER ============ */
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -478,6 +494,17 @@
             animation: spin 0.8s linear infinite;
         }
 
+        .spinner-table {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #94a3b8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ============ EMPTY STATE ============ */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -514,6 +541,165 @@
             text-decoration: underline;
         }
 
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .modal-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* ============ FORM IN MODAL ============ */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+
+        .info-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .info-row-label {
+            color: #64748b;
+            font-weight: 500;
+            flex-shrink: 0;
+            min-width: 140px;
+        }
+
+        .info-row-value {
+            color: #1e293b;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            margin-top: 20px;
+        }
+
+        .status-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .status-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .status-option:hover {
+            border-color: #cbd5e1;
+            background: #fafbfc;
+        }
+
+        .status-option.selected-pending {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .status-option.selected-approved {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .status-option.selected-rejected {
+            border-color: #ef4444;
+            background: #fff1f2;
+        }
+
+        .status-option input[type="radio"] {
+            accent-color: #0f172a;
+            width: 16px;
+            height: 16px;
+        }
+
+        .status-option-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-option-sub {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* ============ CONFIRM DELETE MODAL ============ */
+        .delete-modal {
+            max-width: 420px;
+        }
+
+        .delete-icon {
+            width: 56px;
+            height: 56px;
+            background: #fee2e2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 16px;
+        }
+
         @media (max-width: 1023px) {
             .mobile-menu-btn {
                 display: block;
@@ -537,6 +723,7 @@
             }
         }
     </style>
+    <script src="auth.js"></script>
 </head>
 
 <body>
@@ -556,7 +743,6 @@
                 </div>
             </div>
         </div>
-
         <div class="sidebar-nav">
             <a href="admin-dashboard.html" class="nav-item">
                 <svg class="nav-icon" viewBox="0 0 24 24">
@@ -639,7 +825,6 @@
                 Manajemen Akun
             </a>
         </div>
-
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-name" id="admin-name">Administrator</div>
@@ -694,9 +879,7 @@
                     <h2 class="card-title">Jumlah Pengajuan Dana per Bulan</h2>
                 </div>
                 <div class="card-content">
-                    <div class="chart-container">
-                        <canvas id="chartPengajuan"></canvas>
-                    </div>
+                    <div class="chart-container"><canvas id="chartPengajuan"></canvas></div>
                 </div>
             </div>
 
@@ -737,9 +920,7 @@
                         </select>
                         <input type="text" class="search-input" id="search-nama"
                             placeholder="🔍 Cari nama / sub kegiatan..." oninput="filterData()">
-                        <button onclick="loadData(true)" class="btn btn-primary" id="btn-refresh">
-                            🔄 Refresh
-                        </button>
+                        <button onclick="loadData(true)" class="btn btn-primary" id="btn-refresh">🔄 Refresh</button>
                     </div>
                 </div>
                 <div style="overflow-x:auto;">
@@ -750,7 +931,7 @@
                                 <th>Timestamp</th>
                                 <th>Nama</th>
                                 <th>Unit</th>
-                                <th>Sub Kegiatan</th> <!-- ★ KOLOM BARU -->
+                                <th>Sub Kegiatan</th>
                                 <th>Bulan Pengajuan</th>
                                 <th>Nominal Pengajuan</th>
                                 <th>File Pengajuan Dana</th>
@@ -761,7 +942,7 @@
                         <tbody id="data-tbody">
                             <tr>
                                 <td colspan="10" style="text-align:center;padding:40px;color:#94a3b8;">
-                                    <div class="spinner" style="border-top-color:#94a3b8;"></div>
+                                    <div class="spinner-table"></div>
                                     <div style="margin-top:12px;">Memuat data...</div>
                                 </td>
                             </tr>
@@ -772,13 +953,114 @@
         </div>
     </div>
 
+    <!-- ===== MODAL EDIT STATUS ===== -->
+    <div id="editModal" class="modal-overlay" style="display:none;" onclick="handleOverlayClick(event,'editModal')">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">✏️ Edit Status Pengajuan</div>
+                <div class="modal-subtitle" id="edit-modal-subtitle">—</div>
+            </div>
+            <div class="modal-body">
+                <!-- Info data yang tidak bisa diubah -->
+                <div style="background:#f8fafc;border-radius:8px;padding:4px 16px;margin-bottom:4px;">
+                    <div class="info-row">
+                        <span class="info-row-label">Nama Pengaju</span>
+                        <span class="info-row-value" id="edit-info-nama">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-row-label">Unit</span>
+                        <span class="info-row-value" id="edit-info-unit">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-row-label">Sub Kegiatan</span>
+                        <span class="info-row-value" id="edit-info-subkeg"
+                            style="max-width:220px;word-break:break-word;">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-row-label">Bulan Pengajuan</span>
+                        <span class="info-row-value" id="edit-info-bulan">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-row-label">Nominal</span>
+                        <span class="info-row-value" id="edit-info-nominal">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-row-label">File</span>
+                        <span class="info-row-value" id="edit-info-file">—</span>
+                    </div>
+                </div>
+
+                <!-- Pilih status -->
+                <div class="form-label">Ubah Status Pengajuan</div>
+                <div class="status-options">
+                    <label class="status-option" id="opt-pending" onclick="selectStatus('PENDING')">
+                        <input type="radio" name="edit-status" value="PENDING" id="radio-pending">
+                        <div>
+                            <div class="status-option-label" style="color:#92400e;">⏳ Pending</div>
+                            <div class="status-option-sub">Menunggu persetujuan admin</div>
+                        </div>
+                    </label>
+                    <label class="status-option" id="opt-approved" onclick="selectStatus('APPROVED')">
+                        <input type="radio" name="edit-status" value="APPROVED" id="radio-approved">
+                        <div>
+                            <div class="status-option-label" style="color:#065f46;">✅ Disetujui</div>
+                            <div class="status-option-sub">Pengajuan dana disetujui</div>
+                        </div>
+                    </label>
+                    <label class="status-option" id="opt-rejected" onclick="selectStatus('REJECTED')">
+                        <input type="radio" name="edit-status" value="REJECTED" id="radio-rejected">
+                        <div>
+                            <div class="status-option-label" style="color:#991b1b;">❌ Ditolak</div>
+                            <div class="status-option-sub">Pengajuan dana ditolak</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeEditModal()" class="btn" style="flex:1;">Batal</button>
+                <button onclick="submitEditStatus()" class="btn btn-warning" style="flex:1;" id="btn-submit-edit">
+                    💾 Simpan Perubahan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL KONFIRMASI HAPUS ===== -->
+    <div id="deleteModal" class="modal-overlay" style="display:none;" onclick="handleOverlayClick(event,'deleteModal')">
+        <div class="modal delete-modal">
+            <div class="modal-body" style="text-align:center;padding:32px 24px;">
+                <div class="delete-icon">🗑️</div>
+                <h3 style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:8px;">Hapus Pengajuan Dana?</h3>
+                <p style="font-size:14px;color:#64748b;margin-bottom:4px;">Data berikut akan dihapus permanen:</p>
+                <div
+                    style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px 16px;margin:16px 0;text-align:left;">
+                    <div style="font-size:13px;color:#991b1b;font-weight:600;" id="delete-info-nama">—</div>
+                    <div style="font-size:12px;color:#b91c1c;margin-top:2px;" id="delete-info-detail">—</div>
+                </div>
+                <p style="font-size:13px;color:#ef4444;font-weight:500;">⚠️ Tindakan ini tidak dapat dibatalkan.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeDeleteModal()" class="btn" style="flex:1;">Batal</button>
+                <button onclick="submitDelete()" class="btn btn-danger" style="flex:1;" id="btn-submit-delete">
+                    🗑️ Ya, Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        AUTH.init();
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxOjsq6XuS6xB1O8i4F-ZkeZ6ILaOxgVH_NtOwb7Ei4rislLOoldHwwpz_X9_23q_AsZw/exec';
         const CACHE_KEY = 'pengajuan_dana_cache';
         const CACHE_DURATION = 5 * 60 * 1000;
         let allData = [];
         let filteredData = [];
         let chartPengajuan = null;
+
+        // State untuk modal
+        let currentEditId = null;
+        let currentDeleteId = null;
+        let currentSelectedStatus = null;
 
         // ============ CACHE ============
         function getCachedData() {
@@ -805,6 +1087,7 @@
                 return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
             } catch { return String(ts); }
         }
+        const fmtRupiah = n => 'Rp ' + new Intl.NumberFormat('id-ID').format(n || 0);
 
         // ============ LOAD DATA ============
         async function loadData(forceRefresh = false) {
@@ -819,7 +1102,7 @@
 
             document.getElementById('data-tbody').innerHTML = `
                 <tr><td colspan="10" style="text-align:center;padding:40px;color:#94a3b8;">
-                    <div class="spinner" style="border-top-color:#94a3b8;"></div>
+                    <div class="spinner-table"></div>
                     <div style="margin-top:12px;">Memuat data...</div>
                 </td></tr>`;
 
@@ -849,15 +1132,13 @@
                 const matchBulan = !bulan || item.bulanPengajuan?.toUpperCase() === bulan;
                 const matchUnit = !unit || item.unit === unit;
                 const matchStatus = !status || item.status?.toUpperCase() === status;
-                // ★ Search juga mencakup sub kegiatan
                 const matchSearch = !search
                     || item.nama?.toLowerCase().includes(search)
                     || item.subKegiatan?.toLowerCase().includes(search);
                 return matchBulan && matchUnit && matchStatus && matchSearch;
             });
 
-            renderTable();
-            updateStats();
+            renderTable(); updateStats();
         }
 
         // ============ RENDER TABLE ============
@@ -878,17 +1159,11 @@
                 return;
             }
 
-            const fmt = n => new Intl.NumberFormat('id-ID').format(n);
-
             tbody.innerHTML = filteredData.map((item, idx) => {
                 const statusClass = item.status === 'APPROVED' ? 'badge-green'
-                    : item.status === 'REJECTED' ? 'badge-red'
-                        : 'badge-yellow';
+                    : item.status === 'REJECTED' ? 'badge-red' : 'badge-yellow';
                 const statusText = item.status === 'APPROVED' ? 'Disetujui'
-                    : item.status === 'REJECTED' ? 'Ditolak'
-                        : 'Pending';
-
-                // Sub Kegiatan: tampilkan terpotong, full text di tooltip
+                    : item.status === 'REJECTED' ? 'Ditolak' : 'Pending';
                 const subKeg = item.subKegiatan || '-';
 
                 return `
@@ -897,22 +1172,16 @@
                     <td>${formatTimestamp(item.timestamp)}</td>
                     <td style="font-weight:500;">${item.nama || '-'}</td>
                     <td>${item.unit || '-'}</td>
-                    <td>
-                        <div class="sub-kegiatan-cell" title="${subKeg}">${subKeg}</div>
-                    </td>
+                    <td><div class="sub-kegiatan-cell" title="${subKeg}">${subKeg}</div></td>
                     <td>${item.bulanPengajuan || '-'}</td>
-                    <td>Rp ${fmt(item.nominalPengajuan || 0)}</td>
+                    <td>${fmtRupiah(item.nominalPengajuan)}</td>
                     <td>${item.linkFilePengajuanDana
                         ? `<a href="${item.linkFilePengajuanDana}" target="_blank" class="link-file">📄 Lihat File</a>`
                         : '-'}</td>
                     <td><span class="badge ${statusClass}">${statusText}</span></td>
-                    <td>
-                        ${item.status === 'PENDING' ? `
-                            <button onclick="approveItem('${item.id}')" class="btn btn-sm btn-success" id="btn-approve-${item.id}">✓ Setujui</button>
-                            <button onclick="rejectItem('${item.id}')"  class="btn btn-sm btn-danger"  id="btn-reject-${item.id}">✗ Tolak</button>
-                        ` : `
-                            <button onclick="viewDetail('${item.id}')" class="btn btn-sm">👁️ Detail</button>
-                        `}
+                    <td style="white-space:nowrap;">
+                        <button onclick="openEditModal('${item.id}')" class="btn btn-sm btn-warning" title="Edit status">✏️ Edit</button>
+                        <button onclick="openDeleteModal('${item.id}')" class="btn btn-sm btn-danger" style="margin-left:4px;" title="Hapus data">🗑️ Hapus</button>
                     </td>
                 </tr>`;
             }).join('');
@@ -928,7 +1197,7 @@
             document.getElementById('total-pengajuan').textContent = allData.length;
             document.getElementById('bulan-ini-count').textContent = bulanIniData.length;
             document.getElementById('pending-count').textContent = pendingData.length;
-            document.getElementById('total-nominal').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(totalNominal);
+            document.getElementById('total-nominal').textContent = fmtRupiah(totalNominal);
             document.getElementById('bulan-ini-label').textContent = `${currentMonth} 2026`;
         }
 
@@ -937,31 +1206,22 @@
             const months = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
             const monthlyData = {};
             months.forEach(m => { monthlyData[m] = { count: 0, nominal: 0 }; });
-
             allData.forEach(item => {
                 const b = item.bulanPengajuan?.toUpperCase();
-                if (monthlyData[b]) {
-                    monthlyData[b].count++;
-                    monthlyData[b].nominal += parseFloat(item.nominalPengajuan) || 0;
-                }
+                if (monthlyData[b]) { monthlyData[b].count++; monthlyData[b].nominal += parseFloat(item.nominalPengajuan) || 0; }
             });
-
             const labels = months.map(m => m.charAt(0) + m.slice(1).toLowerCase());
             const counts = months.map(m => monthlyData[m].count);
             const nominals = months.map(m => monthlyData[m].nominal / 1_000_000);
 
             if (chartPengajuan) chartPengajuan.destroy();
-
             chartPengajuan = new Chart(document.getElementById('chartPengajuan').getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels,
                     datasets: [
                         { label: 'Jumlah Pengajuan', data: counts, backgroundColor: '#3b82f6', yAxisID: 'y' },
-                        {
-                            label: 'Total Nominal (Juta Rp)', data: nominals, backgroundColor: '#1F4E79',
-                            yAxisID: 'y1', type: 'line', borderColor: '#1F4E79', borderWidth: 2, tension: 0.4
-                        }
+                        { label: 'Total Nominal (Juta Rp)', data: nominals, backgroundColor: '#1F4E79', yAxisID: 'y1', type: 'line', borderColor: '#1F4E79', borderWidth: 2, tension: 0.4 }
                     ]
                 },
                 options: {
@@ -975,37 +1235,146 @@
             });
         }
 
-        // ============ ACTIONS ============
-        async function approveItem(id) {
-            if (!confirm('Setujui pengajuan dana ini?')) return;
-            const aBtn = document.getElementById(`btn-approve-${id}`);
-            const rBtn = document.getElementById(`btn-reject-${id}`);
-            aBtn.disabled = rBtn.disabled = true;
-            aBtn.innerHTML = '<span class="spinner"></span> Memproses...';
-            try {
-                const result = await callAPI({ action: 'updateStatusPengajuanDana', id, status: 'APPROVED' });
-                if (result.success) { Toast.success('Pengajuan dana berhasil disetujui'); clearCache(); await loadData(true); }
-                else { Toast.error(result.message || 'Gagal'); aBtn.disabled = rBtn.disabled = false; aBtn.innerHTML = '✓ Setujui'; }
-            } catch { Toast.error('Terjadi kesalahan'); aBtn.disabled = rBtn.disabled = false; aBtn.innerHTML = '✓ Setujui'; }
-        }
-
-        async function rejectItem(id) {
-            if (!confirm('Tolak pengajuan dana ini?')) return;
-            const aBtn = document.getElementById(`btn-approve-${id}`);
-            const rBtn = document.getElementById(`btn-reject-${id}`);
-            aBtn.disabled = rBtn.disabled = true;
-            rBtn.innerHTML = '<span class="spinner"></span> Memproses...';
-            try {
-                const result = await callAPI({ action: 'updateStatusPengajuanDana', id, status: 'REJECTED' });
-                if (result.success) { Toast.success('Pengajuan dana berhasil ditolak'); clearCache(); await loadData(true); }
-                else { Toast.error(result.message || 'Gagal'); aBtn.disabled = rBtn.disabled = false; rBtn.innerHTML = '✗ Tolak'; }
-            } catch { Toast.error('Terjadi kesalahan'); aBtn.disabled = rBtn.disabled = false; rBtn.innerHTML = '✗ Tolak'; }
-        }
-
-        function viewDetail(id) {
+        // ============ MODAL EDIT ============
+        function openEditModal(id) {
             const item = allData.find(d => d.id === id);
-            if (item) {
-                alert(`Detail Pengajuan Dana:\n\nNama: ${item.nama}\nUnit: ${item.unit}\nSub Kegiatan: ${item.subKegiatan || '-'}\nBulan: ${item.bulanPengajuan}\nNominal: Rp ${new Intl.NumberFormat('id-ID').format(item.nominalPengajuan || 0)}\nStatus: ${item.status}`);
+            if (!item) return;
+
+            currentEditId = id;
+            currentSelectedStatus = item.status || 'PENDING';
+
+            // Isi info panel
+            document.getElementById('edit-modal-subtitle').textContent = `Pengajuan — ${item.bulanPengajuan || ''}`;
+            document.getElementById('edit-info-nama').textContent = item.nama || '-';
+            document.getElementById('edit-info-unit').textContent = item.unit || '-';
+            document.getElementById('edit-info-subkeg').textContent = item.subKegiatan || '-';
+            document.getElementById('edit-info-bulan').textContent = item.bulanPengajuan || '-';
+            document.getElementById('edit-info-nominal').textContent = fmtRupiah(item.nominalPengajuan);
+
+            const fileEl = document.getElementById('edit-info-file');
+            if (item.linkFilePengajuanDana) {
+                fileEl.innerHTML = `<a href="${item.linkFilePengajuanDana}" target="_blank" style="color:#3b82f6;text-decoration:none;">📄 Lihat File</a>`;
+            } else {
+                fileEl.textContent = 'Tidak ada file';
+            }
+
+            // Set radio & highlight
+            selectStatus(currentSelectedStatus);
+
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function selectStatus(status) {
+            currentSelectedStatus = status;
+
+            // Reset semua option
+            ['pending', 'approved', 'rejected'].forEach(s => {
+                const el = document.getElementById('opt-' + s);
+                el.className = 'status-option';
+            });
+
+            // Pilih yang aktif
+            const radio = document.getElementById('radio-' + status.toLowerCase());
+            if (radio) radio.checked = true;
+
+            const activeEl = document.getElementById('opt-' + status.toLowerCase());
+            if (activeEl) activeEl.classList.add('selected-' + status.toLowerCase());
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentEditId = null;
+        }
+
+        async function submitEditStatus() {
+            if (!currentEditId || !currentSelectedStatus) return;
+
+            const btn = document.getElementById('btn-submit-edit');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+
+            try {
+                const result = await callAPI({
+                    action: 'updateStatusPengajuanDana',
+                    id: currentEditId,
+                    status: currentSelectedStatus
+                });
+
+                if (result.success) {
+                    Toast.success('Status berhasil diperbarui!');
+                    clearCache();
+                    closeEditModal();
+                    await loadData(true);
+                } else {
+                    Toast.error(result.message || 'Gagal memperbarui status');
+                }
+            } catch (err) {
+                Toast.error('Gagal menghubungi server');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '💾 Simpan Perubahan';
+            }
+        }
+
+        // ============ MODAL DELETE ============
+        function openDeleteModal(id) {
+            const item = allData.find(d => d.id === id);
+            if (!item) return;
+
+            currentDeleteId = id;
+
+            document.getElementById('delete-info-nama').textContent = item.nama || '-';
+            document.getElementById('delete-info-detail').textContent =
+                `${item.unit || '-'} · ${item.bulanPengajuan || '-'} · ${fmtRupiah(item.nominalPengajuan)}`;
+
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            currentDeleteId = null;
+        }
+
+        async function submitDelete() {
+            if (!currentDeleteId) return;
+
+            const btn = document.getElementById('btn-submit-delete');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Menghapus...';
+
+            try {
+                const result = await callAPI({
+                    action: 'deletePengajuanDana',
+                    id: currentDeleteId
+                });
+
+                if (result.success) {
+                    Toast.success('Data berhasil dihapus!');
+                    clearCache();
+                    closeDeleteModal();
+                    await loadData(true);
+                } else {
+                    // Hapus dari cache lokal meski server gagal (graceful)
+                    allData = allData.filter(d => d.id !== currentDeleteId);
+                    filteredData = filteredData.filter(d => d.id !== currentDeleteId);
+                    setCachedData(allData);
+                    renderTable(); updateStats();
+                    Toast.error('Dihapus lokal. Server: ' + (result.message || 'Unknown'));
+                    closeDeleteModal();
+                }
+            } catch (err) {
+                Toast.error('Gagal menghubungi server: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🗑️ Ya, Hapus';
+            }
+        }
+
+        // Klik di luar modal -> tutup
+        function handleOverlayClick(e, modalId) {
+            if (e.target.id === modalId) {
+                if (modalId === 'editModal') closeEditModal();
+                if (modalId === 'deleteModal') closeDeleteModal();
             }
         }
 
@@ -1057,7 +1426,6 @@
 
         // ============ INIT ============
         loadData();
-        // Auto-select bulan sekarang
         const currentMonthName = new Date().toLocaleString('id-ID', { month: 'long' }).toUpperCase();
         document.getElementById('filter-bulan').value = currentMonthName;
     </script>

@@ -1017,6 +1017,7 @@
             }
         }
     </style>
+    <script src="auth.js"></script>
 </head>
 
 <body>
@@ -1117,6 +1118,15 @@
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                 </svg>
                 Penilaian Monev
+            </a>
+            <a href="admin-manageacc.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                Manajemen Akun
             </a>
         </div>
         <div class="sidebar-footer">
@@ -1342,10 +1352,10 @@
                     <label class="input-label">Pilih Nomor Kendaraan</label>
                     <select class="form-input" id="vehicle-number-select">
                         <option value="">Pilih Nomor Kendaraan</option>
-                        <option value="AB1027AV">AB1027AV</option>
-                        <option value="AB1869UA">AB1869UA</option>
-                        <option value="AB1147UH">AB1147UH</option>
-                        <option value="AB1340UH">AB1340UH</option>
+                        <option value="AB 1027 AV">AB 1027 AV</option>
+                        <option value="AB 1869 UA">AB 1869 UA</option>
+                        <option value="AB 1147 UH">AB 1147 UH</option>
+                        <option value="AB 1340 UH">AB 1340 UH</option>
                         <option value="AB 1530 UH">AB 1530 UH</option>
                         <option value="AB 1067 IA">AB 1067 IA</option>
                     </select>
@@ -1518,6 +1528,7 @@
     </div>
 
     <script>
+        AUTH.init();
         const API_URL = 'https://script.google.com/macros/s/AKfycbwJYcC9UtR6N4jDLcfKBIxiZ57GG2XGB1B9bsJS8b2kDZPo8Fr_cn9jPus6zpDHR0GH1w/exec';
 
         const CACHE_DURATION = 5 * 60 * 1000;
@@ -1558,11 +1569,12 @@
             });
         }
 
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!user.email || user.role !== 'admin') window.location.href = 'login.html';
+        const user = AUTH.getUser() || {};
         document.getElementById('admin-name').textContent = user.name || 'Administrator';
         document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
-        function logout() { if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); localStorage.clear(); window.location.href = 'login.html'; } }
+        function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); AUTH.logout(); }
+        }
 
         function switchTab(tabName, event) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
