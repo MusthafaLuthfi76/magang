@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voucher BBM - Admin Panel</title>
+    <title>Pelayanan Voucher BBM - Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -23,7 +23,7 @@
             min-height: 100vh;
         }
 
-        /* ── TOAST ── */
+        /* ============ TOAST ============ */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -64,7 +64,7 @@
             }
         }
 
-        /* ── MOBILE ── */
+        /* ============ MOBILE MENU ============ */
         .mobile-menu-toggle {
             display: none;
             position: absolute;
@@ -93,7 +93,7 @@
             z-index: 999;
         }
 
-        /* ── SIDEBAR ── */
+        /* ============ SIDEBAR ============ */
         .sidebar {
             width: 252px;
             background: white;
@@ -117,6 +117,18 @@
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+
+        .sidebar-icon {
+            width: 40px;
+            height: 40px;
+            background: #0f172a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
         }
 
         .sidebar-title {
@@ -223,7 +235,7 @@
             background: #f8fafc;
         }
 
-        /* ── MAIN ── */
+        /* ============ MAIN ============ */
         .main-content {
             flex: 1;
             display: flex;
@@ -255,7 +267,7 @@
             width: 100%;
         }
 
-        /* ── TABS ── */
+        /* ============ TABS ============ */
         .tabs {
             display: flex;
             gap: 8px;
@@ -288,25 +300,6 @@
             border-bottom-color: #0f172a;
         }
 
-        .tabs-dropdown {
-            display: none;
-            width: 100%;
-            margin-bottom: 24px;
-        }
-
-        .tabs-dropdown select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            color: #1e293b;
-            cursor: pointer;
-        }
-
         .tab-content {
             display: none;
         }
@@ -315,7 +308,7 @@
             display: block;
         }
 
-        /* ── STATS ── */
+        /* ============ STATS GRID ============ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -328,7 +321,6 @@
             border-radius: 8px;
             border: 1px solid #e5e7eb;
             background: white;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .stat-label {
@@ -343,7 +335,7 @@
             color: #1e293b;
         }
 
-        /* ── CARD ── */
+        /* ============ CARDS ============ */
         .card {
             background: white;
             border-radius: 8px;
@@ -372,7 +364,7 @@
             padding: 24px;
         }
 
-        /* ── FILTER ── */
+        /* ============ FILTER BAR ============ */
         .filter-container {
             display: flex;
             gap: 12px;
@@ -387,14 +379,6 @@
             border-radius: 6px;
             font-size: 14px;
             font-family: 'Inter', sans-serif;
-            transition: border-color 0.15s;
-        }
-
-        .search-input:focus,
-        .select-input:focus {
-            outline: none;
-            border-color: #0f172a;
-            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
         }
 
         .search-input {
@@ -407,7 +391,7 @@
             min-width: 120px;
         }
 
-        /* ── TABLE ── */
+        /* ============ TABLE ============ */
         .table-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -416,7 +400,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px;
+            min-width: 700px;
         }
 
         th {
@@ -441,7 +425,7 @@
             background: #fafbfc;
         }
 
-        /* ── BUTTONS ── */
+        /* ============ BUTTONS ============ */
         .btn {
             padding: 6px 14px;
             border-radius: 6px;
@@ -463,11 +447,6 @@
             border-color: #cbd5e1;
         }
 
-        .btn-sm {
-            padding: 4px 10px;
-            font-size: 12px;
-        }
-
         .btn-primary {
             background: #0f172a;
             color: white;
@@ -478,44 +457,44 @@
             background: #1e293b;
         }
 
-        .btn-approve {
+        .btn-success {
             background: #10b981;
             color: white;
             border-color: #10b981;
         }
 
-        .btn-approve:hover {
+        .btn-success:hover {
             background: #059669;
         }
 
-        .btn-reject {
+        .btn-danger {
             background: #ef4444;
             color: white;
             border-color: #ef4444;
         }
 
-        .btn-reject:hover {
+        .btn-danger:hover {
             background: #dc2626;
         }
 
-        .btn-edit {
+        .btn-blue {
             background: #3b82f6;
             color: white;
             border-color: #3b82f6;
         }
 
-        .btn-edit:hover {
+        .btn-blue:hover {
             background: #2563eb;
         }
 
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 12px;
         }
 
-        .btn-delete:hover {
-            background: #dc2626;
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .action-buttons {
@@ -524,12 +503,7 @@
             flex-wrap: wrap;
         }
 
-        button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* ── BADGES ── */
+        /* ============ BADGES ============ */
         .badge {
             padding: 4px 12px;
             border-radius: 16px;
@@ -554,32 +528,112 @@
             color: #991b1b;
         }
 
-        .badge-used {
-            background: #dbeafe;
-            color: #1e40af;
+        /* ============ LOADING / EMPTY ============ */
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #64748b;
+            gap: 16px;
         }
 
-        /* ── MODAL ── */
+        .spinner {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #0f172a;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .spinner-sm {
+            width: 14px;
+            height: 14px;
+            border-width: 2px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============ PAGINATION ============ */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 16px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination button.active {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #64748b;
+            padding: 0 8px;
+        }
+
+        /* ============ MODAL ============ */
         .modal-overlay {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            z-index: 1001;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
 
+        .modal-overlay.open {
+            display: flex;
+        }
+
         .modal {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-lg {
+            max-width: 720px;
         }
 
         @keyframes slideUp {
@@ -597,11 +651,35 @@
         .modal-header {
             padding: 20px 24px;
             border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .modal-title {
             font-size: 18px;
             font-weight: 600;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #64748b;
+            transition: all 0.15s;
+        }
+
+        .modal-close:hover {
+            background: #fee2e2;
+            color: #ef4444;
+            border-color: #ef4444;
         }
 
         .modal-content {
@@ -615,9 +693,15 @@
             gap: 12px;
         }
 
-        /* ── FORM ── */
+        /* ============ FORM ============ */
         .form-group {
             margin-bottom: 16px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
         }
 
         .input-label {
@@ -628,10 +712,15 @@
             margin-bottom: 6px;
         }
 
+        .input-label span {
+            color: #ef4444;
+        }
+
         .form-input,
+        .form-select,
         .form-textarea {
             width: 100%;
-            padding: 10px 12px;
+            padding: 8px 12px;
             border: 1px solid #e5e7eb;
             border-radius: 6px;
             font-size: 14px;
@@ -640,10 +729,17 @@
         }
 
         .form-input:focus,
+        .form-select:focus,
         .form-textarea:focus {
             outline: none;
             border-color: #0f172a;
             box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .form-input[readonly] {
+            background: #f8fafc;
+            color: #64748b;
+            cursor: not-allowed;
         }
 
         .form-textarea {
@@ -651,34 +747,148 @@
             min-height: 80px;
         }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+        /* ============ ALERT BOX ============ */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            border: 1px solid;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: #93c5fd;
+            color: #1e40af;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border-color: #fcd34d;
+            color: #92400e;
+        }
+
+        /* ============ REQUEST SELECTOR ============ */
+        .source-toggle {
+            display: flex;
+            gap: 8px;
             margin-bottom: 16px;
         }
 
-        .info-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .info-box {
-            margin: 12px 0;
-            padding: 12px;
-            background: #f8fafc;
+        .request-list {
+            max-height: 260px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
             border-radius: 6px;
-            border-left: 3px solid #cbd5e1;
         }
 
-        .info-box-label {
+        .request-item {
+            padding: 12px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.12s;
+        }
+
+        .request-item:last-child {
+            border-bottom: none;
+        }
+
+        .request-item:hover {
+            background: #eff6ff;
+        }
+
+        .request-item.selected {
+            background: #d1fae5;
+        }
+
+        .request-item-check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+        }
+
+        .request-item.selected .request-item-check {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+            font-weight: 700;
+        }
+
+        .request-item-name {
+            font-weight: 600;
+            font-size: 13.5px;
+        }
+
+        .request-item-meta {
             font-size: 12px;
             color: #64748b;
-            margin-bottom: 8px;
-            font-weight: 500;
         }
 
-        /* ── CHARTS ── */
+        .request-item-plate {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #f8fafc;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* ============ INFO BOX ============ */
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 14px 16px;
+            margin-top: 12px;
+        }
+
+        .info-box-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        /* ============ DATE PICKER ============ */
+        .date-wrapper {
+            position: relative;
+        }
+
+        .date-wrapper input[type="date"] {
+            padding-right: 36px;
+        }
+
+        .date-wrapper::after {
+            content: '📅';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 14px;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+        }
+
+        /* ============ CHARTS ============ */
         .charts-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -688,16 +898,16 @@
 
         .chart-container {
             position: relative;
-            height: 350px;
+            height: 320px;
         }
 
-        /* ── SCORE CARDS ── */
+        /* ============ SCORE CARDS ============ */
         .score-card {
             padding: 20px;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             margin-bottom: 16px;
-            transition: box-shadow 0.2s;
+            transition: all 0.2s;
         }
 
         .score-card:hover {
@@ -765,36 +975,28 @@
             color: #1e293b;
         }
 
-        /* ── LOADING ── */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #64748b;
+        .score-bar {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
         }
 
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e5e7eb;
-            border-top-color: #0f172a;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.6s ease;
         }
 
-        .spinner-sm {
-            width: 16px;
-            height: 16px;
-            border-width: 2px;
+        .sanksi-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ── EMPTY STATE ── */
+        /* ============ EMPTY STATE ============ */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -807,155 +1009,7 @@
             opacity: 0.5;
         }
 
-        /* ── PAGINATION ── */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 16px;
-            flex-wrap: wrap;
-        }
-
-        .pagination button {
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .pagination button:hover:not(:disabled) {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .pagination-info {
-            font-size: 14px;
-            color: #64748b;
-            padding: 0 8px;
-        }
-
-        /* ── MOBILE CARDS ── */
-        .requests-card {
-            display: none;
-            padding: 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            background: white;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-
-        .requests-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            gap: 12px;
-        }
-
-        .requests-card-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .requests-card-subtitle {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        .requests-card-body {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .requests-card-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            gap: 8px;
-        }
-
-        .requests-card-label {
-            color: #64748b;
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-
-        .requests-card-value {
-            color: #1e293b;
-            font-weight: 500;
-            word-wrap: break-word;
-            text-align: right;
-            flex: 1;
-        }
-
-        .requests-card-footer {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-top: 12px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .cache-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 8px 12px;
-            background: #10b981;
-            color: white;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1000;
-            pointer-events: none;
-        }
-
-        .cache-indicator.show {
-            opacity: 1;
-        }
-
-        /* ── ALERT BOX ── */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .alert-warning {
-            background: #fef3c7;
-            border: 1px solid #fbbf24;
-            color: #92400e;
-        }
-
-        .alert-info {
-            background: #dbeafe;
-            border: 1px solid #93c5fd;
-            color: #1e40af;
-        }
-
-        /* ── RESPONSIVE ── */
+        /* ============ MOBILE ============ */
         @media (max-width: 1023px) {
             .mobile-menu-toggle {
                 display: block;
@@ -982,10 +1036,6 @@
                 padding-left: 60px;
             }
 
-            .header-title {
-                font-size: 20px;
-            }
-
             .container {
                 padding: 20px 16px;
             }
@@ -994,81 +1044,35 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            .search-input,
-            .select-input {
-                width: 100%;
-            }
-
-            .filter-container {
-                width: 100%;
-            }
-
             .charts-grid {
                 grid-template-columns: 1fr;
             }
 
-            .chart-container {
-                height: 280px;
-            }
-
-            .info-grid {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
 
             .score-details {
                 grid-template-columns: 1fr;
             }
-
-            .tabs {
-                display: none;
-            }
-
-            .tabs-dropdown {
-                display: block;
-            }
-
-            .table-container {
-                display: none;
-            }
-
-            .requests-card {
-                display: block;
-            }
-
-            .pagination {
-                gap: 6px;
-            }
-
-            .pagination button {
-                padding: 6px 10px;
-                font-size: 13px;
-            }
-
-            .pagination-info {
-                font-size: 12px;
-                width: 100%;
-                text-align: center;
-            }
         }
 
         @media (max-width: 640px) {
-            .card-title {
-                font-size: 16px;
+            .header-title {
+                font-size: 20px;
             }
 
-            .action-buttons {
-                flex-direction: column;
-                width: 100%;
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
 
-            .action-buttons .btn {
-                width: 100%;
-                justify-content: center;
+            .tabs {
+                gap: 0;
             }
 
-            .filter-container {
-                flex-direction: column;
-                align-items: flex-start;
+            .tab {
+                padding: 10px 16px;
+                font-size: 13px;
             }
         }
     </style>
@@ -1076,23 +1080,22 @@
 </head>
 
 <body>
-    <div class="cache-indicator" id="cache-indicator">📦 Data dari cache</div>
 
+    <!-- Mobile Toggle -->
     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <svg viewBox="0 0 24 24">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
     </button>
-    <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
 
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-header-content">
-                <div
-                    style="width:40px;height:40px;background:#0f172a;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                <div class="sidebar-icon">
                     <img src="https://yt3.googleusercontent.com/ytc/AIdro_lAD91TqpEoBLA60qxJfjXPWjPJG1qCHBRz8ZomYP_tkA=s900-c-k-c0x00ffffff-no-rj"
                         alt="Logo" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
                 </div>
@@ -1208,22 +1211,16 @@
         </div>
 
         <div class="container">
-
-            <!-- Tabs -->
+            <!-- TABS -->
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('requests', event)">📋 Permintaan Voucher</button>
-                <button class="tab" onclick="switchTab('violations', event)">⚠️ Catatan Keterlambatan</button>
-                <button class="tab" onclick="switchTab('scores', event)">📊 Penilaian</button>
-            </div>
-            <div class="tabs-dropdown">
-                <select id="mobile-tab-select" onchange="switchTabFromDropdown(this.value)">
-                    <option value="requests">📋 Permintaan Voucher</option>
-                    <option value="violations">⚠️ Catatan Keterlambatan</option>
-                    <option value="scores">📊 Penilaian</option>
-                </select>
+                <button class="tab active" id="tab-btn-requests" onclick="switchTab('requests', this)">📋
+                    Permintaan</button>
+                <button class="tab" id="tab-btn-violations" onclick="switchTab('violations', this)">⚠️ Catatan
+                    Keterlambatan</button>
+                <button class="tab" id="tab-btn-scores" onclick="switchTab('scores', this)">📊 Penilaian</button>
             </div>
 
-            <!-- TAB 1: Permintaan Voucher (getVoucherRequests / updateVoucherRequest / deleteVoucherRequest) -->
+            <!-- ===== TAB 1: PERMINTAAN ===== -->
             <div id="tab-requests" class="tab-content active">
                 <div class="stats-grid">
                     <div class="stat-card" style="border-left:4px solid #f59e0b;">
@@ -1248,13 +1245,14 @@
                     <div class="card-header">
                         <h2 class="card-title">Daftar Permintaan Voucher BBM</h2>
                         <div class="filter-container">
-                            <select class="select-input" id="filter-status-req">
+                            <select class="select-input" id="filter-status-req" onchange="applyRequestFilter()">
                                 <option value="">Semua Status</option>
-                                <option value="pending">Menunggu</option>
-                                <option value="approved">Disetujui</option>
-                                <option value="rejected">Ditolak</option>
+                                <option value="PENDING">Menunggu</option>
+                                <option value="APPROVED">Disetujui</option>
+                                <option value="REJECTED">Ditolak</option>
                             </select>
-                            <input type="text" class="search-input" id="search-req" placeholder="Cari nama / unit...">
+                            <input type="text" class="search-input" id="search-req" placeholder="Cari nama / unit..."
+                                oninput="applyRequestFilter()">
                             <button onclick="loadRequests(true)" class="btn">🔄 Refresh</button>
                         </div>
                     </div>
@@ -1262,7 +1260,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Nama Pegawai</th>
+                                    <th>Pegawai</th>
                                     <th>Unit / Eselon</th>
                                     <th>No. Kendaraan</th>
                                     <th>Waktu Pengajuan</th>
@@ -1272,26 +1270,26 @@
                             </thead>
                             <tbody id="requests-tbody">
                                 <tr>
-                                    <td colspan="6" class="loading">
-                                        <div class="spinner"></div>
-                                        <p style="margin-top:16px;">Memuat data...</p>
+                                    <td colspan="6">
+                                        <div class="loading-state">
+                                            <div class="spinner"></div><span>Memuat data...</span>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div id="requests-cards"></div>
                     <div class="pagination" id="requests-pagination"></div>
                 </div>
             </div>
 
-            <!-- TAB 2: Catatan Keterlambatan (getBBMViolations / createBBMViolation / updateBBMViolation / deleteBBMViolation) -->
+            <!-- ===== TAB 2: CATATAN KETERLAMBATAN ===== -->
             <div id="tab-violations" class="tab-content">
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title">Catatan Keterlambatan Pengembalian Bukti BBM</h2>
                         <div class="filter-container">
-                            <select class="select-input" id="filter-bulan-viol">
+                            <select class="select-input" id="filter-bulan-viol" onchange="applyViolationFilter()">
                                 <option value="">Semua Bulan</option>
                                 <option value="JANUARI">Januari</option>
                                 <option value="FEBRUARI">Februari</option>
@@ -1306,13 +1304,13 @@
                                 <option value="NOVEMBER">November</option>
                                 <option value="DESEMBER">Desember</option>
                             </select>
-                            <select class="select-input" id="filter-unit-viol">
+                            <select class="select-input" id="filter-unit-viol" onchange="applyViolationFilter()">
                                 <option value="">Semua Unit</option>
-                                <option value="Sekretariat">Sekretariat</option>
-                                <option value="Bidang Koperasi">Bidang Koperasi</option>
-                                <option value="Bidang UKM">Bidang UKM</option>
-                                <option value="Bidang Usaha Mikro">Bidang Usaha Mikro</option>
-                                <option value="Bidang Kewirausahaan">Bidang Kewirausahaan</option>
+                                <option>Sekretariat</option>
+                                <option>Bidang Koperasi</option>
+                                <option>Bidang UKM</option>
+                                <option>Bidang Usaha Mikro</option>
+                                <option>Bidang Kewirausahaan</option>
                                 <option value="Balai Layanan Usaha Terpadu KUMKM">BLUT KUMKM</option>
                             </select>
                             <button onclick="exportViolations()" class="btn">📊 Export</button>
@@ -1334,24 +1332,23 @@
                             </thead>
                             <tbody id="violations-tbody">
                                 <tr>
-                                    <td colspan="6" style="text-align:center;padding:40px;color:#94a3b8;">Memuat data...
-                                    </td>
+                                    <td colspan="6" style="text-align:center;padding:40px;color:#94a3b8;">Klik tab untuk
+                                        memuat data</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div id="violations-cards"></div>
                     <div class="pagination" id="violations-pagination"></div>
                 </div>
             </div>
 
-            <!-- TAB 3: Penilaian (getBBMScores) -->
+            <!-- ===== TAB 3: PENILAIAN ===== -->
             <div id="tab-scores" class="tab-content">
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title">Rekapitulasi Penilaian Penggunaan Voucher BBM</h2>
                         <div class="filter-container">
-                            <select class="select-input" id="filter-score-bulan">
+                            <select class="select-input" id="filter-score-bulan" onchange="loadScores(false)">
                                 <option value="">Pilih Bulan</option>
                                 <option value="JANUARI">Januari</option>
                                 <option value="FEBRUARI">Februari</option>
@@ -1370,14 +1367,15 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;">
+                        <div class="sanksi-box" id="sanksi-box" style="display:none;">
                             <p style="font-size:14px;color:#64748b;">Sanksi per Keterlambatan:</p>
-                            <p style="font-size:20px;font-weight:700;color:#1e293b;" id="sanksi-value">-</p>
+                            <p style="font-size:20px;font-weight:700;color:#1e293b;" id="sanksi-value">—</p>
                         </div>
-                        <div class="charts-grid">
+
+                        <div class="charts-grid" id="charts-grid" style="display:none;">
                             <div class="card" style="margin:0;">
                                 <div class="card-header" style="padding:16px;">
-                                    <h3 style="font-size:16px;font-weight:600;">Skor Akhir Per Unit</h3>
+                                    <h3 style="font-size:15px;font-weight:600;">Skor Akhir Per Unit</h3>
                                 </div>
                                 <div class="card-content">
                                     <div class="chart-container"><canvas id="scoreChart"></canvas></div>
@@ -1385,13 +1383,14 @@
                             </div>
                             <div class="card" style="margin:0;">
                                 <div class="card-header" style="padding:16px;">
-                                    <h3 style="font-size:16px;font-weight:600;">Jumlah Keterlambatan Per Unit</h3>
+                                    <h3 style="font-size:15px;font-weight:600;">Jumlah Keterlambatan Per Unit</h3>
                                 </div>
                                 <div class="card-content">
                                     <div class="chart-container"><canvas id="violationChart"></canvas></div>
                                 </div>
                             </div>
                         </div>
+
                         <div id="scores-container">
                             <div class="empty-state">
                                 <div class="empty-state-icon">📊</div>
@@ -1401,32 +1400,35 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- MODAL DETAIL VOUCHER -->
+    <!-- ===== MODALS ===== -->
+
+    <!-- DETAIL MODAL -->
     <div id="detailModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
                 <h2 class="modal-title">Detail Permintaan Voucher BBM</h2>
+                <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
             </div>
             <div class="modal-content" id="detail-body"></div>
-            <div class="modal-footer"><button onclick="closeModal('detailModal')" class="btn"
-                    style="flex:1;">Tutup</button></div>
+            <div class="modal-footer">
+                <button onclick="closeModal('detailModal')" class="btn" style="flex:1">Tutup</button>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL APPROVE VOUCHER -->
+    <!-- APPROVE MODAL -->
     <div id="approveModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Setujui Permintaan Voucher BBM</h2>
+                <h2 class="modal-title">Setujui Permintaan Voucher</h2>
+                <button class="modal-close" onclick="closeModal('approveModal')">✕</button>
             </div>
             <div class="modal-content">
-                <div class="alert alert-info">
-                    Status akan diubah menjadi <strong>APPROVED</strong>. Pastikan data sudah benar.
-                </div>
+                <div class="alert alert-info">Status akan diubah menjadi <strong>DISETUJUI</strong>. Pastikan data sudah
+                    benar.</div>
                 <div class="form-group">
                     <label class="input-label">Catatan (opsional)</label>
                     <textarea class="form-textarea" id="approve-catatan"
@@ -1435,330 +1437,338 @@
                 <input type="hidden" id="approve-id">
             </div>
             <div class="modal-footer">
-                <button onclick="closeModal('approveModal')" class="btn" style="flex:1;">Batal</button>
-                <button onclick="confirmApprove()" class="btn btn-approve" style="flex:1;" id="confirm-approve-btn">✓
+                <button onclick="closeModal('approveModal')" class="btn" style="flex:1">Batal</button>
+                <button onclick="confirmApprove()" class="btn btn-success" id="confirm-approve-btn" style="flex:1">✓
                     Setujui</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL EDIT STATUS VOUCHER -->
+    <!-- EDIT STATUS MODAL -->
     <div id="editModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Edit Status Voucher BBM</h2>
+                <h2 class="modal-title">Edit Status Permintaan</h2>
+                <button class="modal-close" onclick="closeModal('editModal')">✕</button>
             </div>
             <div class="modal-content">
                 <div class="form-group">
                     <label class="input-label">Status</label>
-                    <select class="form-input" id="edit-status">
+                    <select class="form-select" id="edit-status">
                         <option value="PENDING">Menunggu</option>
                         <option value="APPROVED">Disetujui</option>
                         <option value="REJECTED">Ditolak</option>
                     </select>
                 </div>
                 <div class="info-box">
-                    <p class="info-box-label">Info Permintaan (tidak dapat diubah)</p>
-                    <div class="form-group" style="margin-bottom:8px;">
-                        <label class="input-label">Nama Pegawai</label>
-                        <input type="text" class="form-input" id="edit-nama" readonly
-                            style="background:#f0f4f8;cursor:not-allowed;">
-                    </div>
-                    <div class="form-group" style="margin-bottom:8px;">
-                        <label class="input-label">Unit</label>
-                        <input type="text" class="form-input" id="edit-unit" readonly
-                            style="background:#f0f4f8;cursor:not-allowed;">
-                    </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label class="input-label">No. Kendaraan</label>
-                        <input type="text" class="form-input" id="edit-kendaraan" readonly
-                            style="background:#f0f4f8;cursor:not-allowed;">
+                    <div class="info-box-title">Info Permintaan</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="input-label">Nama Pegawai</label>
+                            <input type="text" class="form-input" id="edit-nama" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label">Unit</label>
+                            <input type="text" class="form-input" id="edit-unit" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label">No. Kendaraan</label>
+                            <input type="text" class="form-input" id="edit-kendaraan" readonly>
+                        </div>
                     </div>
                 </div>
                 <input type="hidden" id="edit-id">
             </div>
             <div class="modal-footer">
-                <button onclick="closeModal('editModal')" class="btn" style="flex:1;">Batal</button>
-                <button onclick="submitEdit()" class="btn btn-primary" style="flex:1;" id="submit-edit-btn">Simpan
+                <button onclick="closeModal('editModal')" class="btn" style="flex:1">Batal</button>
+                <button onclick="submitEdit()" class="btn btn-primary" id="submit-edit-btn" style="flex:1">Simpan
                     Perubahan</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL TAMBAH CATATAN KETERLAMBATAN -->
+    <!-- ADD VIOLATION MODAL -->
     <div id="addViolationModal" class="modal-overlay">
-        <div class="modal">
+        <div class="modal modal-lg">
             <div class="modal-header">
                 <h2 class="modal-title">Tambah Catatan Keterlambatan BBM</h2>
+                <button class="modal-close" onclick="closeModal('addViolationModal')">✕</button>
             </div>
             <div class="modal-content">
-                <div class="alert alert-info" style="margin-bottom:16px;">
-                    Catatan untuk keterlambatan pengembalian bukti pembelian BBM.
+                <div class="source-toggle">
+                    <button class="btn btn-primary" id="src-btn-approved" onclick="setViolationSource('approved')">✓
+                        Dari Permintaan Disetujui</button>
+                    <button class="btn" id="src-btn-manual" onclick="setViolationSource('manual')">+ Input
+                        Manual</button>
                 </div>
-                <div class="form-group">
-                    <label class="input-label">Bulan *</label>
-                    <select class="form-input" id="violation-bulan" required>
-                        <option value="">Pilih Bulan</option>
-                        <option value="JANUARI">Januari</option>
-                        <option value="FEBRUARI">Februari</option>
-                        <option value="MARET">Maret</option>
-                        <option value="APRIL">April</option>
-                        <option value="MEI">Mei</option>
-                        <option value="JUNI">Juni</option>
-                        <option value="JULI">Juli</option>
-                        <option value="AGUSTUS">Agustus</option>
-                        <option value="SEPTEMBER">September</option>
-                        <option value="OKTOBER">Oktober</option>
-                        <option value="NOVEMBER">November</option>
-                        <option value="DESEMBER">Desember</option>
-                    </select>
+
+                <!-- FROM APPROVED -->
+                <div id="src-approved">
+                    <div class="alert alert-info">Pilih permintaan yang sudah disetujui sebagai dasar catatan
+                        keterlambatan.</div>
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <input type="text" class="search-input" style="width:100%;" id="approved-search"
+                            placeholder="Cari nama atau plat kendaraan..." oninput="filterApprovedRequests()">
+                    </div>
+                    <div class="request-list" id="approved-request-list">
+                        <div style="padding:20px;text-align:center;color:#64748b;font-size:13px;">Memuat data...</div>
+                    </div>
+                    <div id="selected-request-info" style="display:none;" class="info-box">
+                        <div class="info-box-title">Permintaan Dipilih</div>
+                        <div id="selected-request-detail" style="font-size:13.5px;"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="input-label">Unit *</label>
-                    <select class="form-input" id="violation-unit" required>
-                        <option value="">Pilih Unit</option>
-                        <option value="Sekretariat">Sekretariat</option>
-                        <option value="Bidang Koperasi">Bidang Koperasi</option>
-                        <option value="Bidang UKM">Bidang UKM</option>
-                        <option value="Bidang Usaha Mikro">Bidang Usaha Mikro</option>
-                        <option value="Bidang Kewirausahaan">Bidang Kewirausahaan</option>
-                        <option value="Balai Layanan Usaha Terpadu KUMKM">Balai Layanan Usaha Terpadu KUMKM</option>
-                    </select>
+
+                <!-- MANUAL -->
+                <div id="src-manual" style="display:none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="input-label">Bulan <span>*</span></label>
+                            <select class="form-select" id="violation-bulan" required>
+                                <option value="">Pilih Bulan</option>
+                                <option value="JANUARI">Januari</option>
+                                <option value="FEBRUARI">Februari</option>
+                                <option value="MARET">Maret</option>
+                                <option value="APRIL">April</option>
+                                <option value="MEI">Mei</option>
+                                <option value="JUNI">Juni</option>
+                                <option value="JULI">Juli</option>
+                                <option value="AGUSTUS">Agustus</option>
+                                <option value="SEPTEMBER">September</option>
+                                <option value="OKTOBER">Oktober</option>
+                                <option value="NOVEMBER">November</option>
+                                <option value="DESEMBER">Desember</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label">Unit <span>*</span></label>
+                            <select class="form-select" id="violation-unit" required>
+                                <option value="">Pilih Unit</option>
+                                <option>Sekretariat</option>
+                                <option>Bidang Koperasi</option>
+                                <option>Bidang UKM</option>
+                                <option>Bidang Usaha Mikro</option>
+                                <option>Bidang Kewirausahaan</option>
+                                <option value="Balai Layanan Usaha Terpadu KUMKM">Balai Layanan Usaha Terpadu KUMKM
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label">No. Kendaraan</label>
+                            <input type="text" class="form-input" id="violation-no-kendaraan"
+                                placeholder="Cth: AB 1234 CD">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="input-label">Tanggal Pengambilan *</label>
-                    <input type="text" class="form-input" id="violation-tgl-ambil" placeholder="Contoh: 07-01-2026"
-                        required>
-                </div>
-                <div class="form-group">
-                    <label class="input-label">Tanggal Pengembalian</label>
-                    <input type="text" class="form-input" id="violation-tgl-kembali"
-                        placeholder="Contoh: 10-01-2026 (kosongkan jika belum)">
-                </div>
-                <div class="form-group">
-                    <label class="input-label">Nomor Kendaraan</label>
-                    <input type="text" class="form-input" id="violation-no-kendaraan" placeholder="Contoh: AB 1234 CD">
+
+                <!-- DATE FIELDS -->
+                <div class="form-grid" style="margin-top:14px;">
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Pengambilan <span>*</span></label>
+                        <div class="date-wrapper">
+                            <input type="date" class="form-input" id="violation-tgl-ambil" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Pengembalian</label>
+                        <div class="date-wrapper">
+                            <input type="date" class="form-input" id="violation-tgl-kembali">
+                        </div>
+                        <small style="color:#64748b;font-size:11px;margin-top:3px;display:block;">Kosongkan jika belum
+                            dikembalikan</small>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="closeModal('addViolationModal')" class="btn" style="flex:1;">Batal</button>
-                <button onclick="submitViolation()" class="btn btn-primary" style="flex:1;"
-                    id="submit-violation-btn">Simpan</button>
+                <button onclick="closeModal('addViolationModal')" class="btn" style="flex:1">Batal</button>
+                <button onclick="submitViolation()" class="btn btn-primary" id="submit-violation-btn" style="flex:1">💾
+                    Simpan Catatan</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL EDIT CATATAN KETERLAMBATAN -->
+    <!-- EDIT VIOLATION MODAL -->
     <div id="editViolationModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">✏️ Edit Catatan Keterlambatan</h2>
+                <h2 class="modal-title">Edit Catatan Keterlambatan</h2>
+                <button class="modal-close" onclick="closeModal('editViolationModal')">✕</button>
             </div>
             <div class="modal-content">
-                <div class="info-box">
-                    <p class="info-box-label">Info (tidak dapat diubah)</p>
-                    <div style="display:flex;gap:12px;">
-                        <div style="flex:1;">
-                            <label class="input-label">Bulan</label>
-                            <input type="text" class="form-input" id="ev-bulan" readonly
-                                style="background:#f0f4f8;cursor:not-allowed;">
-                        </div>
-                        <div style="flex:1;">
-                            <label class="input-label">Unit</label>
-                            <input type="text" class="form-input" id="ev-unit" readonly
-                                style="background:#f0f4f8;cursor:not-allowed;">
-                        </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="input-label">Bulan</label>
+                        <select class="form-select" id="ev-bulan">
+                            <option value="JANUARI">Januari</option>
+                            <option value="FEBRUARI">Februari</option>
+                            <option value="MARET">Maret</option>
+                            <option value="APRIL">April</option>
+                            <option value="MEI">Mei</option>
+                            <option value="JUNI">Juni</option>
+                            <option value="JULI">Juli</option>
+                            <option value="AGUSTUS">Agustus</option>
+                            <option value="SEPTEMBER">September</option>
+                            <option value="OKTOBER">Oktober</option>
+                            <option value="NOVEMBER">November</option>
+                            <option value="DESEMBER">Desember</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Unit</label>
+                        <select class="form-select" id="ev-unit">
+                            <option>Sekretariat</option>
+                            <option>Bidang Koperasi</option>
+                            <option>Bidang UKM</option>
+                            <option>Bidang Usaha Mikro</option>
+                            <option>Bidang Kewirausahaan</option>
+                            <option value="Balai Layanan Usaha Terpadu KUMKM">Balai Layanan Usaha Terpadu KUMKM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Pengambilan</label>
+                        <div class="date-wrapper"><input type="date" class="form-input" id="ev-tgl-ambil"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Pengembalian</label>
+                        <div class="date-wrapper"><input type="date" class="form-input" id="ev-tgl-kembali"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">No. Kendaraan</label>
+                        <input type="text" class="form-input" id="ev-no-kendaraan">
                     </div>
                 </div>
-                <div class="form-group" style="margin-top:16px;">
-                    <label class="input-label">Tanggal Pengambilan</label>
-                    <input type="text" class="form-input" id="ev-tgl-ambil" placeholder="Contoh: 07-01-2026">
-                </div>
-                <div class="form-group">
-                    <label class="input-label">Tanggal Pengembalian</label>
-                    <input type="text" class="form-input" id="ev-tgl-kembali" placeholder="Contoh: 10-01-2026">
-                </div>
-                <div class="form-group">
-                    <label class="input-label">Nomor Kendaraan</label>
-                    <input type="text" class="form-input" id="ev-no-kendaraan">
-                </div>
                 <input type="hidden" id="ev-id">
-                <input type="hidden" id="ev-bulan-hidden">
-                <input type="hidden" id="ev-unit-hidden">
+                <input type="hidden" id="ev-bulan-orig">
+                <input type="hidden" id="ev-unit-orig">
             </div>
             <div class="modal-footer">
-                <button onclick="closeModal('editViolationModal')" class="btn" style="flex:1;">Batal</button>
-                <button onclick="submitEditViolation()" class="btn btn-primary" style="flex:1;"
-                    id="submit-ev-btn">Simpan Perubahan</button>
+                <button onclick="closeModal('editViolationModal')" class="btn" style="flex:1">Batal</button>
+                <button onclick="submitEditViolation()" class="btn btn-primary" id="submit-ev-btn" style="flex:1">Simpan
+                    Perubahan</button>
             </div>
         </div>
     </div>
 
     <script>
-        AUTH.init();
-        // ════════════════════════════════════════════════════════════════
-        // ⚠️  GANTI URL INI DENGAN DEPLOYMENT URL APPS SCRIPT ANDA
-        // ════════════════════════════════════════════════════════════════
-        const API_URL = 'https://script.google.com/macros/s/AKfycbyfAJcjPDuKqwKk8A46z4quyaeV9trBLAuDtdqhQqX0CIZke6fgN1sptcnS0EURuF6ksg/exec';
-        // ════════════════════════════════════════════════════════════════
-
+        // ── CONFIG ──────────────────────────────────────────────────────────────
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzDmggtdjuUDEGu4CgU75xdvKQRcm5rYm10CgpombfcwQTGVmzfxS4VFREGjN5PMUjZlg/exec';
         const CACHE_DURATION = 5 * 60 * 1000;
-        const CACHE_KEYS = {
-            REQUESTS: 'bbm_voucher_requests',
-            VIOLATIONS: 'bbm_violations_catatan',
-            SCORES: 'bbm_scores_penilaian'
-        };
+        const CK = { REQ: 'bbm_requests', VIOL: 'bbm_violations', SCORES: 'bbm_scores' };
+        const ITEMS_PER_PAGE = 10;
 
         let masterRequests = [], allRequests = [];
         let masterViolations = [], allViolations = [];
         let allScores = {}, scoreChart = null, violationChart = null;
-        let requestsCurrentPage = 1, violationsCurrentPage = 1;
-        const itemsPerPage = 10;
+        let reqPage = 1, violPage = 1;
+        let violationSource = 'approved';
+        let selectedApprovedReq = null;
 
-        // ── Cache ──────────────────────────────────────────────────────
-        function saveToCache(key, data) {
-            try { localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() })); } catch (e) { }
-        }
-        function getFromCache(key) {
-            try {
-                const c = localStorage.getItem(key);
-                if (!c) return null;
-                const p = JSON.parse(c);
-                if (Date.now() - p.timestamp < CACHE_DURATION) return p.data;
-                localStorage.removeItem(key);
-                return null;
-            } catch (e) { return null; }
-        }
-        function clearCache() { Object.values(CACHE_KEYS).forEach(k => localStorage.removeItem(k)); }
-        function showCacheIndicator() {
-            const el = document.getElementById('cache-indicator');
-            el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 2000);
-        }
+        // ── AUTH ─────────────────────────────────────────────────────────────────
+        try { AUTH.init(); } catch (e) { }
+        const user = (typeof AUTH !== 'undefined' && AUTH.getUser) ? (AUTH.getUser() || {}) : {};
+        document.getElementById('admin-name').textContent = user.name || 'Administrator';
+        document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
+        function logout() { if (confirm('Keluar dari sistem?')) { clearCache(); try { AUTH.logout(); } catch (e) { } } }
 
-        // ── Mobile menu ────────────────────────────────────────────────
+        // ── CACHE ─────────────────────────────────────────────────────────────────
+        function saveCache(k, d) { try { localStorage.setItem(k, JSON.stringify({ d, t: Date.now() })); } catch (e) { } }
+        function getCache(k) { try { const c = JSON.parse(localStorage.getItem(k)); if (c && Date.now() - c.t < CACHE_DURATION) return c.d; localStorage.removeItem(k); } catch (e) { } return null; }
+        function clearCache() { Object.values(CK).forEach(k => localStorage.removeItem(k)); }
+
+        // ── MOBILE MENU ────────────────────────────────────────────────────────────
         function toggleMobileMenu() {
             document.getElementById('sidebar').classList.toggle('open');
-            document.querySelector('.sidebar-overlay').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
         }
 
-        // ── Toast ──────────────────────────────────────────────────────
+        // ── TOAST ─────────────────────────────────────────────────────────────────
         const Toast = {
-            container: null,
-            init() {
-                if (!this.container) {
-                    this.container = document.createElement('div');
-                    this.container.className = 'toast-container';
-                    document.body.appendChild(this.container);
-                }
-            },
-            show(message, type = 'success') {
-                this.init();
+            show(msg, type = 'success') {
+                let c = document.querySelector('.toast-container');
+                if (!c) { c = document.createElement('div'); c.className = 'toast-container'; document.body.appendChild(c); }
                 const t = document.createElement('div');
                 t.className = `toast ${type}`;
-                const icon = type === 'success'
-                    ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
-                    : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>';
-                t.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">${icon}</svg><span>${message}</span>`;
-                this.container.appendChild(t);
+                t.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="color:${type === 'success' ? '#10b981' : '#ef4444'};flex-shrink:0;">
+                ${type === 'success'
+                        ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>'
+                        : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>'
+                    }</svg><span>${msg}</span>`;
+                c.appendChild(t);
                 setTimeout(() => t.remove(), 3500);
             },
             success(m) { this.show(m, 'success'); },
             error(m) { this.show(m, 'error'); }
         };
 
-        // ── JSONP ──────────────────────────────────────────────────────
+        // ── JSONP API ─────────────────────────────────────────────────────────────
         function callAPI(params) {
             return new Promise((resolve, reject) => {
-                const cb = 'jsonp_' + Math.round(1e6 * Math.random());
-                window[cb] = function (data) {
-                    delete window[cb];
-                    document.getElementById(cb)?.remove();
-                    resolve(data);
-                };
-                const qs = new URLSearchParams({ ...params, callback: cb }).toString();
-                const script = document.createElement('script');
-                script.id = cb;
-                script.src = `${API_URL}?${qs}`;
-                const tid = setTimeout(() => {
-                    delete window[cb];
-                    script.remove();
-                    reject(new Error('Timeout – tidak ada respons dari server'));
-                }, 20000);
-                script.onerror = () => {
-                    clearTimeout(tid);
-                    delete window[cb];
-                    reject(new Error('Network error – periksa koneksi atau URL API'));
-                };
-                document.body.appendChild(script);
+                const cb = 'cb_' + Math.round(1e7 * Math.random());
+                window[cb] = d => { delete window[cb]; document.getElementById(cb)?.remove(); resolve(d); };
+                const qs = new URLSearchParams({ ...params, callback: cb });
+                const s = document.createElement('script');
+                s.id = cb;
+                s.src = `${API_URL}?${qs}`;
+                const tid = setTimeout(() => { delete window[cb]; s.remove(); reject(new Error('Timeout')); }, 20000);
+                s.onerror = () => { clearTimeout(tid); delete window[cb]; reject(new Error('Network error')); };
+                document.body.appendChild(s);
             });
         }
 
-        // ── Auth ───────────────────────────────────────────────────────
-        const user = AUTH.getUser() || {};
-        document.getElementById('admin-name').textContent = user.name || 'Administrator';
-        document.getElementById('admin-email').textContent = user.email || 'admin@dinas.gov.id';
-        function logout() {
-            if (confirm("Apakah Anda yakin ingin keluar?")) { clearCache(); AUTH.logout(); }
+        // ── DATE HELPERS ──────────────────────────────────────────────────────────
+        function dateToStr(dateInput) {
+            if (!dateInput) return '-';
+            const parts = dateInput.split('-');
+            if (parts.length === 3) return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            return dateInput;
         }
-        // ── Tabs ───────────────────────────────────────────────────────
-        function switchTab(tabName, event) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            if (event?.target) event.target.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            if (tabName === 'requests') loadRequests();
-            if (tabName === 'violations') loadViolations();
-            if (tabName === 'scores') loadScores();
-        }
-        function switchTabFromDropdown(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            if (tabName === 'requests') loadRequests();
-            if (tabName === 'violations') loadViolations();
-            if (tabName === 'scores') loadScores();
+        function strToDate(str) {
+            if (!str || str === '-') return '';
+            const parts = str.split('-');
+            if (parts.length === 3 && parts[2].length === 4) return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+            return str;
         }
 
-        // ── Badge helpers ──────────────────────────────────────────────
-        function createStatusBadge(status) {
+        // ── TABS ──────────────────────────────────────────────────────────────────
+        function switchTab(name, btn) {
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            else { const b = document.getElementById(`tab-btn-${name}`); if (b) b.classList.add('active'); }
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(`tab-${name}`).classList.add('active');
+            if (window.innerWidth < 1024) toggleMobileMenu();
+            if (name === 'requests') loadRequests();
+            if (name === 'violations') loadViolations();
+            if (name === 'scores') loadScores();
+        }
+
+        // ── BADGES ────────────────────────────────────────────────────────────────
+        function badge(status) {
             const s = (status || '').toUpperCase();
             if (s === 'APPROVED') return '<span class="badge badge-approved">Disetujui</span>';
             if (s === 'REJECTED') return '<span class="badge badge-rejected">Ditolak</span>';
             return '<span class="badge badge-pending">Menunggu</span>';
         }
 
-        // ══════════════════════════════════════════════════════════════
-        // TAB 1: PERMINTAAN VOUCHER
-        // Backend action: getVoucherRequests / updateVoucherRequest / deleteVoucherRequest
-        // Sheet: VOUCHER_BBM (kolom: id, timestamp, nama_pegawai, unit_eselon, nomor_kendaraan, status)
-        // ══════════════════════════════════════════════════════════════
-        async function loadRequests(forceRefresh = false) {
+        // ═══════════════════════════════════════════════════════════
+        // TAB 1 — PERMINTAAN VOUCHER
+        // ═══════════════════════════════════════════════════════════
+        async function loadRequests(force = false) {
             const tbody = document.getElementById('requests-tbody');
-            if (!forceRefresh) {
-                const cached = getFromCache(CACHE_KEYS.REQUESTS);
-                if (cached) {
-                    masterRequests = cached;
-                    applyRequestFilter();
-                    updateStats();
-                    showCacheIndicator();
-                    return;
-                }
+            if (!force) {
+                const c = getCache(CK.REQ);
+                if (c) { masterRequests = c; applyRequestFilter(); updateStats(); return; }
             }
-            tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div><p style="margin-top:16px;">Memuat data...</p></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6"><div class="loading-state"><div class="spinner"></div><span>Memuat data...</span></div></td></tr>';
             try {
-                // ← Action yang benar sesuai backend: getVoucherRequests
                 const res = await callAPI({ action: 'getVoucherRequests' });
                 masterRequests = Array.isArray(res) ? res : [];
-                saveToCache(CACHE_KEYS.REQUESTS, masterRequests);
+                saveCache(CK.REQ, masterRequests);
                 applyRequestFilter();
                 updateStats();
             } catch (e) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:#ef4444;">
-                    ❌ Gagal memuat data: ${e.message}<br>
-                    <small style="color:#94a3b8;margin-top:8px;display:block;">Pastikan API_URL sudah dikonfigurasi dengan benar</small>
-                    <button onclick="loadRequests(true)" class="btn" style="margin-top:12px;">🔄 Coba Lagi</button>
-                </td></tr>`;
-                Toast.error('Gagal memuat permintaan voucher: ' + e.message);
+                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">❌</div><p>Gagal: ${e.message}</p><button onclick="loadRequests(true)" class="btn" style="margin-top:12px;">Coba Lagi</button></div></td></tr>`;
+                Toast.error('Gagal memuat data: ' + e.message);
             }
         }
 
@@ -1774,116 +1784,69 @@
             const search = document.getElementById('search-req').value.toLowerCase().trim();
             allRequests = masterRequests.filter(r => {
                 if (status && (r.status || '').toUpperCase() !== status) return false;
-                const haystack = `${r.nama_pegawai || ''} ${r.unit_eselon || ''}`.toLowerCase();
-                if (search && !haystack.includes(search)) return false;
+                if (search && !`${r.nama_pegawai || ''} ${r.unit_eselon || ''}`.toLowerCase().includes(search)) return false;
                 return true;
             });
-            requestsCurrentPage = 1;
-            renderPaginatedRequests();
+            reqPage = 1;
+            renderRequests();
         }
 
-        document.getElementById('filter-status-req').addEventListener('change', applyRequestFilter);
-        document.getElementById('search-req').addEventListener('input', applyRequestFilter);
-
-        function renderPaginatedRequests() {
+        function renderRequests() {
             const tbody = document.getElementById('requests-tbody');
-            const cards = document.getElementById('requests-cards');
             const pgn = document.getElementById('requests-pagination');
 
-            if (allRequests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#94a3b8;">Tidak ada data permintaan</td></tr>';
-                cards.innerHTML = '<div style="text-align:center;padding:2rem;color:#64748b;">Data tidak ditemukan</div>';
-                pgn.innerHTML = '';
-                return;
+            if (!allRequests.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data permintaan</p></div></td></tr>';
+                pgn.innerHTML = ''; return;
             }
 
-            const totalPages = Math.ceil(allRequests.length / itemsPerPage);
-            const start = (requestsCurrentPage - 1) * itemsPerPage;
-            const items = allRequests.slice(start, start + itemsPerPage);
+            const total = Math.ceil(allRequests.length / ITEMS_PER_PAGE);
+            const items = allRequests.slice((reqPage - 1) * ITEMS_PER_PAGE, reqPage * ITEMS_PER_PAGE);
 
-            tbody.innerHTML = items.map(req => {
-                const isPending = (req.status || '').toUpperCase() === 'PENDING';
+            tbody.innerHTML = items.map(r => {
+                const isPending = (r.status || '').toUpperCase() === 'PENDING';
+                const statusCell = isPending
+                    ? `<div class="action-buttons"><button onclick="openApproveModal('${r.id}')" class="btn btn-sm btn-success">✓ Setujui</button><button onclick="quickReject('${r.id}')" class="btn btn-sm btn-danger">✕ Tolak</button></div>`
+                    : badge(r.status);
                 return `<tr>
-                    <td><div style="font-weight:600;">${req.nama_pegawai || '-'}</div></td>
-                    <td style="font-size:13px;color:#64748b;">${req.unit_eselon || '-'}</td>
-                    <td style="font-family:monospace;font-weight:500;">${req.nomor_kendaraan || '-'}</td>
-                    <td style="font-size:13px;color:#64748b;">${req.timestamp || '-'}</td>
-                    <td>${createStatusBadge(req.status)}</td>
-                    <td>
-                        <div class="action-buttons">
-                            ${isPending
-                        ? `<button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve">✓ Setujui</button>
-                                   <button onclick="quickReject('${req.id}')" class="btn btn-sm btn-reject">✕ Tolak</button>`
-                        : ''}
-                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm">👁 Detail</button>
-                            <button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit">✏️ Edit</button>
-                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete">🗑️</button>
-                        </div>
-                    </td>
-                </tr>`;
-            }).join('');
-
-            cards.innerHTML = items.map(req => {
-                const isPending = (req.status || '').toUpperCase() === 'PENDING';
-                return `<div class="requests-card">
-                    <div class="requests-card-header">
-                        <div style="flex:1;">
-                            <div class="requests-card-title">${req.nama_pegawai || '-'}</div>
-                            <div class="requests-card-subtitle">${req.unit_eselon || '-'}</div>
-                        </div>
-                        ${createStatusBadge(req.status)}
+                <td style="font-weight:600;">${r.nama_pegawai || '-'}</td>
+                <td style="font-size:13px;color:#64748b;">${r.unit_eselon || '-'}</td>
+                <td style="font-family:monospace;font-size:13px;">${r.nomor_kendaraan || '-'}</td>
+                <td style="font-size:12px;color:#64748b;">${r.timestamp || '-'}</td>
+                <td>${statusCell}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="viewDetail('${r.id}')" class="btn btn-sm">👁 Detail</button>
+                        <button onclick="openEditModal('${r.id}')" class="btn btn-sm btn-blue">✏️ Edit</button>
+                        <button onclick="deleteRequest('${r.id}')" class="btn btn-sm btn-danger">🗑️ Hapus</button>
                     </div>
-                    <div class="requests-card-body">
-                        <div class="requests-card-row">
-                            <span class="requests-card-label">No. Kendaraan</span>
-                            <span class="requests-card-value" style="font-family:monospace;">${req.nomor_kendaraan || '-'}</span>
-                        </div>
-                        <div class="requests-card-row">
-                            <span class="requests-card-label">Waktu Pengajuan</span>
-                            <span class="requests-card-value">${req.timestamp || '-'}</span>
-                        </div>
-                    </div>
-                    <div class="requests-card-footer">
-                        ${isPending
-                        ? `<div style="display:flex;gap:8px;margin-bottom:8px;">
-                                <button onclick="openApproveModal('${req.id}')" class="btn btn-sm btn-approve" style="flex:1;">✓ Setujui</button>
-                                <button onclick="quickReject('${req.id}')" class="btn btn-sm btn-reject" style="flex:1;">✕ Tolak</button>
-                               </div>`
-                        : ''}
-                        <div style="display:flex;gap:8px;">
-                            <button onclick="viewDetail('${req.id}')" class="btn btn-sm" style="flex:1;">👁 Detail</button>
-                            <button onclick="openEditModal('${req.id}')" class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button>
-                            <button onclick="deleteRequest('${req.id}')" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button>
-                        </div>
-                    </div>
-                </div>`;
+                </td>
+            </tr>`;
             }).join('');
 
             pgn.innerHTML = `
-                <button onclick="changeRequestsPage(${requestsCurrentPage - 1})" ${requestsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-                <span class="pagination-info">Halaman ${requestsCurrentPage} dari ${totalPages} (${allRequests.length} data)</span>
-                <button onclick="changeRequestsPage(${requestsCurrentPage + 1})" ${requestsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+            <button onclick="changeReqPage(${reqPage - 1})" ${reqPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+            <span class="pagination-info">Halaman ${reqPage} dari ${total} (${allRequests.length} data)</span>
+            <button onclick="changeReqPage(${reqPage + 1})" ${reqPage === total ? 'disabled' : ''}>Next ›</button>`;
         }
 
-        function changeRequestsPage(page) {
-            const t = Math.ceil(allRequests.length / itemsPerPage);
-            if (page < 1 || page > t) return;
-            requestsCurrentPage = page;
-            renderPaginatedRequests();
+        function changeReqPage(p) {
+            const t = Math.ceil(allRequests.length / ITEMS_PER_PAGE);
+            if (p < 1 || p > t) return;
+            reqPage = p; renderRequests();
         }
 
         function viewDetail(id) {
-            // Cari dari allRequests dulu, lalu masterRequests
-            const req = allRequests.find(r => r.id == id) || masterRequests.find(r => r.id == id);
-            if (!req) { Toast.error('Data tidak ditemukan'); return; }
+            const r = allRequests.find(x => x.id == id) || masterRequests.find(x => x.id == id);
+            if (!r) return;
             document.getElementById('detail-body').innerHTML = `
-                <div class="info-grid">
-                    <div class="info-item"><label class="input-label">Nama Pegawai</label><p style="font-weight:500;">${req.nama_pegawai || '-'}</p></div>
-                    <div class="info-item"><label class="input-label">Unit / Eselon</label><p style="font-weight:500;">${req.unit_eselon || '-'}</p></div>
-                    <div class="info-item"><label class="input-label">No. Kendaraan</label><p style="font-weight:500;font-family:monospace;">${req.nomor_kendaraan || '-'}</p></div>
-                    <div class="info-item"><label class="input-label">Waktu Pengajuan</label><p style="font-weight:500;">${req.timestamp || '-'}</p></div>
-                </div>
-                <div><label class="input-label">Status</label><div>${createStatusBadge(req.status)}</div></div>`;
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div><div class="input-label" style="margin-bottom:4px;">Nama Pegawai</div><div style="font-weight:600;">${r.nama_pegawai || '-'}</div></div>
+                <div><div class="input-label" style="margin-bottom:4px;">Unit / Eselon</div><div>${r.unit_eselon || '-'}</div></div>
+                <div><div class="input-label" style="margin-bottom:4px;">No. Kendaraan</div><div style="font-family:monospace;">${r.nomor_kendaraan || '-'}</div></div>
+                <div><div class="input-label" style="margin-bottom:4px;">Waktu Pengajuan</div><div style="font-size:13px;">${r.timestamp || '-'}</div></div>
+                <div><div class="input-label" style="margin-bottom:4px;">Status</div>${badge(r.status)}</div>
+            </div>`;
             openModal('detailModal');
         }
 
@@ -1896,477 +1859,382 @@
         async function confirmApprove() {
             const id = document.getElementById('approve-id').value;
             const btn = document.getElementById('confirm-approve-btn');
-            const orig = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyetujui...';
+            const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Menyetujui...';
             try {
-                // ← Action yang benar: updateVoucherRequest
                 const res = await callAPI({ action: 'updateVoucherRequest', id, status: 'APPROVED' });
-                if (res && res.success) {
-                    Toast.success('Permintaan berhasil disetujui');
-                    closeModal('approveModal');
-                    clearCache();
-                    await loadRequests(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal menyetujui');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                if (res?.success) { Toast.success('Permintaan disetujui'); closeModal('approveModal'); clearCache(); await loadRequests(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
             finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
         async function quickReject(id) {
-            if (!confirm('Tolak permintaan voucher BBM ini?')) return;
+            if (!confirm('Tolak permintaan ini?')) return;
             try {
-                // ← Action yang benar: updateVoucherRequest
                 const res = await callAPI({ action: 'updateVoucherRequest', id, status: 'REJECTED' });
-                if (res && res.success) {
-                    Toast.success('Permintaan ditolak');
-                    clearCache();
-                    await loadRequests(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal menolak');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                if (res?.success) { Toast.success('Permintaan ditolak'); clearCache(); await loadRequests(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
         }
 
         function openEditModal(id) {
-            const req = allRequests.find(r => r.id == id) || masterRequests.find(r => r.id == id);
-            if (!req) { Toast.error('Data tidak ditemukan'); return; }
-            document.getElementById('edit-id').value = req.id;
-            document.getElementById('edit-status').value = (req.status || 'PENDING').toUpperCase();
-            document.getElementById('edit-nama').value = req.nama_pegawai || '';
-            document.getElementById('edit-unit').value = req.unit_eselon || '';
-            document.getElementById('edit-kendaraan').value = req.nomor_kendaraan || '';
+            const r = allRequests.find(x => x.id == id) || masterRequests.find(x => x.id == id);
+            if (!r) return;
+            document.getElementById('edit-id').value = r.id;
+            document.getElementById('edit-status').value = (r.status || 'PENDING').toUpperCase();
+            document.getElementById('edit-nama').value = r.nama_pegawai || '';
+            document.getElementById('edit-unit').value = r.unit_eselon || '';
+            document.getElementById('edit-kendaraan').value = r.nomor_kendaraan || '';
             openModal('editModal');
         }
 
         async function submitEdit() {
             const btn = document.getElementById('submit-edit-btn');
-            const orig = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Menyimpan...';
             try {
-                // ← Action yang benar: updateVoucherRequest
-                const res = await callAPI({
-                    action: 'updateVoucherRequest',
-                    id: document.getElementById('edit-id').value,
-                    status: document.getElementById('edit-status').value
-                });
-                if (res && res.success) {
-                    Toast.success('Status berhasil diperbarui!');
-                    closeModal('editModal');
-                    clearCache();
-                    await loadRequests(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal memperbarui');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                const res = await callAPI({ action: 'updateVoucherRequest', id: document.getElementById('edit-id').value, status: document.getElementById('edit-status').value });
+                if (res?.success) { Toast.success('Status diperbarui'); closeModal('editModal'); clearCache(); await loadRequests(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
             finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
         async function deleteRequest(id) {
-            if (!confirm('Hapus permintaan ini? Tindakan tidak dapat dibatalkan.')) return;
+            if (!confirm('Hapus permintaan ini?')) return;
             try {
-                // ← Action yang benar: deleteVoucherRequest
                 const res = await callAPI({ action: 'deleteVoucherRequest', id });
-                if (res && res.success) {
-                    Toast.success('Permintaan berhasil dihapus');
-                    clearCache();
-                    await loadRequests(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal menghapus');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                if (res?.success) { Toast.success('Dihapus'); clearCache(); await loadRequests(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
         }
 
-        // ══════════════════════════════════════════════════════════════
-        // TAB 2: CATATAN KETERLAMBATAN
-        // Backend action: getBBMViolations / createBBMViolation / updateBBMViolation / deleteBBMViolation
-        // Sheet: CATATAN BBM (horizontal, per unit, per bulan)
-        // ══════════════════════════════════════════════════════════════
-        async function loadViolations(forceRefresh = false) {
+        // ═══════════════════════════════════════════════════════════
+        // TAB 2 — CATATAN KETERLAMBATAN
+        // ═══════════════════════════════════════════════════════════
+        async function loadViolations(force = false) {
             const tbody = document.getElementById('violations-tbody');
-            if (!forceRefresh) {
-                const cached = getFromCache(CACHE_KEYS.VIOLATIONS);
-                if (cached) {
-                    masterViolations = cached;
-                    applyViolationFilter();
-                    showCacheIndicator();
-                    return;
-                }
+            if (!force) {
+                const c = getCache(CK.VIOL);
+                if (c) { masterViolations = c; applyViolationFilter(); return; }
             }
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;"><div class="spinner"></div><p style="margin-top:16px;color:#64748b;">Memuat data...</p></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6"><div class="loading-state"><div class="spinner"></div><span>Memuat data...</span></div></td></tr>';
             try {
-                // ← Action yang benar: getBBMViolations
                 const res = await callAPI({ action: 'getBBMViolations' });
                 masterViolations = Array.isArray(res) ? res : [];
-                saveToCache(CACHE_KEYS.VIOLATIONS, masterViolations);
+                saveCache(CK.VIOL, masterViolations);
                 applyViolationFilter();
             } catch (e) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:#ef4444;">
-                    ❌ Gagal memuat catatan: ${e.message}
-                    <br><button onclick="loadViolations(true)" class="btn" style="margin-top:12px;">🔄 Coba Lagi</button>
-                </td></tr>`;
-                Toast.error('Gagal memuat catatan: ' + e.message);
+                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">❌</div><p>${e.message}</p><button onclick="loadViolations(true)" class="btn" style="margin-top:12px;">Coba Lagi</button></div></td></tr>`;
+                Toast.error('Gagal: ' + e.message);
             }
         }
 
         function applyViolationFilter() {
-            const bulan = document.getElementById('filter-bulan-viol').value;
-            const unit = document.getElementById('filter-unit-viol').value;
-            allViolations = masterViolations.filter(v =>
-                (bulan === '' || v.bulan === bulan) &&
-                (unit === '' || v.unit === unit)
-            );
-            violationsCurrentPage = 1;
-            renderPaginatedViolations();
+            const b = document.getElementById('filter-bulan-viol').value;
+            const u = document.getElementById('filter-unit-viol').value;
+            allViolations = masterViolations.filter(v => (!b || v.bulan === b) && (!u || v.unit === u));
+            violPage = 1;
+            renderViolations();
         }
 
-        ['filter-bulan-viol', 'filter-unit-viol'].forEach(id =>
-            document.getElementById(id).addEventListener('change', applyViolationFilter)
-        );
-
-        function renderPaginatedViolations() {
+        function renderViolations() {
             const tbody = document.getElementById('violations-tbody');
-            const cards = document.getElementById('violations-cards');
             const pgn = document.getElementById('violations-pagination');
 
-            if (allViolations.length === 0) {
+            if (!allViolations.length) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#94a3b8;">Tidak ada catatan keterlambatan</td></tr>';
-                cards.innerHTML = '<div style="text-align:center;padding:2rem;color:#64748b;">Data tidak ditemukan</div>';
-                pgn.innerHTML = '';
-                return;
+                pgn.innerHTML = ''; return;
             }
 
-            const totalPages = Math.ceil(allViolations.length / itemsPerPage);
-            const start = (violationsCurrentPage - 1) * itemsPerPage;
-            const items = allViolations.slice(start, start + itemsPerPage);
+            const total = Math.ceil(allViolations.length / ITEMS_PER_PAGE);
+            const start = (violPage - 1) * ITEMS_PER_PAGE;
+            const items = allViolations.slice(start, start + ITEMS_PER_PAGE);
 
             tbody.innerHTML = items.map((v, idx) => {
                 const gi = start + idx;
                 return `<tr>
-                    <td>${v.bulan || '-'}</td>
-                    <td>${v.unit || '-'}</td>
-                    <td>${v.tanggal_pengambilan || '-'}</td>
-                    <td>${v.tanggal_pengembalian || '-'}</td>
-                    <td style="font-family:monospace;">${v.nomor_kendaraan || '-'}</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button onclick="openEditViolationModal(${gi})" class="btn btn-sm btn-edit">✏️ Edit</button>
-                            <button onclick="deleteViolation(${gi})" class="btn btn-sm btn-delete">🗑️ Hapus</button>
-                        </div>
-                    </td>
-                </tr>`;
-            }).join('');
-
-            cards.innerHTML = items.map((v, idx) => {
-                const gi = start + idx;
-                return `<div class="requests-card">
-                    <div class="requests-card-header">
-                        <div style="flex:1;">
-                            <div class="requests-card-title">${v.unit || '-'}</div>
-                            <div class="requests-card-subtitle">Bulan ${v.bulan || '-'}</div>
-                        </div>
+                <td><span style="font-weight:600;font-size:12px;background:#f1f5f9;color:#1e293b;padding:3px 8px;border-radius:4px;">${v.bulan || '-'}</span></td>
+                <td style="font-size:13px;">${v.unit || '-'}</td>
+                <td style="font-size:13px;">${v.tanggal_pengambilan || '-'}</td>
+                <td style="font-size:13px;">${v.tanggal_pengembalian || '-'}</td>
+                <td style="font-family:monospace;font-size:13px;">${v.nomor_kendaraan || '-'}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="openEditViolationModal(${gi})" class="btn btn-sm btn-blue">✏️ Edit</button>
+                        <button onclick="deleteViolation(${gi})" class="btn btn-sm btn-danger">🗑️ Hapus</button>
                     </div>
-                    <div class="requests-card-body">
-                        <div class="requests-card-row"><span class="requests-card-label">Tgl Pengambilan</span><span class="requests-card-value">${v.tanggal_pengambilan || '-'}</span></div>
-                        <div class="requests-card-row"><span class="requests-card-label">Tgl Pengembalian</span><span class="requests-card-value">${v.tanggal_pengembalian || '-'}</span></div>
-                        <div class="requests-card-row"><span class="requests-card-label">No. Kendaraan</span><span class="requests-card-value" style="font-family:monospace;">${v.nomor_kendaraan || '-'}</span></div>
-                    </div>
-                    <div class="requests-card-footer">
-                        <div style="display:flex;gap:8px;">
-                            <button onclick="openEditViolationModal(${gi})" class="btn btn-sm btn-edit" style="flex:1;">✏️ Edit</button>
-                            <button onclick="deleteViolation(${gi})" class="btn btn-sm btn-delete" style="flex:1;">🗑️ Hapus</button>
-                        </div>
-                    </div>
-                </div>`;
+                </td>
+            </tr>`;
             }).join('');
 
             pgn.innerHTML = `
-                <button onclick="changeViolationsPage(${violationsCurrentPage - 1})" ${violationsCurrentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
-                <span class="pagination-info">Halaman ${violationsCurrentPage} dari ${totalPages} (${allViolations.length} data)</span>
-                <button onclick="changeViolationsPage(${violationsCurrentPage + 1})" ${violationsCurrentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+            <button onclick="changeViolPage(${violPage - 1})" ${violPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+            <span class="pagination-info">Halaman ${violPage} dari ${total} (${allViolations.length} data)</span>
+            <button onclick="changeViolPage(${violPage + 1})" ${violPage === total ? 'disabled' : ''}>Next ›</button>`;
         }
 
-        function changeViolationsPage(page) {
-            const t = Math.ceil(allViolations.length / itemsPerPage);
-            if (page < 1 || page > t) return;
-            violationsCurrentPage = page;
-            renderPaginatedViolations();
+        function changeViolPage(p) {
+            const t = Math.ceil(allViolations.length / ITEMS_PER_PAGE);
+            if (p < 1 || p > t) return;
+            violPage = p; renderViolations();
+        }
+
+        // VIOLATION SOURCE
+        function setViolationSource(src) {
+            violationSource = src;
+            document.getElementById('src-approved').style.display = src === 'approved' ? 'block' : 'none';
+            document.getElementById('src-manual').style.display = src === 'manual' ? 'block' : 'none';
+            document.getElementById('src-btn-approved').className = `btn ${src === 'approved' ? 'btn-primary' : ''}`;
+            document.getElementById('src-btn-manual').className = `btn ${src === 'manual' ? 'btn-primary' : ''}`;
+            if (src === 'approved') renderApprovedRequests();
+        }
+
+        function renderApprovedRequests(filter = '') {
+            const list = document.getElementById('approved-request-list');
+            const approved = masterRequests.filter(r => (r.status || '').toUpperCase() === 'APPROVED');
+            const filtered = filter
+                ? approved.filter(r => `${r.nama_pegawai} ${r.nomor_kendaraan} ${r.unit_eselon}`.toLowerCase().includes(filter.toLowerCase()))
+                : approved;
+
+            if (!filtered.length) {
+                list.innerHTML = '<div style="padding:20px;text-align:center;color:#64748b;font-size:13px;">Tidak ada permintaan yang disetujui</div>';
+                return;
+            }
+            list.innerHTML = filtered.map(r => `
+            <div class="request-item ${selectedApprovedReq?.id === r.id ? 'selected' : ''}" onclick="selectApprovedRequest('${r.id}')">
+                <div class="request-item-check">${selectedApprovedReq?.id === r.id ? '✓' : ''}</div>
+                <div style="flex:1;">
+                    <div class="request-item-name">${r.nama_pegawai || '-'}</div>
+                    <div class="request-item-meta">${r.unit_eselon || '-'} · <span class="request-item-plate">${r.nomor_kendaraan || '-'}</span></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:2px;">${r.timestamp || ''}</div>
+                </div>
+            </div>`).join('');
+        }
+
+        function filterApprovedRequests() {
+            renderApprovedRequests(document.getElementById('approved-search').value);
+        }
+
+        function selectApprovedRequest(id) {
+            selectedApprovedReq = masterRequests.find(r => r.id == id);
+            renderApprovedRequests(document.getElementById('approved-search').value);
+            const info = document.getElementById('selected-request-info');
+            const detail = document.getElementById('selected-request-detail');
+            if (selectedApprovedReq) {
+                info.style.display = 'block';
+                detail.innerHTML = `<strong>${selectedApprovedReq.nama_pegawai}</strong> — ${selectedApprovedReq.unit_eselon} — <span class="request-item-plate">${selectedApprovedReq.nomor_kendaraan}</span>`;
+            }
         }
 
         function openAddViolationModal() {
-            ['violation-bulan', 'violation-unit', 'violation-tgl-ambil', 'violation-tgl-kembali', 'violation-no-kendaraan']
-                .forEach(id => document.getElementById(id).value = '');
+            selectedApprovedReq = null;
+            ['violation-bulan', 'violation-unit', 'violation-no-kendaraan', 'violation-tgl-ambil', 'violation-tgl-kembali'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            document.getElementById('approved-search').value = '';
+            document.getElementById('selected-request-info').style.display = 'none';
+            if (!masterRequests.length) loadRequests().then(() => renderApprovedRequests());
+            else renderApprovedRequests();
+            setViolationSource('approved');
             openModal('addViolationModal');
         }
 
         async function submitViolation() {
-            const bulan = document.getElementById('violation-bulan').value.trim();
-            const unit = document.getElementById('violation-unit').value.trim();
-            const tglAmbil = document.getElementById('violation-tgl-ambil').value.trim();
+            const btn = document.getElementById('submit-violation-btn');
+            const tglAmbil = dateToStr(document.getElementById('violation-tgl-ambil').value);
+            const tglKembali = dateToStr(document.getElementById('violation-tgl-kembali').value) || '-';
 
-            if (!bulan || !unit || !tglAmbil) {
-                Toast.error('Bulan, unit, dan tanggal pengambilan harus diisi');
-                return;
+            let bulan, unit, noKendaraan;
+
+            if (violationSource === 'approved') {
+                if (!selectedApprovedReq) { Toast.error('Pilih permintaan yang disetujui'); return; }
+                const tglAmbilRaw = document.getElementById('violation-tgl-ambil').value;
+                if (!tglAmbilRaw) { Toast.error('Tanggal pengambilan harus diisi'); return; }
+                const mn = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+                bulan = mn[new Date(tglAmbilRaw).getMonth()];
+                unit = selectedApprovedReq.unit_eselon;
+                noKendaraan = selectedApprovedReq.nomor_kendaraan;
+            } else {
+                bulan = document.getElementById('violation-bulan').value;
+                unit = document.getElementById('violation-unit').value;
+                noKendaraan = document.getElementById('violation-no-kendaraan').value || '-';
+                if (!bulan || !unit) { Toast.error('Bulan dan unit harus diisi'); return; }
             }
 
-            const btn = document.getElementById('submit-violation-btn');
-            const orig = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            if (!document.getElementById('violation-tgl-ambil').value) { Toast.error('Tanggal pengambilan harus diisi'); return; }
+
+            const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Menyimpan...';
             try {
-                // ← Action yang benar: createBBMViolation
-                const res = await callAPI({
-                    action: 'createBBMViolation',
-                    bulan: bulan,
-                    unit: unit,
-                    tanggal_pengambilan: tglAmbil,
-                    tanggal_pengembalian: document.getElementById('violation-tgl-kembali').value.trim() || '-',
-                    nomor_kendaraan: document.getElementById('violation-no-kendaraan').value.trim() || '-'
-                });
-                if (res && res.success) {
-                    Toast.success('Catatan berhasil ditambahkan!');
-                    closeModal('addViolationModal');
-                    clearCache();
-                    await loadViolations(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal menyimpan catatan');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                const res = await callAPI({ action: 'createBBMViolation', bulan, unit, tanggal_pengambilan: tglAmbil, tanggal_pengembalian: tglKembali, nomor_kendaraan: noKendaraan });
+                if (res?.success) { Toast.success('Catatan berhasil ditambahkan'); closeModal('addViolationModal'); clearCache(); await loadViolations(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
             finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
         function openEditViolationModal(idx) {
             const v = allViolations[idx];
-            if (!v) { Toast.error('Data tidak ditemukan'); return; }
+            if (!v) return;
             document.getElementById('ev-id').value = v.id || '';
-            document.getElementById('ev-bulan').value = v.bulan || '';
-            document.getElementById('ev-bulan-hidden').value = v.bulan || '';
+            document.getElementById('ev-bulan').value = v.bulan || 'JANUARI';
             document.getElementById('ev-unit').value = v.unit || '';
-            document.getElementById('ev-unit-hidden').value = v.unit || '';
-            document.getElementById('ev-tgl-ambil').value = v.tanggal_pengambilan || '';
-            document.getElementById('ev-tgl-kembali').value = v.tanggal_pengembalian || '';
-            document.getElementById('ev-no-kendaraan').value = v.nomor_kendaraan || '';
+            document.getElementById('ev-bulan-orig').value = v.bulan || '';
+            document.getElementById('ev-unit-orig').value = v.unit || '';
+            document.getElementById('ev-tgl-ambil').value = strToDate(v.tanggal_pengambilan);
+            document.getElementById('ev-tgl-kembali').value = strToDate(v.tanggal_pengembalian);
+            document.getElementById('ev-no-kendaraan').value = v.nomor_kendaraan !== '-' ? v.nomor_kendaraan : '';
             openModal('editViolationModal');
         }
 
         async function submitEditViolation() {
             const btn = document.getElementById('submit-ev-btn');
-            const orig = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner spinner-sm"></span> Menyimpan...';
+            const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Menyimpan...';
             try {
-                // ← Action yang benar: updateBBMViolation
                 const res = await callAPI({
                     action: 'updateBBMViolation',
                     id: document.getElementById('ev-id').value,
-                    bulan: document.getElementById('ev-bulan-hidden').value,
-                    unit: document.getElementById('ev-unit-hidden').value,
-                    tanggal_pengambilan: document.getElementById('ev-tgl-ambil').value,
-                    tanggal_pengembalian: document.getElementById('ev-tgl-kembali').value,
-                    nomor_kendaraan: document.getElementById('ev-no-kendaraan').value
+                    bulan: document.getElementById('ev-bulan').value,
+                    unit: document.getElementById('ev-unit').value,
+                    tanggal_pengambilan: dateToStr(document.getElementById('ev-tgl-ambil').value),
+                    tanggal_pengembalian: dateToStr(document.getElementById('ev-tgl-kembali').value) || '-',
+                    nomor_kendaraan: document.getElementById('ev-no-kendaraan').value || '-'
                 });
-                if (res && res.success) {
-                    Toast.success('Catatan berhasil diperbarui!');
-                    closeModal('editViolationModal');
-                    clearCache();
-                    await loadViolations(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal memperbarui');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                if (res?.success) { Toast.success('Catatan diperbarui'); closeModal('editViolationModal'); clearCache(); await loadViolations(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
             finally { btn.disabled = false; btn.innerHTML = orig; }
         }
 
         async function deleteViolation(idx) {
             const v = allViolations[idx];
-            if (!v) return;
-            if (!confirm(`Hapus catatan ini?\nUnit: ${v.unit}\nBulan: ${v.bulan}\n\nTindakan tidak dapat dibatalkan.`)) return;
+            if (!v || !confirm(`Hapus catatan ${v.unit} bulan ${v.bulan}?`)) return;
             try {
-                // ← Action yang benar: deleteBBMViolation
-                const res = await callAPI({
-                    action: 'deleteBBMViolation',
-                    id: v.id || '',
-                    bulan: v.bulan,
-                    unit: v.unit
-                });
-                if (res && res.success) {
-                    Toast.success('Catatan berhasil dihapus');
-                    clearCache();
-                    await loadViolations(true);
-                    await loadScores(true);
-                } else {
-                    Toast.error((res && res.message) || 'Gagal menghapus');
-                }
-            } catch (e) { Toast.error('Error: ' + e.message); }
+                const res = await callAPI({ action: 'deleteBBMViolation', id: v.id || '', bulan: v.bulan, unit: v.unit });
+                if (res?.success) { Toast.success('Dihapus'); clearCache(); await loadViolations(true); await loadScores(true); }
+                else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
         }
 
         async function exportViolations() {
-            if (!confirm('Export catatan keterlambatan ke sheet baru di spreadsheet?')) return;
-            Toast.success('Mengekspor data...');
+            if (!confirm('Export ke spreadsheet?')) return;
+            Toast.success('Mengekspor...');
             try {
-                // ← Action yang benar: exportBBMViolationsReport
-                const res = await callAPI({
-                    action: 'exportBBMViolationsReport',
-                    bulan: document.getElementById('filter-bulan-viol').value || '',
-                    unit: document.getElementById('filter-unit-viol').value || ''
-                });
-                if (res && res.success) {
-                    Toast.success(`Berhasil export ${res.recordCount} catatan!`);
-                    if (res.url && confirm('Buka spreadsheet di tab baru?')) window.open(res.url, '_blank');
-                } else {
-                    Toast.error((res && res.message) || 'Gagal export');
-                }
-            } catch (e) { Toast.error('Gagal export: ' + e.message); }
+                const res = await callAPI({ action: 'exportBBMViolationsReport', bulan: document.getElementById('filter-bulan-viol').value || '', unit: document.getElementById('filter-unit-viol').value || '' });
+                if (res?.success) {
+                    Toast.success(`Berhasil export ${res.recordCount} data!`);
+                    if (res.url && confirm('Buka spreadsheet?')) window.open(res.url, '_blank');
+                } else Toast.error(res?.message || 'Gagal');
+            } catch (e) { Toast.error(e.message); }
         }
 
-        // ══════════════════════════════════════════════════════════════
-        // TAB 3: PENILAIAN
-        // Backend action: getBBMScores
-        // ══════════════════════════════════════════════════════════════
-        async function loadScores(forceRefresh = false) {
+        // ═══════════════════════════════════════════════════════════
+        // TAB 3 — PENILAIAN
+        // ═══════════════════════════════════════════════════════════
+        async function loadScores(force = false) {
             const bulan = document.getElementById('filter-score-bulan').value;
-            const cacheKey = CACHE_KEYS.SCORES + '_' + (bulan || 'all');
-
-            if (!forceRefresh && bulan) {
-                const cached = getFromCache(cacheKey);
-                if (cached) { allScores = cached; renderScoresUI(); showCacheIndicator(); return; }
+            const ck = CK.SCORES + '_' + (bulan || 'all');
+            if (!force && bulan) {
+                const c = getCache(ck);
+                if (c) { allScores = c; renderScoresUI(); return; }
             }
-
-            document.getElementById('scores-container').innerHTML =
-                '<div class="loading"><div class="spinner"></div><p style="margin-top:16px;">Memuat penilaian...</p></div>';
+            document.getElementById('scores-container').innerHTML = '<div class="loading-state"><div class="spinner"></div><span>Memuat...</span></div>';
             try {
-                // ← Action yang benar: getBBMScores
                 const res = await callAPI({ action: 'getBBMScores', bulan: bulan || '' });
-                if (res && res.success) {
+                if (res?.success) {
                     allScores = { sanksi: res.sanksiPerPelanggaran, scores: res.scores };
-                    if (bulan) saveToCache(cacheKey, allScores);
+                    if (bulan) saveCache(ck, allScores);
                     renderScoresUI();
                 } else {
-                    document.getElementById('scores-container').innerHTML =
-                        '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color:#ef4444;">Gagal memuat penilaian</p></div>';
-                    Toast.error((res && res.message) || 'Gagal memuat penilaian');
+                    document.getElementById('scores-container').innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p style="color:#ef4444;">Gagal memuat penilaian</p></div>';
                 }
             } catch (e) {
-                document.getElementById('scores-container').innerHTML =
-                    `<div class="empty-state"><div class="empty-state-icon">❌</div><p style="color:#ef4444;">${e.message}</p></div>`;
-                Toast.error('Error: ' + e.message);
+                document.getElementById('scores-container').innerHTML = `<div class="empty-state"><div class="empty-state-icon">❌</div><p>${e.message}</p></div>`;
             }
         }
-
-        document.getElementById('filter-score-bulan').addEventListener('change', () => loadScores(false));
 
         function renderScoresUI() {
-            document.getElementById('sanksi-value').textContent =
-                allScores.sanksi !== undefined ? `${allScores.sanksi} poin per keterlambatan` : '-';
-            renderScores();
-        }
-
-        function renderScores() {
             const bulan = document.getElementById('filter-score-bulan').value;
-            const container = document.getElementById('scores-container');
+            const sanksiBox = document.getElementById('sanksi-box');
+            const chartsGrid = document.getElementById('charts-grid');
+
+            if (allScores.sanksi !== undefined) {
+                sanksiBox.style.display = 'block';
+                document.getElementById('sanksi-value').textContent = `${allScores.sanksi} poin per keterlambatan`;
+            }
 
             if (!bulan) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>';
-                if (scoreChart) scoreChart.destroy();
-                if (violationChart) violationChart.destroy();
-                return;
-            }
-            if (!allScores.scores || allScores.scores.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data penilaian</p></div>';
-                return;
+                document.getElementById('scores-container').innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>Pilih bulan untuk melihat penilaian</p></div>';
+                chartsGrid.style.display = 'none'; return;
             }
 
-            const monthScores = allScores.scores.filter(s => s.bulan === bulan);
-            if (monthScores.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>';
-                if (scoreChart) scoreChart.destroy();
-                if (violationChart) violationChart.destroy();
-                return;
+            const monthScores = (allScores.scores || []).filter(s => s.bulan === bulan);
+            if (!monthScores.length) {
+                document.getElementById('scores-container').innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>Tidak ada data untuk bulan ini</p></div>';
+                chartsGrid.style.display = 'none'; return;
             }
 
+            chartsGrid.style.display = 'grid';
             renderCharts(monthScores);
 
-            container.innerHTML = monthScores.map(score => {
-                const s = parseFloat(score.skorAkhir) || 0;
-                const cls = s >= 4.5 ? 'score-good' : s >= 3 ? 'score-warning' : 'score-danger';
+            document.getElementById('scores-container').innerHTML = monthScores.map(s => {
+                const score = parseFloat(s.skorAkhir) || 0;
+                const cls = score >= 4.5 ? 'score-good' : score >= 3 ? 'score-warning' : 'score-danger';
+                const barColor = score >= 4.5 ? '#10b981' : score >= 3 ? '#f59e0b' : '#ef4444';
+                const label = score >= 4.5 ? 'Sangat Baik' : score >= 3 ? 'Cukup' : 'Perlu Perhatian';
+                const pct = Math.min(100, (score / 5) * 100);
                 return `<div class="score-card">
-                    <div class="score-header">
-                        <div>
-                            <div class="score-unit-name">${score.unit}</div>
-                            <div class="score-month">Bulan ${score.bulan}</div>
-                        </div>
-                        <div class="score-value ${cls}">${s.toFixed(2)}</div>
+                <div class="score-header">
+                    <div>
+                        <div class="score-unit-name">${s.unit}</div>
+                        <div class="score-month">Bulan ${s.bulan}</div>
                     </div>
-                    <div class="score-details">
-                        <div class="score-detail-item">
-                            <div class="score-detail-label">Skor Awal</div>
-                            <div class="score-detail-value">${parseFloat(score.skorUtuh || 0).toFixed(1)}</div>
-                        </div>
-                        <div class="score-detail-item">
-                            <div class="score-detail-label">Keterlambatan</div>
-                            <div class="score-detail-value">${score.jumlahPelanggaran || 0}</div>
-                        </div>
-                        <div class="score-detail-item">
-                            <div class="score-detail-label">Pengurangan</div>
-                            <div class="score-detail-value" style="color:#ef4444;">-${parseFloat(score.jumlahSanksi || 0).toFixed(2)}</div>
-                        </div>
+                    <div style="text-align:right;">
+                        <div class="score-value ${cls}">${score.toFixed(2)}</div>
+                        <div style="font-size:12px;color:#64748b;">${label}</div>
                     </div>
-                </div>`;
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:${pct}%;background:${barColor};"></div></div>
+                <div class="score-details">
+                    <div class="score-detail-item">
+                        <div class="score-detail-label">Skor Awal</div>
+                        <div class="score-detail-value">${parseFloat(s.skorUtuh || 0).toFixed(1)}</div>
+                    </div>
+                    <div class="score-detail-item">
+                        <div class="score-detail-label">Keterlambatan</div>
+                        <div class="score-detail-value" style="color:#f59e0b;">${s.jumlahPelanggaran || 0}×</div>
+                    </div>
+                    <div class="score-detail-item">
+                        <div class="score-detail-label">Pengurangan</div>
+                        <div class="score-detail-value" style="color:#ef4444;">−${parseFloat(s.jumlahSanksi || 0).toFixed(2)}</div>
+                    </div>
+                </div>
+            </div>`;
             }).join('');
         }
 
         function renderCharts(monthScores) {
-            const units = monthScores.map(s => s.unit.length > 22 ? s.unit.substring(0, 19) + '...' : s.unit);
+            const units = monthScores.map(s => s.unit.length > 20 ? s.unit.substring(0, 17) + '…' : s.unit);
             const scores = monthScores.map(s => parseFloat(s.skorAkhir) || 0);
             const violations = monthScores.map(s => parseInt(s.jumlahPelanggaran) || 0);
-
             if (scoreChart) scoreChart.destroy();
-            scoreChart = new Chart(document.getElementById('scoreChart').getContext('2d'), {
+            scoreChart = new Chart(document.getElementById('scoreChart'), {
                 type: 'bar',
-                data: {
-                    labels: units,
-                    datasets: [{
-                        label: 'Skor Akhir',
-                        data: scores,
-                        backgroundColor: scores.map(s => s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'),
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, max: 5, ticks: { stepSize: 0.5 } }, x: { ticks: { font: { size: 11 } } } }
-                }
+                data: { labels: units, datasets: [{ label: 'Skor Akhir', data: scores, backgroundColor: scores.map(s => s >= 4.5 ? '#10b981' : s >= 3 ? '#f59e0b' : '#ef4444'), borderRadius: 6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 5, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
             });
-
             if (violationChart) violationChart.destroy();
-            violationChart = new Chart(document.getElementById('violationChart').getContext('2d'), {
+            violationChart = new Chart(document.getElementById('violationChart'), {
                 type: 'bar',
-                data: {
-                    labels: units,
-                    datasets: [{
-                        label: 'Keterlambatan',
-                        data: violations,
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 11 } } } }
-                }
+                data: { labels: units, datasets: [{ label: 'Keterlambatan', data: violations, backgroundColor: '#3b82f6', borderRadius: 6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
             });
         }
 
-        // ── Modal helpers ──────────────────────────────────────────────
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        window.onclick = e => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; };
+        // ── MODAL HELPERS ─────────────────────────────────────────────────────────
+        function openModal(id) { document.getElementById(id).classList.add('open'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+        window.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('open'); });
+        window.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open')); });
 
-        // ── Init ───────────────────────────────────────────────────────
+        // ── INIT ─────────────────────────────────────────────────────────────────
         loadRequests();
     </script>
 </body>
