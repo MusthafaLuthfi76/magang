@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -23,7 +23,6 @@
             min-height: 100vh;
         }
 
-        /* TOAST */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -52,6 +51,10 @@
             border-left: 4px solid #ef4444;
         }
 
+        .toast.info {
+            border-left: 4px solid #3b82f6;
+        }
+
         @keyframes slideIn {
             from {
                 transform: translateX(400px);
@@ -64,7 +67,6 @@
             }
         }
 
-        /* MOBILE */
         .mobile-menu-toggle {
             display: none;
             position: absolute;
@@ -93,7 +95,6 @@
             z-index: 999;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 252px;
             background: white;
@@ -197,7 +198,6 @@
             stroke-width: 1.8;
         }
 
-        /* MAIN */
         .main-content {
             flex: 1;
             display: flex;
@@ -309,7 +309,36 @@
             width: 100%;
         }
 
-        /* BANNER */
+        /* SPJ STATUS BANNER */
+        .spj-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #92400e;
+        }
+
+        .spj-status-bar.success {
+            background: #f0fdf4;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .spj-status-bar.error {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .spj-status-bar svg {
+            flex-shrink: 0;
+        }
+
         .banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
             border-radius: 10px;
@@ -360,7 +389,6 @@
             flex-shrink: 0;
         }
 
-        /* STAT CARDS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -427,7 +455,6 @@
             }
         }
 
-        /* SECTION */
         .section-head {
             display: flex;
             align-items: baseline;
@@ -448,7 +475,6 @@
             color: #94a3b8;
         }
 
-        /* TAB BAR */
         .chart-tabs {
             display: flex;
             gap: 4px;
@@ -482,7 +508,6 @@
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* CARD */
         .card {
             background: white;
             border-radius: 8px;
@@ -516,7 +541,6 @@
             padding: 20px;
         }
 
-        /* GRID */
         .grid-2 {
             display: grid;
             grid-template-columns: 3fr 2fr;
@@ -531,7 +555,6 @@
             margin-bottom: 20px;
         }
 
-        /* CHART WRAP */
         .chart-wrap {
             position: relative;
         }
@@ -548,7 +571,6 @@
             height: 230px;
         }
 
-        /* CAT BUTTONS */
         .cat-row {
             display: flex;
             flex-wrap: wrap;
@@ -569,7 +591,6 @@
             color: #64748b;
         }
 
-        /* TABLE */
         .table-container {
             overflow-x: auto;
         }
@@ -727,7 +748,6 @@
             text-align: right;
         }
 
-        /* TABLE LEGEND */
         .table-legend {
             display: flex;
             flex-wrap: wrap;
@@ -758,7 +778,6 @@
             font-size: 14px;
         }
 
-        /* USER INFO */
         .user-info {
             padding: 0 12px;
             margin-bottom: 12px;
@@ -800,7 +819,33 @@
             border-color: #fca5a5;
         }
 
-        /* RESPONSIVE */
+        /* SPJ Source indicator */
+        .spj-source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+
+        .spj-source-api {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .spj-source-local {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .spj-source-none {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
         @media (max-width: 1200px) {
             .grid-2 {
                 grid-template-columns: 1fr;
@@ -1029,6 +1074,16 @@
 
         <div class="container">
 
+            <!-- SPJ Status Bar — menampilkan status sumber data SPJ -->
+            <div id="spjStatusBar" class="spj-status-bar" style="display:none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span id="spjStatusMsg"></span>
+            </div>
+
             <!-- Banner -->
             <div class="banner">
                 <div class="banner-left">
@@ -1083,7 +1138,6 @@
                 <span class="section-note" id="sectionNote">—</span>
             </div>
 
-            <!-- Chart Tab Bar -->
             <div class="chart-tabs">
                 <button class="chart-tab active" onclick="goTab('total',this)">📊 Total per Divisi</button>
                 <button class="chart-tab" onclick="goTab('trend',this)">📈 Tren Bulanan</button>
@@ -1091,7 +1145,6 @@
                 <button class="chart-tab" onclick="goTab('profil',this)">🎯 Profil Divisi</button>
             </div>
 
-            <!-- PANEL: Total per Divisi -->
             <div id="pTotal" data-active="1">
                 <div class="grid-2">
                     <div class="card">
@@ -1115,7 +1168,6 @@
                 </div>
             </div>
 
-            <!-- PANEL: Tren Bulanan -->
             <div id="pTrend" style="display:none">
                 <div class="card">
                     <div class="card-header">
@@ -1133,7 +1185,6 @@
                 <div class="grid-3" id="trendSmall"></div>
             </div>
 
-            <!-- PANEL: Per Kategori -->
             <div id="pCat" style="display:none">
                 <div class="section-head" style="margin-bottom:10px">
                     <span class="section-title">Pilih Kategori Penilaian:</span>
@@ -1159,7 +1210,6 @@
                 </div>
             </div>
 
-            <!-- PANEL: Profil Divisi -->
             <div id="pProfil" style="display:none">
                 <div class="grid-3" id="radarGrid"></div>
             </div>
@@ -1213,8 +1263,9 @@
                     <div class="leg-item">
                         <div class="leg-dot" style="background:#fee2e2"></div>Kurang &lt;40%
                     </div>
-                    <div class="leg-item" style="margin-left:auto;color:#94a3b8;font-style:italic">Monev termasuk
-                        dalam Total /100</div>
+                    <div class="leg-item" style="margin-left:auto;color:#94a3b8;font-style:italic">
+                        Sumber SPJ: <span id="spjSourceLabel">—</span>
+                    </div>
                 </div>
             </div>
 
@@ -1223,11 +1274,12 @@
 
     <script>
         AUTH.init();
+
         // ════════════════════════════════════════
-        // CONFIG — 3 API terpisah
+        // CONFIG
         // ════════════════════════════════════════
         const API_OP = 'https://script.google.com/macros/s/AKfycbyEhda6j6cf0EO6NtMrYj8oCB_m0KZn_3mcAkd9H3CoLhMn2Y2b8RmW9Zhlybj_LMWqrQ/exec';
-        const API_SPJ = 'https://script.google.com/macros/s/AKfycbyE0dBi4Wa6I2OxJbI6w0KVJF97D1-hpXp29LPBJmXH0TuHZYIFAHxb0GlRJxKlOxQf/exec';
+        const API_SPJ = 'https://script.google.com/macros/s/AKfycbxoYIwpRZizipn0TD84nNeoqld570-85UlnL6jBdXbbu-GVNwoEK712P7yB1e03SSU0EQ/exec';
         const API_MONEV = 'https://script.google.com/macros/s/AKfycbxwvQtZzZCYRmSX4UIL-7ars1HQX3Zp6pW0g9vlcffp2lXHTacIMX8I6PYkQtzRDaua/exec';
 
         const UNITS = [
@@ -1261,10 +1313,17 @@
             'september': 'SEPTEMBER', 'oktober': 'OKTOBER', 'november': 'NOVEMBER', 'desember': 'DESEMBER'
         };
 
+        // State
         let S = { bulan: '', scores: {}, allMonth: {}, loading: false };
-        let MONEV_CACHE = null;  // hasil dari API_MONEV getAllSheetData / getAllMonev
+        let MONEV_CACHE = null;
+        // ★ FIX: SPJ_CACHE menyimpan data dari API (getAllMonthlySheetData)
+        //         Digunakan di semua bulan tanpa bergantung localStorage
+        let SPJ_CACHE = null; // { type:'monthly', data: { BULAN: { UNIT: {nilaiTepat,sanksi,totalNilai} } } }
         let C = {};
         let activeCat = 'bbm';
+
+        // SPJ source tracking (untuk info di UI)
+        let spjDataSource = 'none'; // 'api-monthly' | 'api-rekap' | 'local' | 'none'
 
         // ════════════════════════════════════════
         // INIT
@@ -1303,19 +1362,13 @@
             });
         }
 
-        // ════════════════════════════════════════
-        // NORMALIZE BULAN
-        // "Januari 2026" / "januari" / "JANUARI" → "JANUARI"
-        // ════════════════════════════════════════
         function normalizeBulan(str) {
             if (!str) return '';
             const first = String(str).trim().toLowerCase().split(/[\s,\/\-]+/)[0];
             return MONTH_MAP[first] || String(str).trim().toUpperCase().split(/[\s,\/\-]+/)[0];
         }
 
-        function ok(r) {
-            return r.status === 'fulfilled' && r.value?.success;
-        }
+        function ok(r) { return r.status === 'fulfilled' && r.value?.success; }
 
         // ════════════════════════════════════════
         // LOAD ALL
@@ -1330,72 +1383,120 @@
             document.getElementById('stkNote').textContent = bL;
 
             try {
-                // ── Fetch semua API secara paralel ──
-                // API_MONEV: coba action getAllSheetData terlebih dahulu,
-                // jika gagal akan fallback ke getAllMonev / localStorage
-                const [roomR, vkR, vbR, bbmR, docsR, spjR, monevR] = await Promise.allSettled([
+                // ── Fetch semua API secara paralel ──────────────────────────────────
+                // ★ FIX: Tambahkan dua action baru untuk SPJ:
+                //   1. getAllMonthlySheetData → baca langsung dari sheet bulan (PALING AKURAT)
+                //   2. getAllSPJKeuangan      → baca dari sheet DATA_PENILAIAN_SPJ (backup)
+                //
+                // Kenapa dua? getAllMonthlySheetData lebih reliable karena baca sheet summary,
+                // sementara getAllSPJKeuangan baca raw data. Jika salah satu gagal, pakai yang lain.
+                const [roomR, vkR, vbR, bbmR, docsR, spjMonthlyR, spjRekapR, monevR] = await Promise.allSettled([
                     api(API_OP, { action: 'getRoomScores' }),
                     api(API_OP, { action: 'getVehicleScores', jenis: 'KUNCI' }),
                     api(API_OP, { action: 'getVehicleScores', jenis: 'BERSIH' }),
                     api(API_OP, { action: 'getBBMScores' }),
                     api(API_OP, { action: 'getDocuments' }),
-                    api(API_SPJ, { action: 'getAllSPJKeuangan' }),
+                    api(API_SPJ, { action: 'getAllMonthlySheetData' }),  // ★ FIX: Sumber utama SPJ
+                    api(API_SPJ, { action: 'getAllSPJKeuangan' }),       // ★ FIX: Sumber backup SPJ
                     api(API_MONEV, { action: 'getAllSheetData' }),
                 ]);
 
-                // ── Parse hasil API Monev ──
-                // Respons yang mungkin diterima dari API_MONEV:
-                //   Format A: { status: 'success', data: { JANUARI: { 'Sekretariat': { total: 32, ... }, ... }, ... } }
-                //   Format B: { success: true, rekap: { JANUARI: { 'Sekretariat': { totalNilai: 32, ... } } } }
-                //   Format C: { success: true, data: [ { bulan, unit, total, ... }, ... ] }  (array)
-                //   Format D: response langsung adalah array [ { bulan, unit, total } ]
+                // ── Parse SPJ Cache ──────────────────────────────────────────────
+                // ★ FIX: Bangun SPJ_CACHE dari dua sumber API, tanpa localStorage
+                SPJ_CACHE = null;
+                spjDataSource = 'none';
+
+                // ── DEBUG: Log raw responses ────────────────────────────────
+                console.group('=== SPJ API DEBUG ===');
+                console.log('[spjMonthlyR] status:', spjMonthlyR.status,
+                    '| success:', spjMonthlyR.value?.success,
+                    '| rekap keys:', Object.keys(spjMonthlyR.value?.rekap || {}).join(', ') || '(kosong)');
+                if (spjMonthlyR.value?.rekap) {
+                    Object.entries(spjMonthlyR.value.rekap).forEach(([bln, ud]) => {
+                        console.log(' ', bln, '→', Object.keys(ud).length, 'units:', Object.keys(ud).join(', '));
+                        Object.entries(ud).forEach(([u, d]) => console.log('   ', u, '→ totalNilai:', d.totalNilai));
+                    });
+                }
+                console.log('[spjRekapR] status:', spjRekapR.status,
+                    '| success:', spjRekapR.value?.success,
+                    '| rekap keys:', Object.keys(spjRekapR.value?.rekap || {}).join(', ') || '(kosong)');
+                console.groupEnd();
+                // ────────────────────────────────────────────────────────────────
+
+                // Sumber 1: getAllMonthlySheetData
+                if (spjMonthlyR.status === 'fulfilled' && spjMonthlyR.value?.success && spjMonthlyR.value?.rekap) {
+                    const rekap = spjMonthlyR.value.rekap;
+                    if (Object.keys(rekap).length > 0) {
+                        SPJ_CACHE = { type: 'monthly', data: rekap };
+                        spjDataSource = 'api-monthly';
+                        console.log('[SPJ] ✅ Sumber: getAllMonthlySheetData. Bulan:', Object.keys(rekap).join(', '));
+                    } else {
+                        console.warn('[SPJ] ⚠️ getAllMonthlySheetData berhasil tapi rekap KOSONG!',
+                            'Kemungkinan semua unit difilter oleh kondisi hasData di backend.',
+                            'Cek Google Apps Script Logger untuk detail raw values.');
+                    }
+                } else {
+                    console.warn('[SPJ] ⚠️ getAllMonthlySheetData gagal:', spjMonthlyR.reason || 'unknown');
+                }
+
+                // Sumber 2: getAllSPJKeuangan (backup)
+                if (!SPJ_CACHE && spjRekapR.status === 'fulfilled' && spjRekapR.value?.success && spjRekapR.value?.rekap) {
+                    const rekap = spjRekapR.value.rekap;
+                    if (Object.keys(rekap).length > 0) {
+                        SPJ_CACHE = { type: 'rekap', data: rekap };
+                        spjDataSource = 'api-rekap';
+                        console.log('[SPJ] ✅ Sumber: getAllSPJKeuangan. Bulan:', Object.keys(rekap).join(', '));
+                    }
+                }
+
+                // Sumber 3: localStorage (fallback terakhir, tidak lagi utama)
+                // ★ FIX: localStorage HANYA digunakan jika KEDUA API gagal
+                if (!SPJ_CACHE) {
+                    try {
+                        const localRaw = localStorage.getItem('spj_keuangan_data');
+                        if (localRaw) {
+                            const localData = JSON.parse(localRaw);
+                            if (Object.keys(localData).length > 0) {
+                                // Normalise format agar sama dengan rekap
+                                SPJ_CACHE = { type: 'local', data: localData };
+                                spjDataSource = 'local';
+                                console.warn('[SPJ] Kedua API SPJ gagal. Menggunakan localStorage sebagai fallback.');
+                            }
+                        }
+                    } catch (e) { console.warn('[SPJ] localStorage error:', e); }
+                }
+
+                // Update status bar UI
+                updateSPJStatusBar();
+
+                // ── Parse Monev Cache ────────────────────────────────────────────
                 MONEV_CACHE = null;
                 if (monevR.status === 'fulfilled' && monevR.value) {
                     const val = monevR.value;
-                    console.log('[Monev API] Raw response keys:', Object.keys(val));
-
                     if (val.status === 'success' && val.data && !Array.isArray(val.data)) {
-                        // Format A — nested object per bulan per unit
                         MONEV_CACHE = { type: 'nested', data: val.data };
-                        console.log('[Monev API] Format A — nested. Bulan tersedia:', Object.keys(val.data));
-
                     } else if ((val.success || val.status === 'success') && val.rekap) {
-                        // Format B — rekap object
                         MONEV_CACHE = { type: 'rekap', data: val.rekap };
-                        console.log('[Monev API] Format B — rekap. Bulan tersedia:', Object.keys(val.rekap));
-
                     } else if (Array.isArray(val.data)) {
-                        // Format C — array of records
                         MONEV_CACHE = { type: 'array', data: val.data };
-                        console.log('[Monev API] Format C — array. Jumlah record:', val.data.length);
-
                     } else if (Array.isArray(val)) {
-                        // Format D — response langsung array
                         MONEV_CACHE = { type: 'array', data: val };
-                        console.log('[Monev API] Format D — direct array. Jumlah record:', val.length);
-
                     } else if (val.success && val.data && typeof val.data === 'object') {
-                        // Format E — { success: true, data: { BULAN: { UNIT: { total } } } }
                         MONEV_CACHE = { type: 'nested', data: val.data };
-                        console.log('[Monev API] Format E — nested via success. Bulan:', Object.keys(val.data));
-
-                    } else {
-                        console.warn('[Monev API] Format tidak dikenal, fallback ke localStorage:', val);
                     }
-                } else {
-                    console.warn('[Monev API] Request gagal/timeout, fallback ke localStorage');
                 }
 
-                // ── Build scores bulan aktif ──
+                // ── Build scores bulan aktif ──────────────────────────────────────
                 const sc = {};
                 UNITS.forEach(u => {
                     sc[u] = { bbm: null, kendaraan: null, ruang: null, kearsipan: null, spj: null, monev: null };
                 });
-                fillScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR, spjR);
+                fillOperasionalScores(sc, S.bulan, roomR, vkR, vbR, bbmR, docsR);
+                fillSPJScores(sc, S.bulan);   // ★ FIX: Pisahkan SPJ ke fungsi sendiri
                 fillMonev(sc, S.bulan);
                 S.scores = sc;
 
-                // ── Build scores semua bulan (tren) ──
+                // ── Build scores semua bulan (tren) ───────────────────────────────
                 const am = {};
                 MONTHS.forEach(m => {
                     am[m] = {};
@@ -1404,13 +1505,15 @@
                     });
                 });
                 MONTHS.forEach(m => {
-                    fillScores(am[m], m, roomR, vkR, vbR, bbmR, docsR, spjR);
+                    fillOperasionalScores(am[m], m, roomR, vkR, vbR, bbmR, docsR);
+                    fillSPJScores(am[m], m);   // ★ FIX: Pakai SPJ_CACHE untuk semua bulan
                     fillMonev(am[m], m);
                 });
                 S.allMonth = am;
 
                 render();
                 showToast('Data berhasil dimuat', 'success');
+
             } catch (e) {
                 console.error(e);
                 showToast('Gagal memuat sebagian data', 'error');
@@ -1422,18 +1525,54 @@
         }
 
         // ════════════════════════════════════════
-        // fillScores — BBM, Kendaraan, Ruang, Kearsipan, SPJ
+        // updateSPJStatusBar — tampilkan sumber data SPJ di UI
         // ════════════════════════════════════════
-        function fillScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR, spjR) {
+        function updateSPJStatusBar() {
+            const bar = document.getElementById('spjStatusBar');
+            const msg = document.getElementById('spjStatusMsg');
+            const srcLbl = document.getElementById('spjSourceLabel');
 
-            // ── RUANG RAPAT ──────────────────────────────────────
+            if (spjDataSource === 'api-monthly') {
+                bar.className = 'spj-status-bar success';
+                bar.style.display = 'flex';
+                msg.textContent = '✅ Data SPJ Keuangan berhasil diambil langsung dari Google Spreadsheet (sheet bulanan).';
+                srcLbl.textContent = 'Google Spreadsheet (Sheet Bulanan)';
+                srcLbl.style.color = '#065f46';
+            } else if (spjDataSource === 'api-rekap') {
+                bar.className = 'spj-status-bar success';
+                bar.style.display = 'flex';
+                msg.textContent = '✅ Data SPJ Keuangan berhasil diambil dari Google Spreadsheet (sheet rekap).';
+                srcLbl.textContent = 'Google Spreadsheet (Sheet Rekap)';
+                srcLbl.style.color = '#065f46';
+            } else if (spjDataSource === 'local') {
+                bar.className = 'spj-status-bar';
+                bar.style.display = 'flex';
+                msg.textContent = '⚠️ API SPJ tidak tersedia. Menampilkan data dari penyimpanan lokal browser (hanya tersedia jika Anda pernah membuka halaman Penilaian SPJ di browser ini).';
+                srcLbl.textContent = 'Penyimpanan Lokal Browser';
+                srcLbl.style.color = '#92400e';
+            } else {
+                bar.className = 'spj-status-bar error';
+                bar.style.display = 'flex';
+                msg.textContent = '❌ Data SPJ Keuangan tidak tersedia. API tidak merespons dan tidak ada data lokal. Silakan cek koneksi atau input data melalui halaman Penilaian SPJ Keuangan.';
+                srcLbl.textContent = 'Tidak ada data';
+                srcLbl.style.color = '#991b1b';
+            }
+        }
+
+        // ════════════════════════════════════════
+        // fillOperasionalScores — BBM, Kendaraan, Ruang, Kearsipan
+        // (dipisah dari SPJ supaya lebih bersih)
+        // ════════════════════════════════════════
+        function fillOperasionalScores(sc, bulan, roomR, vkR, vbR, bbmR, docsR) {
+
+            // RUANG RAPAT
             if (ok(roomR)) {
                 (roomR.value.scores || []).forEach(s => {
                     if (s.bulan === bulan && sc[s.unit]) sc[s.unit].ruang = s.skorAkhir;
                 });
             }
 
-            // ── KENDARAAN (KUNCI + BERSIH) ────────────────────────
+            // KENDARAAN
             const km = {}, bm = {};
             if (ok(vkR)) (vkR.value.scores || []).forEach(s => { if (s.bulan === bulan) km[s.unit] = s.skorAkhir; });
             if (ok(vbR)) (vbR.value.scores || []).forEach(s => { if (s.bulan === bulan) bm[s.unit] = s.skorAkhir; });
@@ -1442,14 +1581,14 @@
                 if (k !== null || b !== null) sc[u].kendaraan = (k ?? 0) + (b ?? 0);
             });
 
-            // ── BBM ──────────────────────────────────────────────
+            // BBM
             if (ok(bbmR)) {
                 (bbmR.value.scores || []).forEach(s => {
                     if (s.bulan === bulan && sc[s.unit]) sc[s.unit].bbm = s.skorAkhir;
                 });
             }
 
-            // ── KEARSIPAN ─────────────────────────────────────────
+            // KEARSIPAN
             let docsArray = [];
             if (docsR.status === 'fulfilled') {
                 const val = docsR.value;
@@ -1478,52 +1617,84 @@
                     }
                 });
             }
-
-            // ── SPJ KEUANGAN ──────────────────────────────────────
-            // Step 1: dari API backend
-            if (ok(spjR)) {
-                const rekap = spjR.value.rekap || {};
-                const bulanKey = Object.keys(rekap).find(k => k.toUpperCase() === bulan.toUpperCase());
-                const bd = bulanKey ? rekap[bulanKey] : {};
-                UNITS.forEach(u => {
-                    const unitKey = Object.keys(bd).find(k => k.trim() === u.trim());
-                    const unitData = unitKey ? bd[unitKey] : null;
-                    if (unitData?.totalNilai !== undefined) {
-                        const v = parseFloat(unitData.totalNilai);
-                        if (!isNaN(v) && v >= 0) sc[u].spj = v;
-                    }
-                });
-            }
-            // Step 2: localStorage fallback
-            try {
-                const localData = JSON.parse(localStorage.getItem('spj_keuangan_data') || '{}');
-                const localBulanKey = Object.keys(localData).find(k => k.toUpperCase() === bulan.toUpperCase());
-                const monthData = localBulanKey ? localData[localBulanKey] : {};
-                UNITS.forEach(u => {
-                    if (sc[u].spj !== null) return;
-                    const unitKey = Object.keys(monthData).find(k => k.trim() === u.trim())
-                        || Object.keys(monthData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
-                    const unitData = unitKey ? monthData[unitKey] : null;
-                    if (unitData?.totalNilai !== undefined) {
-                        const v = parseFloat(unitData.totalNilai);
-                        if (!isNaN(v)) sc[u].spj = v;
-                    }
-                });
-            } catch (e) { console.warn('SPJ localStorage error:', e); }
         }
 
         // ════════════════════════════════════════
-        // fillMonev — mengisi sc[unit].monev
-        // Prioritas: MONEV_CACHE (API_MONEV) → localStorage fallback
-        // Mendukung berbagai format respons API
+        // ★ FIX: fillSPJScores — HANYA dari SPJ_CACHE (API)
+        //
+        // Tidak lagi bergantung pada localStorage.
+        // SPJ_CACHE diisi dari:
+        //   1. getAllMonthlySheetData → { type:'monthly', data: { BULAN: { UNIT: {nilaiTepat,sanksi,totalNilai} } } }
+        //   2. getAllSPJKeuangan      → { type:'rekap',   data: { BULAN: { UNIT: {totalNilai,...} } } }
+        //   3. localStorage          → { type:'local',   data: { BULAN: { UNIT: {totalNilai,...} } } }
+        //
+        // Dengan SPJ_CACHE di-load sekali saat loadAll(), fungsi ini bisa dipanggil
+        // untuk semua 12 bulan tanpa fetch ulang, sehingga tren bulanan pun benar.
+        // ════════════════════════════════════════
+        function fillSPJScores(sc, bulan) {
+            if (!SPJ_CACHE) return; // Tidak ada data sama sekali
+
+            const { type, data } = SPJ_CACHE;
+
+            // Format 'monthly': { BULAN: { UNIT: { nilaiTepat, sanksi, totalNilai } } }
+            // Ini adalah format dari getAllMonthlySheetData — paling detail
+            if (type === 'monthly') {
+                const bulanKey = Object.keys(data).find(k => k.toUpperCase() === bulan.toUpperCase());
+                if (!bulanKey) return;
+                const bulanData = data[bulanKey];
+                UNITS.forEach(u => {
+                    const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                        || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+                    if (!unitKey) return;
+                    const unitData = bulanData[unitKey];
+                    // getAllMonthlySheetData mengembalikan { nilaiTepat, sanksi, totalNilai }
+                    const v = parseFloat(unitData.totalNilai ?? unitData.total ?? unitData.nilai ?? null);
+                    if (!isNaN(v) && v >= 0) sc[u].spj = v;
+                });
+                return;
+            }
+
+            // Format 'rekap': { BULAN: { UNIT: { totalNilai, nilaiTepat, sanksi, ... } } }
+            // Ini adalah format dari getAllSPJKeuangan
+            if (type === 'rekap') {
+                const bulanKey = Object.keys(data).find(k => k.toUpperCase() === bulan.toUpperCase());
+                if (!bulanKey) return;
+                const bulanData = data[bulanKey];
+                UNITS.forEach(u => {
+                    const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                        || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+                    if (!unitKey) return;
+                    const unitData = bulanData[unitKey];
+                    const v = parseFloat(unitData.totalNilai ?? unitData.total ?? null);
+                    if (!isNaN(v) && v >= 0) sc[u].spj = v;
+                });
+                return;
+            }
+
+            // Format 'local': sama dengan rekap (dari localStorage admin-spj-keuangan.html)
+            if (type === 'local') {
+                const bulanKey = Object.keys(data).find(k => k.toUpperCase() === bulan.toUpperCase());
+                if (!bulanKey) return;
+                const bulanData = data[bulanKey];
+                UNITS.forEach(u => {
+                    const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
+                        || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
+                    if (!unitKey) return;
+                    const unitData = bulanData[unitKey];
+                    const v = parseFloat(unitData.totalNilai ?? null);
+                    if (!isNaN(v) && v >= 0) sc[u].spj = v;
+                });
+            }
+        }
+
+        // ════════════════════════════════════════
+        // fillMonev
         // ════════════════════════════════════════
         function fillMonev(sc, bulan) {
-
             if (MONEV_CACHE) {
                 const { type, data } = MONEV_CACHE;
 
-                // ── Format A / E: nested object { BULAN: { UNIT: { total/totalNilai/nilai, ... } } }
-                if (type === 'nested') {
+                if (type === 'nested' || type === 'rekap') {
                     const bulanKey = Object.keys(data).find(k => normalizeBulan(k) === bulan);
                     const bulanData = bulanKey ? data[bulanKey] : {};
                     UNITS.forEach(u => {
@@ -1531,7 +1702,6 @@
                             || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
                         const unitData = unitKey ? bulanData[unitKey] : null;
                         if (unitData !== null && unitData !== undefined) {
-                            // Coba berbagai nama field untuk nilai total
                             const raw = unitData.total ?? unitData.totalNilai ?? unitData.nilai
                                 ?? unitData.score ?? unitData.skor ?? unitData.totalScore ?? null;
                             if (raw !== null) {
@@ -1543,27 +1713,6 @@
                     return;
                 }
 
-                // ── Format B: rekap { BULAN: { UNIT: { totalNilai/total } } }
-                if (type === 'rekap') {
-                    const bulanKey = Object.keys(data).find(k => normalizeBulan(k) === bulan);
-                    const bulanData = bulanKey ? data[bulanKey] : {};
-                    UNITS.forEach(u => {
-                        const unitKey = Object.keys(bulanData).find(k => k.trim() === u.trim())
-                            || Object.keys(bulanData).find(k => k.trim().toLowerCase() === u.trim().toLowerCase());
-                        const unitData = unitKey ? bulanData[unitKey] : null;
-                        if (unitData !== null && unitData !== undefined) {
-                            const raw = unitData.totalNilai ?? unitData.total ?? unitData.nilai
-                                ?? unitData.score ?? unitData.skor ?? unitData.totalScore ?? null;
-                            if (raw !== null) {
-                                const v = parseFloat(raw);
-                                if (!isNaN(v) && v >= 0) sc[u].monev = v;
-                            }
-                        }
-                    });
-                    return;
-                }
-
-                // ── Format C / D: array [ { bulan, unit, total/totalNilai, ... } ]
                 if (type === 'array') {
                     const records = data.filter(d => {
                         const b = normalizeBulan(d.bulan || d.month || d.periode || '');
@@ -1584,24 +1733,15 @@
                 }
             }
 
-            // ── Fallback: localStorage (format lama dari admin-penilaian-monev.html) ──
-            console.warn('[Monev] Menggunakan localStorage fallback untuk bulan:', bulan);
+            // Fallback localStorage monev
             UNITS.forEach(u => {
                 try {
-                    // Coba beberapa key format yang mungkin disimpan
-                    const keys = [
-                        `monev_${bulan}_${u}`,
-                        `monev_${bulan.toLowerCase()}_${u}`,
-                        `monev_${cap(bulan)}_${u}`,
-                    ];
+                    const keys = [`monev_${bulan}_${u}`, `monev_${bulan.toLowerCase()}_${u}`, `monev_${cap(bulan)}_${u}`];
                     for (const key of keys) {
                         const d = JSON.parse(localStorage.getItem(key) || 'null');
                         if (!d) continue;
                         const v = d.totalScore ?? d.total ?? d.totalNilai ?? d.nilai ?? d.score ?? null;
-                        if (v !== null && !isNaN(parseFloat(v))) {
-                            sc[u].monev = parseFloat(v);
-                            break;
-                        }
+                        if (v !== null && !isNaN(parseFloat(v))) { sc[u].monev = parseFloat(v); break; }
                     }
                 } catch { }
             });
@@ -1748,8 +1888,7 @@
             C.cRadarMain = new Chart(document.getElementById('cRadarMain'), {
                 type: 'radar',
                 data: {
-                    labels: MODS.map(m => m.label),
-                    datasets: [{
+                    labels: MODS.map(m => m.label), datasets: [{
                         label: 'Rata-rata %', data: rd,
                         backgroundColor: 'rgba(15,23,42,.08)', borderColor: '#0f172a', borderWidth: 2,
                         pointBackgroundColor: MODS.map(m => m.color), pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5
@@ -1772,7 +1911,6 @@
         function drawTrend() {
             kill('cTrend');
             Object.keys(C).filter(k => k.startsWith('sm_')).forEach(k => { C[k].destroy(); delete C[k]; });
-
             const ds = UNITS.map((u, i) => ({
                 label: US[u],
                 data: MONTHS.map(m => {
@@ -2001,9 +2139,7 @@
             document.getElementById('sidebarOverlay').classList.toggle('active');
         }
 
-        function logout() {
-            if (confirm('Yakin keluar?')) { AUTH.logout(); }
-        }
+        function logout() { if (confirm('Yakin keluar?')) { AUTH.logout(); } }
 
         function showToast(msg, type = '') {
             const container = document.getElementById('toastContainer');
@@ -2017,11 +2153,7 @@
         </svg>
         <span>${msg}</span>`;
             container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity .3s';
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .3s'; setTimeout(() => toast.remove(), 300); }, 3500);
         }
 
         document.getElementById('pTotal').setAttribute('data-active', '1');
